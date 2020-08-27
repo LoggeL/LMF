@@ -1,0 +1,58 @@
+html, body {
+    background-image: linear-gradient(to bottom, #f8f8f8, #f8f8f8, #f8f8f8, #990b16);
+    background-attachment: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+nav.border {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+h1 {
+    font-size: 8vw;
+    display: flex;
+}
+
+h1 span {
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+h1 span::first-letter { 
+    color: #990b16;
+    font-size: 12vw;
+}
+
+@media screen and (min-width: 701px) {
+    h1 {
+      font-size: 80px !important;
+    }
+
+    h1 span::first-letter { 
+        font-size: 100px;
+    }
+  }
+
+.nav-brand .logo {
+    height: 60px;
+}
+
+.logo 
+{
+    border-style: none;
+}
+
+.card {
+    background-color: white;
+}
+
+.card img {
+    margin: 15px;
+}
+
+div.divider {
+    height: 1px;
+    border: 1px solid black;
+}
