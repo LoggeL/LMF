@@ -207,6 +207,16 @@ h2 {
     max-height: 600px;
 }
 
+.partner img {
+    max-height: 500px;
+    max-width: 500px;
+}
+
+.partner video {
+    max-height: 500px;
+    max-width: 500px;
+}
+
 .partner h3 {
     overflow: hidden;
 }
