@@ -8,12 +8,12 @@
 
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/lmf.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="assets/fonts/Montserrat.woff2" rel="stylesheet">
 </head>
 
 <body>
     <nav>
-        <img src="assets/svg/Logo.svg">
+        <img src="assets/svg/logo.svg">
         <ul>
             <li><a href="#contact">CONTACT</a></li>
             <li><a href="#partners">PARTNERS</a></li>
@@ -22,7 +22,7 @@
     </nav>
     <main>
         <div class="hero">
-            <img src="assets/svg/Logo.svg">
+            <img src="assets/svg/logo.svg">
             <h1 class="title">Logge Media Forge</h1>
         </div>
 
@@ -77,7 +77,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="projectCategory">
-                        <img src="assets/svg/yt.svg" class="logo">
+                        <img src="assets/svg/YT.svg" class="logo">
                         <h3>Videos</h3>
                         <i>Timelapse, Livestream, VFX</i><br /><br />
                         <span>Full movie VFX to aftermovie.</span>
@@ -216,17 +216,17 @@
 
         <div class="card-container">
             <div class="row">
-                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                <a class="contact" href="mailto:hyper.xjo@gmail.com" target="_blank">
                     <div class="contactMedia">Mail</div>
                     <img src="assets/svg/mail.svg" alt="">
                     <div class="contactUsername">hyper.xjo@gmail.com</div>
                 </a>
-                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                <a class="contact" href="https://discord.logge.top" target="_blank">
                     <div class="contactMedia">Discord</div>
                     <img src="assets/svg/discord.svg" alt="">
                     <div class="contactUsername">Logge#1337</div>
                 </a>
-                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                <a class="contact" href="https://t.me/LoggeL" target="_blank">
                     <div class="contactMedia">Telegram</div>
                     <img src="assets/svg/tg.svg" alt="">
                     <div class="contactUsername">@LoggeL</div>
@@ -236,7 +236,12 @@
     </main>
 
     <footer>
-
+        <div class="copyright">
+            © 2020 Logge
+        </div>
+        <script>
+            document.querySelector('.copyright').innerText = '© ' + (new Date()).getFullYear() + ' Logge'
+        </script>
     </footer>
 </body>
 

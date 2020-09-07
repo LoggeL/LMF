@@ -127,6 +127,7 @@ h2 {
     display: flex;
     width: 100%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-radius: 2px;
 }
 
 .card:hover {
@@ -194,12 +195,13 @@ h2 {
     float: left;
     height: 35vw;
     max-height: 600px;
+    overflow: hidden;
 }
 
 @media (max-width: 750px) {
     .partner {
         width: 40%;
-        height: 300px;
+        height: 400px;
         margin: 25px 5%;
 
     }
@@ -210,6 +212,15 @@ h2 {
 
     .cfw-logo {
         margin: 10% 0 !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .partner {
+        width: 40%;
+        height: 300px;
+        margin: 25px 5%;
+
     }
 }
 
@@ -249,10 +260,10 @@ h2 {
 }
 
 .contact {
-    width: 25%;
+    width: 20%;
     display: block;
     float: left;
-    margin: 1.66666666% 4.1666666%;
+    margin: 1.66666666% 6.6666666%;
     text-align: center;
     font-size: 15px;
 }
@@ -270,4 +281,16 @@ h2 {
 
 .contactMedia {
     font-weight: bolder;
+}
+
+footer {
+    border-top: 1px solid #d90429;
+    height: 64px;
+    background-color: #ccc;
+}
+
+footer .copyright {
+    margin: 2px 5%;
+    height: 60px;
+    line-height: 60px;
 }
