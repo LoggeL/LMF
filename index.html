@@ -4,190 +4,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMF Homepage</title>
+    <title>LMF</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
-    <link rel="manifest" href="./site.webmanifest">
-
-
-
-    <link rel="stylesheet" href="css/paper.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/lmf.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-    <nav class="border border-3 split-nav">
-        <div class="nav-brand">
-            <a href="#"><img src="assets/svg/logo.svg" class="logo no-border"></a>
-        </div>
-        <div class="collapsible">
-            <input id="collapsible1" type="checkbox" name="collapsible1">
-            <label for="collapsible1">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </label>
-            <div class="collapsible-body">
-                <ul class="inline">
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#partners">Partners</a></li>
-                </ul>
-            </div>
-        </div>
+    <nav>
+        <img src="assets/svg/Logo.svg">
+        <ul>
+            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="#partners">PARTNERS</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+        </ul>
     </nav>
+    <main>
+        <div class="hero">
+            <img src="assets/svg/Logo.svg">
+            <h1 class="title">Logge Media Forge</h1>
+        </div>
 
-    <div class="container">
-        <div class="row flex-center">
-            <img class="logo col sm-10 md-8 lg-6 align-middle margin-large no-border" src="assets/svg/logo.svg"
-                alt="LMF Logo">
+        <div class="subcaption"> <a name="projects"></a>
+            <h2>Projects</h2>
         </div>
-        <div class="row flex-center">
-            <h1 class="margin-none flex-center"><span>Logge</span> <span>Media</span> <span>Forge</span></h1>
-        </div>
-        <div class="row flex-center code">
-            <code> I'm just pressing buttons</code>
-        </div>
-    </div>
 
-    <div class="divider margin-large"></div>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="projectCategory">
+                        <img src="assets/svg/html5.svg" class="logo">
+                        <h3>Websites</h3>
+                        <i>HTML, CSS, JS</i><br /><br />
+                        <span>Fast and responsive websites with focus on user experience.</span>
+                    </div>
 
-    <a name="projects"></a>
-    <div class="row flex-spaces">
-        <div class="col-10 sm-5 md-5 lg-3 margin-top-large">
-            <h2 class="margin-none">Projects</h2>
-        </div>
-        <div class="col-10 sm-5 md-5 lg-3 margin-top-large">
-        </div>
-        <div class="col-10 sm-5 md-5 lg-3 margin-top-large">
-        </div>
-    </div>
-
-    <div class="row flex-spaces">
-        <div class="card col-10 sm-5 md-5 lg-3 margin-top-large">
-            <img src="assets/svg/html5.svg" alt="HTML5">
-
-            <div class="card-body">
-                <h4 class="card-title">Websites</h4>
-                <h5 class="card-subtitle">HTML, CSS, JS</h5>
-                <p class="card-text">Fast and responsive websites with focus on user experience.</p>
-                <ul>
-                    <li><a target="_blank" href="https://palatina-films.de">Palatina Films</a> - Movie Group</li>
-                    <li><a target="_blank" href="http://theater.kolping-ramsen.de">Kolpingtheater Ramsen</a> - Theater
-                        Group</li>
-                    <li><a target="_blank" href="https://poolparty.jupeters.de">Poolparty</a> - Event</li>
-                </ul>
+                    <div class="row">
+                        <a class="project" href="https://palatina-films.de" target="_blank">
+                            <div class="projectName">Palatina Films</div>
+                            <picture>
+                                <source srcset="assets/img/PalatinaFilms.webp" type="image/webp">
+                                <source srcset="assets/img/PalatinaFilms.jpg" type="image/jpeg">
+                                <img src="assets/img/PalatinaFilms.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Movie Group</div>
+                        </a>
+                        <a class="project" href="http://theater.kolping-ramsen.de" target="_blank">
+                            <div class="projectName">Kolpingtheater Ramsen</div>
+                            <picture>
+                                <source srcset="assets/img/Kolpingtheater.webp" type="image/webp">
+                                <source srcset="assets/img/Kolpingtheater.jpg" type="image/jpeg">
+                                <img src="assets/img/Kolpingtheater.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Theater Group</div>
+                        </a>
+                        <a class="project" href="https://poolparty.jupeters.de" target="_blank">
+                            <div class="projectName">JP Poolparty</div>
+                            <picture>
+                                <source srcset="assets/img/PoolpartyWebsite.webp" type="image/webp">
+                                <source srcset="assets/img/PoolpartyWebsite.jpg" type="image/jpeg">
+                                <img src="assets/img/PoolpartyWebsite.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Event Page</div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card col-10 sm-5 md-5 lg-3 margin-top-large">
-            <img src="assets/svg/yt.svg" alt="YouTube">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="projectCategory">
+                        <img src="assets/svg/yt.svg" class="logo">
+                        <h3>Videos</h3>
+                        <i>Timelapse, Livestream, VFX</i><br /><br />
+                        <span>Full movie VFX to aftermovie.</span>
+                    </div>
 
-            <div class="card-body">
-                <h4 class="card-title">Videos</h4>
-                <h5 class="card-subtitle">Timelapse, Livestream, VFX</h5>
-                <p class="card-text">From full VFX for movies to supercuts of different events.</p>
-                <ul>
-                    <li><a target="_blank" href="https://www.youtube.com/watch?v=Vt3wFY_ldt4">Sailing 2019</a> - Event
-                    </li>
-                    <li><a target="_blank" href="https://www.youtube.com/watch?v=6Qai_0gckB4">Poolparty 2020 Aftermovie
-                        </a> - Event
-                    </li>
-                    <li><a target="_blank"
-                            href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw">Die
-                            Chroniken
-                            von Selantis</a>
-                        - Movie (VFX)</li>
-                </ul>
+                    <div class="row">
+                        <a class="project" href="https://www.youtube.com/watch?v=Vt3wFY_ldt4" target="_blank">
+                            <div class="projectName">Project Sailing 2019</div>
+                            <picture>
+                                <img src="assets/img/Sailing.webp" alt="">
+                            </picture>
+                            <div class="projectGroup">Event</div>
+                        </a>
+                        <a class="project" href="https://www.youtube.com/watch?v=6Qai_0gckB4" target="_blank">
+                            <div class="projectName">Poolparty 2020 Aftermovie</div>
+                            <picture>
+                                <img src="assets/img/Poolparty.webp" alt="">
+                            </picture>
+                            <div class="projectGroup">Event</div>
+                        </a>
+                        <a class="project"
+                            href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw"
+                            target="_blank">
+                            <div class="projectName">Die Chroniken von Selantis</div>
+                            <picture>
+                                <img src="assets/img/Selantis.webp" alt="">
+                            </picture>
+                            <div class="projectGroup">Movie</div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card col-10 sm-5 md-5 lg-3 margin-top-large">
-            <img src="assets/svg/gh.svg" alt="GitHub">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="projectCategory">
+                        <img src="assets/svg/gh.svg" class="logo">
+                        <h3>Software</h3>
+                        <i>Data management, visualization, automation</i><br /><br />
+                        <span>From event management to fun social games.</span>
+                    </div>
 
-            <div class="card-body">
-                <h4 class="card-title">Software</h4>
-                <h5 class="card-subtitle">Data management, visualization and automation.</h5>
-                <p class="card-text">Projects to automate event planning, manage events and to inform.</p>
-                <ul>
-                    <li><a target="_blank" href="https://loggel.github.io/spyfall/">Spyfall</a> - Game</li>
-                    <li><a target="_blank" href="https://loggel.github.io/CoronaBoard/">Corona Board </a> - Data
-                        Visualization
-                    </li>
-                    <li><a target="_blank" href="https://github.com/LoggeL">GitHub Repository</a> - Code</li>
-                </ul>
+                    <div class="row">
+                        <a class="project" href="https://loggel.github.io/spyfall/" target="_blank">
+                            <div class="projectName">Spyfall</div>
+                            <picture>
+                                <source srcset="assets/img/Spyfall.webp" type="image/webp">
+                                <source srcset="assets/img/Spyfall.jpg" type="image/jpeg">
+                                <img src="assets/img/Spyfall.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Social Game</div>
+                        </a>
+                        <a class="project" href="http://theater.kolping-ramsen.de" target="_blank">
+                            <div class="projectName">CoronaBoard</div>
+                            <picture>
+                                <source srcset="assets/img/CoronaBoard.webp" type="image/webp">
+                                <source srcset="assets/img/CoronaBoard.jpg" type="image/jpeg">
+                                <img src="assets/img/CoronaBoard.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Realtime Dashboard</div>
+                        </a>
+                        <a class="project" href="https://github.com/LoggeL" target="_blank">
+                            <div class="projectName">GitHub</div>
+                            <picture>
+                                <source srcset="assets/img/GitHub.webp" type="image/webp">
+                                <source srcset="assets/img/GitHub.jpg" type="image/jpeg">
+                                <img src="assets/img/GitHub.jpg" alt="">
+                            </picture>
+                            <div class="projectGroup">Code Repository</div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="divider margin-large"></div>
-    <a name="contact"></a>
-
-    <div class="row flex-spaces">
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
-            <h2 class="margin-none">Contact</h2>
+        <div class="subcaption"> <a name="partners"></a>
+            <h2>Partners</h2>
         </div>
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
+
+        <div class="card-container">
+            <div class="card partner-card">
+                <a class="partner" href="https://discord.gg/K7Tjtfq" target="_blank">
+                    <video autoplay loop muted playsinline class="logo">
+                        <source src="assets/video/gummibaeren.mp4" type="video/av1">
+                        <source src="assets/video/gummibaeren.webm" type="video/webm">
+                        <source src="assets/video/gummibaeren.gif">
+                    </video>
+                    <h3 class="break-word">Gummibärenbande</h3>
+                    <i>Gaming</i><br /><br />
+                    <span>A friendly german gaming discord</span>
+                </a>
+
+                <a class="partner" href="http://theater.kolping-ramsen.de" target="_blank">
+                    <img src="assets/svg/KolpingLogo.svg" class="logo">
+                    <h3>Kolpingtheater Ramsen</h3>
+                    <i>Theater</i><br /><br />
+                    <span>A small but great theater group</span>
+                </a>
+
+                <a class="partner" href="https://palatina-films.de" target="_blank">
+                    <img src="assets/svg/palatinaFilms.svg" class="logo">
+                    <h3>Palatina Films</h3>
+                    <i>Movie Group</i><br /><br />
+                    <span>A small and local movie group</span>
+                </a>
+
+                <a class="partner" href="https://jupeters.de" target="_blank">
+                    <img src="assets/svg/JP.svg" class="jp-logo logo">
+                    <h3>JP</h3>
+                    <i>Event management</i><br /><br />
+                    <span>Poolparty organizer, Bus lover</span>
+                </a>
+
+                <a class="partner" href="https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w" target="_blank">
+                    <img src="assets/svg/CFW.svg" class="logo cfw-logo">
+                    <h3>CFW</h3>
+                    <i>Media</i><br /><br />
+                    <span>Train and boat enthusiast</span>
+                </a>
+
+                <a class="partner" href="https://xenon.bot" target="_blank">
+                    <img src="assets/svg/xenon.svg" class="logo">
+                    <h3>Xenon</h3>
+                    <i>Discord Bot</i><br /><br />
+                    <span>Discord Backups, Templates and More</span>
+                </a>
+            </div>
         </div>
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
+
+        <div class="subcaption">
+            <a name="contact"></a>
+            <h2>Contact</h2>
         </div>
-    </div>
 
-    <div class="row flex-spaces">
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" target="_blank" href="https://discord.logge.top"
-            popover-top="Discord">
-            <img src="assets/svg/discord.svg" alt="Discord">
-        </a>
-
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" target="_blank" href="https://t.me/LoggeL"
-            popover-top="Telegram">
-            <img src="assets/svg/tg.svg" alt="Telegram">
-        </a>
-
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" href="mailto:hyperxjo@gmail.com" popover-top="Mail">
-            <img src="assets/svg/mail.svg" alt="Mail">
-        </a>
-    </div>
-
-    <div class="divider margin-large"></div>
-    <a name="partners"></a>
-    <div class="row flex-spaces">
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
-            <h2 class="margin-none">Partners</h2>
+        <div class="card-container">
+            <div class="row">
+                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                    <div class="contactMedia">Mail</div>
+                    <img src="assets/svg/mail.svg" alt="">
+                    <div class="contactUsername">hyper.xjo@gmail.com</div>
+                </a>
+                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                    <div class="contactMedia">Discord</div>
+                    <img src="assets/svg/discord.svg" alt="">
+                    <div class="contactUsername">Logge#1337</div>
+                </a>
+                <a class="contact" href="https://loggel.github.io/spyfall/" target="_blank">
+                    <div class="contactMedia">Telegram</div>
+                    <img src="assets/svg/tg.svg" alt="">
+                    <div class="contactUsername">@LoggeL</div>
+                </a>
+            </div>
         </div>
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
-        </div>
-        <div class="col-5 sm-3 md-3 lg-3 margin-small">
-        </div>
-    </div>
+    </main>
 
-    <div class="row flex-spaces">
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" target="_blank" href="http://theater.kolping-ramsen.de/"
-            popover-top="Kolpingtheater Ramsen">
-            <img src="assets/svg/kt.svg" alt="Kolpingtheater Logo">
-        </a>
+    <footer>
 
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" target="_blank" href="https://jupeters.de" popover-top="JP">
-            <img src="assets/svg/jp.svg" alt="JP Logo">
-        </a>
-
-        <a class="card col-5 sm-3 md-3 lg-3 margin-small" target="_blank" href="https://palatina-films.de"
-            popover-top="Palatina Films">
-            <img src="assets/svg/pf.svg" alt="Palatina Films Logo">
-        </a>
-    </div>
-
-    <div class="divider margin-large"></div>
-    <div class="container margin-large flex-center">
-        <footer>
-            © Logge 2020
-        </footer>
-    </div>
-
-
+    </footer>
 </body>
 
 </html>
