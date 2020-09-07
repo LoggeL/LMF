@@ -205,6 +205,9 @@ h2 {
     float: left;
     height: 35vw;
     max-height: 600px;
+}
+
+.partner h3 {
     overflow: hidden;
 }
 
@@ -236,7 +239,6 @@ h2 {
 
 .partner img {
     border: 1px solid #d90429;
-    overflow: show;
 }
 
 .partner video {
