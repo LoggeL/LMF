@@ -5,7 +5,7 @@
     font-display: swap; 
     unicode-range: U+000-5FF;
     src: local('Montserrat'),
-    url('assets/fonts/Montserrat.woff2') format('woff2');
+    url('../assets/fonts/Montserrat.woff2') format('woff2');
 }
 
 html, body {
