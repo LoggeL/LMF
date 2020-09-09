@@ -163,7 +163,7 @@ h2 {
     text-align: center;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 950px) {
     .project {
         width: 95%;
         margin: 5% 2.5%;
