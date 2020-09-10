@@ -116,7 +116,7 @@ nav ul li:hover a {
 
 .subcaption {
     width: 100%;
-    background-color: #eeeeee;
+    background-color: #ddd;
     text-align: center;
     padding: 10px 0;
     border-top: 1px solid #d90429;
@@ -180,7 +180,7 @@ h2 {
 }
 
 .projectGroup {
-    color: #5a5a5a;
+    color: #2e2e2e;
     opacity: 0.5;
 }
 
@@ -299,7 +299,7 @@ h2 {
 footer {
     border-top: 1px solid #d90429;
     height: 64px;
-    background-color: #ccc;
+    background-color: #ddd;
 }
 
 footer .copyright {
