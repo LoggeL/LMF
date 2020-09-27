@@ -41,7 +41,7 @@ const sizes = [['thumb', 100], ['small', 400], ['medium', 600], ['large', 800]];
                 .toBuffer()
             fs.writeFileSync(`../img/${sizeName}/${imgName}.jpg`, data)
             const encoder = new CWebp(data);
-            const newMeta = await sharp(file.data).metadata()
+            const newMeta = await sharp(data).metadata()
             encoder.write(`../img/${sizeName}/${imgName}.webp`)
             img.sizes.push({ size: sizeName, width: newMeta.width, height: newMeta.height })
         }
