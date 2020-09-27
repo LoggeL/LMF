@@ -2,476 +2,172 @@
     {
         "name": "betze",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 178
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 711
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 1067
-            },
-            {
-                "size": "large",
-                "width": 715,
-                "height": 1271
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "boat",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 133
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 533
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 800
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 1067
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "bubble",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 75
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 300
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 450
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 600
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "crystal",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 66
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 265
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 397
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 530
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "drinks",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 66
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 265
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 397
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 530
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "duck",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 133
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 533
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 800
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 1067
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "elbe",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 56
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 225
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 338
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 450
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "fanController",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 75
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 300
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 450
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 600
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "fire",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 133
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 533
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 799
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 1066
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "ktown",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 41
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 163
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 244
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 326
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "lakeConstance",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 56
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 225
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 338
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 450
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "machine",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 75
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 300
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 450
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 600
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "moon",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 56
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 225
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 337
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 450
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "mountain",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 133
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 533
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 799
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 1066
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "nightshot",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 178
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 711
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 1067
-            },
-            {
-                "size": "large",
-                "width": 715,
-                "height": 1271
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "roof",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 74
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 297
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 445
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 593
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "sail",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 75
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 300
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 450
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 600
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "ski",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 74
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 297
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 445
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 593
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     },
     {
         "name": "sunset",
         "sizes": [
-            {
-                "size": "thumb",
-                "width": 100,
-                "height": 56
-            },
-            {
-                "size": "small",
-                "width": 400,
-                "height": 225
-            },
-            {
-                "size": "medium",
-                "width": 600,
-                "height": 338
-            },
-            {
-                "size": "large",
-                "width": 800,
-                "height": 450
-            }
+            "thumb",
+            "small",
+            "medium",
+            "large"
         ]
     }
 ]

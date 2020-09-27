@@ -6,7 +6,7 @@ const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 
 let json = [];
-const sizes = [['thumb', 100], ['small', 400], ['medium', 600], ['large', 800]];
+const sizes = [['thumb', 20], ['small', 400], ['medium', 600], ['large', 800]];
 
 (async () => {
 
@@ -43,7 +43,7 @@ const sizes = [['thumb', 100], ['small', 400], ['medium', 600], ['large', 800]];
             const encoder = new CWebp(data);
             const newMeta = await sharp(data).metadata()
             encoder.write(`../img/${sizeName}/${imgName}.webp`)
-            img.sizes.push({ size: sizeName, width: newMeta.width, height: newMeta.height })
+            img.sizes.push(sizeName)
         }
         json.push(img)
     }
