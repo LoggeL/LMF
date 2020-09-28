@@ -1,4 +1,6 @@
 fetch('assets/data/images.json').then(response => response.json().then(pictures => {
+    const imageCount = pictures.length
+    let loadCounter = 0
     const ul = document.createElement('ul')
     for (let i = 0; i < pictures.length; i++) {
         const picture = pictures[i]
@@ -13,19 +15,19 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         a.href = `assets/img/large/${picture.name}.jpg`
         a.target = '_blank'
 
-        img.className = 'preload'
-        img.setAttribute('src', `assets/img/thumb/${picture.name}.webp`)
+        img.setAttribute('src', `assets/img/large/${picture.name}.webp`)
 
-        const img2 = document.createElement('img')
-        img2.setAttribute('src', `assets/img/large/${picture.name}.webp`)
-        img2.style.opacity = 0
-        img2.onload = e => {
-            e.target.style.opacity = 1
-            setTimeout(() => img.remove(), 1000)
+        img.onload = () => {
+            loadCounter++
+            if (loadCounter == imageCount) {
+                // Hide Preloader
+                const preloader = document.getElementById('preloader')
+                preloader.style.opacity = 0
+                setTimeout(() => preloader.remove(), 1000)
+            }
         }
 
         a.append(img)
-        a.append(img2)
         a.append(text)
         a.append(shadow)
         li.append(a)

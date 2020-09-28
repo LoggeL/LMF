@@ -4,6 +4,16 @@ html, body {
     margin: 0;
 }
 
+#preloader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: white;
+  z-index: 5000;
+  opacity: 1;
+  transition: ease-in-out opacity 1s;
+}
+
 ul {
     display: flex;
     flex-wrap: wrap;
@@ -22,10 +32,9 @@ ul {
   li a {
     width: 100%;
     height: 100%;
-    box-shadow: inset 0 0 200px #000000;
   }
 
-  li.loaded:hover .imageInfo, li.loaded:hover .shadow {
+  li:hover .imageInfo, li:hover .shadow {
     display: block;
     opacity: 1;
   }
@@ -35,15 +44,6 @@ ul {
     min-width: 100%;
     object-fit: cover;
     vertical-align: bottom;
-    transition: ease-in-out opacity 1s;
-  }
-
-  img.preload {
-    min-height: 100%;
-    filter: blur(5px);
-    transform: scale(1.1);
-    position: absolute;
-    overflow: hidden;
   }
 
   .imageInfo {
@@ -55,6 +55,7 @@ ul {
     display: text;
     color: white;
     opacity: 0;
+    z-index: 2;
   }
 
   .shadow {
@@ -65,7 +66,7 @@ ul {
     top: 0;
     left: 0;
     opacity: 0;
-    transition: ease-in-out opacity 200ms;
+    z-index: 1;
   }
 
   li:last-child {
