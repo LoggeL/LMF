@@ -7,6 +7,8 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         const li = document.createElement('li')
         const a = document.createElement('a')
         const img = document.createElement('img')
+        const preloadImg = document.createElement('div')
+        preloadImg.className = 'preload'
         const shadow = document.createElement('div')
         shadow.className = 'shadow'
         const text = document.createElement('div')
@@ -15,9 +17,13 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         a.href = `assets/img/large/${picture.name}.jpg`
         a.target = '_blank'
 
-        img.setAttribute('src', `assets/img/large/${picture.name}.webp`)
+        img.setAttribute('src', `assets/img/thumb/${picture.name}.webp`)
+        img.setAttribute('loading', 'lazy')
 
         img.onload = () => {
+            console.log('Onload', img)
+            img.nextElementSibling.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
+            img.nextElementSibling.style['opacity'] = `1`
             loadCounter++
             if (loadCounter == imageCount) {
                 // Hide Preloader
@@ -28,6 +34,7 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         }
 
         a.append(img)
+        a.append(preloadImg)
         a.append(text)
         a.append(shadow)
         li.append(a)
