@@ -5,6 +5,8 @@ const sharp = require('sharp')
 const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 
+const imageminJpegAutorotate = require('./imagemin-jpeg-autorotate');
+
 let json = [];
 const sizes = [['thumb', 20], ['small', 400], ['medium', 600], ['large', 800]];
 
@@ -12,7 +14,10 @@ const sizes = [['thumb', 20], ['small', 400], ['medium', 600], ['large', 800]];
 
     const files = await imagemin(['../img/original/*.jpg'], {
         plugins: [
-            imageminJpegtran()
+            imageminJpegAutorotate({
+                disable: false
+            }),
+            imageminJpegtran(),
         ]
     })
 

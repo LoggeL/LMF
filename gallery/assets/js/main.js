@@ -1,4 +1,15 @@
+const webPsupport = (function () {
+    const webP = new Image();
+    webP.onload = WebP.onerror = function () {
+        callback(webP.height == 2);
+    };
+    webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+});
+
+const extension = webPsupport ? 'webp' : 'jpg'
+
 fetch('assets/data/images.json').then(response => response.json().then(pictures => {
+
     const imageCount = pictures.length
     let loadCounter = 0
     const ul = document.createElement('ul')
@@ -15,10 +26,10 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         const text = document.createElement('div')
         text.className = 'imageInfo'
         text.innerText = 'Text'
-        a.href = `assets/img/large/${picture.name}.jpg`
+        a.href = `assets/img/original/${picture.name}.jpg`
         a.target = '_blank'
 
-        img.setAttribute('src', `assets/img/thumb/${picture.name}.webp`)
+        img.setAttribute('src', `assets/img/thumb/${picture.name}.${extension}`)
         img.setAttribute('loading', 'lazy')
 
         img.onload = () => {
