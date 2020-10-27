@@ -31,21 +31,20 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
                 setTimeout(() => preloader.remove(), 1000)
 
                 document.querySelectorAll('img[loading=lazy]').forEach(imgElem => {
-                    const url = imgElem.getAttribute('src').replace('thumb', 'large')
+                    const width = imgElem.clientWidth
+                    let size = 'large'
+                    if (width < 400) size = 'small'
+                    else if (width < 600) size = 'medium'
+                    const url = imgElem.getAttribute('src').replace('thumb', size)
                     const loadImg = document.createElement('img');
                     loadImg.onload = function () {
-                        //preloadImg.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
                         imgElem.nextElementSibling.style.opacity = '1'
-                        // setTimeout(() => 
                         imgElem.style.opacity = '0'
-                        // , 5000)
                         console.log("replace", url)
                     };
 
                     loadImg.setAttribute('src', url)
                     imgElem.nextElementSibling.style['background-image'] = `url('${url}')`
-                    // loadImg.setAttribute('src', `assets/img/large/${picture.name}.webp`)
-                    // preloadImg.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
                 })
             }
         }
