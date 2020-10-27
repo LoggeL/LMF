@@ -9,6 +9,7 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
         const img = document.createElement('img')
         const preloadImg = document.createElement('div')
         preloadImg.className = 'preload'
+        preloadImg.style.opacity = '1'
         const shadow = document.createElement('div')
         shadow.className = 'shadow'
         const text = document.createElement('div')
@@ -22,14 +23,30 @@ fetch('assets/data/images.json').then(response => response.json().then(pictures 
 
         img.onload = () => {
             console.log('Onload', img)
-            img.nextElementSibling.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
-            img.nextElementSibling.style['opacity'] = `1`
             loadCounter++
             if (loadCounter == imageCount) {
                 // Hide Preloader
                 const preloader = document.getElementById('preloader')
-                preloader.style.opacity = 0
+                preloader.style.opacity = '0'
                 setTimeout(() => preloader.remove(), 1000)
+
+                document.querySelectorAll('img[loading=lazy]').forEach(imgElem => {
+                    const url = imgElem.getAttribute('src').replace('thumb', 'large')
+                    const loadImg = document.createElement('img');
+                    loadImg.onload = function () {
+                        //preloadImg.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
+                        imgElem.nextElementSibling.style.opacity = '1'
+                        // setTimeout(() => 
+                        imgElem.style.opacity = '0'
+                        // , 5000)
+                        console.log("replace", url)
+                    };
+
+                    loadImg.setAttribute('src', url)
+                    imgElem.nextElementSibling.style['background-image'] = `url('${url}')`
+                    // loadImg.setAttribute('src', `assets/img/large/${picture.name}.webp`)
+                    // preloadImg.style['background-image'] = `url('assets/img/large/${picture.name}.webp')`
+                })
             }
         }
 
