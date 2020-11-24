@@ -10,6 +10,8 @@ const extension = webPsupport ? 'webp' : 'jpg'
 
 fetch('assets/data/images.json').then(response => response.json().then(pictures => {
 
+    pictures = pictures.sort(() => Math.random() - 0.5) // Shuffle
+
     const imageCount = pictures.length
     let loadCounter = 0
     const ul = document.createElement('ul')
