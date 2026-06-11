@@ -1,0 +1,431 @@
+[
+  {
+    "id": "kniffel",
+    "title": "Kniffel Multiplayer",
+    "category": "Multiplayer Game",
+    "description": "Classic Kniffel (Yahtzee) for 1-6 players with real-time multiplayer, dark mode, emoji reactions and live leaderboard.",
+    "picture": "images/Kniffel",
+    "link": "https://kniffel.logge.top",
+    "tags": [
+      "game",
+      "multiplayer",
+      "websocket",
+      "nextjs"
+    ]
+  },
+  {
+    "id": "geo-game",
+    "title": "GeoGames",
+    "category": "Geography Game",
+    "description": "Ten daily geography mini-games on a single board: DropZone, GeoWordle, FlagQuiz, Silhouette, StadtPin, Capital Streak, GeoSize, GeoFacts, MapPin and Länder-Check.",
+    "picture": "images/GeoGame",
+    "link": "https://geo.logge.top",
+    "tags": [
+      "game",
+      "geography",
+      "education",
+      "vanilla-js"
+    ]
+  },
+  {
+    "id": "setlist",
+    "title": "Setlist",
+    "category": "Music Website",
+    "description": "Das Tagebuch für Musikfans. Log the songs you hear, the concerts you attend and the artists you still want to see live — no algorithm, no metrics, no ads.",
+    "picture": "images/Setlist",
+    "link": "https://setlist.logge.top",
+    "tags": [
+      "nextjs",
+      "music",
+      "diary",
+      "typescript"
+    ]
+  },
+  {
+    "id": "frontier",
+    "title": "Frontier",
+    "category": "Data Science Website",
+    "description": "Static LLM benchmark explorer. Compare frontier and open-weight models across Artificial Analysis benchmarks, with a training-to-release timeline that surfaces pretraining cohorts.",
+    "picture": "images/Frontier",
+    "link": "https://loggel.github.io/frontier/",
+    "tags": [
+      "ai",
+      "benchmarks",
+      "astro",
+      "visualization"
+    ]
+  },
+  {
+    "id": "spotify-viz",
+    "title": "Spotify Listening Report",
+    "category": "Data Science Website",
+    "description": "Data-driven visualisations of my own Spotify Extended Streaming History. 14 views — top artists, weekly heatmap, year calendar, skip rates and more — rendered locally from the raw export.",
+    "picture": "images/SpotifyViz",
+    "link": "https://loggel.github.io/spotify-viz/logge/",
+    "tags": [
+      "data-science",
+      "visualization",
+      "typescript",
+      "vite"
+    ]
+  },
+  {
+    "id": "marathon-trainer",
+    "title": "Marathon Trainer",
+    "category": "Sports App",
+    "description": "AI-powered marathon training dashboard with Strava sync, auto-adapting plan and race-day countdown.",
+    "picture": "images/MarathonTrainer",
+    "link": "https://marathon.logge.top",
+    "tags": [
+      "nextjs",
+      "strava",
+      "sqlite",
+      "ai"
+    ]
+  },
+  {
+    "id": "transcripator",
+    "title": "Transcripator",
+    "category": "AI Tool",
+    "description": "Upload any audio or video file and get an AI-generated transcript, improved text and smart summary in seconds.",
+    "picture": "images/Transcripator",
+    "link": "https://transcripator.logge.top",
+    "tags": [
+      "ai",
+      "transcription",
+      "gemini",
+      "nextjs"
+    ]
+  },
+  {
+    "id": "learn-ai",
+    "title": "Learn AI",
+    "category": "Educational Website",
+    "description": "Interactive learning platform for AI concepts. Features hands-on explorations of LLMs, tokenization, attention mechanisms, and prompting strategies with beautiful visualizations.",
+    "picture": "images/LearnAI",
+    "link": "https://learn.logge.top",
+    "tags": [
+      "nextjs",
+      "react",
+      "typescript",
+      "ai-education"
+    ]
+  },
+  {
+    "id": "coop-sudoku",
+    "title": "Coop Sudoku",
+    "category": "Game Website",
+    "description": "Real-time multiplayer Sudoku with Coop and Versus modes. Race to claim cells, track scores, and solve puzzles together. Built with React, Socket.IO, and TypeScript.",
+    "picture": "images/CoopSudoku",
+    "link": "https://sudoku.logge.top",
+    "tags": [
+      "game",
+      "multiplayer",
+      "typescript",
+      "react"
+    ]
+  },
+  {
+    "id": "beatguessr",
+    "title": "BeatGuessr",
+    "category": "Game Website",
+    "description": "Music guessing game with two modes: Classic (guess title & artist) and Timeline (sort songs chronologically). Features 660 songs from 1960-2025 with Spotify previews.",
+    "picture": "images/BeatGuessr",
+    "link": "https://loggel.github.io/BeatGuessr/",
+    "tags": [
+      "game",
+      "music",
+      "javascript"
+    ]
+  },
+  {
+    "id": "theater-website",
+    "title": "Kolpingtheater Ramsen",
+    "category": "Website + Ticket System",
+    "description": "Complete website and ticketing system for a local theater in Ramsen. Built with Next.js, Tailwind CSS, TypeScript and Cloudflare.",
+    "picture": "images/Kolpingtheater",
+    "link": "https://kolpingtheater-ramsen.de",
+    "tags": [
+      "nextjs",
+      "tailwindcss",
+      "typescript",
+      "cloudflare"
+    ]
+  },
+  {
+    "id": "oilbert",
+    "title": "Oilbert's Adventure",
+    "category": "Game Website",
+    "description": "An engaging jump and run game featuring a charming VW Bus. Built with JavaScript and Canvas API for smooth animations and gameplay.",
+    "picture": "images/Oilbert",
+    "link": "https://loggel.github.io/OilbertsAdventure/",
+    "tags": [
+      "game",
+      "javascript",
+      "canvas"
+    ]
+  },
+  {
+    "id": "melodai",
+    "title": "Melod.ai - Karaoke App",
+    "category": "Game Website",
+    "description": "Comprehensive karaoke solution using machine learning to extract vocals and lyrics from any song. Features real-time voice processing and scoring.",
+    "picture": "images/Melodai",
+    "link": "https://melodai.logge.top",
+    "tags": [
+      "ml",
+      "audio",
+      "web-app"
+    ]
+  },
+  {
+    "id": "skiing-2024-fun",
+    "title": "Skiing Aftermovie 2024 - Fun Version",
+    "category": "Movie",
+    "description": "Creative edit of our annual skiing trip featuring AI-generated music. This fun version captures the playful moments and highlights of our alpine adventure.",
+    "picture": "images/Skiing2024fun",
+    "link": "https://www.youtube.com/watch?v=dJX9U7F-FIM",
+    "tags": [
+      "editing",
+      "aftermovie",
+      "travel"
+    ]
+  },
+  {
+    "id": "skiing-2024-epic",
+    "title": "Skiing Aftermovie 2024 - Epic Version",
+    "category": "Movie",
+    "description": "Cinematic recreation of our skiing trip to Flachau. This epic version features stunning drone shots and professionally mixed audio for an immersive experience.",
+    "picture": "images/Skiing2024epic",
+    "link": "https://www.youtube.com/watch?v=rZaMHwuKFcw",
+    "tags": [
+      "cinematic",
+      "drone",
+      "skiing"
+    ]
+  },
+  {
+    "id": "skiing-2026",
+    "title": "Skiing Aftermovie 2026 - Portes du Soleil",
+    "category": "Aftermovie",
+    "description": "Skiing trip to Portes du Soleil 2026 — cinematic aftermovie.",
+    "picture": "images/Skiing2026",
+    "link": "https://youtu.be/ZjB-0SG0icU",
+    "tags": [
+      "video",
+      "skiing",
+      "aftermovie",
+      "travel"
+    ]
+  },
+  {
+    "id": "infected",
+    "title": "Infected - Short Film",
+    "category": "Movie",
+    "description": "Action-packed short film shot over 48 hours with extensive post-production. Features practical effects, choreographed fight scenes, and original scoring.",
+    "picture": "images/Infected",
+    "link": "https://youtu.be/6iNdfsbZWHs",
+    "tags": [
+      "short-film",
+      "action",
+      "vfx"
+    ]
+  },
+  {
+    "id": "voll-o-meter",
+    "title": "Voll-O-Meter",
+    "category": "Website",
+    "description": "PWA that tracks blood alcohol levels based on consumed drinks. Features real-time decay calculations, drink customization, and offline functionality.",
+    "picture": "images/VollOMeter",
+    "link": "https://loggel.github.io/VollOMeter",
+    "tags": [
+      "pwa",
+      "health",
+      "javascript"
+    ]
+  },
+  {
+    "id": "exception",
+    "title": "Exception - Short Film",
+    "category": "Movie",
+    "description": "Short film created during a 48-hour film hackathon. Features experimental storytelling techniques and creative problem-solving under tight constraints.",
+    "picture": "images/Exception",
+    "link": "https://youtu.be/uhlAo1chnlM",
+    "tags": [
+      "short-film",
+      "indie",
+      "hackathon"
+    ]
+  },
+  {
+    "id": "skiing-2022",
+    "title": "Skiing 2022 Aftermovie",
+    "category": "Movie",
+    "description": "Documentary-style aftermovie of our trip to the Austrian Alps in Zillertal. Captures both the breathtaking scenery and the camaraderie of our group.",
+    "picture": "images/Skiing2022",
+    "link": "https://www.youtube.com/watch?v=GVPzXOix2sk",
+    "tags": [
+      "travel",
+      "documentary",
+      "winter"
+    ]
+  },
+  {
+    "id": "sailing-2022",
+    "title": "Sailing 2022 Aftermovie",
+    "category": "Movie",
+    "description": "Nautical adventure captured across IJsselmeer in the Netherlands. This film combines sweeping waterscapes with intimate moments to tell our journey's story.",
+    "picture": "images/Sailing2022",
+    "link": "https://www.youtube.com/watch?v=MbZPufQscBw",
+    "tags": [
+      "sailing",
+      "travel",
+      "cinematography"
+    ]
+  },
+  {
+    "id": "poolparty-website",
+    "title": "JP Poolparty Website",
+    "category": "Website + Management System",
+    "description": "Event registration and music request platform with admin dashboard. Built using PaperCSS for the frontend and Express.js with SQLite for the backend.",
+    "picture": "images/PoolpartyWebsite",
+    "link": "https://poolparty.jupeters.de",
+    "tags": [
+      "event",
+      "management",
+      "nodejs"
+    ]
+  },
+  {
+    "id": "palatina-films-website",
+    "title": "Palatina Films",
+    "category": "Website + VFX",
+    "description": "My first professional website incorporating custom visual effects. Used Materializecss for the frontend and integrated After Effects animations for dynamic content.",
+    "picture": "images/PalatinaFilms",
+    "link": "https://palatina-films.de",
+    "tags": [
+      "portfolio",
+      "vfx",
+      "responsive"
+    ],
+    "archived": true
+  },
+  {
+    "id": "poolparty-2021",
+    "title": "Poolparty 2021 Aftermovie",
+    "category": "Movie",
+    "description": "Vibrant celebration of our annual poolparty featuring hot tubs and cocktail bars. Employs creative transitions and color grading to enhance the summer atmosphere.",
+    "picture": "images/Poolparty2021",
+    "link": "https://www.youtube.com/watch?v=ZCvVEFKuC_o",
+    "tags": [
+      "party",
+      "summer",
+      "editing"
+    ]
+  },
+  {
+    "id": "skiing-2020",
+    "title": "Skiing 2020 Aftermovie",
+    "category": "Movie",
+    "description": "Winter adventure documentary set in Bad Gastein, Austria. Features slow-motion sequences and drone footage capturing the majesty of the Alpine landscape.",
+    "picture": "images/Skiing2020",
+    "link": "https://www.youtube.com/watch?v=KYahVktrq_I",
+    "tags": [
+      "winter",
+      "sports",
+      "travel"
+    ]
+  },
+  {
+    "id": "poolparty-2020",
+    "title": "Poolparty 2020 Aftermovie",
+    "category": "Movie",
+    "description": "Sun-soaked celebration of friendship and summer vibes. Employs handheld camera techniques and warm color grading to create an authentic, nostalgic feel.",
+    "picture": "images/Poolparty2020",
+    "link": "https://www.youtube.com/watch?v=6Qai_0gckB4",
+    "tags": [
+      "summer",
+      "aftermovie",
+      "music"
+    ]
+  },
+  {
+    "id": "bodensee-2020",
+    "title": "Bodensee 2020 Aftermovie",
+    "category": "Movie",
+    "description": "Lake Constance adventure featuring watersports and exploration. Combines underwater footage with above-water perspectives for a complete visual experience.",
+    "picture": "images/Bodensee2020",
+    "link": "https://www.youtube.com/watch?v=8p3xwe7amDE",
+    "tags": [
+      "lake",
+      "watersports",
+      "travel"
+    ]
+  },
+  {
+    "id": "skiing-2019",
+    "title": "Skiing 2019 Aftermovie",
+    "category": "Movie",
+    "description": "Fast-paced mini-documentary of a weekend trip to Feldberg in the Black Forest. Focuses on capturing authentic moments despite the brief timeframe.",
+    "picture": "images/Skiing2019",
+    "link": "https://www.youtube.com/watch?v=VTPliFOTA0",
+    "tags": [
+      "short-trip",
+      "winter",
+      "black-forest"
+    ]
+  },
+  {
+    "id": "selantis",
+    "title": "Die Chroniken von Selantis",
+    "category": "Movie",
+    "description": "Epic fantasy trilogy with extensive worldbuilding and visual effects. I served as VFX artist and actor, contributing to creating this imaginative universe.",
+    "picture": "images/Selantis",
+    "link": "https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw",
+    "tags": [
+      "fantasy",
+      "trilogy",
+      "vfx"
+    ]
+  },
+  {
+    "id": "sailing-2019",
+    "title": "Sailing 2019 Aftermovie",
+    "category": "Movie",
+    "description": "Our inaugural sailing adventure through the IJsselmeer in the Netherlands. Documents both the challenges and triumphs of learning to sail as a team.",
+    "picture": "images/Sailing2019",
+    "link": "https://www.youtube.com/watch?v=Vt3wFY_ldt4",
+    "tags": [
+      "sailing",
+      "teambuilding",
+      "adventure"
+    ]
+  },
+  {
+    "id": "spyfall",
+    "title": "Spyfall",
+    "category": "Game Website",
+    "description": "Digital adaptation of the popular Spyfall party game with Hot-Seat mode. Built as a Progressive Web App with minimalist design and offline capabilities.",
+    "picture": "images/Spyfall",
+    "link": "https://loggel.github.io/spyfall/",
+    "tags": [
+      "game",
+      "pwa",
+      "party"
+    ]
+  },
+  {
+    "id": "corona-board",
+    "title": "Corona Board",
+    "category": "Data Science Website",
+    "description": "Interactive COVID-19 data dashboard using Johns Hopkins University datasets. Features real-time updates, trend visualization, and regional comparisons.",
+    "picture": "images/CoronaBoard",
+    "link": "https://loggel.github.io/CoronaBoard/",
+    "tags": [
+      "data-science",
+      "visualization",
+      "api"
+    ],
+    "archived": true
+  }
+]

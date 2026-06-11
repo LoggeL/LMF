@@ -4,231 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMF</title>
+    <title>Logge Media Forge</title>
 
-    <meta name="Description" content="Logge Media Forge Website">
+    <meta name="description" content="Logge Media Forge — fast websites, cinematic video and playful software.">
+    <meta name="theme-color" content="#dddddd">
 
-    <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/lmf.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="font" href="assets/fonts/Montserrat.woff2" type="font/woff2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/lmf.css">
 </head>
 
 <body>
-    <nav>
-        <img src="assets/svg/logo.svg" alt="LMF Logo">
+    <nav id="nav">
+        <a class="brand" href="#top"><img src="assets/svg/logo.svg" alt="LMF Logo"></a>
         <ul>
             <li><a href="#contact">CONTACT</a></li>
             <li><a href="#partners">PARTNERS</a></li>
             <li><a href="#projects">PROJECTS</a></li>
         </ul>
     </nav>
-    <main>
-        <div class="hero">
-            <img src="assets/svg/logo.svg" alt="Logge Media Forge Logo">
-            <h1 class="title">Logge Media Forge</h1>
-        </div>
 
-        <div class="subcaption"> <a name="projects"></a>
+    <main id="top">
+        <header class="hero">
+            <div class="hero-bg" aria-hidden="true">
+                <span class="blob blob-1"></span>
+                <span class="blob blob-2"></span>
+                <span class="blob blob-3"></span>
+            </div>
+            <img class="hero-logo" src="assets/svg/logo.svg" alt="Logge Media Forge Logo">
+            <h1 class="title">Logge Media Forge</h1>
+            <p class="hero-lmf" aria-live="polite">
+                <span class="lmf-tag">LMF —</span>
+                <span class="lmf-rotator" id="lmf-rotator">Logge Media Forge</span>
+            </p>
+            <p class="hero-sub">Independent AI &amp; media enthusiast — forging websites, film &amp; software.</p>
+            <a class="hero-scroll" href="#projects" aria-label="Scroll to projects"><span></span></a>
+        </header>
+
+        <div class="subcaption reveal"><a name="projects" id="projects"></a>
             <h2>Projects</h2>
         </div>
 
         <div class="card-container">
-            <div class="card">
-                <div class="projectCategory">
-                    <img src="assets/svg/html5.svg" class="logo" alt="HTML5 Logo">
-                    <h3>Websites</h3>
-                    <i>HTML, CSS, JS</i><br /><br />
-                    <span>Fast and responsive websites with focus on user experience.</span>
+            <div class="card projects-card">
+                <p class="projects-intro"><span id="project-count">…</span> projects across websites, games, film and
+                    software.</p>
+
+                <div class="filter-bar" id="filter-bar" role="group" aria-label="Filter projects by category"></div>
+
+                <div class="project-grid" id="project-grid" aria-live="polite" aria-busy="true">
+                    <div class="project skeleton"></div>
+                    <div class="project skeleton"></div>
+                    <div class="project skeleton"></div>
+                    <div class="project skeleton"></div>
+                    <div class="project skeleton"></div>
+                    <div class="project skeleton"></div>
                 </div>
 
-                <div class="row">
-                    <a class="project" href="https://palatina-films.de" rel="noopener" target="_blank">
-                        <div class="projectName">Palatina Films</div>
-                        <picture>
-                            <source srcset="assets/img/PalatinaFilms.avif" type="image/avif"
-                                alt="PalatinaFilms Website">
-                            <source srcset="assets/img/PalatinaFilms.webp" type="image/webp"
-                                alt="PalatinaFilms Website">
-                            <source srcset="assets/img/PalatinaFilms.jpg" type="image/jpeg" alt="PalatinaFilms Website">
-                            <img src="assets/img/PalatinaFilms.jpg" alt="PalatinaFilms Website">
-                        </picture>
-                        <div class="projectGroup">Movie Group</div>
-                    </a>
-                    <a class="project" href="http://theater.kolping-ramsen.de" rel="noopener" target="_blank">
-                        <div class="projectName">Kolpingtheater</div>
-                        <picture>
-                            <source srcset="assets/img/Kolpingtheater.avif" type="image/avif"
-                                alt="Kolpingtheater Website">
-                            <source srcset="assets/img/Kolpingtheater.webp" type="image/webp"
-                                alt="Kolpingtheater Website">
-                            <source srcset="assets/img/Kolpingtheater.jpg" type="image/jpeg"
-                                alt="Kolpingtheater Website">
-                            <img src="assets/img/Kolpingtheater.jpg" alt="Kolpingtheater Website">
-                        </picture>
-                        <div class="projectGroup">Theater Group</div>
-                    </a>
-                    <a class="project" href="https://poolparty.jupeters.de" rel="noopener" target="_blank">
-                        <div class="projectName">JP Poolparty</div>
-                        <picture>
-                            <source srcset="assets/img/PoolpartyWebsite.avif" type="image/avif"
-                                alt="PoolpartyWebsite Website">
-                            <source srcset="assets/img/PoolpartyWebsite.webp" type="image/webp"
-                                alt="PoolpartyWebsite Website">
-                            <source srcset="assets/img/PoolpartyWebsite.jpg" type="image/jpeg"
-                                alt="PoolpartyWebsite Website">
-                            <img src="assets/img/PoolpartyWebsite.jpg" alt="PoolpartyWebsite Website">
-                        </picture>
-                        <div class="projectGroup">Event Page</div>
-                    </a>
-                </div>
+                <p id="project-empty" class="projects-note" hidden>No projects in this category.</p>
+                <p id="project-fallback" class="projects-note" hidden>
+                    Couldn't load the project list —
+                    <a href="https://github.com/LoggeL" rel="noopener" target="_blank">see my work on GitHub →</a>
+                </p>
             </div>
         </div>
 
-        <div class="card-container">
-            <div class="card">
-                <div class="projectCategory">
-                    <img src="assets/svg/yt.svg" class="logo" alt="Youtube Logo">
-                    <h3>Videos</h3>
-                    <i>Timelapse, Livestream, VFX</i><br /><br />
-                    <span>Full movie VFX to aftermovie.</span>
-                </div>
-
-                <div class="row">
-                    <a class="project" href="https://www.youtube.com/watch?v=Vt3wFY_ldt4" rel="noopener"
-                        target="_blank">
-                        <div class="projectName">Sailing 2019</div>
-                        <picture>
-                            <source srcset="assets/img/Sailing.avif" type="image/avif" alt="Sailing Youtube Thumbnail">
-                            <source srcset="assets/img/Sailing.webp" type="image/webp" alt="Sailing Youtube Thumbnail">
-                            <source srcset="assets/img/Sailing.jpg" type="image/jpeg" alt="Sailing Youtube Thumbnail">
-                            <img src="assets/img/Sailing.jpg" alt="Sailing Youtube Thumbnail">
-
-                        </picture>
-                        <div class="projectGroup">Event</div>
-                    </a>
-                    <a class="project" href="https://www.youtube.com/watch?v=6Qai_0gckB4" rel="noopener"
-                        target="_blank">
-                        <div class="projectName">Poolparty 2020</div>
-                        <picture>
-                            <source srcset="assets/img/Poolparty.avif" type="image/avif"
-                                alt="Poolparty Youtube Thumbnail">
-                            <source srcset="assets/img/Poolparty.webp" type="image/webp"
-                                alt="Poolparty Youtube Thumbnail">
-                            <source srcset="assets/img/Poolparty.jpg" type="image/jpeg"
-                                alt="Poolparty Youtube Thumbnail">
-                            <img src="assets/img/Poolparty.jpg" alt="Poolparty Youtube Thumbnail">
-
-                        </picture>
-                        <div class="projectGroup">Event</div>
-                    </a>
-                    <a class="project" href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw"
-                        rel="noopener" target="_blank">
-                        <div class="projectName">Selantis</div>
-                        <picture>
-                            <source srcset="assets/img/Selantis.avif" type="image/avif"
-                                alt="Selantis Youtube Thumbnail">
-                            <source srcset="assets/img/Selantis.webp" type="image/webp"
-                                alt="Selantis Youtube Thumbnail">
-                            <source srcset="assets/img/Selantis.jpg" type="image/jpeg" alt="Selantis Youtube Thumbnail">
-                            <img src="assets/img/Selantis.jpg" alt="Selantis Youtube Thumbnail">
-                        </picture>
-                        <div class="projectGroup">Movie</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-container">
-            <div class="card">
-                <div class="projectCategory">
-                    <img src="assets/svg/gh.svg" class="logo" alt="GitHub Logo">
-                    <h3>Software</h3>
-                    <i>Data management, visualization, automation</i><br /><br />
-                    <span>From event management to fun social games.</span>
-                </div>
-
-                <div class="row">
-                    <a class="project" href="https://loggel.github.io/spyfall/" rel="noopener" target="_blank">
-                        <div class="projectName">Spyfall</div>
-                        <picture>
-                            <source srcset="assets/img/Spyfall.avif" type="image/avif" alt="Spyfall Website">
-                            <source srcset="assets/img/Spyfall.webp" type="image/webp" alt="Spyfall Website">
-                            <source srcset="assets/img/Spyfall.jpg" type="image/jpeg" alt="Spyfall Website">
-                            <img src="assets/img/Spyfall.jpg" alt="Spyfall Website">
-                        </picture>
-                        <div class="projectGroup">Social Game</div>
-                    </a>
-                    <a class="project" href="https://loggel.github.io/CoronaBoard" rel="noopener" target="_blank">
-                        <div class="projectName">CoronaBoard</div>
-                        <picture>
-                            <source srcset="assets/img/CoronaBoard.avif" type="image/avif" alt="CoronaBoard Website">
-                            <source srcset="assets/img/CoronaBoard.webp" type="image/webp" alt="CoronaBoard Website">
-                            <source srcset="assets/img/CoronaBoard.jpg" type="image/jpeg" alt="CoronaBoard Website">
-                            <img src="assets/img/CoronaBoard.jpg" alt="CoronaBoard Website">
-                        </picture>
-                        <div class="projectGroup">Realtime Dashboard</div>
-                    </a>
-                    <a class="project" href="https://github.com/LoggeL" rel="noopener" target="_blank">
-                        <div class="projectName">GitHub</div>
-                        <picture>
-                            <source srcset="assets/img/GitHub.avif" type="image/avif" alt="My GitHub Repository">
-                            <source srcset="assets/img/GitHub.webp" type="image/webp" alt="My GitHub Repository">
-                            <source srcset="assets/img/GitHub.jpg" type="image/jpeg" alt="My GitHub Repository">
-                            <img src="assets/img/GitHub.jpg" alt="My GitHub Repository">
-                        </picture>
-                        <div class="projectGroup">Code Repository</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="subcaption"> <a name="partners"></a>
+        <div class="subcaption reveal"><a name="partners" id="partners"></a>
             <h2>Partners</h2>
         </div>
 
         <div class="card-container">
             <div class="card partner-card">
-                <a class="partner" href="https://discord.gg/K7Tjtfq" rel="noopener" target="_blank">
+                <a class="partner reveal" href="https://discord.gg/K7Tjtfq" rel="noopener" target="_blank">
                     <video autoplay loop muted playsinline class="logo">
-                        <source src="assets/video/gummibaeren.mp4" type="video/av1" alt="Gummibärenbande Logo">
-                        <source src="assets/video/gummibaeren.webm" type="video/webm" alt="Gummibärenbande Logo">
-                        <source src="assets/video/gummibaeren.gif" alt="Gummibärenbande Logo">
+                        <source src="assets/video/gummibaeren.mp4" type="video/mp4">
+                        <source src="assets/video/gummibaeren.webm" type="video/webm">
                     </video>
                     <h3 class="break-word">Gummibärenbande</h3>
                     <i>Gaming</i><br /><br />
                     <span>A friendly german gaming discord</span>
                 </a>
-
-                <a class="partner" href="http://theater.kolping-ramsen.de" rel="noopener" target="_blank">
+                <a class="partner reveal" href="http://theater.kolping-ramsen.de" rel="noopener" target="_blank">
                     <img src="assets/svg/KolpingLogo.svg" class="logo" alt="Kolpingtheater Logo">
                     <h3>Kolpingtheater Ramsen</h3>
                     <i>Theater</i><br /><br />
                     <span>A small but great theater group</span>
                 </a>
-
-                <a class="partner" href="https://palatina-films.de" rel="noopener" target="_blank">
+                <a class="partner reveal" href="https://palatina-films.de" rel="noopener" target="_blank">
                     <img src="assets/svg/palatinaFilms.svg" class="logo" alt="PalatinaFilms Logo">
                     <h3>Palatina Films</h3>
                     <i>Movie Group</i><br /><br />
                     <span>A small and local movie group</span>
                 </a>
-
-                <a class="partner" href="https://jupeters.de" rel="noopener" target="_blank">
+                <a class="partner reveal" href="https://jupeters.de" rel="noopener" target="_blank">
                     <img src="assets/svg/jp.svg" class="jp-logo logo" alt="jupeters Logo">
                     <h3>JP</h3>
                     <i>Event management</i><br /><br />
                     <span>Poolparty organizer, Bus lover</span>
                 </a>
-
-                <a class="partner" href="https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w" rel="noopener"
+                <a class="partner reveal" href="https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w" rel="noopener"
                     target="_blank">
                     <img src="assets/svg/CFW.svg" class="logo cfw-logo" alt="CFW Logo">
                     <h3>CFW</h3>
                     <i>Media</i><br /><br />
                     <span>Train and boat enthusiast</span>
                 </a>
-
-                <a class="partner" href="https://xenon.bot" rel="noopener" target="_blank">
+                <a class="partner reveal" href="https://xenon.bot" rel="noopener" target="_blank">
                     <img src="assets/svg/xenon.svg" class="logo" alt="Xenon Logo">
                     <h3>Xenon</h3>
                     <i>Discord Bot</i><br /><br />
@@ -237,24 +127,23 @@
             </div>
         </div>
 
-        <div class="subcaption">
-            <a name="contact"></a>
+        <div class="subcaption reveal"><a name="contact" id="contact"></a>
             <h2>Contact</h2>
         </div>
 
         <div class="card-container">
             <div class="row">
-                <a class="contact" href="mailto:hyper.xjo@gmail.com" rel="noopener" target="_blank">
+                <a class="contact reveal" href="mailto:hyper.xjo@gmail.com" rel="noopener">
                     <div class="contactMedia">Mail</div>
                     <img src="assets/svg/mail.svg" alt="GMail Logo">
                     <div class="contactUsername">hyper.xjo@gmail.com</div>
                 </a>
-                <a class="contact" href="https://discord.logge.top" rel="noopener" target="_blank">
+                <a class="contact reveal" href="https://discord.logge.top" rel="noopener" target="_blank">
                     <div class="contactMedia">Discord</div>
                     <img src="assets/svg/discord.svg" alt="Discord Logo">
                     <div class="contactUsername">Logge#1337</div>
                 </a>
-                <a class="contact" href="https://t.me/LoggeL" rel="noopener" target="_blank">
+                <a class="contact reveal" href="https://t.me/LoggeL" rel="noopener" target="_blank">
                     <div class="contactMedia">Telegram</div>
                     <img src="assets/svg/tg.svg" alt="Telegram Logo">
                     <div class="contactUsername">@LoggeL</div>
@@ -263,18 +152,28 @@
         </div>
     </main>
 
-    <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-        data-cf-beacon='{"token": "70ed6e9a6e6f43789b76df86d69f110a"}'></script>
+    <div class="modal" id="modal" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="modal-close" type="button" data-close aria-label="Close preview">&times;</button>
+            <div class="modal-media" id="modal-media"></div>
+            <div class="modal-body">
+                <span class="modal-cat" id="modal-cat"></span>
+                <h3 class="modal-title" id="modal-title"></h3>
+                <p class="modal-desc" id="modal-desc"></p>
+                <div class="modal-tags" id="modal-tags"></div>
+                <a class="modal-visit" id="modal-visit" target="_blank" rel="noopener">Visit project ↗</a>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <div class="copyright">
-            © 2020 Logge
-        </div>
-        <script>
-            document.querySelector('.copyright').innerText = '© ' + (new Date()).getFullYear() + ' Logge'
-        </script>
+        <div class="copyright">© <span id="year">2020</span> Logge</div>
     </footer>
+
+    <script src="js/main.js"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "70ed6e9a6e6f43789b76df86d69f110a"}'></script>
 </body>
 
 </html>
