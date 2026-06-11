@@ -15,16 +15,32 @@
       'Lovingly Made Films',
       'Logic Meets Flair'
     ];
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canAnimate = typeof el.animate === 'function' && !reduce;
     var i = 0;
     el.textContent = meanings[0];
-    setInterval(function () {
-      el.classList.add('swap');
-      setTimeout(function () {
-        i = (i + 1) % meanings.length;
+
+    var EASE_OUT = 'cubic-bezier(0.4, 0, 1, 1)';
+    var EASE_IN = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+    function next() {
+      i = (i + 1) % meanings.length;
+      if (!canAnimate) { el.textContent = meanings[i]; return; }
+      el.animate(
+        [{ opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+         { opacity: 0, transform: 'translateY(-10px)', filter: 'blur(3px)' }],
+        { duration: 380, easing: EASE_OUT, fill: 'forwards' }
+      ).onfinish = function () {
         el.textContent = meanings[i];
-        el.classList.remove('swap');
-      }, 320);
-    }, 2800);
+        el.animate(
+          [{ opacity: 0, transform: 'translateY(12px)', filter: 'blur(3px)' },
+           { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }],
+          { duration: 520, easing: EASE_IN, fill: 'forwards' }
+        );
+      };
+    }
+
+    setInterval(next, 3200);
   })();
 
   /* ---- Nav shadow on scroll ---- */
@@ -158,11 +174,12 @@
         b.className = 'filter-chip' + (g === activeGroup ? ' active' : '');
         b.textContent = g;
         b.addEventListener('click', function () {
+          if (g === activeGroup) return;
           activeGroup = g;
           Array.prototype.forEach.call(filterBar.children, function (c) {
             c.classList.toggle('active', c.textContent === g);
           });
-          draw();
+          switchTo();
         });
         filterBar.appendChild(b);
       });
@@ -177,6 +194,17 @@
       if (emptyEl) emptyEl.hidden = list.length !== 0;
       list.forEach(function (p, i) { grid.appendChild(card(p, i)); });
       revealObserve(grid.querySelectorAll('.reveal'));
+    }
+
+    function switchTo() {
+      var current = grid.querySelectorAll('.project');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!current.length || reduce) { draw(); return; }
+      grid.classList.add('is-leaving');
+      setTimeout(function () {
+        draw();
+        grid.classList.remove('is-leaving');
+      }, 240);
     }
 
     function card(p, i) {
