@@ -216,7 +216,7 @@
       a.target = '_blank';
       a.rel = 'noopener';
       a.title = p.description || p.title;
-      a.style.transitionDelay = Math.min(i, 9) * 45 + 'ms';
+      a.style.transitionDelay = Math.min(i, 9) * 30 + 'ms';
 
       var media = document.createElement('div');
       media.className = 'project-media';
