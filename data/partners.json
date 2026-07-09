@@ -1,0 +1,50 @@
+[
+  {
+    "id": "gummibaerenbande",
+    "title": "Gummibärenbande",
+    "category": "Gaming",
+    "description": "A friendly German gaming Discord community.",
+    "video": "assets/video/gummibaeren.webm",
+    "link": "https://discord.gg/K7Tjtfq"
+  },
+  {
+    "id": "kolpingtheater",
+    "title": "Kolpingtheater Ramsen",
+    "category": "Theater",
+    "description": "A small but great local theater group.",
+    "image": "assets/svg/KolpingLogo.svg",
+    "link": "http://theater.kolping-ramsen.de"
+  },
+  {
+    "id": "palatina-films",
+    "title": "Palatina Films",
+    "category": "Movie Group",
+    "description": "A small local movie group creating films together.",
+    "image": "assets/svg/palatinaFilms.svg",
+    "link": "https://palatina-films.de"
+  },
+  {
+    "id": "jp",
+    "title": "JP",
+    "category": "Event Management",
+    "description": "Poolparty organizer, trip planner, and bus lover.",
+    "image": "assets/svg/jp.svg",
+    "link": "https://jupeters.de"
+  },
+  {
+    "id": "cfw",
+    "title": "CFW",
+    "category": "Media",
+    "description": "Train and boat enthusiast with a practical creative streak.",
+    "image": "assets/svg/CFW.svg",
+    "link": "https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w"
+  },
+  {
+    "id": "xenon",
+    "title": "Xenon",
+    "category": "Discord Bot",
+    "description": "Discord backups, templates, and more.",
+    "image": "assets/svg/xenon.svg",
+    "link": "https://xenon.bot"
+  }
+]

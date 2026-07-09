@@ -1,0 +1,20 @@
+[
+  {
+    "id": "mail-contact",
+    "title": "Mail - hyper.xjo@gmail.com",
+    "description": "The best channel for project ideas and collaborations.",
+    "link": "mailto:hyper.xjo@gmail.com"
+  },
+  {
+    "id": "discord-contact",
+    "title": "Discord - Logge#1337",
+    "description": "Find me on Discord for a quick conversation.",
+    "link": "https://discord.logge.top"
+  },
+  {
+    "id": "telegram-contact",
+    "title": "Telegram - @LoggeL",
+    "description": "Reach me directly on Telegram.",
+    "link": "https://t.me/LoggeL"
+  }
+]

@@ -1,179 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logge Media Forge</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Logge Media Forge — independent AI and media work across websites, software, games, and film." />
+  <meta name="keywords" content="Logge Media Forge, LMF, AI, websites, software, games, film, portfolio" />
+  <meta name="author" content="LMF" />
 
-    <meta name="description" content="Logge Media Forge — fast websites, cinematic video and playful software.">
-    <meta name="theme-color" content="#dddddd">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lmf.logge.top/" />
+  <meta property="og:title" content="Logge Media Forge — Code. Stories. Play." />
+  <meta property="og:description"
+    content="Independent AI and media work across websites, software, games, and film." />
+  <meta property="og:image" content="https://lmf.logge.top/assets/img/logo.png" />
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
-    <link rel="icon" href="favicon.ico?v=2" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=2">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=2">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
-    <link rel="manifest" href="site.webmanifest">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Logge Media Forge — Code. Stories. Play." />
+  <meta name="twitter:description"
+    content="Independent AI and media work across websites, software, games, and film." />
+  <meta name="twitter:image" content="https://lmf.logge.top/assets/img/logo.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="font" href="assets/fonts/Montserrat.woff2" type="font/woff2" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="css/lmf.css?v=2">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3" />
+  <link rel="icon" href="favicon.ico?v=3" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=3" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#0a0a0b" />
+
+  <title>Logge Media Forge — Code. Stories. Play.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800;1,900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/lmf.css?v=3" />
 </head>
 
 <body>
-    <nav id="nav">
-        <a class="brand" href="#top"><img src="assets/svg/logo.svg" alt="LMF Logo"></a>
-        <ul>
-            <li><a href="#contact">CONTACT</a></li>
-            <li><a href="#partners">PARTNERS</a></li>
-            <li><a href="#projects">PROJECTS</a></li>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="page-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-shell">
+      <a class="brand" href="#home" aria-label="LMF home">
+        <img src="assets/svg/logo.svg" alt="LMF" />
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <ul class="nav-links" id="primary-nav">
+          <li><a href="#projects" data-section="projects"><span>01</span> Work</a></li>
+          <li><a href="#about" data-section="about"><span>02</span> Studio</a></li>
+          <li><a href="#partners" data-section="partners"><span>03</span> Network</a></li>
+          <li><a href="#socials" data-section="socials"><span>04</span> Contact</a></li>
         </ul>
-    </nav>
+      </nav>
 
-    <main id="top">
-        <header class="hero">
-            <div class="hero-bg" aria-hidden="true">
-                <span class="blob blob-1"></span>
-                <span class="blob blob-2"></span>
-                <span class="blob blob-3"></span>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+          <span class="theme-toggle__dot" aria-hidden="true"></span>
+          <span class="theme-toggle__label">Light</span>
+        </button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"
+          aria-label="Open navigation">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero__mark" aria-hidden="true">LMF</div>
+      <div class="section-shell hero__grid">
+        <div class="hero__copy reveal">
+          <div class="eyebrow hero__eyebrow">
+            <span>Independent creative practice</span>
+            <span>Digital / Play / Film</span>
+          </div>
+
+          <h1 id="hero-title">
+            <span>Code.</span>
+            <span>Stories.</span>
+            <span class="hero__accent">Play.</span>
+          </h1>
+
+          <div class="hero__footer">
+            <div class="hero__intro">
+              <p>I forge websites, software, games, and moving images—usually where technology and curiosity collide.</p>
+              <div class="hero__actions">
+                <a class="action action--primary" href="#projects">Explore the work <span aria-hidden="true">↘</span></a>
+                <a class="action action--text" href="#socials">Start a conversation <span aria-hidden="true">↗</span></a>
+              </div>
             </div>
-            <img class="hero-logo" src="assets/svg/logo.svg" alt="Logge Media Forge Logo">
-            <h1 class="title">Logge Media Forge</h1>
-            <p class="hero-lmf" aria-live="polite">
-                <span class="lmf-tag">LMF —</span>
-                <span class="lmf-rotator" id="lmf-rotator">Logge Media Forge</span>
-            </p>
-            <p class="hero-sub">Independent AI &amp; media enthusiast — forging websites, film &amp; software.</p>
-            <a class="hero-scroll" href="#projects" aria-label="Scroll to projects"><span></span></a>
-        </header>
 
-        <div class="subcaption reveal"><a name="projects" id="projects"></a>
-            <h2>Projects</h2>
-        </div>
-
-        <div class="card-container">
-            <div class="card projects-card">
-                <p class="projects-intro"><span id="project-count">…</span> projects across websites, games, film and
-                    software.</p>
-
-                <div class="filter-bar" id="filter-bar" role="group" aria-label="Filter projects by category"></div>
-
-                <div class="project-grid" id="project-grid" aria-live="polite" aria-busy="true">
-                    <div class="project skeleton"></div>
-                    <div class="project skeleton"></div>
-                    <div class="project skeleton"></div>
-                    <div class="project skeleton"></div>
-                    <div class="project skeleton"></div>
-                    <div class="project skeleton"></div>
-                </div>
-
-                <p id="project-empty" class="projects-note" hidden>No projects in this category.</p>
-                <p id="project-fallback" class="projects-note" hidden>
-                    Couldn't load the project list —
-                    <a href="https://github.com/LoggeL" rel="noopener" target="_blank">see my work on GitHub →</a>
-                </p>
+            <div class="lmf-decoder" aria-live="polite">
+              <span>LMF / currently</span>
+              <strong id="lmf-meaning">Logge Media Forge</strong>
             </div>
+          </div>
         </div>
 
-        <div class="subcaption reveal"><a name="partners" id="partners"></a>
-            <h2>Partners</h2>
-        </div>
-
-        <div class="card-container">
-            <div class="card partner-card">
-                <a class="partner reveal" href="https://discord.gg/K7Tjtfq" rel="noopener" target="_blank">
-                    <video autoplay loop muted playsinline class="logo">
-                        <source src="assets/video/gummibaeren.mp4" type="video/mp4">
-                        <source src="assets/video/gummibaeren.webm" type="video/webm">
-                    </video>
-                    <h3 class="break-word">Gummibärenbande</h3>
-                    <i>Gaming</i><br /><br />
-                    <span>A friendly german gaming discord</span>
-                </a>
-                <a class="partner reveal" href="http://theater.kolping-ramsen.de" rel="noopener" target="_blank">
-                    <img src="assets/svg/KolpingLogo.svg" class="logo" alt="Kolpingtheater Logo">
-                    <h3>Kolpingtheater Ramsen</h3>
-                    <i>Theater</i><br /><br />
-                    <span>A small but great theater group</span>
-                </a>
-                <a class="partner reveal" href="https://palatina-films.de" rel="noopener" target="_blank">
-                    <img src="assets/svg/palatinaFilms.svg" class="logo" alt="PalatinaFilms Logo">
-                    <h3>Palatina Films</h3>
-                    <i>Movie Group</i><br /><br />
-                    <span>A small and local movie group</span>
-                </a>
-                <a class="partner reveal" href="https://jupeters.de" rel="noopener" target="_blank">
-                    <img src="assets/svg/jp.svg" class="jp-logo logo" alt="jupeters Logo">
-                    <h3>JP</h3>
-                    <i>Event management</i><br /><br />
-                    <span>Poolparty organizer, Bus lover</span>
-                </a>
-                <a class="partner reveal" href="https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w" rel="noopener"
-                    target="_blank">
-                    <img src="assets/svg/CFW.svg" class="logo cfw-logo" alt="CFW Logo">
-                    <h3>CFW</h3>
-                    <i>Media</i><br /><br />
-                    <span>Train and boat enthusiast</span>
-                </a>
-                <a class="partner reveal" href="https://xenon.bot" rel="noopener" target="_blank">
-                    <img src="assets/svg/xenon.svg" class="logo" alt="Xenon Logo">
-                    <h3>Xenon</h3>
-                    <i>Discord Bot</i><br /><br />
-                    <span>Discord Backups, Templates and More</span>
-                </a>
+        <div class="hero__visual reveal" style="--reveal-delay: 120ms">
+          <div class="profile-frame">
+            <div class="profile-stage" aria-label="A rotating selection of Logge Media Forge projects">
+              <img src="assets/img/Skiing2026.jpg" alt="Skiing 2026 cinematic project artwork" class="profile-image active" style="object-position: left center" />
+              <img src="assets/img/Frontier.jpg" alt="Frontier data project interface" class="profile-image" />
+              <img src="assets/img/CoopSudoku.jpg" alt="Coop Sudoku multiplayer game interface" class="profile-image" />
             </div>
+            <div class="profile-frame__scan" aria-hidden="true"></div>
+            <div class="profile-frame__label"><span>LMF / Current reel</span><strong>001</strong></div>
+            <div class="profile-frame__badge">Built with<br />curiosity</div>
+          </div>
+          <div class="profile-caption eyebrow">
+            <span>Based in Germany</span>
+            <span>Web / Film / Software</span>
+          </div>
         </div>
+      </div>
 
-        <div class="subcaption reveal"><a name="contact" id="contact"></a>
-            <h2>Contact</h2>
-        </div>
+      <a class="scroll-cue" href="#about">
+        <span>Scroll to enter</span>
+        <span aria-hidden="true">↓</span>
+      </a>
+    </section>
 
-        <div class="card-container">
-            <div class="row">
-                <a class="contact reveal" href="mailto:hyper.xjo@gmail.com" rel="noopener">
-                    <div class="contactMedia">Mail</div>
-                    <img src="assets/svg/mail.svg" alt="GMail Logo">
-                    <div class="contactUsername">hyper.xjo@gmail.com</div>
-                </a>
-                <a class="contact reveal" href="https://discord.logge.top" rel="noopener" target="_blank">
-                    <div class="contactMedia">Discord</div>
-                    <img src="assets/svg/discord.svg" alt="Discord Logo">
-                    <div class="contactUsername">Logge#1337</div>
-                </a>
-                <a class="contact reveal" href="https://t.me/LoggeL" rel="noopener" target="_blank">
-                    <div class="contactMedia">Telegram</div>
-                    <img src="assets/svg/tg.svg" alt="Telegram Logo">
-                    <div class="contactUsername">@LoggeL</div>
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <div class="modal" id="modal" hidden>
-        <div class="modal-backdrop" data-close></div>
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <button class="modal-close" type="button" data-close aria-label="Close preview">&times;</button>
-            <div class="modal-media" id="modal-media"></div>
-            <div class="modal-body">
-                <span class="modal-cat" id="modal-cat"></span>
-                <h3 class="modal-title" id="modal-title"></h3>
-                <p class="modal-desc" id="modal-desc"></p>
-                <div class="modal-tags" id="modal-tags"></div>
-                <a class="modal-visit" id="modal-visit" target="_blank" rel="noopener">Visit project ↗</a>
-            </div>
-        </div>
+    <div class="signal-strip" aria-label="Creative disciplines">
+      <div class="signal-track">
+        <span>Creative development</span><i aria-hidden="true">✦</i>
+        <span>Game systems</span><i aria-hidden="true">✦</i>
+        <span>Applied AI</span><i aria-hidden="true">✦</i>
+        <span>Moving image</span><i aria-hidden="true">✦</i>
+        <span>Digital products</span><i aria-hidden="true">✦</i>
+        <span>Creative development</span><i aria-hidden="true">✦</i>
+        <span>Game systems</span><i aria-hidden="true">✦</i>
+        <span>Applied AI</span><i aria-hidden="true">✦</i>
+        <span>Moving image</span><i aria-hidden="true">✦</i>
+        <span>Digital products</span><i aria-hidden="true">✦</i>
+      </div>
     </div>
 
-    <footer>
-        <div class="copyright">© <span id="year">2020</span> Logge</div>
-    </footer>
+    <section class="about section-pad" id="about" aria-labelledby="about-title">
+      <div class="section-shell">
+        <header class="section-header reveal">
+          <p class="section-index">01 / Studio</p>
+          <h2 class="section-title" id="about-title">Different mediums.<br /><em>One restless mind.</em></h2>
+        </header>
 
-    <script src="js/main.js?v=2"></script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "70ed6e9a6e6f43789b76df86d69f110a"}'></script>
+        <div class="about__lead reveal">
+          <p class="about__statement">Logge Media Forge is my creative playground: a place to turn ambitious ideas into useful tools, memorable games, and stories that move.</p>
+          <div class="about__copy">
+            <p>I’m Logge, an independent AI and media enthusiast working across code, design, games, and film. I like projects with a strong point of view and enough technical friction to make the solution interesting.</p>
+            <p>The output changes. The process does not: understand the idea, find its pulse, and keep refining until every part feels intentional.</p>
+          </div>
+        </div>
+
+        <div class="studio-stats reveal" aria-label="Studio overview">
+          <div class="stat"><strong data-project-count>32</strong><span>Documented projects</span></div>
+          <div class="stat"><strong>04</strong><span>Creative disciplines</span></div>
+          <div class="stat"><strong>01</strong><span>Independent studio</span></div>
+          <div class="stat"><strong>∞</strong><span>Things left to learn</span></div>
+        </div>
+
+        <div class="capabilities" aria-label="Capabilities">
+          <article class="capability reveal">
+            <span class="capability__index">01</span>
+            <h3>Digital products</h3>
+            <p>Web apps, interfaces, data experiences, and practical systems with personality.</p>
+            <span class="capability__arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="capability reveal" style="--reveal-delay: 60ms">
+            <span class="capability__index">02</span>
+            <h3>Playable systems</h3>
+            <p>Multiplayer games, prototypes, mechanics, and experiments that invite participation.</p>
+            <span class="capability__arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="capability reveal" style="--reveal-delay: 120ms">
+            <span class="capability__index">03</span>
+            <h3>Moving image</h3>
+            <p>Short films, aftermovies, editing, VFX, and visual storytelling with momentum.</p>
+            <span class="capability__arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="capability reveal" style="--reveal-delay: 180ms">
+            <span class="capability__index">04</span>
+            <h3>Applied AI</h3>
+            <p>Agents, RAG systems, model evaluation, and AI features grounded in real use.</p>
+            <span class="capability__arrow" aria-hidden="true">↗</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects section-pad" id="projects" aria-labelledby="projects-title">
+      <div class="section-shell">
+        <header class="section-header section-header--ink reveal">
+          <p class="section-index">02 / Project archive</p>
+          <h2 class="section-title" id="projects-title">Work that earns<br /><em>its pixels.</em></h2>
+          <p class="section-summary">A living archive of shipped products, games, data experiments, films, and creative detours.</p>
+        </header>
+
+        <div class="project-toolbar reveal">
+          <div class="filter-buttons" role="group" aria-label="Filter projects">
+            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" type="button" data-filter="web" aria-pressed="false">Digital</button>
+            <button class="filter-btn" type="button" data-filter="games" aria-pressed="false">Games</button>
+            <button class="filter-btn" type="button" data-filter="film" aria-pressed="false">Film</button>
+            <button class="filter-btn" type="button" data-filter="ai" aria-pressed="false">AI</button>
+          </div>
+          <p class="project-count" id="project-count" aria-live="polite">Loading archive…</p>
+        </div>
+
+        <div class="projects-grid" id="projects-container" aria-live="polite">
+          <p class="loading-note">Loading the project archive…</p>
+        </div>
+
+        <div class="load-more-wrap">
+          <button class="load-more" id="load-more" type="button" hidden>
+            <span>Load more work</span>
+            <span aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners section-pad" id="partners" aria-labelledby="partners-title">
+      <div class="section-shell">
+        <header class="section-header reveal">
+          <p class="section-index">03 / Network</p>
+          <h2 class="section-title" id="partners-title">Good work needs<br /><em>good people.</em></h2>
+        </header>
+
+        <div class="partners-grid" id="partners-container">
+          <p class="loading-note">Loading the network…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="socials" id="socials" aria-labelledby="socials-title">
+      <div class="section-shell socials__inner">
+        <header class="contact-header reveal">
+          <p class="section-index">04 / Open channel</p>
+          <h2 id="socials-title">Have an idea<br />with a pulse?</h2>
+          <p>Tell me what you’re building, filming, automating, or imagining.</p>
+          <a class="contact-mail" href="mailto:hyper.xjo@gmail.com">hyper.xjo@gmail.com <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <div class="social-links-grid" id="connect-links-container">
+          <p class="loading-note">Opening channels…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-shell footer-grid">
+      <div class="footer-brand">
+        <a href="#home" aria-label="Back to the top"><img src="assets/svg/logo.svg" alt="LMF" /></a>
+        <p>Logge Media Forge / Code. Stories. Play.</p>
+      </div>
+      <div class="footer-meta">
+        <p>Independent creative practice<br />Germany / Everywhere online</p>
+      </div>
+      <div class="footer-end">
+        <a href="#home">Back to top ↑</a>
+        <p>© <span id="current-year"></span> Logge Media Forge</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="project-dialog" id="project-modal" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="close-modal" type="button" aria-label="Close project details">
+        <span>Close</span><span aria-hidden="true">×</span>
+      </button>
+      <div class="modal-body">
+        <div class="modal-image-container">
+          <img id="modal-image" src="assets/img/logo.png" alt="" />
+          <span class="modal-image-index">LMF / Project file</span>
+        </div>
+        <div class="modal-info">
+          <div class="modal-meta">
+            <span id="modal-index">00</span>
+            <span id="modal-category"></span>
+          </div>
+          <h2 id="modal-title"></h2>
+          <p id="modal-description"></p>
+          <div class="project-tags" id="modal-tags"></div>
+          <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="action action--primary">Launch project <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <div class="noscript-note">This portfolio needs JavaScript to load the project archive.</div>
+  </noscript>
+  <script src="js/main.js?v=3"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "70ed6e9a6e6f43789b76df86d69f110a"}'></script>
 </body>
 
 </html>
