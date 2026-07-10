@@ -185,7 +185,7 @@ p {
   font-size: clamp(4rem, 8.4vw, 8.75rem);
   font-weight: 900;
   letter-spacing: -0.045em;
-  line-height: 0.78;
+  line-height: 0.86;
   text-transform: uppercase;
 }
 
@@ -452,13 +452,16 @@ p {
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.065em;
-  line-height: 0.68;
+  line-height: 0.8;
   text-transform: uppercase;
 }
 
 .hero h1 span {
   display: block;
   width: max-content;
+  -webkit-text-stroke: 0.65px var(--bg);
+  paint-order: stroke fill;
+  text-shadow: 0 1px 0 var(--bg);
 }
 
 .hero h1 span:nth-child(2) {
@@ -1321,7 +1324,9 @@ button.project-card__trigger {
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.06em;
-  line-height: 0.68;
+  line-height: 0.78;
+  -webkit-text-stroke: 0.5px var(--brand-red);
+  paint-order: stroke fill;
   text-transform: uppercase;
 }
 
@@ -1855,7 +1860,7 @@ button.project-card__trigger {
 
   .hero h1 {
     font-size: clamp(4.6rem, 23vw, 7.5rem);
-    line-height: 0.7;
+    line-height: 0.82;
   }
 
   .hero h1 span:nth-child(2) {
@@ -1955,7 +1960,7 @@ button.project-card__trigger {
 
   .contact-header h2 {
     font-size: clamp(4.5rem, 21vw, 7rem);
-    line-height: 0.73;
+    line-height: 0.8;
   }
 
   .contact-mail {
