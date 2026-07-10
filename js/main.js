@@ -244,7 +244,9 @@
 
     try {
       const projects = await fetchJson('data/projects.json')
-      state.projects = Array.isArray(projects) ? projects : []
+      state.projects = Array.isArray(projects)
+        ? projects.slice().sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+        : []
       renderProjects(container)
       updateProjectTotal()
     } catch (error) {
@@ -286,7 +288,7 @@
     const wrapperClose = project.archived ? '</div>' : '</button>'
 
     return `
-      <article class="project-card reveal${project.archived ? ' archived' : ''}" data-project-id="${projectId}" style="--reveal-delay: ${(index % 3) * 55}ms">
+      <article class="project-card reveal${project.featured ? ' featured' : ''}${project.archived ? ' archived' : ''}" data-project-id="${projectId}" style="--reveal-delay: ${(index % 3) * 55}ms">
         ${wrapperOpen}
           <div class="project-card__media">
             <picture>
@@ -295,6 +297,7 @@
               <img src="${picturePath}.jpg" alt="${title}" loading="${index < 3 ? 'eager' : 'lazy'}" width="1200" height="750">
             </picture>
             <span class="project-card__number">${number} / ${String(state.projects.length).padStart(2, '0')}</span>
+            ${project.featured ? '<span class="featured-badge">Featured</span>' : ''}
             ${project.archived ? '<span class="archived-badge">Archived</span>' : ''}
           </div>
           <div class="project-card__content">

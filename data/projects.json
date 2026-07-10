@@ -100,6 +100,7 @@
   {
     "id": "learn-ai",
     "title": "Learn AI",
+    "featured": true,
     "category": "Educational Website",
     "description": "Interactive learning platform for AI concepts. Features hands-on explorations of LLMs, tokenization, attention mechanisms, and prompting strategies with beautiful visualizations.",
     "picture": "images/LearnAI",
