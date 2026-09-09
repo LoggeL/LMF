@@ -1,5 +1,33 @@
 [
   {
+    "id": "voxel-blitz",
+    "title": "VOXEL BLITZ",
+    "category": "Multiplayer Game",
+    "description": "A multiplayer voxel arena shooter with destructible cover, bots and multiple game modes. Jump into Quick Play, invite friends to a custom lobby or practice in the Killhouse.",
+    "picture": "images/VoxelBlitz",
+    "link": "https://voxel.logge.top/",
+    "tags": [
+      "game",
+      "multiplayer",
+      "threejs",
+      "websocket"
+    ]
+  },
+  {
+    "id": "bomberman-web",
+    "title": "Bomberman",
+    "category": "Multiplayer Game",
+    "description": "Play locally on one keyboard or online with room codes. A browser arcade game with bots, destructible arenas, power-ups and chain-reaction bombs.",
+    "picture": "images/Bomberman",
+    "link": "https://bomberman.logge.top/",
+    "tags": [
+      "game",
+      "multiplayer",
+      "canvas",
+      "websocket"
+    ]
+  },
+  {
     "id": "kniffel",
     "title": "Kniffel Multiplayer",
     "category": "Multiplayer Game",
