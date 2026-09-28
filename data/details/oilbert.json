@@ -1,0 +1,61 @@
+{
+  "id": "oilbert",
+  "story": [
+    "Oilbert ist ein kleiner rot-weißer VW-Bus mit großen Augen und der Held meines Endless-Runners: von Plattform zu Plattform springen, Schraubenschlüssel sammeln, Bomben ausweichen. Alles in Vanilla JavaScript, mit selbst gestalteten Sprites, Highscore im Browser und Touch-Steuerung fürs Handy."
+  ],
+  "highlights": [
+    "Endless-Runner mit steigender Geschwindigkeit und immer schwierigeren Plattformen",
+    "Grüne und zerbrechliche orange Plattformen, die nach der Landung zerfallen",
+    "Power-ups: Schraubenschlüssel (+100 Punkte, 30 %), Flügel (Doppelsprung, 20 %), Bombe (Game Over, 15 %)",
+    "Highscore per localStorage, Pause mit ESC, Soundeffekte",
+    "Touch-Steuerung für Mobilgeräte"
+  ],
+  "stack": [
+    "JavaScript (Vanilla)",
+    "HTML",
+    "CSS",
+    "localStorage",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "JavaScript": 49.9,
+    "CSS": 42.9,
+    "HTML": 7.1
+  },
+  "commits": 14,
+  "funFact": {
+    "text": "Die README nennt Oilbert nur „a brave little car“, das Sprite ist aber eindeutig ein rot-weißer VW-Bus mit VW-Logo.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 4,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/OilbertsAdventure · README, Sprites/Oilbert.png, Commit-Historie",
+      "url": "https://github.com/LoggeL/OilbertsAdventure",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/OilbertsAdventure",
+      "url": "https://loggel.github.io/OilbertsAdventure/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/Bulli-Drive · README",
+      "url": "https://github.com/LoggeL/Bulli-Drive",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/OilbertsAdventure: game.js · Quellcode geprüft: kein Canvas (getContext) in game.js und index.html",
+      "url": "https://github.com/LoggeL/OilbertsAdventure/blob/a467686553386b8678674311f60b9dafea2ee81d/game.js",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/OilbertsAdventure",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

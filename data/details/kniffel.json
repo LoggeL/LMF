@@ -1,0 +1,57 @@
+{
+  "id": "kniffel",
+  "story": [
+    "Kniffel wie am Küchentisch, nur online: Raum erstellen, Code teilen, bis zu sechs Leute würfeln live mit.",
+    "Angefangen hat es als klassischer Gewinnzettel im Papierstil, dann kamen 3D-Würfel mit Physik, Achievements, Emoji-Reaktionen und ein Zuschauermodus dazu. Der Hintergrund mit Tulpen ist per KI generiert."
+  ],
+  "highlights": [
+    "Räume per Code oder Link (?room=CODE), 1 bis 6 Spieler, Zuschauer-Modus",
+    "Vollständige Regeln: 13 Kategorien, 3 Würfe, Halten, Bonus ab 63 im oberen Block",
+    "3D-Würfel mit Three.js/React Three Fiber und Rapier-Physik",
+    "Serverseitige Achievements (laut Commit 25+), Emoji-Reaktionsblasen statt Chat",
+    "SQLite-Persistenz, Reconnect, Rematch, Sounds und Haptik"
+  ],
+  "stack": [
+    "Next.js",
+    "TypeScript",
+    "Socket.io",
+    "Three.js / React Three Fiber",
+    "Rapier",
+    "Framer Motion",
+    "Tailwind CSS",
+    "SQLite",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 69.6,
+    "JavaScript": 28.2,
+    "CSS": 1.7,
+    "Dockerfile": 0.4
+  },
+  "commits": 43,
+  "funFact": {
+    "text": "Laut Commit-Historie ist der Tulpen-Hintergrund mit „Nano Banana 2“ generiert.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/kniffel · README, package.json, Commit-Historie",
+      "url": "https://github.com/LoggeL/kniffel",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite kniffel.logge.top",
+      "url": "https://kniffel.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/kniffel",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

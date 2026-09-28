@@ -1,0 +1,39 @@
+{
+  "_comment": "Owner decisions (spec §3.16). Defaults as of 28.09.2026. scripts/validate.mjs reads this file.",
+  "serotonin": "hide",
+  "stripGps": "pending",
+  "allowPlaceNames": false,
+  "setlistToBands": true,
+  "marathonPersonalData": "hide",
+  "gummibaerenClip": "tiny",
+  "serverGamesLinkRepo": true,
+  "excludedProjects": [
+    "heatline-solara",
+    "theatermon",
+    "nachtschicht",
+    "frontier",
+    "static-pages",
+    "rectify",
+    "guess-the-model",
+    "song-domino",
+    "creepshow-rpg",
+    "pulse-field-monitor",
+    "kindenheimer-kerweborsch",
+    "infected-origins"
+  ],
+  "excludedRepos": [
+    "LoggeL/GTA-Web",
+    "LoggeL/theatermon",
+    "LoggeL/nachtschicht-3d-escape-room",
+    "LoggeL/frontier",
+    "LoggeL/static-pages",
+    "LoggeL/guess-the-model",
+    "LoggeL/song-domino",
+    "LoggeL/creepshow-rpg",
+    "LoggeL/pulse-field-monitor",
+    "LoggeL/kindenheimer-kerweborsch",
+    "LoggeL/infected-origins"
+  ],
+  "_excludedNote": "Owner, 28.09.2026: diese Projekte kommen nicht ins Portfolio (auch nicht in Kapitel, Universum, Querverweise oder die benannte Zeitraffer-Liste).",
+  "_excludedReposNote": "Repos der ausgeschlossenen Projekte (rectify liegt in LoggeL/static-pages). scripts/import-research.mjs entfernt Quellen, die dorthin zeigen, aus den übrigen Details."
+}

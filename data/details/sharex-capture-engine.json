@@ -1,0 +1,47 @@
+{
+  "id": "sharex-capture-engine",
+  "story": [
+    "Eine von drei unabhängigen Neuinterpretationen der ShareX-Website: Hier wird der Screenshot zum Auslöser eines Workflows.",
+    "Die Seite ist kinoartig inszeniert, mit Three.js-„Reaktor“, den man ziehen und per Klick „auslösen“ kann, und Kapiteln, die beim Scrollen vom Capture bis zum Upload führen. Ein Designkonzept, kein offizieller ShareX-Auftritt."
+  ],
+  "highlights": [
+    "Interaktiver Three.js-Reaktor: „Drag the reactor. Click to capture.“",
+    "Scrollgesteuerte Kapitel 01–07 von Capture über Annotation bis Upload",
+    "Lade-Indikator „CAPTURE 00%“ und Terminal-artige HUD-Details",
+    "Vanilla JavaScript + CSS, Vite-Build nach docs/ für GitHub Pages"
+  ],
+  "stack": [
+    "Three.js",
+    "JavaScript (Vanilla)",
+    "CSS",
+    "Vite",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "CSS": 52.8,
+    "JavaScript": 26.4,
+    "HTML": 20.8
+  },
+  "commits": 1,
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/sharex-capture-engine · README, Metadaten",
+      "url": "https://github.com/LoggeL/sharex-capture-engine",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/sharex-capture-engine",
+      "url": "https://loggel.github.io/sharex-capture-engine/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/sharex-capture-engine",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

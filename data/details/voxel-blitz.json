@@ -1,0 +1,55 @@
+{
+  "id": "voxel-blitz",
+  "story": [
+    "Fünfzehn Karten, darunter Nachbauten von Dust 2 und ttt_minecraft_b5 mit schwimmbarem Ozean und funktionierenden Netherportalen sowie eine eigene Unterwasserstadt nach Cartoon-Vorbild.",
+    "Waffen wie der SB-1 SUDSBLASTER verschießen Seifenblasen, die aufsteigen, platzen und schubsen. Die Karriere schaltet Kosmetik frei, ohne Kampfwerte zu verändern."
+  ],
+  "highlights": [
+    "15 Waffen · 15 Karten · 7 Modi",
+    "Bis zu 32 Spieler, 16 pro Team",
+    "Bots in drei Schwierigkeitsstufen",
+    "Desktop und Touch",
+    "Optionale Accounts mit PostgreSQL"
+  ],
+  "stack": [
+    "three.js",
+    "Node.js",
+    "WebSocket",
+    "PostgreSQL (optional)",
+    "Docker Compose"
+  ],
+  "languages": {
+    "JavaScript": 74.2,
+    "Python": 22.1,
+    "CSS": 3.1,
+    "HTML": 0.5
+  },
+  "commits": 297,
+  "media": [
+    {
+      "src": "assets/img/VoxelBlitz.webp",
+      "alt": "Hauptmenü von Voxel Blitz",
+      "caption": "Offizieller Screenshot aus dem Repo (docs/screenshots/main-menu.png). Eine öffentliche Instanz gibt es nicht.",
+      "kind": "screenshot",
+      "width": 1440,
+      "height": 900,
+      "source": 0
+    }
+  ],
+  "note": "Braucht einen eigenen Spielserver. Verlinkt ist deshalb das Repo.",
+  "refs": {
+    "repo": 1
+  },
+  "sources": [
+    {
+      "label": "README (Inside the arena, Modes, Screenshots, Get started) · GitHub Pages API: 404, keine Homepage – Server nötig",
+      "url": "https://github.com/LoggeL/voxel-blitz",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/voxel-blitz",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

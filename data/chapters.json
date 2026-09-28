@@ -1,0 +1,39 @@
+[
+  {
+    "n": "I",
+    "alloy": "web",
+    "anchor": "theater-website",
+    "probe": "theater-saalplan",
+    "universe": true
+  },
+  {
+    "n": "II",
+    "alloy": "games",
+    "anchor": "bomberman-web",
+    "probe": "bomberman-chain"
+  },
+  {
+    "n": "III",
+    "alloy": "ai",
+    "anchor": "melodai",
+    "probe": "melodai-mixer",
+    "more": [
+      "learn-ai",
+      "transcripator",
+      "codex-quota-widget"
+    ]
+  },
+  {
+    "n": "IV",
+    "alloy": "film",
+    "series": "ski",
+    "more": [
+      "selantis",
+      "infected",
+      "exception",
+      "poolparty-2021",
+      "sailing-2022",
+      "bodensee-2020"
+    ]
+  }
+]

@@ -1,42 +1,88 @@
 # Logge Media Forge
 
-The current LMF portfolio, rebuilt with the **LMF Redline** design system while preserving the established project archive, partner network, contact channels, analytics, gallery, and asset structure.
+Mein Portfolio: Web-Apps, Spiele, KI-Experimente und Filme, als Werkstatt gebaut („Die Esse brennt noch.“). Statische Website für GitHub Pages und `lmf.logge.top`, ohne Build-Schritt und ohne produktive npm-Abhängigkeiten. Die verbindliche Spezifikation liegt in [`docs/redesign-spec.md`](docs/redesign-spec.md).
 
-## Features
+Grundregel: **Nichts ist erfunden.** Jede Zahl, jedes Datum und jede Rolle stammt aus einem README, Repo-Metadaten, einer geprüften Live-Seite, der GitHub- oder YouTube-API oder vorhandenen Daten. Fehlt etwas, wird das Element weggelassen, nie mit einem Platzhalter gefüllt.
 
-- Responsive editorial layout based on the angular LMF logo
-- Dynamic project archive with filters, progressive loading, and detail dialog
-- Current six-partner network and three contact channels loaded from JSON
-- Dark and light themes with persisted preference
-- Keyboard-friendly navigation and reduced-motion support
-- Build-free HTML, CSS, and JavaScript
+## Lokal starten
 
-## Local development
-
-The site loads JSON content with `fetch`, so serve it over HTTP:
-
-```powershell
-python -m http.server 8000 --bind 127.0.0.1
+```sh
+npm run dev
+# http://127.0.0.1:4173
 ```
 
-Then open `http://127.0.0.1:8000/`.
+`npm run dev` startet `scripts/serve.mjs`, einen kleinen statischen Server ohne Abhängigkeiten (großer Listen-Backlog, damit parallele Playwright-Worker keine Verbindungsabbrüche bekommen; unbekannte Pfade liefern `404.html` wie GitHub Pages). Anderer Port: `PORT=4180 npm run dev`, Tests dagegen mit `LMF_PORT=4180 npm test`. Zur Not geht auch `python3 -m http.server 4173 --bind 127.0.0.1`, der bricht aber unter parallelen Tests ab. JSON und ES-Module brauchen HTTP; `file://` funktioniert nicht.
 
-## Structure
+## Aufbau
 
-```text
-index.html          Main portfolio page
-css/lmf.css         Redline design system and responsive layout
-js/main.js          Navigation, themes, projects, modal, and motion
-data/               Projects, partners, and contact channels
-assets/             Fonts, project images, logos, and video
-gallery/            Existing standalone gallery
+```
+index.html              Gerüst, alle Texte, Mount-Punkte, Prerender-Marker (<!-- prerender:NAME -->)
+404.html  gallery/      Fehlerseite, Fotoarchiv (ohne JavaScript nutzbar)
+css/tokens.css base.css Farben (Tageslicht, Esse, Screen), Typo, Abstände, Bewegung
+css/sections/*.css      je Abschnitt; werkbank.css und probes.css werden nachgeladen
+js/main.js              Boot, Abschnitts-Registry, data-bind-Aktualisierung
+js/lib/data.js          lädt alle Datendateien (allSettled), Details auf Abruf
+js/lib/derive.js        reine Ableitungen: Glut, Lagernummer, Suche, Zählungen, data-bind-Werte
+js/render/*.js          reine String-Renderer (Browser und Prerender)
+js/sections/*.js        Abschnittsmodule (mount/destroy)
+data/                   alle Inhalte (siehe unten)
+assets/fonts/           4 WOFF2-Dateien + OFL-Lizenzen
+scripts/                Entwicklungswerkzeuge (nicht Teil der Auslieferung)
+tests/                  Playwright
 ```
 
-## Validation
+## Daten
 
-```powershell
-node --check .\js\main.js
-Get-Content -Raw .\data\projects.json | ConvertFrom-Json | Out-Null
-Get-Content -Raw .\data\partners.json | ConvertFrom-Json | Out-Null
-Get-Content -Raw .\data\socials.json | ConvertFrom-Json | Out-Null
+Die Seite liest zur Laufzeit nur `data/`. `docs/research/*.json` ist Rohmaterial und wird nur über `scripts/import-research.mjs` übernommen.
+
+| Datei | Inhalt |
+| --- | --- |
+| `data/projects.json` | alle Projekte in Lager-Reihenfolge (= `scripts/order.json`), ≤ 40 KB |
+| `data/details/<id>.json` | Tiefe pro Projekt: Geschichte, Highlights, Stack, Sprachen, Commits, Fakten, Medien, Quellen |
+| `data/films.json` | YouTube-ID, Originaltitel, Upload, Länge, Reihe, Ort, wörtliches Beschreibungszitat |
+| `data/repos.json` | eigene öffentliche Repos ohne Forks (Zeitraffer, Glut der Esse); Namen nur laut `scripts/repo-allowlist.json` |
+| `data/snapshot.json` | `asOf` (Stichtag für jedes „Stand“ und jede Glut), GitHub-Konto, Repos pro Jahr |
+| `data/milestones.json` | Schichtbuch-Meilensteine mit Quellen; `{gallery.nights}`-Platzhalter füllt `fillBindings()` |
+| `data/chapters.json`, `data/universe.json` | Meisterstück-Kapitel, Kolpingtheater-Universum |
+| `data/partners.json`, `data/socials.json` | Zunft und Kontakt |
+| `docs/decisions.json` | Entscheidungen des Besitzers (Serotonin, GPS, Ortsnamen …), von `validate` gelesen |
+
+### Projektfelder
+
+Pflicht: `id` (`/^[a-z0-9-]+$/`, stabil, steckt in `#werk/<id>`), `title`, `category`, `description` (≤ 320 Zeichen), `link` (https), `tags`, `groups` (Teilmenge von `web`, `games`, `ai`, `film`; die erste ist die Legierung) und entweder `image` (exakte Schreibweise, GitHub Pages unterscheidet Groß/Klein) oder `art` (`music|capture|retro|organic|widget|film` → Rohling).
+
+Optional: `summary`, `imageAlt`, `artTitle`, `linkLabel`, `source`, `isNew`, `archived`, `year` (kuratiertes Startjahr, nie aus `repo.createdAt` kopiert), `yearLabel`, `repo` (`fullName`, `private`, `stars`, `createdAt`, `pushedAt`; geschrieben vom Snapshot), `live` (`live|repo-only|offline` + `checkedAt`), `probe`, `contentNote`, `details`, `related`.
+
+### Details-Felder
+
+`story` (1–4 Absätze), `highlights` (3–6), `stack`, `languages` (Prozent), `commits`, `commitsBy`, `facts` (`{key, label, value, source}`), `funFact` (`{text, source}`), `relatedRepos`, `media` (`{src, alt, caption, kind, width, height, source}`), `note`, `refs` (`repo`, `live`, `video`: Index der Quelle für die Werkstattdaten-Zeilen) und `sources` (`{label, url, checkedAt, private?}`). Jede `source`-Zahl ist ein Index in `sources`. Quellen mit `private: true` zeigen auf ein privates Repo und werden ohne Link angezeigt.
+
+### Abgeleitete Werte
+
+`js/lib/derive.js` rechnet alles, was die Seite zählt: `glowOf` (glüht ≤ 30 Tage, warm ≤ 180 Tage, sonst abgekühlt; Filme „fertig“, Archiv „ausgemustert“, immer gegen `snapshot.asOf`), `stockNo`, `normalize`/`haystack` (Suche, ä → a, ß → ss, Apostrophe weg), `reposByYear`, `nights` (Fotos vor 12 Uhr zählen zur Nacht davor), `toolCounts` (Werkzeugwand) und `bindings()`. Jede Zahl im Text ist ein `<span data-bind="schlüssel">`; `npm run prerender` schreibt den Wert hinein, `main.js` aktualisiert ihn zur Laufzeit.
+
+## Skripte
+
+| Befehl | Was passiert |
+| --- | --- |
+| `npm run import` | Recherche → `data/` (Korrekturen, neue Projekte, Details, Filme, Meilensteine, Universum, Partner). Idempotent, verweigert Fakten ohne Quelle. |
+| `npm run snapshot` | `gh`-CLI (angemeldet): `repos.json`, `snapshot.json`, Sterne/Daten in `projects.json`, Commits/Sprachen in den Details. `--as-of YYYY-MM-DD` optional. |
+| `npm run prerender` | füllt Prerender-Blöcke und `data-bind` in `index.html`; fehlende Renderer werden übersprungen. |
+| `npm run check` | `scripts/validate.mjs`, alle Regeln aus Spec §3.15 plus Budgets und Umlaut-Prüfung. |
+| `npm test` | Playwright. |
+| `node scripts/fetch-fonts.mjs` | lädt die vier Schriftdateien und OFL-Texte (gepinnte Versionen). |
+| `node scripts/fetch-film-stills.mjs` | YouTube-Vorschaubild für Ski 2023 (`maxresdefault` → `sddefault` → `hqdefault`, Balken abgeschnitten, 640×360 WebP). `--maxres-only`: ohne `maxresdefault` bleibt der Rohling. |
+| `node scripts/strip-gps.mjs` | zeigt, welche Galerie-Originale GPS-Daten tragen. `--write` entfernt sie, **nur nach Freigabe**; danach `"stripGps": "done"` in `docs/decisions.json`. |
+
+Reihenfolge nach neuen Recherchen: `npm run import && npm run snapshot && npm run prerender && npm run check && npm test`.
+
+## Prüfen
+
+```sh
+npm ci
+npx playwright install chromium
+npm run check
+npm test
 ```
+
+`npm` wird ausschließlich für Entwicklungswerkzeuge gebraucht. Ausgeliefert werden die statischen Dateien; `node_modules`, `work`, `docs/research` und Testberichte gehören nicht auf den Webserver. Cloudflare Web Analytics und die Custom Domain bleiben konfiguriert; YouTube lädt erst nach einem Klick.

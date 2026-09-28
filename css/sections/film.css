@@ -1,0 +1,465 @@
+/*
+ * css/sections/film.css  [WP3] — Kapitel IV · Film · Rotglut: the projector gate (§2.3, §5.8).
+ * Always dark (.screen). The gate is a strip of film: sprocket margins, the still, grain.
+ * At rest every film shows its 16:9 YouTube poster whole. While a 9:16 film plays, the gate turns
+ * upright below 1024 px (≤ 70svh); on desktop the 16:9 gate stays and YouTube pillarboxes.
+ */
+@layer sections {
+  #kapitel-iv {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    --alloy: var(--alloy-film);
+  }
+  #kapitel-iv::before {
+    content: attr(data-chapter);
+    position: absolute;
+    z-index: -1;
+    inset-block-start: clamp(24px, 5vw, 72px);
+    inset-inline-end: max(16px, 4vw);
+    font-family: var(--font-display);
+    font-size: var(--t-numeral);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--alloy-film) 55%, var(--line));
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+  }
+  #kapitel-iv::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    inset: auto 0 0;
+    block-size: 60%;
+    background: radial-gradient(70% 80% at 30% 100%, color-mix(in srgb, var(--heat-1) 45%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  #kapitel-iv .chapter-kicker::after {
+    content: "";
+    flex: 1;
+    max-inline-size: 180px;
+    block-size: 1px;
+    background: linear-gradient(90deg, var(--alloy-film), transparent);
+  }
+  #kapitel-iv .chapter-title em {
+    font-style: italic;
+  }
+
+  /* Deck */
+  #kapitel-iv .projector {
+    max-inline-size: none;
+  }
+  #kapitel-iv .projector-deck {
+    display: grid;
+    gap: var(--s6);
+  }
+  #kapitel-iv .projector-main {
+    display: grid;
+    gap: var(--s5);
+    min-inline-size: 0;
+  }
+  #kapitel-iv .projector-gate {
+    display: grid;
+    gap: var(--s5);
+    margin: 0;
+    max-inline-size: none;
+    aspect-ratio: auto;
+    border: 0;
+    overflow: visible;
+  }
+  #kapitel-iv .projector-gate img {
+    block-size: 100%;
+  }
+
+  /* The gate: a frame of film */
+  #kapitel-iv .projector-frame {
+    --strip: clamp(14px, 2.2cqi, 22px);
+    position: relative;
+    container-type: inline-size;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    box-shadow: 0 40px 90px -50px color-mix(in srgb, var(--heat-2) 55%, transparent);
+  }
+  #kapitel-iv .projector-film {
+    position: relative;
+  }
+  /* sprocket margins (they jump with the pull-down) */
+  #kapitel-iv .projector-film::before,
+  #kapitel-iv .projector-film::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    inset-block: -8%;
+    inline-size: var(--strip);
+    background:
+      repeating-linear-gradient(
+          to bottom,
+          transparent 0 9px,
+          color-mix(in srgb, var(--ink) 13%, var(--bg)) 9px 19px,
+          transparent 19px 27px
+        )
+        50% 0 / 45% 100% no-repeat,
+      var(--bg);
+    pointer-events: none;
+  }
+  #kapitel-iv .projector-film::before {
+    inset-inline-start: 0;
+    border-inline-end: 1px solid var(--line);
+  }
+  #kapitel-iv .projector-film::after {
+    inset-inline-end: 0;
+    border-inline-start: 1px solid var(--line);
+  }
+  #kapitel-iv .projector-pic {
+    position: relative;
+    margin-inline: var(--strip);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  #kapitel-iv .projector-still,
+  #kapitel-iv .projector-gl {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+  #kapitel-iv .projector-pic .projector-still {
+    inset: -1.5%;
+    inline-size: 103%;
+    block-size: 103%;
+    max-inline-size: none; /* base img cap would pin it to 100 % and bare the right edge */
+  }
+  #kapitel-iv .projector-gl {
+    z-index: 1;
+    opacity: 0;
+  }
+  #kapitel-iv .projector-gl.is-live {
+    opacity: 1;
+  }
+  #kapitel-iv .projector-fx {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, color-mix(in srgb, var(--bg) 55%, transparent));
+  }
+  #kapitel-iv .projector-frame[data-gl] .projector-fx {
+    display: none;
+  }
+  #kapitel-iv .projector-slate {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    gap: var(--s3);
+    text-align: center;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 22px, color-mix(in srgb, var(--ink) 5%, transparent) 22px 44px),
+      var(--surface);
+  }
+  #kapitel-iv .projector-slate[hidden] {
+    display: none;
+  }
+  #kapitel-iv .projector-slate-title {
+    font-family: var(--font-display);
+    font-size: var(--t-chapter);
+    line-height: 1;
+  }
+  #kapitel-iv .projector-slate-meta {
+    color: var(--muted);
+  }
+  #kapitel-iv .projector-player {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: var(--bg);
+  }
+  #kapitel-iv .projector-player iframe {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+    display: block;
+  }
+  #kapitel-iv .projector-pic {
+    z-index: 1;
+  }
+
+  /* Caption: the verbatim description */
+  #kapitel-iv .projector-caption {
+    display: grid;
+    gap: var(--s4);
+    max-inline-size: 62ch;
+  }
+  #kapitel-iv .projector-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s1) 1.4em;
+    margin: 0;
+    color: var(--muted);
+    overflow-x: clip;
+  }
+  #kapitel-iv .projector-meta > span {
+    position: relative;
+  }
+  #kapitel-iv .projector-meta > span + span::before {
+    content: "·" / "";
+    position: absolute;
+    inset-inline-end: 100%;
+    inline-size: 1.4em;
+    text-align: center;
+    color: var(--control);
+  }
+  #kapitel-iv .projector-meta a {
+    color: var(--ink);
+  }
+  #kapitel-iv .projector-meta .i {
+    inline-size: 0.9em;
+    block-size: 0.9em;
+    vertical-align: -0.05em;
+  }
+  #kapitel-iv .projector-quote-wrap {
+    display: grid;
+    gap: var(--s2);
+  }
+  #kapitel-iv .projector-quote-wrap:empty {
+    display: none;
+  }
+  #kapitel-iv .projector-label {
+    margin: 0;
+    color: var(--alloy-film);
+  }
+  #kapitel-iv .projector-quote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--t-quote);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  #kapitel-iv .projector-quote p {
+    margin: 0;
+  }
+  #kapitel-iv .projector-quote--paraphrase {
+    font-style: normal;
+  }
+
+  /* Facade */
+  #kapitel-iv .projector-facade {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s3) var(--s5);
+  }
+  #kapitel-iv .projector-facade .button[hidden] {
+    display: none;
+  }
+  #kapitel-iv .projector-consent {
+    margin: 0;
+    max-inline-size: 42ch;
+    color: var(--muted);
+    font-size: var(--t-small, 0.9375rem);
+    line-height: 1.45;
+  }
+
+  /* Reel */
+  #kapitel-iv .projector-reel {
+    display: grid;
+    align-content: start;
+    gap: var(--s3);
+    min-inline-size: 0;
+  }
+  #kapitel-iv .projector-edge {
+    margin: 0;
+    color: var(--alloy-film);
+    letter-spacing: 0.22em;
+  }
+  #kapitel-iv .projector-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--line);
+  }
+  #kapitel-iv .reel-item {
+    --heat: 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.4em minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: var(--s3);
+    row-gap: var(--s1);
+    inline-size: 100%;
+    min-block-size: 56px;
+    padding: 14px 14px 14px 18px;
+    border: 0;
+    border-block-end: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    text-align: start;
+    cursor: pointer;
+  }
+  #kapitel-iv .reel-item::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 3px;
+    background: var(--alloy-film);
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+  #kapitel-iv .reel-name {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 560;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  #kapitel-iv .reel-badge {
+    grid-column: 2;
+    justify-self: start;
+    padding: 2px 6px;
+    border: 1px solid var(--control);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  #kapitel-iv .reel-item:hover,
+  #kapitel-iv .reel-item:focus-visible {
+    --heat: 1;
+    color: var(--ink);
+  }
+  #kapitel-iv .reel-item[aria-pressed="true"] {
+    color: var(--heat-text);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--alloy-film) 16%, transparent), transparent 85%);
+  }
+  #kapitel-iv .reel-item[aria-pressed="true"]::before {
+    transform: scaleY(1);
+  }
+  #kapitel-iv .reel-item:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+
+  /* Layout */
+  @media (min-width: 1024px) {
+    #kapitel-iv .projector-deck {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      column-gap: calc(var(--gap) * 2);
+      align-items: start;
+    }
+    #kapitel-iv .projector-reel {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + var(--s5));
+    }
+    #kapitel-iv .film-more {
+      max-inline-size: none;
+    }
+    #kapitel-iv .film-selantis {
+      max-inline-size: 32em;
+    }
+  }
+  @media (max-width: 1023.98px) {
+    #kapitel-iv .projector-reel {
+      order: -1;
+    }
+    #kapitel-iv .projector-list {
+      display: flex;
+      gap: var(--s2);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      border: 0;
+      padding-block-end: var(--s2);
+    }
+    #kapitel-iv .projector-list > li {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    #kapitel-iv .reel-item {
+      grid-template-columns: auto auto;
+      inline-size: auto;
+      min-inline-size: 150px;
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+    }
+    #kapitel-iv .reel-name {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      white-space: nowrap;
+    }
+    #kapitel-iv .reel-badge {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+    #kapitel-iv .reel-item::before {
+      inset-block: auto 0;
+      inset-inline: 0;
+      inline-size: auto;
+      block-size: 3px;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+    }
+    #kapitel-iv .reel-item[aria-pressed="true"]::before {
+      transform: scaleX(1);
+    }
+    #kapitel-iv .projector-gate[data-aspect="9:16"] .projector-frame {
+      aspect-ratio: 9 / 16;
+      inline-size: min(100%, calc(70svh * 9 / 16));
+      justify-self: center;
+    }
+  }
+
+  @media (forced-colors: active) {
+    #kapitel-iv::before,
+    #kapitel-iv::after,
+    #kapitel-iv .projector-film::before,
+    #kapitel-iv .projector-film::after {
+      display: none;
+    }
+    #kapitel-iv .projector-pic {
+      margin-inline: 0;
+    }
+    #kapitel-iv .reel-item {
+      border: 1px solid ButtonText;
+    }
+    #kapitel-iv .reel-item[aria-pressed="true"] {
+      background: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+  }
+}
+
+@layer sections {
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) #kapitel-iv .reel-item {
+      transition:
+        --heat var(--d-cool) var(--ease-cool),
+        color var(--d-cool) var(--ease-cool),
+        background-color var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) #kapitel-iv .reel-item:is(:hover, :focus-visible) {
+      transition-duration: var(--d-heat-in);
+    }
+    :root:not([data-motion="paused"]) #kapitel-iv .reel-item::before {
+      transition: transform var(--d-rebound) var(--ease-rebound);
+    }
+    :root:not([data-motion="paused"]) #kapitel-iv .projector-gl {
+      transition: opacity 400ms var(--ease-std);
+    }
+  }
+}

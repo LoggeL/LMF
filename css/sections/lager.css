@@ -1,0 +1,1137 @@
+/* css/sections/lager.css [WP2]: Lager + Noch warm plates, Rohlinge, toolbar, Liste, legend,
+   quench/reheat (§2.4, §4.5, §5.3). Heat in over --d-heat-in, out over --d-cool; motion calm-gated. */
+@layer sections {
+  /* == PLATE == */
+  .plate {
+    --heat: 0;
+    --plate-pad: clamp(14px, 1.2vw + 8px, 20px);
+    --rivet: radial-gradient(
+      circle at 38% 34%,
+      color-mix(in oklch, var(--surface) 80%, var(--ink)) 0 0.8px,
+      color-mix(in oklch, var(--ink) 38%, var(--surface)) 1.6px,
+      color-mix(in oklch, var(--ink) 62%, var(--surface)) 2.7px,
+      transparent 3.2px
+    );
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-inline-size: 0;
+    background: var(--surface);
+    border: 1px solid color-mix(in oklch, var(--alloy) calc(var(--heat) * 85%), var(--line));
+    box-shadow:
+      0 1px 0 rgb(var(--shadow-ink) / 0.05),
+      0 calc(var(--heat) * 22px) calc(var(--heat) * 44px) calc(var(--heat) * -22px) rgb(var(--shadow-ink) / 0.42);
+    translate: 0 calc(var(--heat) * -3px);
+  }
+  :root[data-theme="dark"] .plate {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--surface) 92%, var(--ink)), var(--surface) 38%);
+  }
+  .plate:is(:hover, :focus-within) {
+    --heat: 1;
+  }
+
+  /* rivets, one in each corner */
+  .plate::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    z-index: 3;
+    pointer-events: none;
+    background:
+      var(--rivet) left top / 7px 7px no-repeat,
+      var(--rivet) right top / 7px 7px no-repeat,
+      var(--rivet) left bottom / 7px 7px no-repeat,
+      var(--rivet) right bottom / 7px 7px no-repeat;
+  }
+  .plate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 40%),
+      color-mix(in oklch, var(--heat-4) calc(var(--heat) * 20%), transparent),
+      transparent 55%
+    );
+    mix-blend-mode: normal;
+  }
+  :root[data-theme="light"] .plate::after {
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 40%),
+      color-mix(in oklch, var(--heat-3) calc(var(--heat) * 11%), transparent),
+      transparent 55%
+    );
+  }
+
+  .plate .project-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    inline-size: 100%;
+    padding: var(--plate-pad);
+    color: var(--ink);
+    text-decoration: none;
+    outline-offset: 4px;
+    box-shadow: inset 0 calc(var(--heat) * -2px) 0 color-mix(in oklch, var(--heat-2) calc(var(--heat) * 100%), transparent);
+  }
+  /* steel grain */
+  .plate .project-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--grain);
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  :root[data-theme="dark"] .plate .project-link::before {
+    mix-blend-mode: screen;
+  }
+  .plate .project-link:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+  @supports selector(:has(a)) {
+    .plate:has(.project-link:focus-visible) {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .plate .project-link:focus-visible {
+      outline: none;
+    }
+  }
+  .plate .project-link:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* top row: stock number, badges, alloy */
+  .plate-top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    min-block-size: 24px;
+    padding-inline: 6px;
+  }
+  .plate-top::after {
+    content: "";
+    position: absolute;
+    inset-inline: 6px;
+    inset-block-end: -6px;
+    block-size: 1px;
+    background: linear-gradient(90deg, var(--alloy), color-mix(in oklch, var(--alloy) 30%, transparent) 60%, transparent);
+    transform-origin: left center;
+    scale: calc(0.22 + var(--heat) * 0.78) 1;
+    opacity: calc(0.7 + var(--heat) * 0.3);
+  }
+  .plate-no {
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 500;
+    letter-spacing: var(--track-meta);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .plate-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-inline-start: auto;
+  }
+  .plate-alloy {
+    min-block-size: 22px;
+    padding: 0 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+  }
+  .plate-badge {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 22px;
+    padding: 0 7px;
+    border: 1px dashed currentColor;
+    border-radius: var(--r-chip);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .plate-badge--new {
+    color: var(--heat-text);
+  }
+  .plate-badge--note {
+    color: var(--muted);
+  }
+
+  /* media: 16:10 frame, image or Rohling */
+  .plate-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    margin-block-start: var(--s2);
+    overflow: hidden;
+    background: var(--surface-2);
+    container-type: inline-size;
+  }
+  .plate-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+    pointer-events: none;
+  }
+  .plate-media img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 50% 0;
+    scale: calc(1 + var(--heat) * 0.035);
+    transform-origin: 50% 30%;
+    filter: saturate(calc(1 + var(--heat) * 0.12)) brightness(calc(1 + var(--heat) * 0.04));
+  }
+  .plate-media--film img {
+    object-position: 50% 50%;
+  }
+  .plate-media::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--heat-3);
+    opacity: calc(var(--heat) * 0.06);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .plate-media--strip {
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(80% 70% at 50% 100%, color-mix(in oklch, var(--alloy) 22%, transparent), transparent 70%),
+      var(--bg);
+  }
+  .plate-media--strip img {
+    inline-size: auto;
+    max-inline-size: 92%;
+    block-size: auto;
+    object-fit: contain;
+    object-position: 50% 50%;
+    border-radius: 10px;
+    box-shadow: 0 14px 30px -14px rgb(0 0 0 / 0.9);
+  }
+
+  /* body */
+  .plate-body {
+    display: grid;
+    gap: 6px;
+    padding-inline: 6px;
+  }
+  .plate-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s3);
+    margin: var(--s1) 0 0;
+    font-family: var(--font-body);
+    font-size: clamp(20px, 1.55vw, 22px);
+    font-weight: 640;
+    line-height: var(--lh-h3);
+    letter-spacing: -0.01em;
+    hyphens: manual;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+  .plate-title-text {
+    min-inline-size: 0;
+  }
+  .plate-title-sub {
+    display: block;
+    margin-block-start: 2px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--muted);
+  }
+  .plate-arrow {
+    flex: none;
+    inline-size: 0.8em;
+    block-size: 0.8em;
+    color: var(--alloy);
+    translate: calc(var(--heat) * 4px) 0;
+    opacity: calc(0.55 + var(--heat) * 0.45);
+  }
+  .plate-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    color: var(--alloy);
+  }
+  .plate-summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: var(--t-small);
+    line-height: 1.5;
+  }
+  .plate mark,
+  .lager-table mark {
+    padding: 0 0.08em;
+    background: color-mix(in oklch, var(--heat-4) 42%, transparent);
+    color: inherit;
+    border-radius: 1px;
+    box-shadow: inset 0 -2px 0 color-mix(in oklch, var(--heat-3) 70%, transparent);
+  }
+
+  /* stamp row: mono facts, stamped into the bottom edge */
+  .plate-stamps {
+    position: relative;
+    margin-block-start: auto;
+    margin-inline: 6px;
+    padding-block-start: var(--s3);
+    border-block-start: 1px dashed var(--line);
+    font-size: 0.75rem;
+    min-block-size: 30px;
+  }
+  .plate-stamps::before {
+    content: "";
+    position: absolute;
+    inset-inline: -6px;
+    inset-block-start: -1px;
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--heat-4), var(--heat-3) 40%, color-mix(in oklch, var(--heat-2) 60%, transparent));
+    opacity: var(--heat);
+    pointer-events: none;
+  }
+  .plate .project-link::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    z-index: -1;
+    block-size: 45%;
+    background: linear-gradient(0deg, color-mix(in oklch, var(--heat-3) 22%, transparent), transparent);
+    opacity: var(--heat);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) .plate {
+      --bed: 0;
+    }
+    :root:not([data-motion="paused"]) .plate[data-glow="glueht"] {
+      --bed: 0.35;
+    }
+    :root:not([data-motion="paused"]) .plate[data-glow="warm"] {
+      --bed: 0.18;
+    }
+    :root:not([data-motion="paused"]) .plate .project-link::after {
+      background: linear-gradient(0deg, color-mix(in oklch, var(--heat-3) 42%, transparent), color-mix(in oklch, var(--heat-4) 14%, transparent) 45%, transparent);
+      transform-origin: center bottom;
+      scale: 1 calc(0.2 + var(--heat) * 0.8);
+      opacity: max(var(--bed), calc(var(--heat) * 0.9));
+    }
+    :root:not([data-motion="paused"]) .plate-no {
+      color: color-mix(in oklch, var(--heat-text) calc(var(--heat) * 100%), var(--muted));
+    }
+  }
+  .plate-star {
+    inline-size: 0.95em;
+    block-size: 0.95em;
+    margin-inline-end: 3px;
+    vertical-align: -0.12em;
+    color: var(--heat-text);
+  }
+  .plate .stamp--glow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* == GLUT (data glow, static) == */
+  .plate[data-glow="glueht"] {
+    box-shadow:
+      inset 0 -2px 0 color-mix(in oklch, var(--heat-3) 85%, transparent),
+      inset 0 -64px 48px -48px color-mix(in oklch, var(--heat-3) 45%, transparent),
+      0 calc(var(--heat) * 22px) calc(var(--heat) * 44px) calc(var(--heat) * -22px) rgb(var(--shadow-ink) / 0.42);
+  }
+  .plate[data-glow="warm"] {
+    box-shadow:
+      inset 0 -1px 0 color-mix(in oklch, var(--heat-2) 60%, transparent),
+      inset 0 -48px 40px -40px color-mix(in oklch, var(--heat-2) 30%, transparent),
+      0 calc(var(--heat) * 22px) calc(var(--heat) * 44px) calc(var(--heat) * -22px) rgb(var(--shadow-ink) / 0.42);
+  }
+  .plate[data-glow="fertig"] {
+    box-shadow:
+      inset 0 -2px 0 var(--alloy-film),
+      0 calc(var(--heat) * 22px) calc(var(--heat) * 44px) calc(var(--heat) * -22px) rgb(var(--shadow-ink) / 0.42);
+  }
+  .plate[data-glow="glueht"] .stamp--glow {
+    color: var(--heat-text);
+    font-weight: 700;
+  }
+  .stamp-ember {
+    display: none;
+  }
+  .plate[data-glow="glueht"] .stamp-ember,
+  .plate[data-glow="warm"] .stamp-ember {
+    display: inline-block;
+    inline-size: 7px;
+    block-size: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, var(--heat-5), var(--heat-4) 35%, var(--heat-3) 65%, var(--heat-2));
+    box-shadow: 0 0 6px 1px color-mix(in oklch, var(--heat-3) 70%, transparent);
+  }
+  .plate[data-glow="warm"] .stamp-ember {
+    background: radial-gradient(circle at 40% 40%, var(--heat-3), var(--heat-2) 70%);
+    box-shadow: none;
+  }
+  .plate[data-glow="warm"] .stamp--glow {
+    color: var(--ink);
+  }
+  .plate[data-glow="ausgemustert"] .plate-media img,
+  .plate[data-glow="ausgemustert"] .rohling {
+    filter: grayscale(0.6) contrast(0.95);
+  }
+  .plate-seal {
+    position: absolute;
+    inset-block-start: calc(var(--plate-pad) + 58px);
+    inset-inline-end: calc(var(--plate-pad) + 10px);
+    z-index: 2;
+    padding: 4px 10px;
+    border: 2px solid var(--brand);
+    outline: 1px solid var(--brand);
+    outline-offset: 2px;
+    color: var(--brand);
+    background: color-mix(in oklch, var(--surface) 80%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    rotate: -7deg;
+    pointer-events: none;
+    mix-blend-mode: normal;
+  }
+
+  /* == ROHLING (no image) == */
+  .rohling {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 6px;
+    padding: 8% 10%;
+    text-align: center;
+    color: color-mix(in oklch, var(--alloy) 60%, var(--muted));
+    background:
+      radial-gradient(120% 90% at 30% 10%, color-mix(in oklch, var(--surface) 55%, transparent), transparent 60%),
+      linear-gradient(135deg, color-mix(in oklch, var(--alloy) 12%, var(--surface-2)), var(--surface-2) 55%, color-mix(in oklch, var(--ink) 8%, var(--surface-2)));
+    overflow: hidden;
+  }
+  /* brushed steel */
+  .rohling::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--ink) 4%, transparent) 0 1px,
+      transparent 1px 3px,
+      color-mix(in oklch, var(--surface) 20%, transparent) 3px 4px,
+      transparent 4px 7px
+    );
+    opacity: 0.8;
+  }
+  .rohling-etch {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    opacity: 0.5;
+  }
+  .rohling-etch .rohling-dot {
+    fill: var(--brand);
+    stroke: none;
+  }
+  .rohling-etch .rohling-hi {
+    stroke: var(--surface);
+  }
+  .rohling-etch .rohling-needle {
+    stroke: var(--heat-text);
+  }
+  .rohling-etch circle:not(.rohling-dot) {
+    fill: currentColor;
+  }
+  .rohling--film .rohling-etch rect {
+    fill: var(--bg);
+    stroke: none;
+  }
+  .rohling-mark {
+    position: absolute;
+    inset-block-start: 8px;
+    inset-inline-start: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .rohling--film .rohling-mark {
+    inset-block-start: 20%;
+  }
+  .rohling-title {
+    position: relative;
+    max-inline-size: 100%;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 11cqi, 3.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    color: color-mix(in oklch, var(--ink) 78%, var(--surface-2));
+    text-shadow:
+      0 1px 0 color-mix(in oklch, var(--surface) 75%, transparent),
+      0 -1px 0 color-mix(in oklch, var(--ink) 30%, transparent);
+    overflow-wrap: anywhere;
+  }
+  :root[data-theme="dark"] .rohling-title,
+  .screen .rohling-title {
+    text-shadow:
+      0 -1px 0 color-mix(in oklch, var(--bg) 90%, transparent),
+      0 1px 0 color-mix(in oklch, var(--ink) 16%, transparent);
+  }
+  .rohling-cat {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* == TOOLBAR == */
+  #lager .lager-toolbar {
+    position: relative;
+    gap: var(--s4) var(--s5);
+    padding-block: var(--s4);
+    border-block: 1px solid var(--line);
+  }
+  #lager .filters {
+    gap: var(--s2);
+  }
+  #lager .search {
+    flex: 1 1 280px;
+    min-block-size: 48px;
+    background: var(--surface);
+  }
+  #lager .search .i {
+    color: var(--muted);
+  }
+  #lager .search input {
+    font-size: 1rem;
+  }
+  /* the native clear button stays; keep its colour quiet */
+  #lager .search input::-webkit-search-cancel-button {
+    filter: grayscale(1);
+    opacity: 0.6;
+  }
+  .search-kbd {
+    flex: none;
+  }
+  #lager .search:focus-within .search-kbd {
+    opacity: 0;
+  }
+  #lager .lager-view .chip {
+    min-block-size: 44px;
+  }
+
+  #lager .lager-meta {
+    align-items: center;
+  }
+  #project-count {
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  #lager .lager-stand {
+    margin: 0 auto 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  @media (min-width: 640px) {
+    #lager .lager-stand::before {
+      content: "· ";
+    }
+  }
+  #lager .lager-stand-no {
+    display: inline-block;
+    max-inline-size: 100%;
+  }
+  /* narrow: the caption gets its own line, so no leading „·“ */
+  @media (max-width: 639.98px) {
+    #lager .lager-stand-no {
+      display: block;
+    }
+    #lager .lager-stand-sep {
+      display: none;
+    }
+  }
+  #lager .lager-film-note {
+    margin: 0 0 var(--s4);
+    padding-block: var(--s2);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--muted);
+  }
+  #lager .lager-film-note::before {
+    content: "";
+    display: inline-block;
+    inline-size: 8px;
+    block-size: 8px;
+    margin-inline-end: 8px;
+    background: var(--alloy-film);
+  }
+  #lager .lager-toolbar[data-disabled] {
+    opacity: 0.5;
+  }
+  #lager .lager-toolbar[data-disabled] :disabled {
+    cursor: not-allowed;
+  }
+  .lager-static .ls {
+    display: none;
+  }
+  .lager-static > li {
+    grid-template-columns: 1fr;
+  }
+  .lager-static > li::before {
+    content: none;
+  }
+  .lager-motto {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+  }
+
+  /* grid */
+  #projects-container.projects-grid {
+    gap: clamp(16px, 1.6vw, 28px);
+  }
+  #projects-container.is-liste {
+    display: block;
+    margin-block-start: 0;
+  }
+  #projects-container.is-liste .lager-table thead th {
+    padding-block-start: var(--s2);
+  }
+  .lager-error {
+    padding: var(--s6) var(--s5);
+    border: 1px dashed var(--control);
+    background: var(--surface);
+  }
+  #lager .empty-state {
+    position: relative;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in oklch, var(--line) 45%, transparent) 14px 15px),
+      var(--surface);
+  }
+  #lager .empty-state p {
+    max-inline-size: 48ch;
+    color: var(--muted);
+  }
+  #lager .load-more-wrap {
+    padding-block: var(--s6) 0;
+  }
+  #lager.section {
+    padding-block-end: var(--section-pad);
+  }
+
+  /* == LISTE (table) == */
+  .lager-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--t-small);
+    font-variant-numeric: tabular-nums;
+  }
+  .lager-table thead th {
+    position: sticky;
+    inset-block-start: var(--header-h);
+    z-index: 1;
+    padding: var(--s3) var(--s3);
+    background: var(--bg);
+    border-block-end: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    text-align: start;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .lt-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 32px;
+    padding: 0 4px;
+    margin-inline: -4px;
+    color: var(--ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+  }
+  .lt-sort-mark {
+    color: var(--muted);
+  }
+  .lt-sort[aria-pressed="true"] .lt-sort-mark {
+    color: var(--accent);
+  }
+  .lager-row {
+    --heat: 0;
+    position: relative;
+    border-block-end: 1px solid var(--line);
+    background: linear-gradient(90deg, color-mix(in oklch, var(--alloy) calc(var(--heat) * 10%), transparent), transparent 70%);
+  }
+  .lager-row:is(:hover, :focus-within) {
+    --heat: 1;
+  }
+  .lager-row td {
+    padding: var(--s3);
+    vertical-align: baseline;
+  }
+  .lager-row .lt-no,
+  .lager-row .lt-jahr,
+  .lager-row .lt-stack,
+  .lager-row .lt-glut,
+  .lager-row .lt-zuletzt {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .lager-row .lt-no {
+    inline-size: 6ch;
+    box-shadow: inset 3px 0 0 var(--alloy);
+    padding-inline-start: var(--s4);
+  }
+  .lager-row .project-link {
+    color: var(--ink);
+    font-weight: 650;
+    font-size: 1rem;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--alloy) calc(30% + var(--heat) * 70%), transparent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+  }
+  .lager-row .plate-badge {
+    margin-inline-start: 6px;
+    vertical-align: 0.1em;
+  }
+  .lt-legierung {
+    white-space: nowrap;
+  }
+  .lt-swatch {
+    display: inline-block;
+    inline-size: 8px;
+    block-size: 8px;
+    margin-inline-end: 8px;
+    background: var(--alloy);
+  }
+  .lt-glow {
+    display: inline-block;
+    min-inline-size: 11ch;
+  }
+  .lager-row[data-glow="glueht"] .lt-glow {
+    color: var(--heat-text);
+    font-weight: 700;
+  }
+  .lager-row .lt-date {
+    color: var(--ink);
+  }
+  .lt-note {
+    font-size: 0.75rem;
+  }
+  .lt-fold {
+    display: none;
+    margin-block-start: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  @media (max-width: 639.98px) {
+    .lager-table :is(.lt-stack, .lt-glut, .lt-zuletzt) {
+      display: none;
+    }
+    .lt-fold {
+      display: block;
+    }
+    .lager-row .lt-no {
+      padding-inline-start: var(--s3);
+    }
+    .lager-table thead th,
+    .lager-row td {
+      padding-inline: var(--s2);
+    }
+    .lt-legierung {
+      white-space: normal;
+    }
+  }
+  .lt-fold-narrow {
+    display: none;
+  }
+  @media (max-width: 479.98px) {
+    .lager-table :is(.lt-legierung, .lt-jahr) {
+      display: none;
+    }
+    .lt-fold-narrow {
+      display: block;
+      color: var(--ink);
+    }
+  }
+
+  #lager .lager-meta .legend {
+    order: 2;
+    margin: 0;
+    max-inline-size: none;
+  }
+  #lager .lager-meta .lager-motto {
+    order: 3;
+  }
+  #lager .lager-meta .legend[open] {
+    order: 4;
+    flex-basis: 100%;
+    padding: 0 var(--s5) var(--s4);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+  #lager .legend[open] p {
+    max-inline-size: 72ch;
+  }
+  #lager .legend > summary {
+    cursor: pointer;
+    gap: var(--s2);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+  }
+  #lager .legend > summary::after {
+    content: "";
+    inline-size: 64px;
+    block-size: 6px;
+    margin-inline-start: var(--s2);
+    background: linear-gradient(90deg, var(--alloy-web), var(--alloy-games), var(--alloy-ai), var(--alloy-film));
+  }
+  #lager .legend p {
+    margin-block-start: var(--s3);
+    line-height: 1.65;
+  }
+
+  /* == MOBILE == */
+  @media (max-width: 1023.98px) {
+    :root.js #lager .lager-toolbar {
+      display: contents;
+    }
+    :root.js #lager .filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-block: var(--s4) var(--s2);
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      border-block-start: 1px solid var(--line);
+      mask-image: linear-gradient(90deg, transparent, black var(--gutter), black calc(100% - 40px), transparent);
+    }
+    :root.js #lager .filters::-webkit-scrollbar {
+      display: none;
+    }
+    :root.js #lager .filters .chip {
+      flex: none;
+    }
+    :root.js #lager .search {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + 8px);
+      z-index: 6;
+      margin-block: var(--s2);
+      box-shadow: 0 10px 24px -16px rgb(var(--shadow-ink) / 0.5);
+    }
+    .search-kbd {
+      display: none;
+    }
+    @media (max-height: 30rem) {
+      :root.js #lager .search {
+        position: static;
+      }
+    }
+    :root.js #lager .lager-options {
+      padding-block-end: var(--s3);
+      border-block-end: 1px solid var(--line);
+    }
+    #lager .lager-options > summary {
+      cursor: pointer;
+      gap: var(--s2);
+    }
+  }
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .lager-table .lt-glut {
+      display: none;
+    }
+  }
+  @media (max-width: 480px) {
+    :root.js #lager .filters {
+      flex-wrap: wrap;
+      overflow: visible;
+      mask-image: none;
+      gap: 8px;
+    }
+  }
+  @media (max-width: 639.98px) {
+    #projects-container.projects-grid {
+      grid-template-columns: 1fr;
+    }
+    #lager .lager-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+    #lager .lager-meta .legend[open] {
+      align-self: stretch;
+      margin-block-start: var(--s2);
+    }
+  }
+  @media (max-width: 599.98px) {
+    #projects-container.projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    #projects-container .plate {
+      --plate-pad: 8px;
+    }
+    #projects-container .plate::before {
+      inset: 4px;
+    }
+    #projects-container .plate .project-link {
+      gap: var(--s2);
+    }
+    #projects-container :is(.plate-no, .plate-kicker, .plate-summary, .plate-arrow, .stamp--lang, .stamp--stars, .stamp--duration) {
+      display: none;
+    }
+    #projects-container .plate-top {
+      padding-inline: 2px;
+      min-block-size: 22px;
+    }
+    #projects-container .plate-top::after {
+      inset-inline: 2px;
+      inset-block-end: -4px;
+    }
+    #projects-container .plate-badges {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+    #projects-container :is(.plate-alloy, .plate-badge) {
+      min-block-size: 20px;
+      padding: 0 5px;
+    }
+    #projects-container .plate-media {
+      margin-block-start: 2px;
+    }
+    #projects-container .plate-body {
+      padding-inline: 2px;
+      gap: 2px;
+    }
+    #projects-container .plate-title {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+      text-wrap: pretty;
+    }
+    #projects-container .plate-title-sub {
+      font-size: 0.8125rem;
+    }
+    #projects-container .plate-stamps {
+      margin-inline: 2px;
+      padding-block-start: 6px;
+      min-block-size: 0;
+      gap: 2px 8px;
+    }
+    #projects-container .plate-seal {
+      inset-block-start: calc(var(--plate-pad) + 34px);
+      inset-inline-end: calc(var(--plate-pad) + 4px);
+      padding: 2px 6px;
+      outline-offset: 1px;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+    }
+    #projects-container .rohling-title {
+      font-size: clamp(1rem, 14cqi, 2rem);
+    }
+    #projects-container :is(.rohling-mark, .rohling-cat) {
+      font-size: 0.625rem;
+    }
+    #projects-container .rohling-mark {
+      inset-block-start: 4px;
+      inset-inline-start: 6px;
+    }
+  }
+
+  /* == CONTRAST / FORCED COLOURS == */
+  @media (prefers-contrast: more) {
+    .plate {
+      border-width: 2px;
+      border-color: var(--muted);
+    }
+    .plate::after,
+    .plate .project-link::before,
+    .rohling::before {
+      display: none;
+    }
+    .plate[data-glow] {
+      box-shadow: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .plate {
+      border: 1px solid CanvasText;
+      box-shadow: none;
+    }
+    .plate::before,
+    .plate::after,
+    .plate .project-link::before,
+    .plate-top::after {
+      display: none;
+    }
+    .plate-alloy,
+    .plate-badge {
+      forced-color-adjust: none;
+      background: ButtonFace;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+    #lager .chip--filter,
+    #lager .chip--filter[data-alloy] {
+      forced-color-adjust: none;
+      transition: none !important;
+      border-color: ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+    #lager .chip--filter[aria-pressed="true"] {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+    }
+    #lager .chip--filter[aria-pressed="true"]::before {
+      background: HighlightText;
+    }
+    #lager .chip--filter:disabled,
+    #lager .chip--filter[aria-disabled="true"] {
+      border-color: GrayText;
+      color: GrayText;
+    }
+    .plate mark,
+    .lager-table mark {
+      background: Mark;
+      color: MarkText;
+    }
+  }
+}
+
+/* == MOTION (opt-in, calm-gated) == */
+@layer sections {
+  @media (prefers-reduced-motion: no-preference) {
+    /* heat grammar: cool slowly … */
+    :root:not([data-motion="paused"]) :is(.plate, .lager-row) {
+      transition:
+        --heat var(--d-cool) var(--ease-cool),
+        border-color var(--d-cool) var(--ease-cool),
+        translate var(--d-cool) var(--ease-cool);
+    }
+    /* … heat up fast */
+    :root:not([data-motion="paused"]) :is(.plate, .lager-row):is(:hover, :focus-within) {
+      transition-duration: var(--d-heat-in), var(--d-heat-in), var(--d-ui);
+      transition-timing-function: var(--ease-std);
+    }
+    /* stamp row inks in when a plate first appears */
+    :root:not([data-motion="paused"]) .plate.is-fresh .plate-stamps {
+      animation: lager-ink var(--d-stamp) var(--ease-cool) both;
+      animation-delay: 160ms;
+    }
+    @keyframes lager-ink {
+      from {
+        clip-path: inset(0 100% 0 0);
+      }
+      to {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+    :root:not([data-motion="paused"]) #project-count.is-ticking {
+      animation: lager-tick var(--d-rebound) var(--ease-std);
+    }
+    @keyframes lager-tick {
+      from {
+        translate: 0 -4px;
+      }
+    }
+
+    :root[data-vt="lager"]::view-transition-old(root),
+    :root[data-vt="lager"]::view-transition-new(root) {
+      animation: none;
+    }
+    ::view-transition-group(.plate) {
+      animation-duration: 420ms;
+      animation-timing-function: var(--ease-cool);
+    }
+    ::view-transition-old(.plate):only-child {
+      animation: lager-quench var(--d-quench) var(--ease-quench) both;
+    }
+    ::view-transition-new(.plate):only-child {
+      animation: lager-reheat 520ms var(--ease-cool) both;
+    }
+    @keyframes lager-quench {
+      to {
+        opacity: 0;
+        filter: brightness(1.5) saturate(0.2) blur(6px);
+        scale: 0.98;
+      }
+    }
+    @keyframes lager-reheat {
+      from {
+        opacity: 0;
+        filter: sepia(1) saturate(3) hue-rotate(-18deg) brightness(1.2);
+        scale: 0.985;
+      }
+      45% {
+        opacity: 1;
+      }
+      to {
+        filter: none;
+      }
+    }
+  }
+}

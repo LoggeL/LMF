@@ -1,0 +1,60 @@
+{
+  "id": "spotify-viz",
+  "story": [
+    "Ich habe meinen kompletten Spotify-Datenexport angefordert und daraus einen eigenen Hörbericht gebaut, lokal aggregiert, ohne OAuth, Server oder Tracking.",
+    "Heraus kamen Hörzeit-Heatmaps, Skip-Raten, Genre-Ströme, Künstler-Treue und ein „Festival Match“, der Lineups mit meinem Hörverhalten abgleicht. Der Bericht deckt den Zeitraum vom 16.10.2017 bis 17.04.2026 ab."
+  ],
+  "highlights": [
+    "Kennzahlen im Bericht: 437.138 Plays, rund 22.476 Stunden, 19.111 Künstler, 75.238 Tracks",
+    "Wochen-Uhr (7×24-Heatmap), 24h-Polaruhr, Jahreskalender im GitHub-Stil",
+    "Skip-Verhalten, „Warum Tracks enden“, Shuffle vs. bewusst gewählt",
+    "Genre-Treemap, Genre-Stream und Rang-Verlauf",
+    "Festival Match: Festival-Lineups gegen die eigene Hörgeschichte",
+    "Vergleichsseite für zwei Nutzer; ein Play zählt ab 30.000 ms"
+  ],
+  "stack": [
+    "TypeScript",
+    "Vite",
+    "SVG",
+    "rough.js",
+    "Node.js (Preprocessing)",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "TypeScript": 76.1,
+    "JavaScript": 12.1,
+    "CSS": 9.9,
+    "HTML": 1.9
+  },
+  "commits": 47,
+  "funFact": {
+    "text": "Die Zahlen stammen direkt aus der Live-Seite: 437.138 Plays und rund 22.476 Stunden Musik seit Oktober 2017.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 3,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/spotify-viz · README, Commit-Historie",
+      "url": "https://github.com/LoggeL/spotify-viz",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/spotify-viz/logge",
+      "url": "https://loggel.github.io/spotify-viz/logge/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/spotify-viz",
+      "url": "https://loggel.github.io/spotify-viz/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/spotify-viz",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

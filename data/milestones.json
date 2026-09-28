@@ -1,0 +1,305 @@
+[
+  {
+    "date": "2014-11-22",
+    "precision": "day",
+    "kind": "film",
+    "text": "Mein erstes Video: „AE Test“, sieben Sekunden After Effects.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=wHEcSFBkM0s",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2015",
+    "precision": "year",
+    "kind": "film",
+    "text": "Selantis Teil 1 wird gedreht. Palatina Films entsteht dafür.",
+    "sources": [
+      {
+        "label": "Palatina-Films-Website: selantis.html",
+        "url": "https://github.com/LoggeL/PalatinaFilms/blob/master/selantis.html",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2015-04-15",
+    "precision": "day",
+    "kind": "code",
+    "text": "GitHub-Account angelegt.",
+    "sources": [
+      {
+        "label": "GitHub API users/LoggeL",
+        "url": "https://api.github.com/users/LoggeL",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2017-03-29",
+    "precision": "day",
+    "kind": "film",
+    "text": "Selantis Teil 1 geht auf YouTube, Teil 2 am Tag danach.",
+    "sources": [
+      {
+        "label": "YouTube-Playlist „Selantis“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2017-07-12",
+    "precision": "day",
+    "kind": "code",
+    "text": "Erstes öffentliches Repo: BetterDiscordThemes.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/BetterDiscordThemes",
+        "url": "https://github.com/LoggeL/BetterDiscordThemes",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2018-06-15",
+    "precision": "day",
+    "kind": "web",
+    "text": "Die Palatina-Films-Website, meine erste richtige Website.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/PalatinaFilms",
+        "url": "https://github.com/LoggeL/PalatinaFilms",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "palatina-films-website"
+  },
+  {
+    "date": "2019-02-19",
+    "precision": "day",
+    "kind": "film",
+    "text": "Feldberg 2019, der erste Ski-Aftermovie in meiner LMF-Playlist.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=-VTPliFOTA0",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "skiing-2019"
+  },
+  {
+    "date": "2020-03-22",
+    "precision": "day",
+    "kind": "film",
+    "text": "Selantis Teil 3. Meine erste Hauptrolle: Harras.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=c9oV3Lh2Lyw",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Palatina-Films-Website: team.html",
+        "url": "https://github.com/LoggeL/PalatinaFilms/blob/master/team.html",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "selantis"
+  },
+  {
+    "date": "2020-08-27",
+    "precision": "day",
+    "kind": "film",
+    "text": "Der Kanaltrailer fürs Kolpingtheater, „Produziert von LMF“. Am selben Tag lege ich das Repo dieser Seite an.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=hlvHRI5d3qc",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/LMF",
+        "url": "https://github.com/LoggeL/LMF",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2020-09-24",
+    "precision": "day",
+    "kind": "galerie",
+    "text": "Die erste von {gallery.nights} Nächten mit der Handykamera. Die Galerie baue ich parallel.",
+    "sources": [
+      {
+        "label": "Galerie im Repo (Dateinamen der Fotos)",
+        "url": "https://github.com/LoggeL/LMF/tree/master/gallery",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Erstes Galerie-Commit",
+        "url": "https://github.com/LoggeL/LMF/commit/52c7a825bafb72e907aa208f7f4b54297e94434b",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2020-09-27",
+    "precision": "day",
+    "kind": "galerie",
+    "text": "Commit in der Galerie: „im getting tired of this“.",
+    "sources": [
+      {
+        "label": "Commit 1f3440a",
+        "url": "https://github.com/LoggeL/LMF/commit/1f3440a3f44f81a58e0e9fd967f0bb447e9ed0df",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2020-12-05",
+    "precision": "day",
+    "kind": "film",
+    "text": "Bad Gastein 2020, mit Flowframes von 25 auf 50 Bilder pro Sekunde gerechnet.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=KYahVktrq_I",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "skiing-2020"
+  },
+  {
+    "date": "2021-01-25",
+    "precision": "day",
+    "kind": "film",
+    "text": "Den Aftermovie zu „Der Kristall der Träume“ entruckelt und auf 60 fps gebracht.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=YOi_lhZ7eJI",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2021-07-05",
+    "precision": "day",
+    "kind": "code",
+    "text": "kolpingCore, mein erstes Backend fürs Theater.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/kolpingCore",
+        "url": "https://github.com/LoggeL/kolpingCore",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2022-12-27",
+    "precision": "day",
+    "kind": "film",
+    "text": "Kurzfilm „Exception“.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=uhlAo1chnlM",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "exception"
+  },
+  {
+    "date": "2023-12-29",
+    "precision": "day",
+    "kind": "film",
+    "text": "Kurzfilm „Infected“, 12:22.",
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=6iNdfsbZWHs",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "infected"
+  },
+  {
+    "date": "2024-10-21",
+    "precision": "day",
+    "kind": "code",
+    "text": "MelodAI.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/MelodAI",
+        "url": "https://github.com/LoggeL/MelodAI",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "melodai"
+  },
+  {
+    "date": "2025-12-25",
+    "precision": "day",
+    "kind": "code",
+    "text": "Weihnachtsnacht: Kurz nach Mitternacht (00:46 Uhr) lege ich BeatGuessr an, um 02:37 Uhr kommt das erste Commit von Coop Sudoku.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/BeatGuessr",
+        "url": "https://github.com/LoggeL/BeatGuessr",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/coop-sudoku",
+        "url": "https://github.com/LoggeL/coop-sudoku",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "date": "2026",
+    "precision": "year",
+    "kind": "life",
+    "text": "„Creepshow“: auf der Bühne als Bote / Diener, dahinter die Website.",
+    "sources": [
+      {
+        "label": "Teamseite kolpingtheater-ramsen.de",
+        "url": "https://kolpingtheater-ramsen.de/team",
+        "checkedAt": "2026-09-28"
+      }
+    ],
+    "projectId": "theater-website"
+  },
+  {
+    "date": "2026-07-15",
+    "precision": "day",
+    "kind": "web",
+    "text": "Drei ShareX-Konzepte in {sharex.seconds} Sekunden angelegt.",
+    "sources": [
+      {
+        "label": "Repo LoggeL/sharex-capture-engine",
+        "url": "https://github.com/LoggeL/sharex-capture-engine",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/sharex-win98",
+        "url": "https://github.com/LoggeL/sharex-win98",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/sharex-afterimage-lab",
+        "url": "https://github.com/LoggeL/sharex-afterimage-lab",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  }
+]

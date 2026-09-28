@@ -1,0 +1,62 @@
+{
+  "id": "setlist",
+  "story": [
+    "Angefangen als Liste der Bands, die ich noch live sehen will. Daraus wurde ein kleines Musiktagebuch mit Konzerten, Wunschliste und 30-Sekunden-Vorschauen direkt beim Bandnamen.",
+    "Das Projekt hieß erst „Sonic Noir“, dann „Setlist“, und läuft inzwischen als „Bands“."
+  ],
+  "highlights": [
+    "Zwei Listen: „Will sehen“ (Bucket List) und „Gesehen“ mit Umschalter pro Band",
+    "Deezer-Vorschauen mit globalem Lautstärkeregler",
+    "Song-Tagebuch mit Stimmungstags und anonymen Emoji-Reaktionen",
+    "Profilseiten unter /<username>, Login mit Passwort",
+    "Bilder mit gecachter Dominanzfarbe und BlurHash",
+    "Anstehende Konzerte über einen Bandsintown-Cache"
+  ],
+  "stack": [
+    "Next.js 15",
+    "TypeScript",
+    "Tailwind CSS v4",
+    "SQLite (better-sqlite3)",
+    "Sharp",
+    "BlurHash",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 86.6,
+    "HTML": 7.2,
+    "CSS": 3.5,
+    "JavaScript": 2.6,
+    "Dockerfile": 0.1
+  },
+  "commits": 78,
+  "funFact": {
+    "text": "Namensgeschichte laut Commits: „Sonic Noir“ → „Setlist“ (30.03.2026) → „Bands“ (20.07.2026).",
+    "source": 0
+  },
+  "refs": {
+    "repo": 3,
+    "live": 2
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/setlist · README, bands.json, Commit-Historie",
+      "url": "https://github.com/LoggeL/setlist",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite setlist.logge.top · 404",
+      "url": "https://setlist.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite bands.logge.top",
+      "url": "https://bands.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/setlist",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

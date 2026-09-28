@@ -1,0 +1,54 @@
+{
+  "id": "voll-o-meter",
+  "story": [
+    "Voll-O-Meter ist ein augenzwinkernder Promillerechner fürs Handy: Gewicht, Körpertyp und Abbaurate eingeben, Getränke antippen und eine Live-Schätzung bekommen.",
+    "Freunde haben früh Cocktails, Bilder und Sounds beigesteuert. Je höher der Wert, desto mehr kippt und verschwimmt die Oberfläche. Wichtig bleibt: Es ist nur eine Schätzung und keine Grundlage fürs Fahren."
+  ],
+  "highlights": [
+    "Live-Schätzung in Promille mit Aufnahme- und Abbauphase, Abbaurate 0,08 bis 0,15 ‰/h wählbar",
+    "Berücksichtigt Gewicht, Geschlecht, Körpertyp und „mit vollem Magen“",
+    "Getränkekategorien: Cocktails, Weinschorle, Bier, Mischbier, Kurze, Sonstiges, dazu eigene Getränke",
+    "„Party-Chaos“: Die Oberfläche neigt sich, verschiebt sich und verschwimmt mit steigendem Wert (CSS-Variablen)",
+    "Trinkgeräusche beim Hinzufügen, Hell/Dunkel-Theme",
+    "Daten bleiben lokal im Browser; per Web-App-Manifest installierbar"
+  ],
+  "stack": [
+    "JavaScript (Vanilla)",
+    "CSS",
+    "HTML",
+    "localStorage",
+    "Web App Manifest",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "JavaScript": 46.9,
+    "CSS": 42.5,
+    "HTML": 10.6
+  },
+  "commits": 60,
+  "funFact": {
+    "text": "Am ersten Tag (30.06.2023) gab es neben dem „first commit“ gleich drei Fixes an der Promilleberechnung, einer davon heißt „Fix BAC calc (again)“.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/VollOMeter · main.js, index.html, Commit-Historie; keine README vorhanden",
+      "url": "https://github.com/LoggeL/VollOMeter",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/VollOMeter",
+      "url": "https://loggel.github.io/VollOMeter/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/VollOMeter",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

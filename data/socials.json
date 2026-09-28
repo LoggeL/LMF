@@ -2,19 +2,19 @@
   {
     "id": "mail-contact",
     "title": "Mail - hyper.xjo@gmail.com",
-    "description": "The best channel for project ideas and collaborations.",
+    "description": "Für Projektideen und Fragen.",
     "link": "mailto:hyper.xjo@gmail.com"
   },
   {
     "id": "discord-contact",
-    "title": "Discord - Logge#1337",
-    "description": "Find me on Discord for a quick conversation.",
+    "title": "Discord",
+    "description": "Für eine Unterhaltung auf Discord.",
     "link": "https://discord.gg/ma457gpGvw"
   },
   {
     "id": "telegram-contact",
     "title": "Telegram - @LoggeL",
-    "description": "Reach me directly on Telegram.",
+    "description": "Direkt auf Telegram erreichbar.",
     "link": "https://t.me/LoggeL"
   }
 ]

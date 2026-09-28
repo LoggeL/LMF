@@ -1,0 +1,60 @@
+{
+  "id": "spyfall",
+  "story": [
+    "Meine Version des Deduktionsspiels Spyfall für Spieleabende: Das Handy geht reihum, jede Person sieht ihren Ort und ihre Rolle, nur der Spion weiß nichts. Es ist seit 2019 als installierbare Web-App mit Offline-Unterstützung online und wurde 2024 mit neuer Oberfläche, mehr Orten und überarbeitetem Regelwerk aufgefrischt."
+  ],
+  "highlights": [
+    "Hot-Seat-Modus: ein Gerät, Rollen werden nacheinander aufgedeckt",
+    "33 Orte (laut Live-Seite) mit Rollen je Ort",
+    "Optionen: Blacklist gegen Wiederholungen, Mehrfachnennung von Rollen, Farben",
+    "Eingebautes Regelwerk",
+    "PWA mit Service Worker (Workbox) für Offline-Nutzung"
+  ],
+  "stack": [
+    "JavaScript (Vanilla)",
+    "HTML",
+    "CSS",
+    "Service Worker / Workbox",
+    "Web App Manifest",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "JavaScript": 66.9,
+    "HTML": 24,
+    "CSS": 9.1
+  },
+  "commits": 16,
+  "facts": [
+    {
+      "key": "places",
+      "label": "Orte",
+      "value": "33",
+      "source": 1
+    }
+  ],
+  "funFact": {
+    "text": "Ein Commit vom Juni 2019 heißt „Neue Rollen thx to Wolverine“.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/spyfall · main.js, Dateiliste, Commit-Historie",
+      "url": "https://github.com/LoggeL/spyfall",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/spyfall",
+      "url": "https://loggel.github.io/spyfall/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/spyfall",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

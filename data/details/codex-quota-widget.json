@@ -1,0 +1,65 @@
+{
+  "id": "codex-quota-widget",
+  "story": [
+    "Codex-Limits direkt auf dem Homescreen: eine Android-App mit 4x1-Widget, die mehrere ChatGPT-Konten getrennt anzeigt, mit Verbrauchsbalken, Reset-Countdown und einer linearen Prognose, wo man beim Reset landet. Prozentwerte verschiedener Konten werden bewusst nie addiert."
+  ],
+  "highlights": [
+    "Mehrere Konten nebeneinander, jedes mit eigenen Balken, Reset-Zeiten, Cache und Login",
+    "Prognose und Budgetvergleich, z. B. „W 25→175%“ oder „+11pp“ über dem Zeitbudget",
+    "Weißer Marker zeigt den erwarteten Verbrauch; Amber ab 7, Rot ab 15 Prozentpunkten über Budget",
+    "Kompaktes 4x1-Layout (250 × 56 dp) mit bis zu 130 % Schriftskalierung",
+    "Zugangsdaten und Cache mit Android Keystore verschlüsselt; Refresh etwa alle 30 Minuten",
+    "Login über den Codex-Device-Code-Flow; nicht-offizieller Client"
+  ],
+  "stack": [
+    "Kotlin",
+    "Android (RemoteViews, AppWidget)",
+    "Android Keystore",
+    "Python (Release-Packaging)"
+  ],
+  "languages": {
+    "Kotlin": 95.7,
+    "Python": 2.2,
+    "JavaScript": 2.1
+  },
+  "commits": 23,
+  "facts": [
+    {
+      "key": "release",
+      "label": "Aktuelles Release",
+      "value": "v1.0.3",
+      "source": 0
+    }
+  ],
+  "funFact": {
+    "text": "Die README enthält die komplette Prognoseformel: projected = used% × D / elapsed. Prognosen dürfen über 100 % gehen und werden absichtlich nicht gekappt.",
+    "source": 0
+  },
+  "media": [
+    {
+      "src": "assets/img/CodexQuotaWidget.webp",
+      "alt": "Codex-Quota-Widget mit zwei Testkonten „Privat“ und „Arbeit“, je mit Verbrauchsbalken, Prognose und Reset in sechs Tagen",
+      "caption": "Widget-Vorschau mit Testdaten (aus dem Repo)",
+      "kind": "strip",
+      "width": 945,
+      "height": 147,
+      "source": 0
+    }
+  ],
+  "refs": {
+    "repo": 1,
+    "live": 0
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/codex-quota-widget · README v1.0.3, Tags, Commit-Historie",
+      "url": "https://github.com/LoggeL/codex-quota-widget",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/codex-quota-widget",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

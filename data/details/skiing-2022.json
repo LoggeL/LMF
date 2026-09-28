@@ -1,0 +1,22 @@
+{
+  "id": "skiing-2022",
+  "funFact": {
+    "text": "Die YouTube-Beschreibung besteht aus zwei Wörtern: „Hallo Welt“.",
+    "source": 0
+  },
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=GVPzXOix2sk",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "jupeters.de (Filme der Gruppe)",
+      "url": "https://jupeters.de",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

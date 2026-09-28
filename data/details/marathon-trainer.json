@@ -1,0 +1,52 @@
+{
+  "id": "marathon-trainer",
+  "story": [
+    "Mein Trainings-Cockpit: Countdown zur Startlinie, 14-Wochen-Plan, Tagesansicht und Rennbereitschaft.",
+    "Das Projekt ist mit meinen Zielen gewachsen und hatte schon mehrere Leben. Workouts lassen sich mit Strava-Link speichern, die KI-Analyse läuft über meinen Agenten."
+  ],
+  "highlights": [
+    "14-Wochen-Plan mit Tagesansicht „Heute & Fortschritt“ und Trainingswoche x von 14",
+    "Karte zur Rennbereitschaft, Kennzahlen „Deine Form in Zahlen“ (Recharts)",
+    "Workout-Log mit Strava-Link und Bild-Uploads, gespeichert in SQLite",
+    "API-Endpunkte für Plan, Review und Readiness, über die ein externer KI-Agent Workouts einliest"
+  ],
+  "stack": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "SQLite (better-sqlite3)",
+    "Recharts",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 90.4,
+    "JavaScript": 6.4,
+    "CSS": 2.2,
+    "Dockerfile": 1
+  },
+  "commits": 120,
+  "note": "Das Repo ist privat. Ziele, Zeiten und Termine zeige ich hier bewusst nicht.",
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/marathon-trainer (privat, nicht öffentlich einsehbar) · README, Quellcode src/lib/db.ts, src/app/api/analyze/route.ts, Commit-Historie",
+      "url": "https://github.com/LoggeL/marathon-trainer",
+      "checkedAt": "2026-09-28",
+      "private": true
+    },
+    {
+      "label": "Live-Seite marathon.logge.top",
+      "url": "https://marathon.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen (privat, nicht öffentlich einsehbar)",
+      "url": "https://api.github.com/repos/LoggeL/marathon-trainer",
+      "checkedAt": "2026-09-28",
+      "private": true
+    }
+  ]
+}

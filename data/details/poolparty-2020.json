@@ -1,0 +1,21 @@
+{
+  "id": "poolparty-2020",
+  "story": [
+    "Der offizielle Aftermovie der JP Poolparty 2020. So ist er auch auf jupeters.de verlinkt."
+  ],
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=6Qai_0gckB4",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "jupeters.de (Filme der Gruppe)",
+      "url": "https://jupeters.de",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

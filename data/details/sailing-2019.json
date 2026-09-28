@@ -1,0 +1,23 @@
+{
+  "id": "sailing-2019",
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=Vt3wFY_ldt4",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "jupeters.de (Filme der Gruppe)",
+      "url": "https://jupeters.de",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "YouTube-Playlist „LMF“",
+      "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

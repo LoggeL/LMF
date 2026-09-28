@@ -1,0 +1,258 @@
+/*
+ * css/sections/esse.css  [WP3] — Anheizen (#esse): hero copy refinements + the Esse panel (§2.1, §5.1).
+ * The panel is an instrument: a fixed-aspect stage (poster → canvas), a year scale, the Glut caption.
+ * Fixed stage aspects (10:11 desktop, 16:10 below 1024 px) keep the rendered poster, the WebGL frame
+ * and the DOM year axis in exact register.
+ */
+@layer sections {
+  /* Copy */
+  #esse .hero-title {
+    display: block;
+  }
+  #esse .hero-line {
+    display: inline;
+  }
+  #esse .hero-line:first-child::after {
+    content: "\A";
+    white-space: pre;
+  }
+  /* the stamp needs a box to scale; it only happens long after LCP */
+  #esse .hero-stamp.is-stamped {
+    display: inline-block;
+  }
+  #esse .hero-title em {
+    --heat: 0;
+    transform-origin: 0.1em 80%;
+    text-shadow: 0 0 calc(var(--heat) * 0.28em) color-mix(in oklch, var(--heat-3) calc(var(--heat) * 75%), transparent);
+  }
+  #esse .hero-stamp.is-hot {
+    --heat: 1;
+  }
+
+  /* Panel */
+  #esse .esse-panel {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    aspect-ratio: auto;
+    align-self: end;
+    margin: 0;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    box-shadow: 0 48px 90px -48px rgb(var(--shadow-ink) / 0.5);
+  }
+  #esse .esse-stage {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    grid-row: 1;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    contain: layout paint;
+    background: var(--bg);
+  }
+  /* Registration corners: the frame of an instrument, not content. */
+  #esse .esse-stage::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    z-index: 3;
+    pointer-events: none;
+    --c: color-mix(in srgb, var(--control) 70%, transparent);
+    background:
+      linear-gradient(var(--c), var(--c)) 0 0 / 10px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) 0 0 / 1px 10px no-repeat,
+      linear-gradient(var(--c), var(--c)) 100% 0 / 10px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) 100% 0 / 1px 10px no-repeat,
+      linear-gradient(var(--c), var(--c)) 0 100% / 10px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) 0 100% / 1px 10px no-repeat,
+      linear-gradient(var(--c), var(--c)) 100% 100% / 10px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) 100% 100% / 1px 10px no-repeat;
+  }
+  #esse .esse-poster {
+    z-index: 0;
+  }
+  #esse .esse-still,
+  #esse .esse-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+  #esse .esse-still {
+    z-index: 1;
+  }
+  #esse .esse-canvas {
+    z-index: 2;
+    opacity: 0;
+    cursor: crosshair;
+    touch-action: manipulation;
+  }
+  #esse .esse-canvas.is-live {
+    opacity: 1;
+  }
+
+  #esse .esse-axis {
+    position: relative;
+    grid-row: 2;
+    block-size: 30px;
+    border-block-start: 1px solid var(--line);
+    background: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    overflow: hidden;
+  }
+  #esse .esse-axis::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: var(--m, 5%);
+    block-size: 3px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--heat-1) 60%, transparent), var(--heat-2) 70%, var(--heat-3) 92%, var(--heat-4));
+    opacity: 0.55;
+  }
+  #esse .esse-tick {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--x, 0);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0 8px 5px;
+  }
+  #esse .esse-tick::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    inline-size: 1px;
+    block-size: 11px;
+    background: var(--control);
+  }
+  #esse .esse-tick:last-child {
+    color: var(--ink);
+  }
+
+  /* Caption (real text), hint, hover readout */
+  #esse .esse-caption {
+    grid-row: 3;
+    padding: var(--s3) var(--s4) var(--s4);
+    border-block-start: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  #esse .esse-panel[data-embers] .esse-caption {
+    display: grid;
+  }
+  #esse .esse-readout {
+    position: absolute;
+    z-index: 4;
+    inset-block-start: 16px;
+    inset-inline-start: 16px;
+    margin: 0;
+    padding: 6px 9px;
+    max-inline-size: calc(100% - 32px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border: 1px solid color-mix(in srgb, var(--heat-3) 55%, transparent);
+    color: var(--ink);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+  #esse .esse-hint {
+    position: static;
+    grid-row: 4;
+    margin: 0;
+    padding: 0 var(--s4) var(--s3);
+    background: var(--surface);
+    color: var(--heat-text);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  #esse .esse-hint {
+    min-block-size: calc(0.75rem * 1.4 + var(--s3));
+  }
+  :root.js #esse .esse-panel:not([data-embers]) .esse-caption {
+    display: grid;
+    visibility: hidden;
+  }
+  :root.js #esse .esse-caption {
+    padding-block-end: var(--s2);
+  }
+  :root:not(.js) #esse .esse-axis {
+    display: none;
+  }
+  :root:not(.js) #esse .esse-hint {
+    position: absolute;
+    min-block-size: 0;
+    padding: 0;
+  }
+
+  /* Desktop: 12 columns, panel 7–12, 10:11 stage, ≤ 78svh */
+  @media (min-width: 1024px) {
+    #esse .esse-panel {
+      aspect-ratio: auto;
+      max-block-size: none;
+      inline-size: min(100%, calc((78svh - 96px) * 10 / 11));
+      min-inline-size: min(100%, 420px);
+      justify-self: end;
+    }
+    #esse .esse-stage {
+      aspect-ratio: 10 / 11;
+    }
+  }
+
+  @media (max-width: 1023.98px) {
+    #esse .hero-inner {
+      row-gap: var(--s6);
+    }
+    #esse .esse-tick[data-minor] {
+      font-size: 0;
+    }
+    #esse .esse-tick[data-minor]::before {
+      block-size: 6px;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    #esse .esse-stage::after,
+    #esse .esse-axis::before {
+      display: none;
+    }
+  }
+  @media (forced-colors: active) {
+    #esse .esse-panel,
+    #esse .esse-axis,
+    #esse .esse-caption {
+      border-color: CanvasText;
+    }
+    #esse .esse-tick::before {
+      background: CanvasText;
+    }
+    #esse .esse-still {
+      display: none;
+    }
+  }
+}
+
+@layer sections {
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) #esse .esse-canvas {
+      transition: opacity 400ms var(--ease-std);
+    }
+    :root:not([data-motion="paused"]) #esse .hero-title em {
+      transition: --heat var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) #esse .hero-stamp.is-hot {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+}

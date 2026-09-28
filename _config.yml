@@ -1,0 +1,56 @@
+# GitHub Pages (branch deploy, Jekyll). The site itself is plain static files: nothing here has
+# front matter, so Jekyll only copies. This file keeps dev-only and legacy files out of the
+# published artifact; they stay in the repo. (Jekyll 3: this list replaces the default excludes,
+# so node_modules and the lockfile are listed again.)
+exclude:
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - playwright.config.js
+  - README.md
+  - docs/
+  - scripts/
+  - tests/
+  - work/
+  - test-results/
+  - playwright-report/
+  # stylesheets and font of the previous site version; nothing in the redesign loads them
+  # (css/paper.min.css stays: index.old.html, the 2020 site, still links it)
+  - css/lmf.css
+  - css/lmf.min.css
+  - css/normalize.min.css
+  - assets/fonts/Montserrat.woff2
+  # encoder binary (10 MB), kept in the repo on the owner's instruction, never served
+  - assets/img/avifenc.exe
+  # gallery full-size originals: 60 of 77 still carry GPS EXIF (spec §3.16 #2). Nothing links to them
+  # (the gallery uses large/medium/small/thumb, which have no GPS); they stay in the repo, unserved,
+  # until the owner approves scripts/strip-gps.mjs. gallery/assets/js/main.js is the legacy script
+  # that linked them; gallery/index.html no longer loads it.
+  - gallery/assets/img/original/
+  # Marathon Trainer screenshots: race, date, goal time and training log (§3.16 #5). Unreferenced.
+  - assets/img/MarathonTrainer.png
+  - assets/img/MarathonTrainer.jpg
+  - assets/img/MarathonTrainer.webp
+  - assets/img/MarathonTrainer.avif
+  # old Kolpingtheater screenshot with ensemble faces (§2.3), replaced by KolpingtheaterSaalplan.webp
+  - assets/img/Kolpingtheater.jpg
+  - assets/img/Kolpingtheater.webp
+  - assets/img/Kolpingtheater.avif
+  # Serotonin is hidden (docs/decisions.json "serotonin": "hide", §3.16 #1). Unreferenced.
+  - assets/img/Serotonin.webp
+  # screenshots of the projects the owner removed on 28.09.2026 (docs/decisions.json → excludedProjects).
+  # They stay on disk as instructed, unreferenced and unserved.
+  - assets/img/HeatlineSolara.webp
+  - assets/img/Theatermon.webp
+  - assets/img/Nachtschicht.webp
+  - assets/img/Frontier.jpg
+  - assets/img/Frontier.webp
+  - assets/img/Frontier.avif
+  - assets/img/StaticPages.webp
+  - assets/img/Rectify.webp
+  - assets/img/GuessTheModel.webp
+  - assets/img/SongDomino.webp
+  - assets/img/CreepshowRPG.webp
+  - assets/img/PulseFieldMonitor.webp
+  - assets/img/Kerweborsch.webp
+  - assets/img/InfectedOrigins.webp

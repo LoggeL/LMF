@@ -3,48 +3,117 @@
     "id": "gummibaerenbande",
     "title": "Gummibärenbande",
     "category": "Gaming",
-    "description": "A friendly German gaming Discord community.",
+    "description": "Eine deutschsprachige Gaming-Community auf Discord. Der Einladungslink hier stammt von meinem Account.",
     "video": "assets/video/gummibaeren.webm",
-    "link": "https://discord.gg/K7Tjtfq"
+    "link": "https://discord.gg/K7Tjtfq",
+    "sources": [
+      {
+        "label": "Discord-Einladung (Invite-API)",
+        "url": "https://discord.com/api/v9/invites/K7Tjtfq?with_counts=true",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   },
   {
     "id": "kolpingtheater",
     "title": "Kolpingtheater Ramsen",
     "category": "Theater",
-    "description": "A small but great local theater group.",
+    "description": "Theatergruppe in Ramsen. Website, Werkzeuge, ein Kartenspiel und 2026 eine Rolle auf der Bühne.",
     "image": "assets/svg/KolpingLogo.svg",
-    "link": "http://theater.kolping-ramsen.de"
+    "link": "https://kolpingtheater-ramsen.de",
+    "place": "Ramsen",
+    "sources": [
+      {
+        "label": "Teamseite kolpingtheater-ramsen.de",
+        "url": "https://kolpingtheater-ramsen.de/team",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "GitHub-Organisation Kolpingtheater-Ramsen",
+        "url": "https://github.com/Kolpingtheater-Ramsen",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   },
   {
     "id": "palatina-films",
     "title": "Palatina Films",
     "category": "Movie Group",
-    "description": "A small local movie group creating films together.",
+    "description": "Die Filmgruppe, für die ich VFX gemacht, die Website gebaut und mitgespielt habe.",
     "image": "assets/svg/palatinaFilms.svg",
-    "link": "https://palatina-films.de"
+    "link": "https://loggel.github.io/PalatinaFilms/",
+    "sources": [
+      {
+        "label": "Palatina-Films-Website: team.html",
+        "url": "https://github.com/LoggeL/PalatinaFilms/blob/master/team.html",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Archiv der Website",
+        "url": "https://loggel.github.io/PalatinaFilms/",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   },
   {
     "id": "jp",
     "title": "JP",
     "category": "Event Management",
-    "description": "Poolparty organizer, trip planner, and bus lover.",
+    "description": "Poolpartys, gemeinsame Reisen und die Begeisterung für Busse.",
     "image": "assets/svg/jp.svg",
-    "link": "https://jupeters.de"
+    "link": "https://jupeters.de",
+    "place": "Ramsen",
+    "sources": [
+      {
+        "label": "jpCore-README: „the annual event in Ramsen, Germany“",
+        "url": "https://github.com/LoggeL/jpCore",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   },
   {
     "id": "cfw",
     "title": "CFW",
     "category": "Media",
-    "description": "Train and boat enthusiast with a practical creative streak.",
+    "description": "Ein YouTube-Kanal über Ausflüge, Reisen und Wanderungen. Für CFW habe ich ein Karteikartensystem gebaut.",
     "image": "assets/svg/CFW.svg",
-    "link": "https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w"
+    "link": "https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w",
+    "sources": [
+      {
+        "label": "YouTube-Kanal CFW",
+        "url": "https://www.youtube.com/channel/UClU8mK17SZwqCLDES0olV1w",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/kartei: „Karteikartensystem für CFW“",
+        "url": "https://github.com/LoggeL/kartei",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   },
   {
     "id": "xenon",
     "title": "Xenon",
     "category": "Discord Bot",
-    "description": "Discord backups, templates, and more.",
+    "description": "Mein eigenes Projekt: ein KI-Support-Bot, der nur aus der offiziellen Xenon-Doku antwortet. Kein offizieller Xenon-Bot.",
     "image": "assets/svg/xenon.svg",
-    "link": "https://xenon.bot"
+    "link": "https://github.com/LoggeL/xenon-support-bot",
+    "sources": [
+      {
+        "label": "xenon.bot",
+        "url": "https://xenon.bot",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Repo LoggeL/xenon-support-bot",
+        "url": "https://github.com/LoggeL/xenon-support-bot",
+        "checkedAt": "2026-09-28"
+      }
+    ]
   }
 ]

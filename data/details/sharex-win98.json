@@ -1,0 +1,51 @@
+{
+  "id": "sharex-win98",
+  "story": [
+    "Was wäre, wenn die ShareX-Website ein Windows-98-Desktop wäre? Dieses Konzept beantwortet das mit einem funktionierenden Retro-Desktop: ziehbare Fenster, Startmenü, Capture-Assistent, Upload-Fortschritt und Dialoge.",
+    "Das Original-Logo bleibt erhalten, für Handys gibt es eine eigene Fallback-Ansicht."
+  ],
+  "highlights": [
+    "Ziehbare Fenster, Startmenü und Dialoge im Win98-Stil",
+    "Desktop-Icons wie „My Computer“, „ShareX Capture Wizard“, „My Uploads“ und „Recycle Bin“",
+    "Simulierte Capture-Flows und Upload-Fortschrittsbalken",
+    "Responsive Mobile-Fallback"
+  ],
+  "stack": [
+    "JavaScript",
+    "CSS",
+    "HTML",
+    "Vite",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "CSS": 41.4,
+    "HTML": 35.9,
+    "JavaScript": 22.7
+  },
+  "commits": 1,
+  "funFact": {
+    "text": "Mit einem Stern ist es das einzige der drei ShareX-Konzepte, das auf GitHub markiert wurde (Stand 28.09.2026).",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/sharex-win98 · README, Metadaten",
+      "url": "https://github.com/LoggeL/sharex-win98",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/sharex-win98",
+      "url": "https://loggel.github.io/sharex-win98/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/sharex-win98",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

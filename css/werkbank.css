@@ -1,0 +1,1647 @@
+/*
+ * css/werkbank.css  [WP2]  (lazy: injected on first idle by main.js, or on first intent by werkbank.js)
+ * Werkbank (§2.5, §5.4): dialog, hero stage, spec sheet, language bar, Punze popover, film facade.
+ */
+@layer sections {
+  /* ═══════════════════════════════════════ DIALOG ═══════════════════════════════════════ */
+  #werkbank.project-dialog {
+    --wb-pad: clamp(16px, 3vw, 48px);
+    inline-size: min(1280px, 100vw - 48px);
+    block-size: calc(100dvh - 48px);
+    max-block-size: calc(100dvh - 48px);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    box-shadow: 0 40px 120px -40px rgb(var(--shadow-ink) / 0.6);
+  }
+  /* one column that may shrink below its content's min-content (320 px reflow, WCAG 1.4.10) */
+  #werkbank.project-dialog[open] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #werkbank.project-dialog[open] > * {
+    min-inline-size: 0;
+  }
+  #werkbank.project-dialog::backdrop {
+    background:
+      radial-gradient(80% 60% at 50% 100%, color-mix(in oklch, var(--heat-1) 40%, transparent), transparent 70%),
+      color-mix(in srgb, var(--heat-0) 84%, transparent);
+    backdrop-filter: blur(3px) saturate(0.8);
+  }
+  :root.wb-open {
+    overflow: hidden;
+  }
+
+  /* ── top bar (always dark) ── */
+  #werkbank .wb-bar {
+    position: relative;
+    z-index: 4;
+    gap: var(--s2) var(--s3);
+    padding: 8px clamp(12px, 2vw, 24px);
+    border-block-end: 1px solid var(--line);
+    box-shadow: 0 1px 0 color-mix(in oklch, var(--alloy) 60%, transparent);
+  }
+  #werkbank .wb-back {
+    order: 0;
+    color: var(--ink);
+    padding-inline: var(--s2) var(--s3);
+    border-radius: var(--r-button);
+  }
+  #werkbank .wb-back:hover {
+    color: var(--accent);
+  }
+  #werkbank .wb-meta {
+    order: 1;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #werkbank[data-glow="glueht"] .wb-meta {
+    color: var(--heat-text);
+  }
+  #werkbank .wb-nav {
+    order: 2;
+    display: flex;
+    gap: var(--s1);
+  }
+  #werkbank .wb-nav button {
+    position: relative;
+    gap: 8px;
+    padding-inline: var(--s3);
+    border: 1px solid var(--control);
+    border-radius: var(--r-button);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  #werkbank .wb-nav button:hover:not(:disabled) {
+    border-color: var(--ink);
+  }
+  @media (min-width: 1024px) {
+    /* desktop: 44 px icon buttons; the label stays for screen readers, the tooltip names the neighbour */
+    #werkbank .wb-nav button {
+      justify-content: center;
+      inline-size: 44px;
+      min-block-size: 44px;
+      padding: 0;
+    }
+    #werkbank .wb-nav-label {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    #werkbank .wb-nav button[data-tip]:not([data-tip=""])::after {
+      content: attr(data-tip);
+      /* the tooltip is visual only: empty alt text keeps the name „Nächstes Werkstück“ */
+      content: attr(data-tip) / "";
+      position: absolute;
+      inset-block-start: calc(100% + 8px);
+      inset-inline-start: 50%;
+      z-index: 5;
+      inline-size: max-content;
+      max-inline-size: 28ch;
+      padding: 6px 10px;
+      border: 1px solid var(--control);
+      border-radius: var(--r-button);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1.3;
+      text-align: start;
+      white-space: normal;
+      translate: -50% 0;
+      box-shadow: 0 12px 30px -12px rgb(var(--shadow-ink) / 0.7);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--d-ui) var(--ease-std);
+    }
+    #werkbank .wb-nav button:is(:hover, :focus-visible):not(:disabled)::after {
+      opacity: 1;
+      transition-delay: 250ms;
+    }
+    #werkbank .wb-meta {
+      flex: 1;
+    }
+  }
+  #werkbank .wb-nav button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  #werkbank .wb-punze {
+    order: 3;
+  }
+  #werkbank .wb-punze:empty {
+    display: none;
+  }
+  #werkbank .wb-close {
+    order: 4;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  #werkbank .wb-close:hover {
+    border-color: var(--ink);
+  }
+  /* Opened by pointer or deep link: focus sits on „Schließen“ (for screen readers and Esc), but the
+     ring stays quiet so it does not read as a pressed button. The first key press restores it. */
+  #werkbank .wb-close[data-quiet]:focus-visible {
+    outline: none;
+    border-color: var(--ink);
+  }
+  #werkbank .wb-meta-m {
+    display: none;
+  }
+
+  /* ── scroll area ── */
+  #werkbank .wb-scroll {
+    position: relative;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-top: var(--s5);
+    scrollbar-width: thin;
+    scrollbar-color: var(--control) transparent;
+  }
+
+  /* ═══════════════════════════════════════ HERO ═══════════════════════════════════════ */
+  #werkbank .wb-hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(20px, 3.4vw, 48px) var(--wb-pad);
+    background:
+      radial-gradient(70% 90% at 50% 110%, color-mix(in oklch, var(--alloy) 34%, transparent), transparent 70%),
+      radial-gradient(40% 50% at 50% 100%, color-mix(in oklch, var(--heat-2) 28%, transparent), transparent 75%),
+      var(--bg);
+    overflow: hidden;
+  }
+  #werkbank .wb-hero:empty {
+    display: none;
+  }
+  #werkbank .wb-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--grain);
+    opacity: 0.08;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  #werkbank .wb-hero-media {
+    position: relative;
+    z-index: 1;
+    inline-size: min(100%, 1040px);
+  }
+  #werkbank .wb-hero-img,
+  #werkbank .wb-hero-media > img {
+    display: block;
+    inline-size: auto;
+    max-inline-size: 100%;
+    max-block-size: min(58vh, 620px);
+    margin-inline: auto;
+    object-fit: contain;
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--ink) 8%, transparent),
+      0 30px 80px -30px rgb(var(--shadow-ink) / 0.9);
+  }
+  #werkbank .wb-hero-media--rohling {
+    aspect-ratio: 16 / 10;
+    max-block-size: min(54vh, 560px);
+    inline-size: min(100%, calc(min(54vh, 560px) * 1.6));
+    container-type: inline-size;
+    box-shadow: 0 30px 80px -30px rgb(var(--shadow-ink) / 0.9);
+  }
+  #werkbank .wb-hero-rohling .rohling-title {
+    font-size: clamp(2.5rem, 12cqi, 6rem);
+  }
+  /* Codex strip: 945×147 on its own dark stage, never forced into 16:10 */
+  #werkbank .wb-hero-media--strip {
+    display: grid;
+    gap: var(--s3);
+    justify-items: center;
+    margin: 0;
+    padding: clamp(24px, 5vw, 64px) 0;
+    background: transparent;
+  }
+  #werkbank .wb-hero-media--strip img {
+    inline-size: min(100%, 945px);
+    block-size: auto;
+    max-block-size: none;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -24px rgb(var(--shadow-ink) / 0.9);
+  }
+  #werkbank .wb-hero-media--strip figcaption {
+    color: var(--muted);
+  }
+
+  /* ── film facade ── */
+  .wb-film {
+    display: grid;
+    gap: var(--s3);
+    justify-items: center;
+  }
+  .wb-film-frame {
+    position: relative;
+    inline-size: min(100%, calc((min(62vh, 600px) - 68px) * 16 / 9));
+    /* never wider than the poster (js/werkbank/werkbank.js sets --poster-w): no soft upscales */
+    max-inline-size: var(--poster-w, none);
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--ink) 8%, transparent),
+      0 30px 80px -30px rgb(var(--shadow-ink) / 0.9);
+  }
+  /* vertical films: the poster (a 16:9 thumbnail) keeps its own frame; 9:16 only once it plays */
+  .wb-film--portrait.is-playing .wb-film-frame {
+    inline-size: min(100%, calc(min(80vh, 760px) * 9 / 16));
+    aspect-ratio: 9 / 16;
+  }
+  .wb-film--portrait:not(.is-playing) .wb-film-bed {
+    display: none;
+  }
+  .wb-film-poster,
+  #werkbank .wb-film-poster > img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    box-shadow: none !important;
+    max-block-size: none !important;
+  }
+  .wb-film-poster {
+    container-type: inline-size;
+  }
+  #werkbank .wb-film-poster > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  /* vertical film, landscape thumbnail: show it whole, on a blurred bed of itself */
+  .wb-film-bed {
+    position: absolute;
+    inset: -40px;
+  }
+  #werkbank .wb-film-bed > img {
+    inline-size: 100%;
+    block-size: 100%;
+    max-block-size: none;
+    object-fit: cover;
+    filter: blur(28px) saturate(1.2) brightness(0.55);
+    box-shadow: none;
+  }
+  #werkbank .wb-film--portrait .wb-film-poster > img {
+    object-fit: cover;
+  }
+  /* Before the click the frame is poster + control bar: the poster keeps 16:9 and nothing sits on
+     it, so its own lettering (Rohling type, thumbnail titles) stays readable. The button still
+     covers both, so a click anywhere plays. */
+  .wb-film:not(.is-playing) .wb-film-frame {
+    display: grid;
+    grid-template-rows: auto var(--film-bar, 68px);
+    aspect-ratio: auto;
+    border-block-end: 2px solid color-mix(in oklch, var(--alloy) 70%, transparent);
+  }
+  .wb-film:not(.is-playing) .wb-film-poster {
+    position: relative;
+    inset: auto;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+  }
+  /* the whole poster is the button; disc, label and length sit in a bar at the bottom edge so the
+     poster's own title (Rohling lettering, thumbnail type) stays readable */
+  .wb-film-play {
+    --heat: 0;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    align-content: end;
+    justify-items: start;
+    gap: var(--s3);
+    padding: 10px clamp(10px, 1.6vw, 16px);
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 650;
+    font-size: var(--t-small);
+    cursor: pointer;
+  }
+  .wb-film-play:is(:hover, :focus-visible) {
+    --heat: 1;
+  }
+  .wb-film-play:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -6px;
+  }
+  .wb-film-disc {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 48px;
+    block-size: 48px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in oklch, var(--ink) 50%, transparent);
+    background: radial-gradient(circle, color-mix(in oklch, var(--heat-3) calc(40% + var(--heat) * 40%), transparent), color-mix(in srgb, var(--bg) 55%, transparent) 70%);
+    box-shadow: 0 0 calc(var(--heat) * 40px) color-mix(in oklch, var(--heat-3) 60%, transparent);
+    scale: calc(1 + var(--heat) * 0.06);
+  }
+  .wb-film-disc .i {
+    inline-size: 20px;
+    block-size: 20px;
+    margin-inline-start: 3px;
+  }
+  .wb-film-frame {
+    container-type: inline-size;
+  }
+  /* narrow frames: „Film abspielen“ only; „(lädt YouTube)“ stays for screen readers and the note
+     under the frame says it too */
+  @container (max-width: 440px) {
+    .wb-film-label-note {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  /* tiny frames: disc + length only */
+  @container (max-width: 220px) {
+    .wb-film-label {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  .wb-film-label {
+    min-inline-size: 0;
+  }
+  .wb-film-len {
+    grid-column: 3;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-button);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: var(--track-meta);
+    opacity: 0.85;
+  }
+  .wb-film-iframe {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+  #werkbank .wb-hero .wb-film-note {
+    max-inline-size: 70ch;
+    margin: 0;
+    color: var(--muted);
+    text-align: center;
+  }
+  #werkbank .wb-hero .wb-film-note a {
+    color: var(--ink);
+    text-underline-offset: 0.25em;
+  }
+
+  /* ═══════════════════════════════════════ TITLE ═══════════════════════════════════════ */
+  #werkbank .wb-title {
+    gap: var(--s3);
+    padding: clamp(28px, 4vw, 56px) var(--wb-pad) var(--s6);
+    max-inline-size: 1100px;
+  }
+  #werkbank .wb-kicker {
+    margin: 0;
+    color: var(--alloy);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 600;
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
+  }
+  #werkbank #modal-title {
+    margin: 0;
+    font-size: clamp(2.5rem, 1rem + 5vw, 5.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+  #werkbank .wb-dek {
+    max-inline-size: 60ch;
+    margin: 0;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  #werkbank .wb-ctas {
+    margin: var(--s3) 0 0;
+  }
+
+  /* ═══════════════════════════════════════ BODY ═══════════════════════════════════════ */
+  #werkbank .wb-body {
+    padding: 0 var(--wb-pad) var(--s8);
+  }
+  #werkbank .wb-note {
+    position: relative;
+    display: grid;
+    gap: var(--s2);
+    max-inline-size: 80ch;
+    margin-block-end: var(--s7);
+    padding: var(--s4) var(--s5) var(--s4) calc(var(--s5) + 4px);
+    border: 1px solid var(--control);
+    border-inline-start: 4px solid var(--heat-text);
+    background: var(--surface);
+  }
+  #werkbank .wb-note p {
+    margin: 0;
+  }
+  #werkbank .wb-note-stamp {
+    justify-self: start;
+    padding: 2px 8px;
+    border: 1.5px solid var(--heat-text);
+    color: var(--heat-text);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    rotate: -2deg;
+  }
+  #werkbank .wb-cols {
+    display: grid;
+    gap: var(--s7) clamp(32px, 4vw, 72px);
+  }
+  @media (min-width: 1024px) {
+    #werkbank .wb-cols {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+      align-items: start;
+    }
+    #werkbank .wb-aside {
+      position: sticky;
+      inset-block-start: var(--s5);
+    }
+  }
+  #werkbank .wb-main {
+    display: grid;
+    gap: var(--s7);
+    min-inline-size: 0;
+  }
+  #werkbank .wb-block {
+    display: grid;
+    gap: var(--s4);
+    min-inline-size: 0;
+  }
+  #werkbank .wb-h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  #werkbank .wb-block > .wb-h3::after {
+    content: "";
+    flex: 1;
+    block-size: 1px;
+    background: linear-gradient(90deg, var(--line), transparent);
+  }
+  #werkbank .wb-story p {
+    max-inline-size: 66ch;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+  #werkbank .wb-story p:first-of-type {
+    font-size: var(--t-lead);
+    line-height: 1.5;
+  }
+  #werkbank .wb-story p:first-of-type::first-letter {
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    font-family: var(--font-display);
+    font-size: 3.4em;
+    line-height: 0.8;
+    color: var(--alloy);
+  }
+  #werkbank .wb-story--nocap p:first-of-type::first-letter {
+    float: none;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+  /* Short story, no media: story full width, then the sheet as a two-column definition grid. */
+  @media (min-width: 1024px) {
+    #werkbank .wb-cols--short {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--s6);
+    }
+    #werkbank .wb-cols--short .wb-aside {
+      position: static;
+    }
+    #werkbank .wb-cols--short .wb-story p {
+      max-inline-size: 60ch;
+    }
+    #werkbank .wb-cols--short .wb-spec {
+      grid-template-columns: repeat(2, fit-content(14ch) minmax(0, 1fr));
+      column-gap: var(--s4);
+    }
+    #werkbank .wb-cols--short .wb-spec > .spec-row {
+      grid-column: span 2;
+    }
+    #werkbank .wb-cols--short .wb-spec > .spec-row:nth-child(odd) {
+      grid-column: 1 / span 2;
+      margin-inline-end: var(--s4);
+    }
+    #werkbank .wb-cols--short .wb-spec > .spec-row:nth-child(even) {
+      grid-column: 3 / span 2;
+    }
+    #werkbank .wb-cols--short :is(.wb-langs, .wb-tools-wrap) {
+      max-inline-size: 60ch;
+    }
+  }
+  #werkbank .wb-rivets {
+    max-inline-size: 70ch;
+  }
+  #werkbank .wb-rivets > li::before {
+    background: radial-gradient(circle at 38% 34%, color-mix(in oklch, var(--surface) 70%, var(--alloy)), var(--alloy) 60%, color-mix(in oklch, var(--alloy) 60%, var(--ink)));
+  }
+  #werkbank .wb-fun p {
+    max-inline-size: 62ch;
+    margin: 0;
+    padding-inline-start: var(--s4);
+    border-inline-start: 2px solid var(--alloy);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem);
+    line-height: 1.3;
+  }
+
+  /* ── Probestück in the Werkbank ── */
+  #werkbank .wb-probe-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+  /* The poster keeps the 16:10 stage (skeletons.css); a fixed min height here would, through the
+     aspect ratio, widen the stage past 288 px on a 320 px phone. The live probe sizes itself. */
+  #werkbank .wb-probe-stage.is-live {
+    min-block-size: 200px;
+  }
+  #werkbank .wb-probe-stage > img {
+    inline-size: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  #werkbank .wb-probe-stage > .rohling {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
+  #werkbank .wb-probe-fail {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    margin: 0;
+    padding: var(--s3) var(--s4);
+    background: color-mix(in oklch, var(--bg) 92%, transparent);
+    border-block-start: 1px solid var(--line);
+    font-size: var(--t-small);
+  }
+
+  /* ── media strip ── */
+  #werkbank .wb-media-strip {
+    display: flex;
+    gap: var(--s4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block-end: var(--s3);
+    scrollbar-width: thin;
+  }
+  #werkbank .wb-media-strip:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  #werkbank .wb-media-item {
+    flex: 0 0 min(100%, 640px);
+    display: grid;
+    gap: var(--s2);
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  #werkbank .wb-media-item img {
+    inline-size: 100%;
+    block-size: auto;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+  #werkbank .wb-media-item figcaption {
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  /* ── Stammbaum ── */
+  #werkbank .wb-related {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: var(--s3);
+    padding: 0;
+    list-style: none;
+  }
+  #werkbank .wb-related-link {
+    --heat: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px var(--s3);
+    align-items: center;
+    min-block-size: 64px;
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--line);
+    border-inline-start: 3px solid var(--alloy);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  #werkbank .wb-related-link:is(:hover, :focus-visible) {
+    --heat: 1;
+    border-color: var(--alloy);
+  }
+  #werkbank .wb-related-no {
+    grid-column: 1;
+    color: var(--muted);
+  }
+  #werkbank .wb-related-title {
+    grid-column: 1;
+    font-weight: 650;
+  }
+  #werkbank .wb-related-cat {
+    grid-column: 1;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  #werkbank .wb-related-link .i {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    color: var(--alloy);
+    translate: calc(var(--heat) * 4px) 0;
+  }
+  #werkbank .wb-repos {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--line);
+  }
+  #werkbank .wb-repos > li {
+    display: grid;
+    grid-template-columns: minmax(0, 14ch) minmax(0, 1fr);
+    gap: 2px var(--s4);
+    padding-block: var(--s3);
+    border-block-end: 1px solid var(--line);
+  }
+  #werkbank .wb-repo-role {
+    grid-row: span 2;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.125rem;
+    color: var(--muted);
+  }
+  #werkbank .wb-repo-name {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  #werkbank .wb-repo-facts {
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  /* ═══════════════════════════════════════ ASIDE: Werkstattdaten ═══════════════════════════════════════ */
+  #werkbank .wb-specs {
+    --rivet: radial-gradient(circle at 38% 34%, color-mix(in oklch, var(--surface) 80%, var(--ink)) 0 0.8px, color-mix(in oklch, var(--ink) 40%, var(--surface)) 1.6px, color-mix(in oklch, var(--ink) 64%, var(--surface)) 2.7px, transparent 3.2px);
+    position: relative;
+    padding: var(--s5) var(--s5) var(--s5);
+    border: 1px solid var(--line);
+    border-block-start: 3px solid var(--alloy);
+    background: var(--surface);
+  }
+  #werkbank .wb-specs::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    pointer-events: none;
+    background:
+      var(--rivet) left top / 7px 7px no-repeat,
+      var(--rivet) right top / 7px 7px no-repeat,
+      var(--rivet) left bottom / 7px 7px no-repeat,
+      var(--rivet) right bottom / 7px 7px no-repeat;
+  }
+  #werkbank .wb-specs > summary {
+    display: flex;
+    align-items: center;
+    min-block-size: 32px;
+    list-style: none;
+    cursor: default;
+  }
+  #werkbank .wb-specs > summary::-webkit-details-marker {
+    display: none;
+  }
+  #werkbank .wb-specs > summary .wb-h3 {
+    color: var(--ink);
+  }
+  #werkbank .wb-spec {
+    display: grid;
+    grid-template-columns: fit-content(14ch) minmax(0, 1fr);
+    column-gap: var(--s4);
+    margin: var(--s3) 0 0;
+  }
+  #werkbank .wb-spec > .spec-row {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+    padding-block: 9px;
+    border-block-end: 1px dotted var(--control);
+  }
+  #werkbank .wb-spec dt {
+    font-size: 0.75rem;
+    color: var(--muted);
+    overflow-wrap: normal;
+  }
+  #werkbank .wb-spec dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: break-word;
+    hyphens: manual;
+  }
+  #werkbank .wb-spec dd a {
+    padding-block: 0;
+  }
+  #werkbank .wb-spec dd a {
+    color: var(--ink);
+    text-decoration-color: var(--alloy);
+    text-underline-offset: 0.25em;
+  }
+  #werkbank .wb-spec dd q {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05rem;
+  }
+  /* narrow phones: label above value, so „geprüft 28.09.2026¹“ never outgrows the column */
+  @media (max-width: 419.98px) {
+    #werkbank .wb-spec {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    #werkbank .wb-spec > .spec-row {
+      row-gap: 2px;
+    }
+  }
+  #werkbank .spec-row--zuletzt dd {
+    color: var(--ink);
+  }
+  #werkbank[data-glow="glueht"] .spec-row--zuletzt dd time {
+    color: var(--heat-text);
+    font-weight: 700;
+  }
+  #werkbank .spec-row--stand {
+    border-block-end: 0 !important;
+  }
+  #werkbank .spec-parts {
+    display: grid;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  #werkbank .spec-part-no,
+  #werkbank .spec-part-len {
+    color: var(--muted);
+  }
+
+  /* ── language bar ── */
+  #werkbank .wb-langs,
+  #werkbank .wb-tools-wrap {
+    display: grid;
+    gap: var(--s3);
+    margin-block-start: var(--s5);
+  }
+  #werkbank .wb-langs-head {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+  #werkbank .wb-aside-title {
+    margin: 0;
+    color: var(--muted);
+  }
+  .wb-lang-bar {
+    display: flex;
+    block-size: 10px;
+    gap: 2px;
+  }
+  .wb-lang-seg {
+    flex: 0 0 var(--w);
+    min-inline-size: 3px;
+  }
+  .wb-lang-seg[data-step="0"],
+  .wb-lang-list [data-step="0"] .wb-lang-dot {
+    background: var(--alloy);
+  }
+  .wb-lang-seg[data-step="1"],
+  .wb-lang-list [data-step="1"] .wb-lang-dot {
+    background: color-mix(in oklch, var(--alloy) 62%, var(--ink));
+  }
+  .wb-lang-seg[data-step="2"],
+  .wb-lang-list [data-step="2"] .wb-lang-dot {
+    background: color-mix(in oklch, var(--alloy) 55%, var(--bg));
+  }
+  .wb-lang-seg[data-step="3"],
+  .wb-lang-list [data-step="3"] .wb-lang-dot {
+    background: color-mix(in oklch, var(--alloy) 35%, var(--ink));
+  }
+  .wb-lang-seg[data-step="4"],
+  .wb-lang-list [data-step="4"] .wb-lang-dot {
+    background: color-mix(in oklch, var(--alloy) 28%, var(--bg));
+  }
+  .wb-lang-seg[data-step="5"],
+  .wb-lang-list [data-step="5"] .wb-lang-dot {
+    background: var(--control);
+  }
+  .wb-lang-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--s4);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .wb-lang-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .wb-lang-dot {
+    inline-size: 8px;
+    block-size: 8px;
+    flex: none;
+  }
+  .wb-lang-pct {
+    color: var(--muted);
+  }
+
+  /* ── tool chips ── */
+  .wb-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  #werkbank .wb-tool {
+    min-block-size: 36px;
+    padding-inline: 10px;
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: start;
+  }
+  #werkbank .wb-tool-i {
+    inline-size: 0.95em;
+    block-size: 0.95em;
+    opacity: calc(0.3 + var(--heat) * 0.7);
+  }
+
+  /* ═══════════════════════════════════════ FOOTER: Gepunzt ═══════════════════════════════════════ */
+  #werkbank .wb-foot {
+    display: grid;
+    gap: var(--s6);
+    margin-block-start: var(--s9);
+    padding-block-start: var(--s6);
+    border-block-start: 2px solid var(--ink);
+  }
+  @media (min-width: 1024px) {
+    #werkbank .wb-foot {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+      align-items: start;
+    }
+  }
+  #werkbank .wb-sources {
+    display: grid;
+    gap: var(--s4);
+  }
+  #werkbank .wb-sources-i {
+    inline-size: 1.6em;
+    block-size: 1.6em;
+    color: var(--accent);
+  }
+  #werkbank .wb-next-card {
+    --heat: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--s2) var(--s4);
+    min-block-size: 140px;
+    padding: var(--s5);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(90% 90% at 100% 100%, color-mix(in oklch, var(--alloy) calc(8% + var(--heat) * 20%), transparent), transparent 70%),
+      var(--surface);
+    color: var(--ink);
+    text-align: start;
+    cursor: pointer;
+  }
+  #werkbank .wb-next-card:is(:hover, :focus-visible) {
+    --heat: 1;
+    border-color: var(--alloy);
+  }
+  #werkbank .wb-next-card .meta {
+    grid-column: 1 / -1;
+    align-self: start;
+    color: var(--muted);
+  }
+  #werkbank .wb-next-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.6rem);
+    line-height: 0.95;
+    overflow-wrap: anywhere;
+  }
+  #werkbank .wb-next-card .i {
+    inline-size: 1.6em;
+    block-size: 1.6em;
+    color: var(--alloy);
+    translate: calc(var(--heat) * 6px) 0;
+  }
+
+
+  /* ═══════════════════════════════════════ MOBILE: full-screen sheet ═══════════════════════════════════════ */
+  @media (max-width: 1023.98px) {
+    #werkbank.project-dialog {
+      inline-size: 100vw;
+      max-inline-size: 100vw;
+      block-size: 100dvh;
+      max-block-size: 100dvh;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+    }
+    #werkbank.project-dialog[open] {
+      grid-template-rows: 1fr auto;
+    }
+    #werkbank .wb-scroll {
+      grid-row: 1;
+    }
+    #werkbank .wb-bar {
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--s2);
+      padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+      border-block-end: 0;
+      border-block-start: 1px solid var(--line);
+      box-shadow: 0 -1px 0 color-mix(in oklch, var(--alloy) 60%, transparent);
+    }
+    #werkbank :is(.wb-back, .wb-meta, .wb-punze) {
+      display: none;
+    }
+    #werkbank .wb-nav {
+      display: contents;
+    }
+    #werkbank .wb-nav button,
+    #werkbank .wb-close {
+      justify-content: center;
+      min-inline-size: 0;
+      min-block-size: 48px;
+      padding-inline: var(--s3);
+      white-space: nowrap;
+    }
+    #werkbank .wb-prev {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    #werkbank .wb-close {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    #werkbank .wb-next {
+      grid-column: 3;
+      grid-row: 1;
+    }
+    #werkbank .wb-nav-extra {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    #werkbank .wb-meta-m {
+      display: block;
+      margin: 0;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    #werkbank[data-glow="glueht"] .wb-meta-m {
+      color: var(--heat-text);
+    }
+    #werkbank .wb-hero {
+      padding: var(--s4);
+    }
+    #werkbank .wb-hero-img,
+    #werkbank .wb-hero-media > img {
+      max-block-size: 46vh;
+    }
+    #werkbank .wb-film--portrait.is-playing .wb-film-frame {
+      inline-size: min(100%, calc(64vh * 9 / 16));
+    }
+    #werkbank .wb-specs > summary {
+      cursor: pointer;
+    }
+    #werkbank .wb-specs > summary::after {
+      content: "";
+      inline-size: 10px;
+      block-size: 10px;
+      margin-inline-start: auto;
+      border-inline-end: 2px solid var(--muted);
+      border-block-end: 2px solid var(--muted);
+      rotate: -45deg;
+    }
+    #werkbank .wb-specs[open] > summary::after {
+      rotate: 45deg;
+    }
+    #werkbank .wb-repos > li {
+      grid-template-columns: 1fr;
+    }
+    #werkbank .wb-repo-role {
+      grid-row: auto;
+    }
+  }
+  /* very narrow screens: prev/next become icon buttons (the label stays for screen readers) */
+  @media (max-width: 359.98px) {
+    #werkbank .wb-bar {
+      grid-template-columns: 56px minmax(0, 1fr) 56px;
+    }
+    #werkbank .wb-nav button {
+      padding-inline: 0;
+    }
+    #werkbank .wb-nav-label {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  @media (min-width: 1024px) {
+    /* the spec sheet is always open on desktop */
+    #werkbank .wb-specs > summary {
+      pointer-events: none;
+    }
+  }
+
+  /* ═══════════════════════════════════════ CONTRAST / FORCED COLOURS ═══════════════════════════════════════ */
+  @media (prefers-contrast: more) {
+    #werkbank .wb-hero::after {
+      display: none;
+    }
+    #werkbank .wb-spec > .spec-row {
+      border-block-end-style: solid;
+    }
+  }
+  @media (forced-colors: active) {
+    #werkbank .wb-hero {
+      background: Canvas;
+    }
+    /* base.css sets system colours on .wb-close, but the #werkbank rules above win by specificity */
+    #werkbank .wb-close,
+    #werkbank .wb-nav button {
+      color: ButtonText;
+      background: ButtonFace;
+      border-color: ButtonText;
+    }
+    #werkbank .wb-close[data-quiet]:focus-visible {
+      outline: 2px solid Highlight;
+      border-color: ButtonText;
+    }
+    .wb-lang-bar {
+      display: none;
+    }
+    .wb-lang-dot {
+      forced-color-adjust: none;
+      border: 1px solid CanvasText;
+    }
+    .punze-button,
+    .punze-close,
+    #werkbank .wb-next-card,
+    #werkbank .wb-related-link {
+      border: 1px solid ButtonText;
+    }
+    .punze-pop {
+      border: 2px solid CanvasText;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════ MOTION (opt-in, calm-gated) ═══════════════════════════════════════ */
+@layer sections {
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) #werkbank.project-dialog {
+      /* no opacity on the dialog itself: text contrast is never mid-fade (axe, low vision) */
+      transition:
+        translate var(--d-quench) var(--ease-quench),
+        clip-path var(--d-quench) var(--ease-quench),
+        overlay var(--d-quench) allow-discrete,
+        display var(--d-quench) allow-discrete;
+      translate: 0 16px;
+      clip-path: inset(0 0 0 0);
+    }
+    :root:not([data-motion="paused"]) #werkbank.project-dialog[open] {
+      translate: 0 0;
+      transition-duration: var(--d-route);
+      transition-timing-function: var(--ease-cool);
+    }
+    @starting-style {
+      :root:not([data-motion="paused"]) #werkbank.project-dialog[open] {
+        translate: 0 16px;
+        clip-path: inset(0 0 6% 0);
+      }
+    }
+    :root:not([data-motion="paused"]) #werkbank.project-dialog::backdrop {
+      transition:
+        opacity var(--d-route) var(--ease-cool),
+        overlay var(--d-route) allow-discrete,
+        display var(--d-route) allow-discrete;
+      opacity: 0;
+    }
+    :root:not([data-motion="paused"]) #werkbank.project-dialog[open]::backdrop {
+      opacity: 1;
+    }
+    @starting-style {
+      :root:not([data-motion="paused"]) #werkbank.project-dialog[open]::backdrop {
+        opacity: 0;
+      }
+    }
+    /* prev/next: the new piece is hammered in */
+    :root:not([data-motion="paused"]) #werkbank .wb-scroll.is-swapping > * {
+      animation: wb-swap var(--d-route) var(--ease-cool) both;
+    }
+    :root:not([data-motion="paused"]) #werkbank .wb-scroll.is-swapping > .wb-title {
+      animation-delay: 40ms;
+    }
+    :root:not([data-motion="paused"]) #werkbank .wb-scroll.is-swapping > .wb-body {
+      animation-delay: 80ms;
+    }
+    @keyframes wb-swap {
+      from {
+        opacity: 0;
+        translate: 0 10px;
+      }
+    }
+    /* heat grammar on Werkbank controls */
+    :root:not([data-motion="paused"]) :is(.punze-button, .wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link) {
+      transition:
+        --heat var(--d-cool) var(--ease-cool),
+        border-color var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) :is(.punze-button, .wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link):is(:hover, :focus-visible) {
+      transition-duration: var(--d-heat-in);
+    }
+    :root:not([data-motion="paused"]) .punze-pop:popover-open {
+      animation: wb-stamp var(--d-stamp) var(--ease-rebound);
+    }
+    /* the hallmark is struck: scale only, so contrast is never mid-fade */
+    @keyframes wb-stamp {
+      from {
+        scale: 1.035;
+      }
+    }
+    /* Morph: plate media → Werkbank hero */
+    ::view-transition-group(werk-hero) {
+      animation-duration: var(--d-route);
+      animation-timing-function: var(--ease-cool);
+    }
+    :root[data-vt="werk"]::view-transition-old(root) {
+      animation: wb-root-out var(--d-route) var(--ease-cool) both;
+    }
+    :root[data-vt="werk"]::view-transition-new(root) {
+      animation: wb-root-in var(--d-route) var(--ease-cool) both;
+    }
+    @keyframes wb-root-out {
+      to {
+        opacity: 0.6;
+      }
+    }
+    @keyframes wb-root-in {
+      from {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+/* ═══════════════════ SHARED renderer output: Punze, source lists, ¹²³ marks, spec links ═══════════════════
+ * js/werkbank/punze.js and js/render/specsheet.js are reused on the chapter spec sheets (WP4); main.js
+ * lists this sheet for the Meisterstücke too, so a chapter mounts only once these styles are in. */
+@layer sections {
+  .ref {
+    margin-inline-start: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    line-height: 0;
+    vertical-align: super;
+  }
+  .ref a {
+    display: inline-block;
+    min-inline-size: 1.6em;
+    padding: 1px 3px;
+    border-radius: 2px;
+    color: var(--accent);
+    text-align: center;
+    text-decoration: none;
+  }
+  .ref a:hover {
+    background: color-mix(in oklch, var(--accent) 14%, transparent);
+  }
+  .spec-list .nb,
+  .punze-nw {
+    white-space: nowrap;
+  }
+  /* the ↗ after a glued label: an inline-block, so the link underline stops at the word */
+  .ext-i {
+    display: inline-block;
+  }
+  /* repo slugs: owner on a muted line, the name never split (js/render/specsheet.js repoValue) */
+  .spec-repo-owner {
+    display: block;
+    color: var(--muted);
+    font-size: 0.92em;
+    overflow-wrap: anywhere;
+  }
+  /* 2.5.8: the ¹²³ marks and spec-sheet links get a 24 px target */
+  .ref a {
+    min-block-size: 24px;
+    min-inline-size: 24px;
+    line-height: 24px;
+    padding-block: 0;
+    vertical-align: middle;
+  }
+  .spec-list dd a {
+    padding-block: 5px;
+  }
+  .punze-list {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: src;
+  }
+  .punze-list > li {
+    counter-increment: src;
+    display: grid;
+    grid-template-columns: 3ch minmax(0, 1fr);
+    gap: var(--s3);
+    padding-block: 8px;
+    border-block-end: 1px solid var(--line);
+    font-size: var(--t-small);
+    scroll-margin-block: var(--s7);
+  }
+  .punze-list > li::before {
+    content: counter(src);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .punze-list > li:target {
+    background: color-mix(in oklch, var(--heat-4) 22%, transparent);
+  }
+  .punze-src {
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  a.punze-src {
+    text-decoration-color: var(--control);
+    text-underline-offset: 0.25em;
+  }
+  a.punze-src:hover {
+    text-decoration-color: var(--accent);
+  }
+  .punze-src .i {
+    inline-size: 0.9em;
+    block-size: 0.9em;
+    vertical-align: -0.1em;
+  }
+  .punze-checked {
+    display: inline-block;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .punze-line {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--t-small);
+  }
+  .punze-line a {
+    color: var(--ink);
+    font-weight: 650;
+  }
+  /* ═══════════════════════════════════════ PUNZE button + popover ═══════════════════════════════════════ */
+  .punze-button {
+    --heat: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-block-size: 44px;
+    padding: 0 12px 0 8px;
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 3px color-mix(in oklch, var(--accent) 55%, transparent);
+    background: color-mix(in oklch, var(--heat-4) calc(var(--heat) * 14%), transparent);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+  }
+  .punze-button::-webkit-details-marker {
+    display: none;
+  }
+  .punze-button:is(:hover, :focus-visible) {
+    --heat: 1;
+  }
+  .punze-i {
+    inline-size: 22px;
+    block-size: 22px;
+    color: var(--accent);
+    rotate: calc(-6deg + var(--heat) * 6deg);
+  }
+  .punze-pop {
+    --pop-pad: clamp(20px, 3vw, 32px);
+    inline-size: min(560px, 100vw - 32px);
+    max-block-size: min(80dvh, 720px);
+    margin: auto;
+    padding: var(--pop-pad);
+    border: 1px solid var(--control);
+    border-block-start: 4px solid var(--accent);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 30px 80px -24px rgb(var(--shadow-ink) / 0.55);
+    overflow: hidden;
+  }
+  .punze-pop::backdrop {
+    background: color-mix(in srgb, var(--heat-0) 50%, transparent);
+  }
+  /* head · scrolling list · pinned foot: the belegt line and „Schließen“ never fall below the fold */
+  .punze-pop:popover-open {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--s4);
+  }
+  .punze-pop-head {
+    display: grid;
+    gap: var(--s3);
+  }
+  .punze-when {
+    margin: 0;
+    color: var(--muted);
+  }
+  .punze-pop-scroll {
+    min-block-size: 0;
+    margin-inline: calc(var(--pop-pad) * -1);
+    padding-inline: var(--pop-pad);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--control) transparent;
+    border-block-start: 1px solid var(--line);
+  }
+  .punze-pop-scroll:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+  /* bottom fade only while there is more below (scroll-driven where supported) */
+  @supports (animation-timeline: scroll()) {
+    .punze-pop-scroll {
+      animation: punze-fade linear both;
+      animation-timeline: scroll(self);
+    }
+    @keyframes punze-fade {
+      from {
+        mask-image: linear-gradient(#000 calc(100% - 88px), rgb(0 0 0 / 0.08));
+      }
+      96% {
+        mask-image: linear-gradient(#000 calc(100% - 88px), rgb(0 0 0 / 0.08));
+      }
+      to {
+        mask-image: none;
+      }
+    }
+  }
+  .punze-pop-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3) var(--s4);
+    padding-block-start: var(--s3);
+    border-block-start: 1px solid var(--line);
+  }
+  .punze-pop-foot .punze-line {
+    flex: 1 1 22ch;
+  }
+  .punze-pop--inline {
+    display: grid;
+    gap: var(--s4);
+    inline-size: auto;
+    margin-block-start: var(--s3);
+  }
+  .punze-pop--inline .punze-pop-scroll {
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+    animation: none;
+  }
+  .punze-pop-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--accent);
+  }
+  .punze-pop-i {
+    inline-size: 28px;
+    block-size: 28px;
+  }
+  .punze-pop-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
+    line-height: 1;
+  }
+  .punze-close {
+    flex: none;
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 44px;
+    padding-inline: var(--s3);
+    border: 1px solid var(--control);
+    border-radius: var(--r-button);
+    color: var(--ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .punze-details {
+    display: inline-block;
+  }
+}
+
+/* ═══════════════════ Moved in from the always-loaded sheets (spec §8 budget) ═══════════════════
+ * werkbank.js awaits this sheet before the dialog opens, so nothing here is needed earlier. */
+@layer base {
+  /* Werkbank skeleton (was css/skeletons.css); the rules above refine it. */
+  .project-dialog {
+    inline-size: min(1200px, 100vw - 32px);
+    max-inline-size: 100vw;
+    max-block-size: calc(100svh - 32px);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .project-dialog[open] {
+    display: grid;
+  }
+  .project-dialog::backdrop {
+    background: rgb(14 12 11 / 0.72);
+  }
+  .wb-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s2) var(--s4);
+    padding: var(--s2) var(--s4);
+  }
+  .wb-back,
+  .wb-close,
+  .wb-nav button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 44px;
+    padding-inline: var(--s2);
+    font-weight: 600;
+    font-size: var(--t-small);
+  }
+  .wb-meta {
+    flex: 1;
+    color: var(--muted);
+  }
+  /* #close-modal is first in DOM (focus lands there and the Tab trap wraps to it), last visually. */
+  .wb-close {
+    order: 99;
+    border: 1px solid var(--control);
+    border-radius: var(--r-button);
+    padding-inline: var(--s3);
+  }
+  .wb-scroll {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .wb-title {
+    display: grid;
+    gap: var(--s3);
+    padding: var(--s6) var(--s5) var(--s5);
+  }
+  #modal-title {
+    font-size: var(--t-chapter);
+    line-height: var(--lh-chapter);
+    outline: none;
+  }
+  .wb-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s3);
+  }
+  .wb-body {
+    padding: 0 var(--s5) var(--s7);
+  }
+}
+@layer sections {
+  /* Probestück stages inside the Werkbank: the measured height incl. the chip row (was
+     css/sections/meister.css, see the stage block there; work/wp4r2/fit.mjs). */
+  :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1529px + -159.40cqi); }
+  @container (min-width: 335px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1697px + -210.00cqi); } }
+  @container (min-width: 385px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(765px + 29.09cqi); } }
+  @container (min-width: 555px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(851px + 12.96cqi); } }
+  @container (min-width: 925px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(738px + 21.79cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(908px + -53.00cqi); }
+  @container (min-width: 295px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(648px + 5.36cqi); } }
+  @container (min-width: 375px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(547px + 36.70cqi); } }
+  @container (min-width: 505px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(251px + 95.50cqi); } }
+  @container (min-width: 595px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(718px + 12.67cqi); } }
+  @container (min-width: 835px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(750px + 4.34cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1673px + -232.00cqi); }
+  @container (min-width: 315px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1375px + -134.00cqi); } }
+  @container (min-width: 355px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1374px + -131.00cqi); } }
+  @container (min-width: 405px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(882px + -21.01cqi); } }
+  @container (min-width: 565px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(821px + -30.20cqi); } }
+  @container (min-width: 805px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(671px + -9.54cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(3398px + -970.00cqi); }
+  @container (min-width: 275px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(968px + -63.00cqi); } }
+  @container (min-width: 315px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(727px + -11.73cqi); } }
+  @container (min-width: 425px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(2124px + -345.00cqi); } }
+  @container (min-width: 455px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(532px + 8.83cqi); } }
+  @container (min-width: 695px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(427px + 10.00cqi); } }
+  @container (min-width: 765px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(413px + 5.83cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="beatguessr-years"]::after { block-size: calc(1298px + -311.00cqi); }
+  @container (min-width: 295px) { :root[data-booted] #werkbank .probe-stage[data-probe="beatguessr-years"]::after { block-size: calc(377px + -0.52cqi); } }
+}

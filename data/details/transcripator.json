@@ -1,0 +1,71 @@
+{
+  "id": "transcripator",
+  "story": [
+    "Transcripator gibt es zweimal: Zuerst 2024 als Telegram-Bot, dem man Sprachnachrichten schickt, später als Web-App zum Hochladen oder direkten Aufnehmen.",
+    "Beide transkribieren, glätten den Text und fassen ihn zusammen. Statt Captchas oder Accounts schützt ein unsichtbarer Proof-of-Work im Browser die Web-App vor Missbrauch."
+  ],
+  "highlights": [
+    "Upload oder direkte Mikrofonaufnahme mit Pause/Fortsetzen und Download",
+    "Drei Ergebnisse nacheinander: Rohtranskript, verbesserte Fassung, Zusammenfassung (Streaming per SSE)",
+    "Uploads bis 100 MB, per ffmpeg auf ≤ 24 MB für die Whisper-API komprimiert",
+    "Unsichtbarer SHA-256-Proof-of-Work im Web Worker statt Captcha",
+    "Telegram-Bot-Variante für Sprachnachrichten und Audiodateien"
+  ],
+  "stack": [
+    "Python",
+    "Flask",
+    "Vanilla JavaScript",
+    "Web Workers",
+    "Groq Whisper large-v3",
+    "OpenRouter (Gemini Flash Lite)",
+    "ffmpeg / PyDub",
+    "python-telegram-bot",
+    "Docker"
+  ],
+  "languages": {
+    "JavaScript": 39.8,
+    "CSS": 24.3,
+    "Python": 22.3,
+    "HTML": 13.2,
+    "Dockerfile": 0.4
+  },
+  "commits": 19,
+  "funFact": {
+    "text": "Die Anti-Missbrauchs-Hürde ist ein kleines Rechenrätsel: Der Browser sucht eine Nonce, bis der SHA-256-Hash mit vier Nullen beginnt, laut README im Schnitt rund 65.000 Versuche. Der Server prüft das mit einem einzigen Hash.",
+    "source": 0
+  },
+  "relatedRepos": [
+    {
+      "role": "Telegram-Bot (Ursprung)",
+      "fullName": "LoggeL/Transcripator",
+      "createdAt": "2024-09-29",
+      "commits": 20
+    }
+  ],
+  "refs": {
+    "repo": 3,
+    "live": 2
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/TranscripatorWeb · README, Commit-Historie",
+      "url": "https://github.com/LoggeL/TranscripatorWeb",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/Transcripator · README, main.py, Commit-Historie",
+      "url": "https://github.com/LoggeL/Transcripator",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite transcripator.logge.top",
+      "url": "https://transcripator.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/TranscripatorWeb",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

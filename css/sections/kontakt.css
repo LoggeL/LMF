@@ -1,0 +1,135 @@
+/* css/sections/kontakt.css  [WP5]
+ * Kontakt: always dark (.screen), with a bed of coals at the bottom whose hot spots breathe
+ * while on screen (calm-gated) and flare when the mail address heats up.
+ */
+@layer sections {
+  .section--kontakt .contact-copy {
+    margin-block-start: calc(var(--s3) * -1);
+    min-block-size: 44px;
+    cursor: pointer;
+  }
+  .section--kontakt .contact-copy:hover,
+  .section--kontakt .contact-copy:focus-visible {
+    border-color: var(--ink);
+  }
+  .section--kontakt .contact-links a .i {
+    color: var(--accent);
+  }
+  .section--kontakt .contact-links a:hover {
+    color: var(--heat-4);
+  }
+  .kontakt-aside {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+  }
+  .kontakt-aside::before {
+    content: "";
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background: var(--heat-4);
+    box-shadow: 0 0 10px var(--heat-3);
+  }
+
+  .kontakt-coals {
+    --heat: 0;
+    overflow: hidden;
+    background: none;
+    filter: brightness(calc(1 + var(--heat) * 0.5)) saturate(calc(1 + var(--heat) * 0.2));
+  }
+  .coal-bed {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+  .section--kontakt:has(.contact-mail:is(:hover, :focus-visible)) .kontakt-coals {
+    --heat: 1;
+  }
+
+  .kontakt-warm {
+    display: none;
+  }
+  @media (min-width: 1200px) {
+    .kontakt-inner {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+      column-gap: var(--s8, 64px);
+    }
+    .kontakt-inner > * {
+      grid-column: 1;
+    }
+    .kontakt-inner > .kontakt-warm {
+      display: grid;
+      gap: var(--s3);
+      grid-column: 2;
+      grid-row: 3 / span 3;
+      align-self: center;
+      justify-self: stretch;
+      padding-inline-start: var(--s5);
+      border-inline-start: 1px solid var(--line);
+    }
+  }
+  .kontakt-warm-title {
+    margin: 0;
+    color: var(--heat-text);
+  }
+  .kontakt-warm-name {
+    font-weight: 650;
+  }
+  .kontakt-warm-line {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding-block: var(--s2);
+    border-block: 1px solid var(--line);
+    font-family: var(--font-mono);
+    overflow-wrap: anywhere;
+  }
+  .kontakt-warm-line a.kontakt-warm-name {
+    color: var(--ink);
+  }
+  .kontakt-warm-date,
+  .kontakt-warm-src {
+    color: var(--muted);
+    text-transform: none;
+  }
+  .kontakt-warm-src {
+    margin: 0;
+  }
+  a.kontakt-warm-name:is(:hover, :focus-visible) {
+    color: var(--heat-4);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) .kontakt-coals {
+      transition: --heat var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .section--kontakt:has(.contact-mail:is(:hover, :focus-visible)) .kontakt-coals {
+      transition-duration: var(--d-heat-in);
+    }
+    :root:not([data-motion="paused"]) .kontakt-coals.is-live .coal-glow {
+      animation: coal-breathe 5.2s ease-in-out infinite alternate;
+    }
+    @keyframes coal-breathe {
+      from {
+        opacity: 0.55;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    :root:not([data-motion="paused"]) .kontakt-warm-name {
+      transition: color var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) a.kontakt-warm-name:is(:hover, :focus-visible) {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .coal-bed {
+      display: none;
+    }
+  }
+}

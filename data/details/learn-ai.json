@@ -1,0 +1,64 @@
+{
+  "id": "learn-ai",
+  "story": [
+    "Learn AI ist mein interaktiver Leitfaden für KI-Konzepte, frei nach dem Motto „Learn by doing, not just reading“.",
+    "Statt Textwänden gibt es Regler, 3D-Räume und Simulationen: Temperatur verstellen, Tokens live entstehen sehen, Embeddings drehen, Batching durchspielen. Alles auf Deutsch und Englisch und laufend erweitert."
+  ],
+  "highlights": [
+    "68 Themen (Stand 28.09.2026), von Agenten über LLM-Architektur und Inferenz bis KI-Sicherheit",
+    "Interaktive Demos: Temperatur, Tokenisierung, 3D-Embedding-Raum, GPU-Batching",
+    "Tokenizer läuft im Browser (js-tiktoken, o200k_base)",
+    "Schwierigkeitsgrade Beginner / Intermediate / Expert je Thema",
+    "Zweisprachig Deutsch/Englisch",
+    "Open Source unter MIT"
+  ],
+  "stack": [
+    "Next.js 14",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion",
+    "React Three Fiber / Three.js",
+    "KaTeX",
+    "js-tiktoken",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 99.4,
+    "CSS": 0.3,
+    "JavaScript": 0.2
+  },
+  "commits": 278,
+  "facts": [
+    {
+      "key": "topics",
+      "label": "Themen",
+      "value": "68",
+      "source": 1
+    }
+  ],
+  "funFact": {
+    "text": "Der neueste Artikel beim Check hieß „Mega-Kernels“.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/learn-guide · README, package.json, Commit-Historie",
+      "url": "https://github.com/LoggeL/learn-guide",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite learn.logge.top",
+      "url": "https://learn.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/learn-guide",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

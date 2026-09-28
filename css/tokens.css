@@ -1,0 +1,277 @@
+/* Design-Tokens [LEAD] · spec §4.1–§4.6 · the only sheet (besides probes.css) with raw colours.
+   Scopes: Tageslicht (light) · Esse (dark) · .screen (always dark). „Hitze kommt schnell, Kälte langsam.“ */
+
+@layer reset, tokens, base, sections, fx, utilities;
+
+/* Fonts (4 files, self-hosted, SIL OFL 1.1; downloaded by WP1) */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/Montserrat-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../assets/fonts/JetBrainsMono-var.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Serif Fallback";
+  src: local("Georgia");
+  size-adjust: 76%;
+  ascent-override: 130%;
+  descent-override: 41%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Serif Fallback 2";
+  src: local("Times New Roman");
+  size-adjust: 84%;
+  ascent-override: 118%;
+  descent-override: 37%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Sans Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 112%;
+  ascent-override: 86%;
+  descent-override: 22%;
+}
+
+/* Registered properties (animatable) */
+@property --heat {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --page-heat {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --mx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 40%;
+}
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer tokens {
+  :root {
+    /* Type families */
+    --font-display: "Instrument Serif", "Serif Fallback", "Serif Fallback 2", serif;
+    --font-body: Montserrat, "Sans Fallback", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* Type scale (fluid 320 → 1440) §4.3 */
+    --t-hero: clamp(3.4rem, 1.4rem + 10vw, 12rem);
+    --t-h2: clamp(2.5rem, 1.2rem + 5.2vw, 6.5rem);
+    --t-chapter: clamp(2.25rem, 1rem + 3vw, 4rem); /* 64 px max: sections (--t-h2, 104 px) clearly outrank chapters */
+    --t-numeral: clamp(6rem, 22vw, 20rem);
+    --t-h3: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+    --t-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    --t-body: 1.0625rem;
+    --t-small: 0.9375rem;
+    --t-meta: 0.8125rem; /* 13 px — never below 12 px */
+    --t-quote: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+
+    --lh-hero: 0.86;
+    --lh-h2: 0.92;
+    --lh-chapter: 0.95;
+    --lh-h3: 1.15;
+    --lh-lead: 1.45;
+    --lh-body: 1.6;
+    --lh-meta: 1.4;
+
+    --track-hero: -0.025em;
+    --track-h2: -0.02em;
+    --track-chapter: -0.015em;
+    --track-meta: 0.06em;
+
+    /* Space (8 px base) §4.4 */
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
+    --s7: 48px;
+    --s8: 64px;
+    --s9: 96px;
+    --s10: 144px;
+    --s11: 208px;
+    --section-pad: clamp(64px, 4.5vw, 80px);
+    --gutter: max(16px, 4vw);
+    --shell: 1440px;
+    --gap: 16px;
+    --cols: 4;
+    --header-h: 56px;
+
+    /* Radii */
+    --r-chip: 2px;
+    --r-button: 2px;
+
+    /* Motion §4.6 */
+    --ease-hammer: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-rebound: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-cool: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-quench: cubic-bezier(0.4, 0, 1, 1);
+    --ease-std: cubic-bezier(0.2, 0, 0, 1);
+    --ease-projector: steps(6, jump-none);
+    --d-strike: 90ms;
+    --d-rebound: 260ms;
+    --d-ui: 180ms;
+    --d-heat-in: 100ms;
+    --d-cool: 1600ms;
+    --d-route: 480ms;
+    --d-stamp: 420ms;
+    --d-quench: 240ms;
+
+    --heat-0: #2a2522;
+    --heat-1: #5a0e05;
+    --heat-2: #b3200a;
+    --heat-3: #f2600c;
+    --heat-4: #ffb347;
+    --heat-5: #fff4d6;
+
+    /* Steel grain (feTurbulence, ~400 B) */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --grain-opacity: 0.04;
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --cols: 6;
+      --gap: 20px;
+    }
+  }
+  @media (min-width: 1024px) {
+    :root {
+      --cols: 12;
+      --gap: 24px;
+      --header-h: 64px;
+    }
+  }
+
+  :root,
+  :root[data-theme="light"] {
+    --bg: #ede9e2;
+    --surface: #f8f6f2;
+    --surface-2: #e2dcd2;
+    --ink: #171311;
+    --muted: #5b524a;
+    --line: #cfc7bb; /* decorative hairlines only */
+    --control: #857970; /* UI borders ≥ 3:1 */
+    --accent: #a3320e;
+    --brand: #b80d29; /* logo red */
+    --focus: #1d4fb3;
+    --alloy-web: #6e5200; /* Strohgelb */
+    --alloy-games: #7a3796; /* Purpur */
+    --alloy-ai: #2a4fa8; /* Blau */
+    --alloy-film: #a8261a; /* Rotglut */
+    --heat-text: #8a2a08; /* „glüht“ label */
+    --on-alloy: var(--surface);
+    --shadow-ink: 23 19 17;
+    --grain-opacity: 0.045;
+    color-scheme: light;
+  }
+
+  /* Esse: dunkel */
+  :root[data-theme="dark"] {
+    --bg: #0e0c0b;
+    --surface: #1a1614;
+    --surface-2: #241e1b;
+    --ink: #f3eee7;
+    --muted: #afa59a;
+    --line: #3a322d;
+    --control: #7d7067;
+    --accent: #ff7a3d;
+    --brand: #ff4d5e;
+    --focus: #ffd166;
+    --alloy-web: #e9c46a;
+    --alloy-games: #d59bf0;
+    --alloy-ai: #86aeff;
+    --alloy-film: #ff7d5c;
+    --heat-text: #ffb347;
+    --on-alloy: var(--bg);
+    --shadow-ink: 0 0 0;
+    --grain-opacity: 0.06;
+    color-scheme: dark;
+  }
+
+  .screen {
+    --bg: #0e0c0b;
+    --surface: #16120f;
+    --surface-2: #211a16;
+    --ink: #f3eee7;
+    --muted: #afa59a;
+    --on-screen-muted: #afa59a;
+    --line: #342c27;
+    --control: #7d7067;
+    --accent: #ff7a3d;
+    --brand: #ff4d5e;
+    --focus: #ffd166;
+    --alloy-web: #e9c46a;
+    --alloy-games: #d59bf0;
+    --alloy-ai: #86aeff;
+    --alloy-film: #ff7d5c;
+    --heat-text: #ffb347;
+    --on-alloy: #0e0c0b;
+    --shadow-ink: 0 0 0;
+    --grain-opacity: 0.06;
+    color-scheme: dark;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* Per-alloy helper: set data-alloy on any element to get --alloy */
+  [data-alloy="web"] {
+    --alloy: var(--alloy-web);
+  }
+  [data-alloy="games"] {
+    --alloy: var(--alloy-games);
+  }
+  [data-alloy="ai"] {
+    --alloy: var(--alloy-ai);
+  }
+  [data-alloy="film"] {
+    --alloy: var(--alloy-film);
+  }
+
+  @media (prefers-contrast: more) {
+    :root,
+    :root[data-theme="light"],
+    :root[data-theme="dark"],
+    .screen {
+      --line: var(--muted);
+      --grain-opacity: 0;
+    }
+  }
+}

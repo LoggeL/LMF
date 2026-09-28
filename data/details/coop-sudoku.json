@@ -1,0 +1,56 @@
+{
+  "id": "coop-sudoku",
+  "story": [
+    "Sudoku, aber zusammen: Alle sehen die Züge und Cursor der anderen in Echtzeit und lösen dasselbe Rätsel, oder sie treten im Versus-Modus gegeneinander an und schnappen sich Zellen. Das erste Commit ist vom ersten Weihnachtstag 2025."
+  ],
+  "highlights": [
+    "Echtzeit-Koop mit sichtbaren Zügen und Cursorn der Mitspieler",
+    "Versus-Modus: Zellen beanspruchen, Punkte für richtige und Abzug für falsche Züge",
+    "Räume per Code oder Link, drei Schwierigkeitsgrade",
+    "Notizmodus, Undo (Ctrl+Z), Hervorhebung von Zeilen, Spalten und Boxen",
+    "Hell/Dunkel-Theme, mobiles 3×4-Nummernfeld"
+  ],
+  "stack": [
+    "React 18",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS 4",
+    "Node.js",
+    "Express",
+    "Socket.io",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 94.3,
+    "CSS": 2.4,
+    "Dockerfile": 1.3,
+    "JavaScript": 1.1,
+    "HTML": 1
+  },
+  "commits": 10,
+  "funFact": {
+    "text": "Initial Commit am 25.12.2025 um 02:37 Uhr deutscher Zeit, keine drei Stunden nach dem Start von BeatGuessr. Beides sind Projekte aus der Weihnachtsnacht.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/coop-sudoku · README, Commit-Historie",
+      "url": "https://github.com/LoggeL/coop-sudoku",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite sudoku.logge.top",
+      "url": "https://sudoku.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/coop-sudoku",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

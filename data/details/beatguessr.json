@@ -1,0 +1,77 @@
+{
+  "id": "beatguessr",
+  "story": [
+    "BeatGuessr ist mein Musik-Ratespiel mit 660 Songs aus 66 Jahrgängen, zehn pro Jahr von 1960 bis 2025, jeweils mit deutschem Zeitkontext wie „NDW-Höhepunkt“ oder „Grunge-Revolution“.",
+    "Im Classic-Modus erkennt man Titel und Künstler, im Timeline-Modus sortiert man Songs chronologisch, und im Buzzer-Modus spielen mehrere Geräte gegeneinander. Die Idee begleitet mich schon länger: Ein öffentliches Vorgänger-Repo gibt es seit 2020."
+  ],
+  "highlights": [
+    "660 Songs mit 30-Sekunden-Vorschau, zehn pro Jahr von 1960 bis 2025",
+    "Classic-Modus: +1 für Titel oder Künstler, +2 für beides, ohne Wiederholungen pro Session",
+    "Timeline-Modus (Hot Seat, 2–4 Spieler): Wer zuerst 10 Karten richtig einordnet, gewinnt",
+    "Buzzer-Modus über mehrere Geräte (optionales Flask-Socket.IO-Backend)",
+    "Jahrzehnt-Farben von Orange (60er) bis Blau (20er), Soundeffekte per WebAudio",
+    "Frontend ohne Build-Schritt (ES Modules) auf GitHub Pages"
+  ],
+  "stack": [
+    "JavaScript (ES Modules, kein Build)",
+    "CSS",
+    "WebAudio",
+    "Python",
+    "Flask + Flask-SocketIO",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "Python": 50.9,
+    "JavaScript": 32.2,
+    "CSS": 15.9,
+    "HTML": 0.8,
+    "Dockerfile": 0.2
+  },
+  "commits": 17,
+  "facts": [
+    {
+      "key": "songs",
+      "label": "Songs",
+      "value": "660",
+      "source": 1
+    }
+  ],
+  "funFact": {
+    "text": "Angelegt habe ich das Repo in der Weihnachtsnacht, um 00:46 Uhr deutscher Zeit, gleich mit README und Pages-Deploy. BeatGuessr2 (2020–2021) war ein früherer Anlauf mit Discord- und Socket-Ordnern.",
+    "source": 0
+  },
+  "relatedRepos": [
+    {
+      "role": "früherer Anlauf",
+      "fullName": "LoggeL/BeatGuessr2",
+      "createdAt": "2020-12-21",
+      "commits": 51
+    }
+  ],
+  "refs": {
+    "repo": 3,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/BeatGuessr · README, Commit-Historie",
+      "url": "https://github.com/LoggeL/BeatGuessr",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/BeatGuessr",
+      "url": "https://loggel.github.io/BeatGuessr/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/BeatGuessr2 · Metadaten, Commits 2020–2021",
+      "url": "https://github.com/LoggeL/BeatGuessr2",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/BeatGuessr",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

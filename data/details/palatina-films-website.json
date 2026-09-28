@@ -1,0 +1,52 @@
+{
+  "id": "palatina-films-website",
+  "story": [
+    "Meine erste richtige Website, 2018 für Palatina Films („We bring you fantasy.“): Startseite, Über uns, Projekte, Team mit Profilbildern, mehrere Galerien und schon damals ein dunkles Theme.",
+    "Laut Commits gab es sogar einen Service Worker mit Benachrichtigungen und einen Kalender. Die Domain ist nicht mehr erreichbar, die Seite lebt als Archiv auf GitHub Pages weiter."
+  ],
+  "highlights": [
+    "Seiten für Start, Über uns, Projekte, Team und drei Galerien",
+    "Umschaltbares dunkles Theme (2018)",
+    "Service Worker und Benachrichtigungen, Kalender (laut Commits Juni/Juli 2018)",
+    "Team-Seite mit automatisch erzeugten Thumbnails",
+    "Gemeinsam mit realjupeters gepflegt (Bilder, Team)"
+  ],
+  "stack": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "PHP",
+    "Service Worker"
+  ],
+  "languages": {
+    "HTML": 85.3,
+    "PHP": 12.9,
+    "CSS": 1.8
+  },
+  "commits": 54,
+  "funFact": {
+    "text": "Die README verspricht noch heute, dass die Seite „Anfangs 2019 in neuem Design die alte ersetzen“ wird. Der letzte Push war am 2. Januar 2019.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/PalatinaFilms · README, Dateiliste, Commit-Historie",
+      "url": "https://github.com/LoggeL/PalatinaFilms",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/PalatinaFilms",
+      "url": "https://loggel.github.io/PalatinaFilms/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/PalatinaFilms",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

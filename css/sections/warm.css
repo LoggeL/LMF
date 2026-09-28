@@ -1,0 +1,85 @@
+/*
+ * css/sections/warm.css  [WP2]
+ * Noch warm (§2.2, §5.5): the rail of the 8 most recently pushed Werkstücke.
+ * Plates come from lager.css; this file only sizes the rail and draws its glow bed.
+ * The glow bed under the rail runs hot → cool from left to right, because the rail is sorted
+ * by last push: it is a colour legend of the order, not a fact about any single plate.
+ */
+@layer sections {
+  #warm .warm-controls {
+    gap: var(--s2);
+  }
+  #warm .warm-controls .icon-button {
+    inline-size: 48px;
+    block-size: 48px;
+  }
+  #warm .warm-controls .icon-button[aria-disabled="true"] {
+    opacity: 0.4;
+  }
+
+  #warm .warm-rail {
+    align-items: stretch;
+    gap: clamp(14px, 1.4vw, 24px);
+    padding-block: var(--s3) var(--s7);
+    scrollbar-width: thin;
+    scrollbar-color: var(--control) transparent;
+    background:
+      linear-gradient(90deg, var(--heat-3), var(--heat-2) 30%, var(--heat-1) 62%, var(--heat-0)) left calc(100% - var(--s5)) / 100% 2px no-repeat;
+  }
+  #warm .warm-rail:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+  #warm .warm-item {
+    display: flex;
+    flex: 0 0 min(85vw, 340px);
+    scroll-snap-align: start;
+  }
+  #warm .warm-item > .plate {
+    inline-size: 100%;
+  }
+  #warm .plate--rail .plate-summary {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  #warm .plate--rail .plate-stamps {
+    font-size: 0.8125rem;
+  }
+  #warm .warm-end {
+    flex-basis: min(70vw, 260px);
+    min-block-size: auto;
+    font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem);
+    background:
+      radial-gradient(120% 80% at 0% 100%, color-mix(in oklch, var(--heat-3) calc(var(--heat) * 22%), transparent), transparent 70%),
+      transparent;
+  }
+  #warm .warm-end .i {
+    inline-size: 1.1em;
+    block-size: 1.1em;
+    translate: calc(var(--heat) * 6px) 0;
+  }
+  .warm-error {
+    flex: 0 0 auto;
+    padding: var(--s5);
+    border: 1px dashed var(--control);
+  }
+
+  @media (min-width: 1024px) {
+    #warm .warm-item {
+      flex-basis: clamp(300px, 24vw, 360px);
+    }
+  }
+  @media (prefers-contrast: more), (forced-colors: active) {
+    #warm .warm-rail {
+      background: none;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) #warm .warm-end .i {
+      transition: translate var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) #warm .warm-end:is(:hover, :focus-visible) .i {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+}

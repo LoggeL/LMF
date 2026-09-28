@@ -1,0 +1,20 @@
+{
+  "name": "logge-media-forge",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node scripts/validate.mjs",
+    "import": "node scripts/import-research.mjs",
+    "snapshot": "node scripts/snapshot-github.mjs",
+    "prerender": "node scripts/prerender.mjs",
+    "gallery": "node scripts/build-gallery.mjs",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
+    "prettier": "^3.9.6"
+  }
+}

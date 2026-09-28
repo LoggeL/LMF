@@ -1,0 +1,710 @@
+/* css/sections/werkstatt.css  [WP5]
+ * Die Werkstatt: Knopf, Bühne, Werkzeugwand (.wand-), Zunft (.zunft-), Abspann (.credits).
+ * Tokens only. Heat in fast, cool out slow; everything that moves is calm-gated.
+ */
+@layer sections {
+  #werkstatt :is(.buehne, .werkzeugwand, .zunft, .abspann) {
+    margin-block-start: clamp(48px, 3.4vw, 64px);
+  }
+
+  /* Knopf */
+  #werkstatt .knoepfe {
+    position: relative;
+    overflow: hidden;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    #werkstatt .knoepfe {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: var(--s8);
+      align-items: end;
+    }
+    #werkstatt .knoepfe > .knoepfe-title {
+      grid-column: 1 / -1;
+    }
+    #werkstatt .knopf {
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: end;
+    }
+  }
+  #werkstatt .knoepfe::after {
+    /* a faint REC-panel texture: engraved ticks along the bottom edge */
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    block-size: 10px;
+    background: repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px 12px);
+    pointer-events: none;
+  }
+  .knopf {
+    position: relative;
+    gap: 10px;
+    grid-auto-flow: column;
+    min-inline-size: 168px;
+    min-block-size: 72px;
+    font-size: 0.9375rem;
+    cursor: pointer;
+  }
+  .knopf::before {
+    /* REC light: dark while idle, glowing brand red once pressed */
+    content: "";
+    inline-size: 10px;
+    block-size: 10px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand) 25%, var(--surface-2));
+    box-shadow: inset 0 1px 1px rgb(var(--shadow-ink) / 0.35);
+  }
+  .knopf[aria-pressed="true"]::before {
+    background: var(--brand);
+    box-shadow: 0 0 10px var(--brand);
+  }
+  .knopf-cap {
+    display: inline-block;
+  }
+  .knopf-said {
+    position: absolute;
+    inset-inline-end: -10px;
+    inset-block-end: calc(100% - 16px);
+    padding: 2px 8px;
+    background: var(--surface);
+    border: 1.5px solid currentColor;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-style: italic;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+    color: var(--brand);
+    rotate: -6deg;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .knopf[aria-pressed="true"] .knopf-said {
+    visibility: visible;
+  }
+
+  /* Werkzeugwand: a pegboard with hanging tags */
+  .werkzeugwand-tags {
+    position: relative;
+    padding: clamp(24px, 2.5vw, 36px) clamp(16px, 3vw, 40px) clamp(32px, 3vw, 44px);
+    border: 1px solid var(--line);
+    background-color: var(--surface);
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 16%, transparent) 1.6px, transparent 2.2px);
+    background-size: 24px 24px;
+    background-position: 12px 12px;
+  }
+  .wand {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--s6) var(--s4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wand-hook {
+    --tilt: 0deg;
+    --w: 0.5;
+    position: relative;
+    padding-block-start: 18px;
+  }
+  .wand-hook::before {
+    /* the peg */
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    inline-size: 8px;
+    block-size: 8px;
+    margin-inline-start: -4px;
+    border-radius: 50%;
+    background: var(--control);
+    box-shadow: 0 1px 0 rgb(var(--shadow-ink) / 0.3);
+  }
+  .wand-tag {
+    --heat: 0;
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45em;
+    min-block-size: 44px;
+    padding: 0.55em 0.9em 0.5em;
+    border: 1px solid var(--control);
+    border-radius: var(--r-chip);
+    background: color-mix(in srgb, var(--heat-4) calc(var(--heat) * 28%), var(--bg));
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: calc(0.9375rem + var(--w) * 0.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    cursor: pointer;
+    transform-origin: 50% -12px;
+    rotate: var(--tilt);
+    box-shadow: 0 6px 14px -8px rgb(var(--shadow-ink) / 0.45);
+  }
+  .wand-tag::before {
+    /* the tag's eyelet + string up to the peg */
+    content: "";
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-start: 50%;
+    inline-size: 1px;
+    block-size: 14px;
+    background: var(--control);
+  }
+  .wand-count {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .wand-tag:is(:hover, :focus-visible) {
+    --heat: 1;
+    rotate: 0deg;
+    border-color: var(--ink);
+  }
+  .wand-tag:is(:hover, :focus-visible) .wand-count {
+    color: var(--heat-text);
+  }
+  .wand-note {
+    margin-block-start: var(--s6);
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    max-inline-size: 70ch;
+  }
+
+  /* Zunft */
+  .zunft {
+    --tile: var(--surface);
+  }
+  :root[data-theme="dark"] .zunft {
+    --tile: var(--ink);
+  }
+  .zunft-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: var(--gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .zunft-card {
+    --heat: 0;
+    position: relative;
+    display: grid;
+    /* mark beside name + category: one row less per card */
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "mark name no"
+      "mark cat cat"
+      "desc desc desc"
+      "punze punze punze";
+    align-content: start;
+    align-items: start;
+    gap: var(--s2) var(--s4);
+    padding: var(--s5);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--heat-3) calc(var(--heat) * 55%), transparent);
+  }
+  .zunft-card:is(:hover, :focus-within) {
+    --heat: 1;
+  }
+  .zunft-mark {
+    grid-area: mark;
+    display: grid;
+    place-items: center;
+    inline-size: 64px;
+    block-size: 64px;
+    padding: 8px;
+    background: var(--tile);
+    border: 1px solid var(--line);
+    margin-block-end: 0;
+  }
+  .zunft-mark img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+  .zunft-mark--clip {
+    padding: 0;
+    background: var(--surface-2);
+  }
+  .zunft-clip {
+    inline-size: 40px;
+    block-size: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .zunft-mark--blank {
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: color-mix(in oklch, var(--accent) 60%, var(--muted));
+    background:
+      repeating-linear-gradient(90deg, color-mix(in oklch, var(--ink) 4%, transparent) 0 1px, transparent 1px 3px),
+      linear-gradient(135deg, color-mix(in oklch, var(--accent) 12%, var(--surface-2)), var(--surface-2) 60%);
+    box-shadow: inset 0 0 0 3px var(--surface-2), inset 0 0 0 4px color-mix(in oklch, var(--accent) 45%, transparent);
+  }
+  .zunft-no {
+    grid-area: no;
+    justify-self: end;
+    color: var(--muted);
+  }
+  .zunft-name {
+    grid-area: name;
+    font-size: 1.25rem;
+  }
+  .zunft-name {
+    line-height: 1.35;
+  }
+  .zunft-name a {
+    display: inline;
+    padding-block: 4px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .zunft-name a .i {
+    color: var(--accent);
+    font-size: 0.85em;
+  }
+  .zunft-name a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .zunft-cat {
+    grid-area: cat;
+    color: var(--muted);
+  }
+  .zunft-desc {
+    grid-area: desc;
+    font-size: var(--t-small);
+  }
+  .zunft-punze {
+    grid-area: punze;
+    margin-block-start: var(--s2);
+    font-size: var(--t-small);
+  }
+  .zunft-punze summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 32px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    list-style: none;
+  }
+  .zunft-punze summary::-webkit-details-marker {
+    display: none;
+  }
+  .zunft-punze summary .i {
+    font-size: 1.35em;
+    color: var(--accent);
+  }
+  .zunft-punze summary:hover {
+    color: var(--ink);
+  }
+  .zunft-punze ul {
+    display: grid;
+    gap: var(--s2);
+    margin: var(--s2) 0 0;
+    padding: var(--s3) 0 0;
+    list-style: none;
+    border-block-start: 1px dashed var(--line);
+  }
+  .zunft-punze li .meta {
+    display: block;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.01em;
+  }
+  .zunft-punze li a {
+    overflow-wrap: anywhere;
+  }
+  .zunft-ramsen {
+    margin-block-start: var(--s3);
+  }
+
+  /* Abspann */
+  .abspann-roll {
+    position: relative;
+  }
+  .abspann-stage {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(32px, 6vw, 96px) clamp(16px, 4vw, 64px);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(120% 60% at 50% 120%, color-mix(in srgb, var(--heat-1) 55%, transparent), transparent 70%),
+      var(--bg);
+  }
+  .credits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: var(--s7) var(--s6);
+    margin: 0;
+  }
+  .credit {
+    display: grid;
+    gap: var(--s2);
+    align-content: start;
+  }
+  .credit dt {
+    margin-block-end: var(--s2);
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--heat-text);
+  }
+  .credit dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    line-height: 1.15;
+  }
+  .credit-role,
+  .credit-count {
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .credit-count {
+    color: var(--ink);
+  }
+  .credit-role {
+    white-space: nowrap;
+  }
+  .credit[data-block="auch-als"] .credit-role {
+    display: block;
+    margin-block-start: 2px;
+  }
+  .credit-note {
+    font-family: var(--font-mono) !important;
+    font-size: var(--t-meta) !important;
+    color: var(--muted);
+    margin-block-start: var(--s2) !important;
+  }
+  .credit[data-block="sprachen"] dd:not(.credit-note),
+  .credit[data-block="drehorte"] dd {
+    display: inline;
+    white-space: nowrap;
+  }
+  .credit[data-block="sprachen"] dd:not(.credit-note):not(:nth-last-child(2))::after,
+  .credit[data-block="drehorte"] dd:not(:last-child)::after {
+    content: "\00a0· ";
+    color: var(--muted);
+    white-space: normal;
+  }
+  .credit[data-block="sprachen"],
+  .credit[data-block="drehorte"] {
+    display: block;
+  }
+  .credit[data-block="sprachen"] dt,
+  .credit[data-block="drehorte"] dt {
+    display: block;
+  }
+  .credit--title {
+    grid-column: 1 / -1;
+  }
+  .credit--title dt {
+    font-family: var(--font-display);
+    font-size: var(--t-chapter);
+    line-height: var(--lh-chapter);
+    letter-spacing: var(--track-chapter);
+    text-transform: none;
+    color: var(--ink);
+    margin: 0;
+  }
+  .credit--title dd {
+    /* clear the display serif's descenders („Logge“) */
+    margin-block-start: 0.6em;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .credits-end {
+    display: grid;
+    gap: var(--s3);
+    justify-items: center;
+    margin-block-start: var(--s9);
+    text-align: center;
+  }
+  .credits-motto {
+    font-family: var(--font-display);
+    font-size: var(--t-h2);
+    line-height: var(--lh-h2);
+    letter-spacing: var(--track-h2);
+  }
+  .credits-motto em {
+    font-style: italic;
+  }
+  .credits-cut {
+    margin-block-start: 0.4em;
+    color: var(--muted);
+  }
+
+  .is-windowed .abspann-stage {
+    padding: 0;
+  }
+  .is-windowed .credits-window {
+    max-block-size: min(440px, 60svh);
+    overflow: hidden;
+    padding-inline: clamp(16px, 4vw, 64px);
+    /* Fades only the text at the edges; the stage glow stays. */
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 80%, transparent);
+  }
+  .is-windowed .credits-reel {
+    padding-block: clamp(32px, 6vw, 96px);
+  }
+  .is-windowed.is-rolling .credits-reel {
+    padding-block: 0;
+  }
+  .is-windowed:not(.is-rolling) .credits-window {
+    mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  }
+  .is-windowed.is-all .credits-window {
+    max-block-size: none;
+    mask-image: none;
+  }
+  .is-windowed.is-all .credits-reel {
+    padding-block-end: clamp(32px, 6vw, 96px);
+  }
+  .abspann-more {
+    margin-block-start: var(--s4);
+  }
+  html:not(.js) .abspann-more {
+    display: none;
+  }
+  .is-windowed .credits {
+    display: block;
+    max-inline-size: 960px;
+    margin-inline: auto;
+  }
+  .is-windowed .credit {
+    display: block;
+    margin-block-end: var(--s7);
+    text-align: center;
+  }
+  .is-windowed .credit dt {
+    margin: 0 0 var(--s2);
+  }
+  .is-windowed .credit dd {
+    margin-block-end: var(--s1);
+  }
+  .is-windowed .credit--title {
+    margin-block-end: var(--s8);
+  }
+  .is-windowed .credits-end {
+    margin-block-start: var(--s9);
+  }
+  @media (min-width: 640px) {
+    .is-windowed .credit {
+      position: relative;
+      padding-inline-start: calc(50% + var(--s5));
+      text-align: start;
+    }
+    .is-windowed .credit dt {
+      position: absolute;
+      inset-block-start: 0.6em;
+      inset-inline: 0 calc(50% + var(--s5));
+      text-align: end;
+    }
+    .is-windowed .credit--title {
+      padding-inline-start: 0;
+      text-align: center;
+    }
+    .is-windowed .credit--title dt {
+      position: static;
+      text-align: center;
+    }
+  }
+  .is-rolling .credits-reel {
+    will-change: transform;
+  }
+
+  /* Motion (calm-gated) */
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) .is-rolling .credits-reel {
+      animation: credits-roll var(--roll-dur, 60s) linear var(--roll-delay, 0s) infinite;
+    }
+    :root:not([data-motion="paused"]) .is-rolling:is(.is-offscreen, :has(.credits-window:hover)) .credits-reel {
+      animation-play-state: paused;
+    }
+    @keyframes credits-roll {
+      from {
+        transform: translate3d(0, var(--roll-from, 0px), 0);
+      }
+      to {
+        transform: translate3d(0, var(--roll-to, 0px), 0);
+      }
+    }
+    :root:not([data-motion="paused"]) .wand-tag {
+      transition:
+        --heat var(--d-cool) var(--ease-cool),
+        rotate var(--d-cool) var(--ease-cool),
+        border-color var(--d-cool) var(--ease-cool),
+        background-color var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .wand-tag:is(:hover, :focus-visible) {
+      transition-duration: var(--d-heat-in), 260ms, var(--d-heat-in), var(--d-heat-in);
+      transition-timing-function: var(--ease-std), var(--ease-rebound), var(--ease-std), var(--ease-std);
+    }
+    :root:not([data-motion="paused"]) .wand-tag.is-struck {
+      animation: wand-strike 300ms var(--ease-hammer);
+    }
+    @keyframes wand-strike {
+      40% {
+        transform: translateY(3px) scaleY(0.94);
+      }
+    }
+    :root:not([data-motion="paused"]) .zunft-card {
+      transition: box-shadow var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .zunft-card:is(:hover, :focus-within) {
+      transition-duration: var(--d-heat-in);
+    }
+    :root:not([data-motion="paused"]) .knopf.is-struck[aria-pressed="true"] .knopf-said {
+      animation: knopf-stamp var(--d-stamp) var(--ease-cool);
+    }
+    @keyframes knopf-stamp {
+      from {
+        opacity: 0;
+        scale: 1.5;
+      }
+    }
+    :root:not([data-motion="paused"]) .knopf.is-struck .knopf-cap {
+      animation: knopf-ink var(--d-stamp) var(--ease-cool);
+    }
+    @keyframes knopf-ink {
+      from {
+        clip-path: inset(0 100% 0 0);
+        scale: 1.15;
+      }
+      to {
+        clip-path: inset(0);
+        scale: 1;
+      }
+    }
+    :root:not([data-motion="paused"]) .knopf::before {
+      transition:
+        background-color var(--d-cool) var(--ease-cool),
+        box-shadow var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .knopf[aria-pressed="true"]::before {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .wand-tag,
+    .zunft-card {
+      border: 1px solid CanvasText;
+    }
+    .werkzeugwand-tags {
+      background-image: none;
+    }
+  }
+}
+
+@layer sections {
+  .zunft-punze--all {
+    display: none;
+  }
+  .zunft-punze-who {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--t-meta);
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  @media (max-width: 639px) {
+    .zunft-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .zunft-card {
+      grid-template-columns: 40px minmax(0, 1fr);
+      grid-template-areas:
+        "mark cat"
+        "name name"
+        "desc desc";
+      gap: var(--s1) var(--s2);
+      padding: var(--s3);
+    }
+    .zunft-cat {
+      align-self: center;
+      line-height: 1.3;
+    }
+    .zunft-card > .zunft-no,
+    .zunft-card > .zunft-punze {
+      display: none;
+    }
+    .zunft-mark {
+      inline-size: 40px;
+      block-size: 40px;
+      padding: 5px;
+      margin-block-end: 0;
+    }
+    .zunft-clip {
+      inline-size: 30px;
+      block-size: 30px;
+    }
+    .zunft-mark--blank {
+      font-size: 1.35rem;
+    }
+    .zunft-name {
+      font-size: 1rem;
+      line-height: 1.25;
+      hyphens: auto;
+      overflow-wrap: break-word;
+    }
+    .zunft-name a {
+      display: inline-block;
+      padding-block: 6px;
+    }
+    .zunft-cat {
+      font-size: 0.6875rem;
+    }
+    .zunft-desc {
+      font-size: 0.8125rem;
+      line-height: 1.4;
+    }
+    .zunft-punze--all {
+      display: block;
+      margin-block-start: var(--s3);
+    }
+    .zunft-punze--all li {
+      display: block;
+    }
+    .zunft-ramsen {
+      font-size: var(--t-small);
+    }
+  }
+  @media (max-width: 639px) {
+    .wand {
+      gap: var(--s5) var(--s2);
+    }
+    .wand-tag {
+      font-size: calc(0.875rem + var(--w) * 0.3rem);
+      padding: 0.5em 0.7em 0.45em;
+    }
+    .wand-hook {
+      padding-block-start: 14px;
+    }
+  }
+}

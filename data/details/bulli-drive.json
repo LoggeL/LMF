@@ -1,0 +1,60 @@
+{
+  "id": "bulli-drive",
+  "story": [
+    "Der Server simuliert jedes Auto mit 60 Hz, jeder Client sagt sein eigenes Auto voraus. Bulli Bay ist eine kuratierte Karte von 2 × 2 km mit Strand, Pier, Downtown, Hafen, Bergstraße, Ranch und Dünen.",
+    "Dieselben Kartendaten treiben Server, Client und einen eigenen Spline-Editor. Getestet wird bis hin zu Mutationstests und Bot-Rennen über echte WebSockets. Wie in Oilbert’s Adventure fährt auch hier ein VW-Bus."
+  ],
+  "highlights": [
+    "Räume für bis zu 32 Spieler",
+    "6 Strecken, Ghost-Zeitfahren, Windschatten",
+    "2 × 2 km Karte mit 19 km Straße",
+    "Eigene Qualitätsstufe fürs Handy",
+    "Worldviewer und Spline-Editor"
+  ],
+  "stack": [
+    "Three.js",
+    "TypeScript",
+    "Vite",
+    "Node.js",
+    "WebSocket",
+    "Blender",
+    "Vitest",
+    "Playwright",
+    "Stryker"
+  ],
+  "languages": {
+    "TypeScript": 84.7,
+    "Python": 10.1,
+    "CSS": 2.5,
+    "JavaScript": 1.5,
+    "HTML": 1.1
+  },
+  "commits": 91,
+  "media": [
+    {
+      "src": "assets/img/BulliDrive.webp",
+      "alt": "Bulli Drive: ein VW Bulli auf der Main Street von Bulli Bay",
+      "caption": "Offizieller Screenshot aus dem Repo (docs/screenshot.jpg)",
+      "kind": "screenshot",
+      "width": 1440,
+      "height": 810,
+      "source": 0
+    }
+  ],
+  "note": "Braucht einen eigenen Spielserver. Verlinkt ist deshalb das Repo.",
+  "refs": {
+    "repo": 1
+  },
+  "sources": [
+    {
+      "label": "README (Features, Scripts) · GitHub Pages API: 404, keine Homepage – Server nötig",
+      "url": "https://github.com/LoggeL/Bulli-Drive",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/Bulli-Drive",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

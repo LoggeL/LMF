@@ -1,0 +1,56 @@
+{
+  "id": "bomberman-web",
+  "story": [
+    "Bomberman, aber so gebaut, dass lokal und online exakt dieselbe Spiel-Engine läuft: eine deterministische Simulation mit 60 Ticks pro Sekunde, die im Browser für den Couch-Modus und auf einem Node-Server für Online-Runden rechnet.",
+    "Kein Game-Framework, nur Vanilla JS und ein Canvas. Auf GitHub Pages läuft der lokale Modus; für Raumcode-Matches braucht es einen eigenen Node-Host."
+  ],
+  "highlights": [
+    "Eine gemeinsame, deterministische Engine (shared/engine.js) für lokalen und Online-Modus, Map-Generierung per Seed",
+    "Sechs 15×13-Arenen: Neon Reactor, Magma Foundry, Cryo Circuit, Switchyard Reactor, Astral Garden, Tidal Works",
+    "Arena-Mechaniken: Portale, Lava-Vents, Eisbahnen, Bomben-Schienen, Orbit-Relais, Strömungen",
+    "Neun Power-ups, u. a. Kick, Remote Detonator, Bomb Throw, Ghost und Shield",
+    "Kettenreaktionen im selben Tick; ausgeschiedene Spieler fliegen als Geister weiter und legen Betäubungsbomben",
+    "Online-Lobby mit vierstelligem Raumcode, FFA oder 2v2, Bots übernehmen bei Verbindungsabbruch"
+  ],
+  "stack": [
+    "JavaScript (Vanilla)",
+    "Canvas",
+    "Vite 6",
+    "Node.js 24",
+    "WebSocket",
+    "Docker",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "JavaScript": 86.5,
+    "CSS": 9.1,
+    "HTML": 4.4,
+    "Dockerfile": 0.1
+  },
+  "commits": 24,
+  "funFact": {
+    "text": "Das Match-Ende ist spiralförmig: Im Sudden Death fällt die Arena in einer Spirale aus Wänden nach innen zusammen. Die Soundtracks der Arenen werden laut Commit-Historie prozedural erzeugt.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/bomberman-web · README, Commit-Historie",
+      "url": "https://github.com/LoggeL/bomberman-web",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/bomberman-web",
+      "url": "https://loggel.github.io/bomberman-web/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/bomberman-web",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

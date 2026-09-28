@@ -1,0 +1,50 @@
+{
+  "id": "powerpoint-karaoke",
+  "story": [
+    "Die Decks sind image-first: Jede Folie ist ein generiertes Bild, in das Überschrift, Diagramme, Fußnoten und Foliennummer eingebrannt sind. Die HTML-Seite ist nur die Vortragshülle mit Navigation, Timer und Karaoke-Hinweisen."
+  ],
+  "highlights": [
+    "17 Decks · je 10 Folien",
+    "Zufallsdeck und Panik-Notiz",
+    "Folien mit eingebranntem Text"
+  ],
+  "stack": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "KI-Bildgenerierung"
+  ],
+  "languages": {
+    "HTML": 100
+  },
+  "commits": 58,
+  "facts": [
+    {
+      "key": "decks",
+      "label": "Decks",
+      "value": "17",
+      "source": 1
+    }
+  ],
+  "refs": {
+    "live": 1,
+    "repo": 2
+  },
+  "sources": [
+    {
+      "label": "README (image-first decks)",
+      "url": "https://github.com/LoggeL/PowerPointKaraoke",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite: „17 Präsentationen“, Decktitel",
+      "url": "https://loggel.github.io/PowerPointKaraoke/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/PowerPointKaraoke",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

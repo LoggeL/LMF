@@ -1,0 +1,9 @@
+node_modules/
+work/
+test-results/
+playwright-report/
+.DS_Store
+
+# Research notes quote private repos (README, code, commit history) and personal details that the
+# site deliberately omits. They stay local; scripts/import-research.mjs reads them from disk.
+docs/research/

@@ -1,0 +1,62 @@
+{
+  "id": "melodai",
+  "story": [
+    "MelodAI macht aus fast jedem Song Karaoke: Song suchen, dann trennt die Pipeline Gesang und Instrumental, erzeugt Lyrics mit Wort-Zeitstempeln und formt sie per LLM zu singbaren Zeilen.",
+    "Im Player wird Wort für Wort hervorgehoben, und Gesang und Instrumental lassen sich getrennt regeln. Das Projekt ist Open Source mit CI, CodeQL und Integrationstests."
+  ],
+  "highlights": [
+    "Sechsstufige Pipeline: Suche, Download, Stimmtrennung (Demucs), Transkription (WhisperX), LLM-Zeilenbildung, Wiedergabe",
+    "Wortgenaues Karaoke-Highlighting mit Sprecher-Einfärbung",
+    "Web Audio API mit zwei GainNodes: Gesang und Instrumental getrennt regelbar (Mix- und Master-Regler)",
+    "Lyrics-Übersetzungen (seit Juni 2026)",
+    "Bibliothek, Admin-Bereich für Songs und Nutzer",
+    "CI, CodeQL, Offline-Integrationstests; MIT-Lizenz"
+  ],
+  "stack": [
+    "Python 3.12",
+    "Flask",
+    "SQLite",
+    "React",
+    "TypeScript",
+    "Vite",
+    "Web Audio API",
+    "Replicate (Demucs, WhisperX)",
+    "OpenRouter",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 54.7,
+    "Python": 28.5,
+    "CSS": 16,
+    "JavaScript": 0.6,
+    "Dockerfile": 0.1,
+    "HTML": 0.1
+  },
+  "commits": 172,
+  "refs": {
+    "repo": 3,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/MelodAI · README, Topics, Commit-Historie",
+      "url": "https://github.com/LoggeL/MelodAI",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite melodai.logge.top/about",
+      "url": "https://melodai.logge.top/about",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite melodai.logge.top",
+      "url": "https://melodai.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/MelodAI",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

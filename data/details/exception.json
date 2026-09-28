@@ -1,0 +1,22 @@
+{
+  "id": "exception",
+  "funFact": {
+    "text": "Die Beschreibung auf YouTube lautet bis heute „Beschreibung hier einfügen“.",
+    "source": 0
+  },
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=uhlAo1chnlM",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "YouTube-Playlist „LMF“",
+      "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

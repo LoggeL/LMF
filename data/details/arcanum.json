@@ -1,0 +1,66 @@
+{
+  "id": "arcanum",
+  "story": [
+    "Runen, farbige Kerzen, Drachenauge und Phönixherz: Die Rätsel stecken in den Gegenständen der Kammer. Die Uhr läuft mit, am Ende steht die eigene Fluchtzeit.",
+    "Gesteuert wird mit WASD und Maus oder mit zwei Daumen auf dem Handy. Kein Build-Schritt, Three.js kommt per Importmap."
+  ],
+  "highlights": [
+    "Zwei Kammern, ein Ausweg",
+    "Fluchtzeit wird gemessen",
+    "Maus oder Touch mit zwei Daumen",
+    "Kein Build-Schritt"
+  ],
+  "stack": [
+    "Three.js 0.170 (Importmap, CDN)",
+    "Vanilla JS",
+    "CSS"
+  ],
+  "languages": {
+    "JavaScript": 79.1,
+    "CSS": 14.9,
+    "HTML": 5.9
+  },
+  "commits": 2,
+  "media": [
+    {
+      "src": "assets/img/Arcanum.webp",
+      "alt": "Die 3D-Kammer des Erzmagiers in Arcanum",
+      "caption": "Titel-Overlay für den Screenshot ausgeblendet (Start braucht Pointer-Lock).",
+      "kind": "screenshot",
+      "width": 1440,
+      "height": 900,
+      "source": 3
+    }
+  ],
+  "refs": {
+    "live": 3,
+    "repo": 4
+  },
+  "sources": [
+    {
+      "label": "Kein README. Repo-Beschreibung: „Fantasy 3D escape room in the browser - three.js, no build step“",
+      "url": "https://github.com/LoggeL/arcanum",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "index.html (Intro-Text, Steuerung, „Zwei Kammern. Ein Ausweg. Viele Sackgassen.“)",
+      "url": "https://github.com/LoggeL/arcanum/blob/HEAD/index.html",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "main.js (Gegenstände: Feuer-/Mond-/Sternenrune, Kerzen, Drachenauge, Nixenträne, Phönixherz, Waldkrone)",
+      "url": "https://github.com/LoggeL/arcanum/blob/HEAD/main.js",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite: HTTP 200, WebGL",
+      "url": "https://loggel.github.io/arcanum/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/arcanum",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

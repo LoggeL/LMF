@@ -1,0 +1,68 @@
+{
+  "id": "loggerythm",
+  "story": [
+    "LoggeRythm ist mein selbst gehosteter Musikplayer im Spotify-Stil: FastAPI-Backend, Next.js-Webplayer und eine native Android-App mit Android Auto.",
+    "Es gibt eine zweistufige Warteschlange, Party-Modus mit Code und synchronisierte Lyrics. Die README sagt es klar: ein privates Demo-Projekt in einer rechtlichen Grauzone, nicht für öffentliche Verbreitung gedacht."
+  ],
+  "highlights": [
+    "Zweistufige Queue: manuell eingereihte Songs spielen immer vor der Playlist- oder Radio-Queue",
+    "Party-Modus: gemeinsame Warteschlange per Party-Code, Einladung auch als QR-Code",
+    "Synchronisierte Lyrics von lrclib.net, Fallback mit Groq-Wort-Zeitstempeln",
+    "Song-Radio über Last.fm-Ähnlichkeit, Import von Spotify-Links",
+    "Offline-Downloads per Service Worker im Browser",
+    "Native Android-App (React Native/Expo) mit MediaSession, Hintergrundwiedergabe und Android Auto"
+  ],
+  "stack": [
+    "FastAPI",
+    "SQLAlchemy",
+    "SQLite",
+    "Next.js 16",
+    "Tailwind CSS v4",
+    "Zustand",
+    "TanStack Query",
+    "React Native / Expo",
+    "Kotlin"
+  ],
+  "languages": {
+    "TypeScript": 65.5,
+    "Python": 14.6,
+    "Kotlin": 13.6,
+    "JavaScript": 3.1,
+    "CSS": 2.4,
+    "Java": 0.7,
+    "HTML": 0.1
+  },
+  "commits": 147,
+  "funFact": {
+    "text": "Die Standard-Datenbank im Backend heißt laut README „spotifrei.db“. Bis v1.0.13 sind 19 Release-Tags entstanden.",
+    "source": 0
+  },
+  "media": [
+    {
+      "src": "assets/img/LoggeRythm.webp",
+      "alt": "LoggeRythm: Warteschlange im Webplayer",
+      "caption": "Offizieller Screenshot aus dem Repo (docs/screenshots/01-queue.png)",
+      "kind": "screenshot",
+      "width": 1440,
+      "height": 900,
+      "source": 0
+    }
+  ],
+  "note": "Ein privates Demo-Projekt, kein öffentlicher Streamingdienst. Deshalb verlinke ich nur das Repo.",
+  "refs": {
+    "repo": 1,
+    "live": 0
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/LoggeRythm · README, Tags, Commit-Historie",
+      "url": "https://github.com/LoggeL/LoggeRythm",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/LoggeRythm",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "geo-game",
+  "story": [
+    "GeoGames ist mein tägliches Geografie-Ritual für eine kleine, ehrgeizige Runde: Jeden Tag gibt es zehn neue Spiele, von GeoWordle über Flaggen und Silhouetten bis StadtPin für deutsche Städte, und abends zählt das gemeinsame Scoreboard. Dazu kommen Streaks, Achievements, ein Performance-Modus für schwache Geräte und eine PWA, die Ergebnisse auch offline zwischenspeichert."
+  ],
+  "highlights": [
+    "Zehn tägliche Spiele: GeoWordle, MapPin, Silhouette, Capital Streak, GeoSize, GeoCompare, GeoFacts, BorderRun, StadtPin, FlagQuiz",
+    "Gemeinsames Tages-Scoreboard (SQLite) plus All-Time-Highscores",
+    "Streaks, Persönliche-Bestleistung- und Weltrekord-Badges",
+    "Performance-Modus ohne Animationen und Sounds, der nach Frame-Messung vorgeschlagen wird",
+    "Offline-PWA mit Warteschlange für Score-Übermittlungen",
+    "StadtPin-Bundeslandgrenzen aus offiziellen BKG-VG2500-Daten"
+  ],
+  "stack": [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "Leaflet",
+    "SQLite (node:sqlite)",
+    "Node.js 24",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 95.8,
+    "JavaScript": 2.5,
+    "CSS": 1.4,
+    "Python": 0.3
+  },
+  "commits": 296,
+  "funFact": {
+    "text": "Die Daten sind handkuratiert: Es gibt eigene Audit-Skripte für Länderfakten und StadtPin, und laut Commits wurde BorderRun extra angepasst, um die Westsahara als eigenes Gebiet zu führen.",
+    "source": 0
+  },
+  "note": "Das Repo ist privat. Die Spiele selbst sind öffentlich.",
+  "refs": {
+    "repo": 3,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/geo-games (privat, nicht öffentlich einsehbar) · README, package.json, Commit-Historie",
+      "url": "https://github.com/LoggeL/geo-games",
+      "checkedAt": "2026-09-28",
+      "private": true
+    },
+    {
+      "label": "Live-Seite geo.logge.top",
+      "url": "https://geo.logge.top",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite geo.logge.top/leaderboard",
+      "url": "https://geo.logge.top/leaderboard",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen (privat, nicht öffentlich einsehbar)",
+      "url": "https://api.github.com/repos/LoggeL/geo-games",
+      "checkedAt": "2026-09-28",
+      "private": true
+    }
+  ]
+}

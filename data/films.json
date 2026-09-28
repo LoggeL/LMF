@@ -1,0 +1,469 @@
+[
+  {
+    "id": "skiing-2026",
+    "youtubeId": "ZjB-0SG0icU",
+    "realTitle": "Ski 2026 - Portes du Soleil",
+    "uploaded": "2026-02-03",
+    "duration": "6:28",
+    "series": "ski",
+    "location": "Portes du Soleil",
+    "aspect": "9:16",
+    "stillFocus": 0.62,
+    "quote": "Die Welt steht schief diesmal in vertikal.",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=ZjB-0SG0icU",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "infected",
+    "youtubeId": "6iNdfsbZWHs",
+    "realTitle": "Kurzfilm - Infected",
+    "uploaded": "2023-12-29",
+    "duration": "12:22",
+    "series": "kurzfilm",
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=6iNdfsbZWHs",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "exception",
+    "youtubeId": "uhlAo1chnlM",
+    "realTitle": "Exception - Kurzfilm",
+    "uploaded": "2022-12-27",
+    "duration": "4:36",
+    "series": "kurzfilm",
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=uhlAo1chnlM",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "selantis",
+    "realTitle": "Die Chroniken von Selantis",
+    "uploaded": "2017-03-29",
+    "duration": "2:01:23",
+    "year": 2015,
+    "parts": [
+      {
+        "title": "Dunkle Mächte",
+        "duration": "25:56",
+        "uploaded": "2017-03-29",
+        "url": "https://www.youtube.com/watch?v=3PNiiK653uQ"
+      },
+      {
+        "title": "Letzte Hoffnung",
+        "duration": "43:20",
+        "uploaded": "2017-03-30",
+        "url": "https://www.youtube.com/watch?v=XUZV9T7fEsE"
+      },
+      {
+        "title": "Falscher Glaube",
+        "duration": "52:07",
+        "uploaded": "2020-03-22",
+        "url": "https://www.youtube.com/watch?v=c9oV3Lh2Lyw"
+      }
+    ],
+    "roles": [
+      "VFX",
+      "Homepage",
+      "Schauspieler",
+      "Hauptrolle Harras (Teil 3)"
+    ],
+    "series": "palatina",
+    "sources": [
+      {
+        "label": "YouTube-Playlist „Selantis“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube: Die Chroniken von Selantis - Dunkle Mächte",
+        "url": "https://www.youtube.com/watch?v=3PNiiK653uQ",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube: Die Chroniken von Selantis - Letzte Hoffnung",
+        "url": "https://www.youtube.com/watch?v=XUZV9T7fEsE",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube: Die Chroniken von Selantis - Falscher Glaube",
+        "url": "https://www.youtube.com/watch?v=c9oV3Lh2Lyw",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Palatina-Films-Website: selantis.html",
+        "url": "https://github.com/LoggeL/PalatinaFilms/blob/master/selantis.html",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "Palatina-Films-Website: team.html (Rolle: VFX, Homepage, Schauspieler)",
+        "url": "https://github.com/LoggeL/PalatinaFilms/blob/master/team.html",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2024-epic",
+    "youtubeId": "rZaMHwuKFcw",
+    "realTitle": "Aftermovie Ski 2024 - Epic Version",
+    "uploaded": "2024-01-30",
+    "duration": "3:25",
+    "series": "ski",
+    "location": "Flachau",
+    "quote": "Mal was anders... Community Version kommt noch",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=rZaMHwuKFcw",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2024-fun",
+    "youtubeId": "dJX9U7F-FIM",
+    "realTitle": "Aftermovie - Flachau 2024",
+    "uploaded": "2024-11-24",
+    "duration": "3:22",
+    "series": "ski",
+    "location": "Flachau",
+    "quote": "Ist in nem Fiebertraum entstanden. Bitte keine Erwatungen [sic] an die Qualität.",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=dJX9U7F-FIM",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2023",
+    "youtubeId": "CLalueWRmLI",
+    "realTitle": "Aftermovie Ski 2023",
+    "uploaded": "2023-07-29",
+    "duration": "4:52",
+    "series": "ski",
+    "quote": "Grüße gehen raus an den FI-Toaster und die unsichtbaren Backbleche.",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=CLalueWRmLI",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2022",
+    "youtubeId": "GVPzXOix2sk",
+    "realTitle": "Zillertal Aftermovie 2022",
+    "uploaded": "2022-06-08",
+    "duration": "7:54",
+    "series": "ski",
+    "location": "Zillertal",
+    "quote": "Hallo Welt",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=GVPzXOix2sk",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "sailing-2022",
+    "youtubeId": "MbZPufQscBw",
+    "realTitle": "Segeln 2022 Aftermovie",
+    "uploaded": "2022-11-11",
+    "duration": "6:30",
+    "series": "segeln",
+    "location": "IJsselmeer",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=MbZPufQscBw",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "poolparty-2021",
+    "youtubeId": "ZCvVEFKuC_o",
+    "realTitle": "Poolparty - Offical Aftermovie 2021",
+    "uploaded": "2021-08-17",
+    "duration": "6:38",
+    "series": "poolparty",
+    "location": "Ramsen",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=ZCvVEFKuC_o",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2020",
+    "youtubeId": "KYahVktrq_I",
+    "realTitle": "Bad Gastein 2020",
+    "uploaded": "2020-12-05",
+    "duration": "4:02",
+    "series": "ski",
+    "location": "Bad Gastein",
+    "paraphrase": "Von 25 auf 50 Bilder pro Sekunde hochgerechnet, mit Flowframes.",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=KYahVktrq_I",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "bodensee-2020",
+    "youtubeId": "8p3xwe7amDE",
+    "realTitle": "Bodensee 2020",
+    "uploaded": "2020-09-16",
+    "duration": "3:55",
+    "series": "bodensee",
+    "location": "Bodensee",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=8p3xwe7amDE",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "poolparty-2020",
+    "youtubeId": "6Qai_0gckB4",
+    "realTitle": "Aftermovie JP Poolparty 2020",
+    "uploaded": "2020-08-15",
+    "duration": "5:38",
+    "series": "poolparty",
+    "location": "Ramsen",
+    "quote": "Aftermovie 2020",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=6Qai_0gckB4",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "skiing-2019",
+    "youtubeId": "-VTPliFOTA0",
+    "realTitle": "Feldberg 2019",
+    "uploaded": "2019-02-19",
+    "duration": "4:09",
+    "series": "ski",
+    "location": "Feldberg",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=-VTPliFOTA0",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  },
+  {
+    "id": "sailing-2019",
+    "youtubeId": "Vt3wFY_ldt4",
+    "realTitle": "Project Sailing 2019",
+    "uploaded": "2022-08-04",
+    "duration": "4:59",
+    "series": "segeln",
+    "location": "IJsselmeer",
+    "alsoOn": [
+      {
+        "label": "jupeters.de",
+        "url": "https://jupeters.de"
+      }
+    ],
+    "roles": [],
+    "sources": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/watch?v=Vt3wFY_ldt4",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "jupeters.de (Filme der Gruppe)",
+        "url": "https://jupeters.de",
+        "checkedAt": "2026-09-28"
+      },
+      {
+        "label": "YouTube-Playlist „LMF“",
+        "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+        "checkedAt": "2026-09-28"
+      }
+    ]
+  }
+]

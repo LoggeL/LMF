@@ -1,0 +1,143 @@
+{
+  "id": "theater-website",
+  "story": [
+    "Für das Kolpingtheater Ramsen baue ich die Website samt Ticketsystem. Die aktuelle Version zeigt Chronik, Ensemble, Galerien pro Stück und eine Online-Platzreservierung mit Saalplan, QR-Tickets, Kalendereintrag und inzwischen Google-Wallet-Tickets.",
+    "Davor gab es schon eigene Vorgänger: eine Theaterseite ab 2020 und ein kleines Ticketsystem mit Turnstile-Captcha und Mailbestätigung."
+  ],
+  "highlights": [
+    "Buchung mit visueller Platzwahl, Belegungsanzeige pro Vorstellung und Warnungen vor Einzelplatzlücken",
+    "QR-Code-Tickets für den Einlass, druckoptimierte Ticketansicht",
+    "Kalenderintegration (ICS) mit Plattformerkennung und 2-Stunden-Erinnerung",
+    "Google-Wallet-Tickets (Commits vom September 2026)",
+    "Chronik-Zeitleiste, Team-Seiten mit Rollen und Technik-Jobs, Masonry-Galerie mit Lightbox je Stück",
+    "BlurHash-Platzhalter, Pressebereich mit Plakaten und Trailern, Hell/Dunkel-Theme"
+  ],
+  "stack": [
+    "Next.js 15",
+    "TypeScript",
+    "React",
+    "Tailwind CSS",
+    "Resend / React Email",
+    "QR (qrcode.react, html5-qrcode)",
+    "BlurHash",
+    "Sharp",
+    "Recharts",
+    "Docker"
+  ],
+  "languages": {
+    "TypeScript": 83.4,
+    "JavaScript": 10.3,
+    "CSS": 6.2,
+    "Dockerfile": 0.1
+  },
+  "commits": 314,
+  "commitsBy": {
+    "LoggeL": 249,
+    "total": 314
+  },
+  "facts": [
+    {
+      "key": "play",
+      "label": "Gebucht wird",
+      "value": "Romeo und Julia",
+      "source": 6
+    },
+    {
+      "key": "seats",
+      "label": "Plätze pro Vorstellung",
+      "value": "68",
+      "source": 6
+    },
+    {
+      "key": "nomination",
+      "label": "Nominiert (das Theater)",
+      "value": "Deutscher Engagementpreis 2026",
+      "source": 5
+    }
+  ],
+  "funFact": {
+    "text": "Rund ums Theater sind weitere Spielereien entstanden, alle als öffentliche Repos, zum Beispiel „Rampenlicht“ (ein Online-Kartenspiel mit den echten Theatermitgliedern als Karten) und eine Jubiläums-Slideshow.",
+    "source": 3
+  },
+  "relatedRepos": [
+    {
+      "role": "Ticketsystem-Vorgänger",
+      "fullName": "LoggeL/TicketTheater",
+      "createdAt": "2024-10-07",
+      "commits": 46
+    },
+    {
+      "role": "Backend-Vorgänger",
+      "fullName": "LoggeL/kolpingCore",
+      "createdAt": "2021-07-05",
+      "commits": 56
+    }
+  ],
+  "media": [
+    {
+      "src": "assets/img/KolpingtheaterSaalplan.webp",
+      "alt": "Saalplan der Buchung: sieben Reihen A bis G vor der Bühne, freie Plätze als Kästchen",
+      "caption": "Platzwahl im Saalplan, Live-Screenshot vom 28.09.2026 (Vorstellung am 28.12.2026, nichts gebucht)",
+      "kind": "screenshot",
+      "width": 1440,
+      "height": 900,
+      "source": 6
+    }
+  ],
+  "refs": {
+    "repo": 9,
+    "live": 5
+  },
+  "sources": [
+    {
+      "label": "Repo Kolpingtheater-Ramsen/next-theater · README, package.json, Contributors, Commit-Historie",
+      "url": "https://github.com/Kolpingtheater-Ramsen/next-theater",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/TicketTheater · README",
+      "url": "https://github.com/LoggeL/TicketTheater",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/kolpingCore",
+      "url": "https://github.com/LoggeL/kolpingCore",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/rampenlicht",
+      "url": "https://github.com/LoggeL/rampenlicht",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/theater-slideshow · Beschreibungen",
+      "url": "https://github.com/LoggeL/theater-slideshow",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite kolpingtheater-ramsen.de",
+      "url": "https://kolpingtheater-ramsen.de",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite kolpingtheater-ramsen.de/booking · Buchung: „Romeo und Julia“, je 68 Plätze",
+      "url": "https://kolpingtheater-ramsen.de/booking",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite kolpingtheater-ramsen.de/about · Über uns",
+      "url": "https://kolpingtheater-ramsen.de/about",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite kolpingtheater-ramsen.de/team · Teamseite: Bote / Diener in „Creepshow“, Crew „Website“",
+      "url": "https://kolpingtheater-ramsen.de/team",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/Kolpingtheater-Ramsen/next-theater",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

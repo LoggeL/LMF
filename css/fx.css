@@ -1,0 +1,189 @@
+/*
+ * css/fx.css  [WP3] — the heat grammar (§5.2): „Hitze kommt schnell, Kälte langsam.“
+ *   · heat under the hand ([data-heat], --mx/--my from js/fx/heat.js)
+ *   · Amboss-Schlag (.is-struck, --strike flash, spark overlay from js/fx/anvil.js)
+ *   · Glühlinie (scroll-timeline cooling + --flare on every forge strike)
+ *   · film grain tile (.fx-grain, tile from js/fx/grain.js)
+ * All motion is opt-in and calm-gated. Defaults live in @layer base (zero specificity) so any
+ * section can override them; only the effects themselves live in @layer fx.
+ */
+
+@property --strike {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --flare {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer base {
+  :where([data-heat]:not(.button, .brand)) {
+    isolation: isolate;
+  }
+  :where([data-heat]:not(.button, .brand)):is(:hover, :focus-within) {
+    --heat: 1;
+  }
+  :where([data-heat]:not(.button, .brand))::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--mx) var(--my),
+      color-mix(in oklch, var(--heat-4) calc(var(--heat, 0) * 30%), transparent),
+      color-mix(in oklch, var(--heat-3) calc(var(--heat, 0) * 8%), transparent) 30%,
+      transparent 55%
+    );
+  }
+  :where([data-heat]:not(.button, .brand)) {
+    position: relative;
+  }
+}
+
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) :where([data-heat]:not(.button, .brand)) {
+      transition: --heat var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) :where([data-heat]:not(.button, .brand)):is(:hover, :focus-within) {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+}
+
+@layer fx {
+  /* Amboss-Schlag */
+  :is(.button, button.chip, .chip--filter, #load-more, .probe-button, [data-anvil]) {
+    background-image: linear-gradient(
+      color-mix(in oklch, var(--heat-4) calc(var(--strike) * 70%), transparent),
+      color-mix(in oklch, var(--heat-3) calc(var(--strike) * 45%), transparent)
+    );
+  }
+  .is-struck {
+    transform: translateY(2px) scaleY(0.965);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) .is-struck {
+      transition: transform var(--d-strike) var(--ease-hammer);
+    }
+  }
+
+  .fx-sparks {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    pointer-events: none;
+    overflow: hidden;
+    contain: strict;
+  }
+  .fx-sparks i {
+    position: absolute;
+    inline-size: 3px;
+    block-size: 3px;
+    border-radius: 50%;
+    background: var(--heat-5);
+    box-shadow:
+      0 0 3px 1px var(--heat-4),
+      0 0 9px 2px color-mix(in oklch, var(--heat-3) 55%, transparent);
+    will-change: transform, opacity;
+  }
+
+  /* Glühlinie */
+  .gluehlinie {
+    --flare: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, var(--heat-2) calc(min(1, var(--page-heat) + var(--flare)) * 100%), var(--line)) 12%,
+      color-mix(in oklch, var(--heat-3) calc(min(1, var(--page-heat) + var(--flare)) * 100%), var(--line)) 50%,
+      color-mix(in oklch, var(--heat-4) calc(min(1, var(--page-heat) + var(--flare)) * 100%), var(--line)) 72%,
+      transparent
+    );
+    box-shadow: 0 0 calc(var(--flare) * 12px) calc(var(--flare) * 1px) color-mix(in oklch, var(--heat-3) calc(var(--flare) * 70%), transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      :root:not([data-motion="paused"]) .gluehlinie {
+        animation: lmf-page-heat linear both;
+        animation-timeline: scroll(root block);
+      }
+    }
+  }
+  @keyframes lmf-page-heat {
+    0% {
+      --page-heat: 1;
+    }
+    30% {
+      --page-heat: 0.15;
+    }
+    100% {
+      --page-heat: 0.05;
+    }
+  }
+
+  /* Film grain (CSS fallback for the projector, §5.8) */
+  .fx-grain {
+    position: absolute;
+    inset: -64px;
+    pointer-events: none;
+    background-image: var(--grain-tile, var(--grain));
+    background-size: 128px 128px;
+    mix-blend-mode: overlay;
+    opacity: 0.22;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) [data-grain] .fx-grain {
+      animation: lmf-grain 0.5s infinite;
+    }
+  }
+  @keyframes lmf-grain {
+    0% {
+      translate: 0 0;
+      animation-timing-function: steps(1, end);
+    }
+    16.66% {
+      translate: -37px 21px;
+      animation-timing-function: steps(1, end);
+    }
+    33.33% {
+      translate: 18px -44px;
+      animation-timing-function: steps(1, end);
+    }
+    50% {
+      translate: -52px -9px;
+      animation-timing-function: steps(1, end);
+    }
+    66.66% {
+      translate: 29px 38px;
+      animation-timing-function: steps(1, end);
+    }
+    83.33% {
+      translate: -11px -27px;
+      animation-timing-function: steps(1, end);
+    }
+    100% {
+      translate: 0 0;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .fx-grain,
+    .fx-sparks {
+      display: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .fx-grain,
+    .fx-sparks {
+      display: none;
+    }
+    :is(.button, button.chip, .chip--filter, #load-more, .probe-button, [data-anvil]) {
+      background-image: none;
+    }
+  }
+}

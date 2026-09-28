@@ -1,0 +1,72 @@
+{
+  "id": "poolparty-website",
+  "story": [
+    "Die Website zur JP Poolparty, einem jährlichen Event in Ramsen: handgezeichneter Papier-Look mit wackeligen Rändern, Post-it-Überschriften und einer neuen Primärfarbe pro Jahr, 2026 knallpink.",
+    "Gäste melden sich an, tragen ein, was sie mitbringen, melden sich als Helfer und wünschen sich Songs. Dahinter läuft mein Backend jpCore mit Login, Admin-Panel und Mails."
+  ],
+  "highlights": [
+    "Anmeldung, Mitbringliste und Helfer-Eintragung für eingeloggte Gäste",
+    "Admin-Dashboard für Accounts, Anmeldungen, Items, Helfer, Mails und Logs, dazu eine eigene DJ-Ansicht für Songwünsche",
+    "Fotogalerie Jahr für Jahr (2018 bis 2026) mit Lightbox und Aftermovie-Links",
+    "Jahresfarbe als Design-Token; 2026 ist #ff2d87",
+    "Rein statisches Frontend ohne Build; Auth nur per HttpOnly-Cookie",
+    "Backend jpCore: Fastify 5, Zod, SQLite/Drizzle, argon2id, Resend mit SMTP-Fallback, automatische Backups"
+  ],
+  "stack": [
+    "HTML",
+    "CSS",
+    "Vanilla JavaScript (ES Modules)",
+    "fslightbox",
+    "GitHub Pages",
+    "jpCore: TypeScript, Fastify 5, Drizzle ORM, SQLite, argon2id, Resend"
+  ],
+  "languages": {
+    "JavaScript": 34.4,
+    "HTML": 34.2,
+    "CSS": 28.1,
+    "Python": 3.3
+  },
+  "commits": 296,
+  "commitsBy": {
+    "LoggeL": 123,
+    "total": 296
+  },
+  "funFact": {
+    "text": "Die README verspricht ausdrücklich „a small easter egg or two (don’t tell)“.",
+    "source": 0
+  },
+  "relatedRepos": [
+    {
+      "role": "Backend",
+      "fullName": "LoggeL/jpCore",
+      "createdAt": "2020-03-09",
+      "commits": 130
+    }
+  ],
+  "refs": {
+    "repo": 3,
+    "live": 2
+  },
+  "sources": [
+    {
+      "label": "Repo realjupeters/realjupeters.github.io · README, Contributors, Commit-Historie",
+      "url": "https://github.com/realjupeters/realjupeters.github.io",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Repo LoggeL/jpCore · README",
+      "url": "https://github.com/LoggeL/jpCore",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite poolparty.jupeters.de",
+      "url": "https://poolparty.jupeters.de",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/realjupeters/realjupeters.github.io",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

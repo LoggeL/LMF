@@ -1,0 +1,80 @@
+[
+  {
+    "label": "Website",
+    "kind": "web",
+    "year": 2025,
+    "projectId": "theater-website",
+    "text": "Die aktuelle Theaterseite: Programm, Chronik, Galerien und Buchung im Saalplan mit QR-Ticket, Kalendereintrag und Google-Wallet-Ticket.",
+    "url": "https://github.com/Kolpingtheater-Ramsen/next-theater"
+  },
+  {
+    "label": "Vorgänger-Website",
+    "kind": "web",
+    "year": 2020,
+    "text": "Schon 2020 stand die Theaterseite in meinem ersten Portfolio unter „Websites“.",
+    "url": "https://github.com/LoggeL/LMF/blob/master/index.old.html"
+  },
+  {
+    "label": "kolpingCore",
+    "kind": "werkzeug",
+    "year": 2021,
+    "text": "Mein erstes Backend fürs Theater.",
+    "url": "https://github.com/LoggeL/kolpingCore"
+  },
+  {
+    "label": "TicketTheater",
+    "kind": "werkzeug",
+    "year": 2024,
+    "text": "Ein kleines Ticketsystem mit Captcha und Bestätigungsmail, der Vorgänger der heutigen Buchung.",
+    "url": "https://github.com/LoggeL/TicketTheater"
+  },
+  {
+    "label": "Skript",
+    "kind": "werkzeug",
+    "year": 2026,
+    "text": "Ein interaktives Drehbuch-System für die Proben, als installierbare Web-App.",
+    "url": "https://github.com/Kolpingtheater-Ramsen/Skript"
+  },
+  {
+    "label": "CyberScreen",
+    "kind": "werkzeug",
+    "year": 2024,
+    "text": "Die Videozuspielung für das Stück „Nexus“.",
+    "url": "https://github.com/Kolpingtheater-Ramsen/CyberScreen"
+  },
+  {
+    "label": "TheaterApp",
+    "kind": "werkzeug",
+    "year": 2026,
+    "text": "Eine Flutter-App mit Terminen, Rollen, Drehbuchleser und Push-Benachrichtigungen.",
+    "url": "https://github.com/LoggeL/TheaterApp"
+  },
+  {
+    "label": "Creepshow-Slideshow",
+    "kind": "werkzeug",
+    "year": 2026,
+    "text": "Eine kinematografische Jubiläums-Slideshow, als eigenständige HTML-Datei.",
+    "url": "https://github.com/LoggeL/theater-slideshow"
+  },
+  {
+    "label": "Rampenlicht",
+    "kind": "spiel",
+    "year": 2026,
+    "text": "Ein Online-Kartenspiel mit den Theatermitgliedern als Karten.",
+    "url": "https://github.com/LoggeL/rampenlicht"
+  },
+  {
+    "label": "Kanaltrailer",
+    "kind": "film",
+    "year": 2020,
+    "text": "Der Kanaltrailer des Theaters. In der Beschreibung steht: „Produziert von LMF“.",
+    "url": "https://www.youtube.com/watch?v=hlvHRI5d3qc"
+  },
+  {
+    "label": "Kristall der Träume, restauriert",
+    "kind": "film",
+    "year": 2021,
+    "text": "Den Aftermovie zu „Der Kristall der Träume“ habe ich entruckelt und auf 60 fps gebracht.",
+    "url": "https://www.youtube.com/watch?v=YOi_lhZ7eJI"
+  }
+]

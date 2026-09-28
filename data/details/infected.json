@@ -1,0 +1,18 @@
+{
+  "id": "infected",
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=6iNdfsbZWHs",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "YouTube-Playlist „LMF“",
+      "url": "https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+/* css/sections/abseits.css  [WP5]
+ * Abseits der Tabs: contact-sheet strip (.contact-sheet, the no-JS / mobile view) and the
+ * Nachtuhr (.nu-). Tokens only; motion is calm-gated.
+ */
+@layer sections {
+  /* Kontaktbogen (film strip) */
+  .contact-sheet {
+    --hole: color-mix(in srgb, var(--ink) 16%, var(--bg));
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(132px, 1fr);
+    gap: 10px;
+    margin: 0;
+    padding: 26px 10px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    border: 1px solid var(--line);
+    background:
+      repeating-linear-gradient(to right, transparent 0 8px, var(--hole) 8px 18px, transparent 18px 26px) 0 8px / 100% 10px no-repeat,
+      repeating-linear-gradient(to right, transparent 0 8px, var(--hole) 8px 18px, transparent 18px 26px) 0 calc(100% - 8px) / 100% 10px no-repeat,
+      var(--bg);
+  }
+  @media (min-width: 900px) {
+    .contact-sheet {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+  .cs-frame {
+    scroll-snap-align: start;
+  }
+  .cs-frame a {
+    --heat: 0;
+    position: relative;
+    display: grid;
+    gap: 6px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .cs-frame img {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--surface-2);
+    filter: saturate(calc(0.85 + var(--heat) * 0.3)) brightness(calc(0.92 + var(--heat) * 0.12));
+  }
+  .cs-frame a:is(:hover, :focus-visible) {
+    --heat: 1;
+  }
+  .cs-edge {
+    position: absolute;
+    inset: 6px auto auto 6px;
+    padding: 1px 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--heat-text);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+  .cs-time {
+    color: var(--muted);
+    text-transform: none;
+  }
+
+  /* Nachtuhr */
+  .nu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s5) var(--s7);
+    align-items: center;
+    padding: clamp(16px, 3vw, 40px);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(70% 80% at 36% 100%, color-mix(in srgb, var(--heat-1) 40%, transparent), transparent 70%),
+      radial-gradient(1px 1px at 20% 30%, color-mix(in srgb, var(--ink) 50%, transparent), transparent),
+      var(--bg);
+    margin-block-end: var(--s5);
+  }
+  @media (min-width: 900px) {
+    .nu {
+      grid-template-columns: minmax(0, 1.9fr) minmax(240px, 1fr);
+    }
+  }
+  @media (max-width: 639px) {
+    .nu {
+      display: none;
+    }
+  }
+  @media (min-width: 640px) {
+    .nachtuhr.has-clock .contact-sheet {
+      display: none;
+    }
+  }
+  .nu-svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+  .nu-ring {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .nu-ring.is-night {
+    stroke: color-mix(in srgb, var(--heat-3) 55%, transparent);
+  }
+  .nu-spoke {
+    stroke: color-mix(in srgb, var(--ink) 18%, transparent);
+    stroke-dasharray: 2 5;
+  }
+  .nu-hour,
+  .nu-ringlabel {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    fill: var(--muted);
+  }
+  .nu-ringlabel {
+    font-size: 13px;
+  }
+  .nu-time {
+    font-family: var(--font-display);
+    font-size: 66px;
+    fill: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .nu-sub {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    fill: var(--muted);
+  }
+  .nu-hand {
+    transform-box: view-box;
+    transform-origin: 400px 404px;
+    transform: rotate(var(--turn, 0deg));
+    opacity: 0.35;
+  }
+  .nu-hand.is-set {
+    opacity: 1;
+  }
+  .nu-hand line {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+  }
+  .nu-hand circle,
+  .nu-pivot {
+    fill: var(--accent);
+  }
+  .nu-tick {
+    cursor: pointer;
+    outline: none;
+  }
+  .nu-hit {
+    stroke: transparent;
+    stroke-width: 11;
+    stroke-linecap: round;
+  }
+  .nu-mark {
+    stroke: color-mix(in srgb, var(--heat-3) 85%, transparent);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+  .nu-tick.is-night .nu-mark {
+    stroke: var(--heat-4);
+  }
+  .nu-tick:hover .nu-mark,
+  .nu-tick.is-active .nu-mark {
+    stroke: var(--heat-5);
+    stroke-width: 4;
+  }
+  .nu-tick:focus-visible .nu-hit {
+    stroke: var(--focus);
+    stroke-width: 12;
+  }
+  .nu-tick:focus-visible .nu-mark {
+    stroke: var(--bg);
+    stroke-width: 3;
+  }
+
+  .nu-dial {
+    display: grid;
+    gap: var(--s4);
+  }
+  .nu-well {
+    display: grid;
+    gap: var(--s3);
+    margin: 0;
+    align-content: center;
+  }
+  .nu-frame {
+    position: relative;
+    aspect-ratio: 1;
+    max-block-size: 460px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .nu-img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+  .nu-img.is-on {
+    z-index: 1;
+    opacity: 1;
+  }
+  .nu-cap {
+    min-block-size: 1.4em;
+    color: var(--heat-text);
+  }
+  .nu-open {
+    justify-self: start;
+    color: var(--ink);
+  }
+  .nu-keys {
+    margin: 0;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+  .nu-keys kbd {
+    font: inherit;
+    padding: 0 4px;
+    border: 1px solid var(--line);
+  }
+  @media (pointer: coarse) {
+    .nu-keys {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="paused"]) .nu-hand {
+      transition:
+        transform 700ms var(--ease-cool),
+        opacity var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .nu-mark {
+      transition:
+        stroke var(--d-cool) var(--ease-cool),
+        stroke-width var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .nu-tick:hover .nu-mark,
+    :root:not([data-motion="paused"]) .nu-tick.is-active .nu-mark {
+      transition-duration: var(--d-heat-in);
+    }
+    :root:not([data-motion="paused"]) .nu-img {
+      transition: opacity 400ms var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .nu-img.is-on {
+      transition: opacity 90ms var(--ease-std);
+    }
+    :root:not([data-motion="paused"]) .cs-frame img {
+      transition: filter var(--d-cool) var(--ease-cool);
+    }
+    :root:not([data-motion="paused"]) .cs-frame a:is(:hover, :focus-visible) img {
+      transition-duration: var(--d-heat-in);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .nu-mark {
+      stroke: CanvasText;
+    }
+    .nu-tick.is-active .nu-mark {
+      stroke: Highlight;
+    }
+    .nu-ring {
+      stroke: GrayText;
+    }
+  }
+}

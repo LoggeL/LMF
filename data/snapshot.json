@@ -1,0 +1,43 @@
+{
+  "asOf": "2026-09-28",
+  "github": {
+    "login": "LoggeL",
+    "createdAt": "2015-04-15",
+    "bio": "I'm just pressing buttons",
+    "ownPublicRepos": 140,
+    "reposByYear": {
+      "2017": 1,
+      "2018": 2,
+      "2019": 6,
+      "2020": 9,
+      "2021": 9,
+      "2022": 8,
+      "2023": 8,
+      "2024": 10,
+      "2025": 25,
+      "2026": 62
+    }
+  },
+  "youtube": {
+    "firstUpload": "2014-11-22",
+    "firstTitle": "AE Test",
+    "firstDurationSeconds": 7
+  },
+  "sources": [
+    {
+      "label": "GitHub API users/LoggeL",
+      "url": "https://api.github.com/users/LoggeL",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API: eigene öffentliche Repos ohne Forks",
+      "url": "https://github.com/LoggeL?tab=repositories&type=source",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "YouTube „AE Test“",
+      "url": "https://www.youtube.com/watch?v=wHEcSFBkM0s",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

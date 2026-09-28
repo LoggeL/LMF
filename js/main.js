@@ -1,554 +1,338 @@
-(() => {
-  'use strict'
+/**
+ * Logge Media Forge · main.js  [LEAD]
+ * Boot, section registry, lazy scheduling, data-bind refresh.
+ * The frozen contract (section module API, ctx, Data, events, data-bind, renderers, CSS layers)
+ * is in docs/contract.md (spec §6.2).
+ */
 
-  document.documentElement.classList.add('js')
+import { motion } from "./lib/motion.js";
+import { router } from "./lib/router.js";
+import { announce, toast } from "./lib/announce.js";
+import storage from "./lib/storage.js";
+import format from "./lib/format.js";
+import { loadData } from "./lib/data.js";
+import { formatBinding } from "./lib/derive.js";
+import { initTheme } from "./shell/theme.js";
+import { initNav } from "./shell/nav.js";
+import { initMotionToggle } from "./shell/motion-toggle.js";
+import { scrollToTarget, watchAnchors } from "./lib/scroll.js";
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const state = {
-    projects: [],
-    filter: 'all',
-    limit: 9,
-    batchSize: 9,
-    activeProjectTrigger: null,
-  }
+/**
+ * Section registry. when: "eager" now · "intent" (Werkbank) on #werk/…, the first reach for a
+ * Werkstück (hover/focus on a #werk/ link, hashchange, lmf:open) or idle · "idle" after load + idle ·
+ * "visible" one viewport ahead (IntersectionObserver). css: injected on load, earlier when on
+ * screen or for an in-page jump; a module mounts once its sheets settled. critical: sheets at once.
+ */
+const SKELETONS = "css/skeletons.css";
+export const SECTIONS = [
+  { name: "lager", selector: "#lager", when: "eager", src: "./sections/lager.js", css: ["css/sections/lager.css", SKELETONS] },
+  { name: "werkbank", selector: "#werkbank", when: "intent", src: "./werkbank/werkbank.pack.js", css: [SKELETONS], critical: true },
+  { name: "warm", selector: "#warm", when: "eager", src: "./sections/warm.js", css: ["css/sections/lager.css"], critical: true },
+  { name: "esse", selector: "#esse", when: "idle", src: "./sections/esse.js" },
+  { name: "meister", selector: "#meisterstuecke", when: "visible", src: "./sections/meister.js", css: [SKELETONS, "css/sections/meister.css", "css/werkbank.css"] },
+  { name: "film", selector: "#kapitel-iv", when: "visible", src: "./sections/film.js", css: [SKELETONS, "css/sections/film.css"] },
+  { name: "schichtbuch", selector: "#schichtbuch", when: "visible", src: "./sections/schichtbuch.js", css: [SKELETONS, "css/sections/schichtbuch.css"] },
+  { name: "werkstatt", selector: "#werkstatt", when: "visible", src: "./sections/werkstatt.js", css: [SKELETONS, "css/sections/werkstatt.css"] },
+  { name: "abspann", selector: "#abspann", when: "visible", src: "./sections/abspann.js", css: [SKELETONS, "css/sections/werkstatt.css"] },
+  { name: "abseits", selector: "#abseits", when: "visible", src: "./sections/abseits.js", css: [SKELETONS, "css/sections/abseits.css"] },
+  { name: "kontakt", selector: "#kontakt", when: "visible", src: "./sections/kontakt.js", css: [SKELETONS, "css/sections/kontakt.css"] },
+];
+for (const entry of SECTIONS) entry.load = (attempt = 0) => import(attempt ? `${entry.src}?r=${attempt}` : entry.src);
 
-  let revealObserver = null
+/** Boolean flags for [data-show-if], computed from bindings. Missing inputs → false (element stays hidden). */
+const FLAGS = {
+  "repos.surge": (b) => Number.isFinite(+b["repos.currentYear"]) && Number.isFinite(+b["repos.before"]) && +b["repos.currentYear"] > +b["repos.before"],
+  "stars.isMelodai": (b) => b["stars.maxId"] === "melodai",
+  // Kapitel IV dek: „Alle 7 laufen …“ when every ski film is also on jupeters.de, else „5 davon laufen …“ [WP3]
+  "films.skiAllOnJp": (b) => +b["films.skiOnJp"] > 0 && +b["films.skiOnJp"] === +b["films.ski"],
+  "films.skiSomeOnJp": (b) => Number.isFinite(+b["films.skiOnJp"]) && +b["films.skiOnJp"] < +b["films.ski"],
+};
 
-  document.addEventListener('DOMContentLoaded', () => {
-    initTheme()
-    initMobileMenu()
-    initHeader()
-    initSectionSpy()
-    initRevealObserver()
-    initMeaningCycle()
-    initProfileCycle()
-    initProjectDialog()
-    initProjectControls()
-    setCurrentYear()
-    Promise.allSettled([loadProjects(), loadPartners(), loadSocialLinks()]).then(syncInitialHashPosition)
-  })
+/** A section whose module failed to load (flaky network) is retried this often, with backoff. */
+const MAX_ATTEMPTS = 3;
 
-  function initTheme() {
-    const toggle = document.getElementById('theme-toggle')
-    const label = toggle?.querySelector('.theme-toggle__label')
-    const themeMeta = document.querySelector('meta[name="theme-color"]')
+const mounted = new Map();
+const attempts = new Map();
 
-    let storedTheme = null
-    try {
-      storedTheme = localStorage.getItem('lmf-theme')
-    } catch (error) {
-      console.warn('Theme preference could not be read.', error)
+/* ── Section stylesheets (not render-blocking, §8) ─────────────────────────────────────────────── */
+
+const sheets = new Map();
+/** `load`, then the first idle moment (≤ 600 ms): below-the-fold work never delays `load` itself. */
+const pageLoaded = new Promise((resolve) => {
+  const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(() => resolve(), { timeout: 600 }) : setTimeout(resolve, 50));
+  if (document.readyState === "complete") idle();
+  else addEventListener("load", idle, { once: true });
+});
+
+/** Adds <link rel=stylesheet> once; resolves when it loaded or failed (one retry), never rejects. */
+function loadSheet(href) {
+  if (sheets.has(href)) return sheets.get(href);
+  const attach = (url) =>
+    new Promise((resolve) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = url;
+      link.onload = () => resolve(true);
+      link.onerror = () => {
+        link.remove();
+        resolve(false);
+      };
+      document.head.append(link);
+    });
+  const done = attach(href).then((ok) => ok || attach(`${href}?r=1`));
+  const settled = Promise.race([done, new Promise((r) => setTimeout(r, 5000))]).then(() => {});
+  sheets.set(href, settled);
+  return settled;
+}
+
+const ALL_SHEETS = [...new Set(SECTIONS.flatMap((e) => e.css ?? []))];
+let allRequested = false;
+/** Every section sheet, now (after `load`, on an in-page jump, or on reload/back mid-page). */
+function loadAllSheets() {
+  if (allRequested) return;
+  allRequested = true;
+  ALL_SHEETS.forEach(loadSheet);
+}
+
+function onScreen(el) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.top < innerHeight;
+}
+
+/** Waits for the section's sheets. Off-screen sections before `load` wait for `load` (budget §8). */
+async function sheetsFor(entry, root) {
+  if (!entry.css?.length) return;
+  if (!entry.critical && !allRequested && !onScreen(root)) await pageLoaded;
+  await Promise.all(entry.css.map(loadSheet));
+}
+
+/* ── data-bind ───────────────────────────────────────────────────────────────────────────────────── */
+
+export function applyBindings(bindings = {}, root = document) {
+  for (const el of root.querySelectorAll("[data-bind]")) {
+    const key = el.dataset.bind;
+    if (Object.prototype.hasOwnProperty.call(bindings, key)) {
+      // Same formatter as scripts/prerender.mjs, so runtime text equals the prerendered text.
+      const value = formatBinding(bindings[key]);
+      if (value !== "" && el.textContent !== value) el.textContent = value;
     }
+  }
+  for (const el of root.querySelectorAll("[data-show-if]")) {
+    const flag = FLAGS[el.dataset.showIf];
+    el.hidden = !(flag && flag(bindings));
+  }
+}
 
-    const applyTheme = (theme) => {
-      const nextTheme = theme === 'light' ? 'light' : 'dark'
-      document.documentElement.dataset.theme = nextTheme
+/* ── Mounting ────────────────────────────────────────────────────────────────────────────────────── */
 
-      if (toggle) {
-        const upcomingTheme = nextTheme === 'dark' ? 'light' : 'dark'
-        toggle.setAttribute('aria-label', `Switch to ${upcomingTheme} theme`)
-        if (label) label.textContent = upcomingTheme
+function makeCtx(name, data) {
+  return { data, router, motion, announce, bus: document, storage, format, name };
+}
+
+async function mountSection(entry, data) {
+  if (mounted.has(entry.name)) return;
+  const root = document.querySelector(entry.selector);
+  if (!root) return;
+  mounted.set(entry.name, null);
+  let mod;
+  const tried = attempts.get(entry.name) ?? 0;
+  // Off-screen sections wait for `load` (§8).
+  const early = entry.when !== "visible" || allRequested || onScreen(root);
+  if (!early) await pageLoaded;
+  // Lazy data files this section reads (data.needFor, WP1), then the bindings again.
+  const lazyData = entry.when === "visible" ? data.then((d) => d?.needFor?.(entry.name).then(() => applyBindings(d.bindings))).catch(() => {}) : null;
+  try {
+    [mod] = await Promise.all([entry.load(tried), sheetsFor(entry, root), lazyData]);
+  } catch (error) {
+    // Fetch failed: retry later under a fresh URL (?r=n; the failed one stays cached).
+    mounted.delete(entry.name);
+    const n = tried + 1;
+    attempts.set(entry.name, n);
+    // The fresh URL failed too: a static dependency is stuck in the module map.
+    if (n >= 2 && (await reloadOnce(entry, error))) return;
+    if (n < MAX_ATTEMPTS) setTimeout(() => mountSection(entry, data), 800 * n);
+    else giveUp(entry, root, data, error);
+    return;
+  }
+  try {
+    if (typeof mod.mount !== "function") return;
+    const handle = await mod.mount(root, makeCtx(entry.name, data));
+    mounted.set(entry.name, handle ?? null);
+    root.dataset.mounted = "";
+  } catch (error) {
+    console.warn(`[lmf] Abschnitt „${entry.name}“ konnte nicht starten:`, error);
+  }
+}
+
+let reloading = false;
+
+/**
+ * A failed module fetch (entry and static imports) stays cached for the page's life, so only a
+ * reload helps once a fresh URL failed too. Reload once per tab session (key shared with the boot
+ * watchdog in index.html, so no loop), only for a fetch failure (TypeError) and when the server answers.
+ * Never while the visitor is busy: scrolled past the first screen, a dialog open or a probe running
+ * would all be lost, so then the section stays in its no-JS form instead.
+ */
+function busy() {
+  return scrollY >= innerHeight || router.isWerk() || !!document.querySelector("dialog[open], .probe-stage.is-live");
+}
+
+async function reloadOnce(entry, error) {
+  if (reloading) return true;
+  if (!(error instanceof TypeError) || busy()) return false;
+  try {
+    if (sessionStorage.getItem("lmf-reloaded")) return false;
+    if (!(await fetch(new URL(entry.src, import.meta.url), { method: "HEAD", cache: "no-store" })).ok) return false;
+    sessionStorage.setItem("lmf-reloaded", "1");
+  } catch {
+    return false;
+  }
+  reloading = true;
+  console.warn(`[lmf] „${entry.name}“: Modul hängt im Cache, lade einmal neu.`);
+  location.reload();
+  return true;
+}
+
+/** A section that cannot load stays usable in its no-JS form. */
+function giveUp(entry, root, data, error) {
+  console.warn(`[lmf] Abschnitt „${entry.name}“ konnte nicht geladen werden:`, error);
+  mounted.set(entry.name, null);
+  root.dataset.failed = "";
+  if (entry.name === "lager") {
+    const list = document.getElementById("lager-static");
+    if (list) list.hidden = false;
+  }
+  if (entry.name === "werkbank") router.degrade(werkFallback(data));
+}
+
+/** Without the Werkbank, #werk/<id> points at the project's line in the prerendered list. */
+function werkFallback(data) {
+  return async (id) => {
+    const d = await data;
+    const project = d?.byId?.get(id);
+    const list = document.getElementById("lager-static");
+    if (!list || !project) {
+      toast("Dieses Projekt gibt’s hier nicht (mehr).");
+      scrollToTarget(document.getElementById("lager"));
+      return;
+    }
+    list.hidden = false;
+    const item =
+      list.querySelector(`[data-werk="${CSS.escape(id)}"]`) ??
+      [...list.querySelectorAll("a")].find((a) => project.link && a.getAttribute("href") === project.link)?.closest("li");
+    toast("Die Werkbank klemmt gerade. Hier ist der direkte Link.");
+    if (!item) return scrollToTarget(list);
+    await scrollToTarget(item);
+    item.querySelector("a")?.focus({ preventScroll: true });
+  };
+}
+
+function whenIdle(fn, timeout = 1500) {
+  const run = () => ("requestIdleCallback" in window ? requestIdleCallback(fn, { timeout }) : setTimeout(fn, 200));
+  if (document.readyState === "complete") run();
+  else addEventListener("load", run, { once: true });
+}
+
+const WERK_LINK = 'a[href^="#werk/"]';
+
+/** Mounts on the first sign that a Werkstück is wanted, else on idle. */
+function onIntent(entry, data) {
+  const go = () => {
+    document.removeEventListener("pointerover", reach, true);
+    document.removeEventListener("focusin", reach, true);
+    removeEventListener("hashchange", hash);
+    document.removeEventListener("lmf:open", go);
+    mountSection(entry, data);
+  };
+  const reach = (e) => {
+    if (e.target instanceof Element && e.target.closest(WERK_LINK)) go();
+  };
+  const hash = () => {
+    if (router.isWerk()) go();
+  };
+  if (router.isWerk()) return go();
+  document.addEventListener("pointerover", reach, { capture: true, passive: true });
+  document.addEventListener("focusin", reach, true);
+  addEventListener("hashchange", hash);
+  document.addEventListener("lmf:open", go);
+  whenIdle(go, 3000);
+}
+
+function schedule(data) {
+  const lazy = [];
+  for (const entry of SECTIONS) {
+    if (entry.when === "eager") mountSection(entry, data);
+    else if (entry.when === "intent") onIntent(entry, data);
+    else if (entry.when === "idle") whenIdle(() => mountSection(entry, data));
+    else lazy.push(entry);
+  }
+  if (!("IntersectionObserver" in window)) {
+    lazy.forEach((entry) => whenIdle(() => mountSection(entry, data)));
+    return;
+  }
+  const bySelector = new Map();
+  const io = new IntersectionObserver(
+    (records) => {
+      for (const record of records) {
+        if (!record.isIntersecting) continue;
+        io.unobserve(record.target);
+        const entry = bySelector.get(record.target);
+        if (entry) mountSection(entry, data);
       }
-
-      if (themeMeta) {
-        themeMeta.setAttribute('content', nextTheme === 'dark' ? '#0a0a0b' : '#f4f0e8')
-      }
-    }
-
-    applyTheme(storedTheme || 'dark')
-
-    toggle?.addEventListener('click', () => {
-      const currentTheme = document.documentElement.dataset.theme
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark'
-      applyTheme(nextTheme)
-
-      try {
-        localStorage.setItem('lmf-theme', nextTheme)
-      } catch (error) {
-        console.warn('Theme preference could not be saved.', error)
-      }
-    })
+    },
+    { rootMargin: "100% 0px" },
+  );
+  for (const entry of lazy) {
+    const el = document.querySelector(entry.selector);
+    if (!el) continue;
+    bySelector.set(el, entry);
+    io.observe(el);
   }
+}
 
-  function initMobileMenu() {
-    const toggle = document.querySelector('.menu-toggle')
-    const nav = document.querySelector('.site-nav')
-    const links = document.querySelectorAll('.nav-links a')
+/* ── Boot ────────────────────────────────────────────────────────────────────────────────────────── */
 
-    if (!toggle || !nav) return
+function boot() {
+  // The watchdog in index.html falls back to the no-JS layout when this never happens.
+  document.documentElement.dataset.booted = "";
+  initTheme();
+  initMotionToggle();
+  initNav();
 
-    const closeMenu = () => {
-      toggle.classList.remove('active')
-      nav.classList.remove('active')
-      toggle.setAttribute('aria-expanded', 'false')
-      toggle.setAttribute('aria-label', 'Open navigation')
-      document.body.classList.remove('menu-open')
-    }
+  // The only Date.now() use on the site (§2.10).
+  const year = document.getElementById("current-year");
+  if (year) year.textContent = String(new Date().getFullYear());
 
-    const openMenu = () => {
-      toggle.classList.add('active')
-      nav.classList.add('active')
-      toggle.setAttribute('aria-expanded', 'true')
-      toggle.setAttribute('aria-label', 'Close navigation')
-      document.body.classList.add('menu-open')
-    }
+  // Reload/Back mid-page restores the scroll before `load`: the sheets must not wait.
+  const nav = performance.getEntriesByType?.("navigation")?.[0]?.type;
+  if (nav === "reload" || nav === "back_forward" || (location.hash && !router.isWerk())) loadAllSheets();
+  pageLoaded.then(loadAllSheets);
+  watchAnchors({ beforeJump: loadAllSheets });
 
-    toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true'
-      if (isOpen) closeMenu()
-      else openMenu()
-    })
+  const data = loadData();
+  schedule(data);
+  // werkbank.css and probes.css stay lazy: js/werkbank/werkbank.js loads its sheet before the
+  // dialog opens (the Meisterstücke list it too, for the shared spec-sheet styles), and
+  // js/probes/index.js loads probes.css with the first probe.
+  whenIdle(loadAllSheets, 3000);
 
-    links.forEach((link) => link.addEventListener('click', closeMenu))
+  data.then((d) => {
+    applyBindings(d?.bindings ?? {});
+    document.dispatchEvent(new CustomEvent("lmf:data", { detail: { data: d } }));
+  });
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeMenu()
-    })
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 928) closeMenu()
-    })
-  }
-
-  function initHeader() {
-    const header = document.getElementById('site-header')
-    if (!header) return
-
-    const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 24)
-    window.addEventListener('scroll', updateHeader, { passive: true })
-    updateHeader()
-  }
-
-  function initSectionSpy() {
-    if (!('IntersectionObserver' in window)) return
-
-    const links = Array.from(document.querySelectorAll('.nav-links a[data-section]'))
-    const sections = links
-      .map((link) => document.getElementById(link.dataset.section))
-      .filter(Boolean)
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
-        if (!visible) return
-
-        links.forEach((link) => {
-          link.classList.toggle('active', link.dataset.section === visible.target.id)
-        })
-      },
-      { rootMargin: '-28% 0px -58% 0px', threshold: [0, 0.15, 0.4] }
-    )
-
-    sections.forEach((section) => observer.observe(section))
-  }
-
-  function initRevealObserver() {
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'))
-      return
-    }
-
-    revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          entry.target.classList.add('is-visible')
-          observer.unobserve(entry.target)
-        })
-      },
-      { rootMargin: '0px 0px -7% 0px', threshold: 0.08 }
-    )
-
-    registerReveals()
-  }
-
-  function registerReveals(scope = document) {
-    const elements = scope.querySelectorAll('.reveal:not([data-reveal-ready])')
-
-    elements.forEach((element) => {
-      element.dataset.revealReady = 'true'
-      if (prefersReducedMotion || !revealObserver) {
-        element.classList.add('is-visible')
-      } else {
-        revealObserver.observe(element)
-      }
-    })
-  }
-
-  function initMeaningCycle() {
-    const target = document.getElementById('lmf-meaning')
-    if (!target || prefersReducedMotion) return
-
-    const meanings = [
-      'Logge Media Forge',
-      "Let's Make Fun",
-      'Lights, Motion, Film',
-      'Learning Machines & Frames',
-      'Lovingly Made Films',
-      'Logic Meets Flair',
-    ]
-    let index = 0
-
-    window.setInterval(() => {
-      target.classList.add('is-switching')
-      window.setTimeout(() => {
-        index = (index + 1) % meanings.length
-        target.textContent = meanings[index]
-        target.classList.remove('is-switching')
-      }, 160)
-    }, 3200)
-  }
-
-  function initProfileCycle() {
-    const images = Array.from(document.querySelectorAll('.profile-image'))
-    if (images.length < 2 || prefersReducedMotion) return
-
-    let currentIndex = 0
-    let timer = null
-
-    const showNextImage = () => {
-      images[currentIndex].classList.remove('active')
-      currentIndex = (currentIndex + 1) % images.length
-      images[currentIndex].classList.add('active')
-    }
-
-    const startCycle = () => {
-      if (!timer) timer = window.setInterval(showNextImage, 4800)
-    }
-
-    const stopCycle = () => {
-      window.clearInterval(timer)
-      timer = null
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stopCycle()
-      else startCycle()
-    })
-
-    startCycle()
-  }
-
-  async function fetchJson(path) {
-    const response = await fetch(path)
-    if (!response.ok) throw new Error(`${path} returned ${response.status}`)
-    return response.json()
-  }
-
-  async function loadProjects() {
-    const container = document.getElementById('projects-container')
-    if (!container) return
-
+  // Deep links (#kontakt, old #about …) land once the async sections above have their height.
+  data.then(() => {
+    if (!location.hash || router.isWerk()) return;
+    let target = null;
     try {
-      const projects = await fetchJson('data/projects.json')
-      state.projects = Array.isArray(projects)
-        ? projects.slice().sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
-        : []
-      renderProjects(container)
-      updateProjectTotal()
-    } catch (error) {
-      console.error('Error loading projects:', error)
-      container.innerHTML = '<p class="loading-note">The project archive could not be loaded.</p>'
-      const count = document.getElementById('project-count')
-      if (count) count.textContent = 'Archive unavailable'
-    }
-  }
+      target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    } catch {}
+    if (target) requestAnimationFrame(() => scrollToTarget(target, { instant: true }));
+  });
+}
 
-  function renderProjects(container) {
-    if (!state.projects.length) {
-      container.innerHTML = '<p class="loading-note">No projects found.</p>'
-      return
-    }
+boot();
 
-    container.innerHTML = state.projects.map(createProjectCard).join('')
-    container.addEventListener('click', handleProjectClick)
-    applyProjectView()
-    registerReveals(container)
-  }
-
-  function createProjectCard(project, index) {
-    const number = String(index + 1).padStart(2, '0')
-    const tags = Array.isArray(project.tags) ? project.tags : []
-    const tagMarkup = tags
-      .slice(0, 3)
-      .map((tag) => `<span class="project-tag">${escapeHtml(tag)}</span>`)
-      .join('')
-    const picturePath = escapeAttribute(getProjectPictureBase(project))
-    const title = escapeHtml(project.title || 'Untitled project')
-    const category = escapeHtml(project.category || 'Project')
-    const description = escapeHtml(project.description || '')
-    const projectId = escapeAttribute(project.id || String(index))
-    const wrapperClass = project.archived ? 'project-card__static' : 'project-card__trigger'
-    const wrapperOpen = project.archived
-      ? `<div class="${wrapperClass}" aria-label="${title}, archived project">`
-      : `<button class="${wrapperClass}" type="button" data-project-id="${projectId}" aria-label="View ${title}">`
-    const wrapperClose = project.archived ? '</div>' : '</button>'
-
-    return `
-      <article class="project-card reveal${project.featured ? ' featured' : ''}${project.archived ? ' archived' : ''}" data-project-id="${projectId}" style="--reveal-delay: ${(index % 3) * 55}ms">
-        ${wrapperOpen}
-          <div class="project-card__media">
-            <picture>
-              <source srcset="${picturePath}.avif" type="image/avif">
-              <source srcset="${picturePath}.webp" type="image/webp">
-              <img src="${picturePath}.jpg" alt="${title}" loading="${index < 3 ? 'eager' : 'lazy'}" width="1200" height="750">
-            </picture>
-            <span class="project-card__number">${number} / ${String(state.projects.length).padStart(2, '0')}</span>
-            ${project.featured ? '<span class="featured-badge">Featured</span>' : ''}
-            ${project.archived ? '<span class="archived-badge">Archived</span>' : ''}
-          </div>
-          <div class="project-card__content">
-            <div class="project-card__meta"><span>${category}</span><span>LMF / ${number}</span></div>
-            <h3>${title}</h3>
-            <p class="project-card__description">${description}</p>
-            <div class="project-card__footer">
-              <div class="project-tags">${tagMarkup}</div>
-              <span class="project-card__open">${project.archived ? 'Filed' : 'View ↗'}</span>
-            </div>
-          </div>
-        ${wrapperClose}
-      </article>`
-  }
-
-  function initProjectControls() {
-    const buttons = document.querySelectorAll('.filter-btn')
-    const loadMore = document.getElementById('load-more')
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        state.filter = button.dataset.filter || 'all'
-        state.limit = state.batchSize
-
-        buttons.forEach((candidate) => {
-          const isActive = candidate === button
-          candidate.classList.toggle('active', isActive)
-          candidate.setAttribute('aria-pressed', String(isActive))
-        })
-
-        applyProjectView()
-      })
-    })
-
-    loadMore?.addEventListener('click', () => {
-      state.limit += state.batchSize
-      applyProjectView()
-    })
-  }
-
-  function getProjectGroups(project) {
-    const haystack = [project.category, ...(project.tags || [])].join(' ').toLowerCase()
-    const groups = new Set()
-
-    if (/game|multiplayer|sudoku|canvas/.test(haystack)) groups.add('games')
-    if (/movie|aftermovie|film|video|cinematic|vfx|editing/.test(haystack)) groups.add('film')
-    if (/website|web|app|tool|data|dashboard|pwa|visualization|typescript|react|nextjs|astro/.test(haystack)) groups.add('web')
-    if (/\bai\b|\bml\b|llm|agent|gemini|model|rag|transcription/.test(haystack)) groups.add('ai')
-    if (!groups.size) groups.add('web')
-
-    return groups
-  }
-
-  function projectMatchesFilter(project) {
-    return state.filter === 'all' || getProjectGroups(project).has(state.filter)
-  }
-
-  function applyProjectView() {
-    if (!state.projects.length) return
-
-    const container = document.getElementById('projects-container')
-    const count = document.getElementById('project-count')
-    const loadMore = document.getElementById('load-more')
-    if (!container) return
-
-    const filteredProjects = state.projects.filter(projectMatchesFilter)
-    const visibleProjects = filteredProjects.slice(0, state.limit)
-    const visibleIds = new Set(visibleProjects.map((project) => String(project.id)))
-    const cards = Array.from(container.querySelectorAll('.project-card'))
-
-    cards.forEach((card) => {
-      card.hidden = !visibleIds.has(card.dataset.projectId)
-      card.classList.remove('project-card--lead')
-    })
-
-    const visibleCards = cards.filter((card) => !card.hidden)
-    visibleCards[0]?.classList.add('project-card--lead')
-    visibleCards.forEach((card) => {
-      if (!card.dataset.revealReady) registerReveals(card.parentElement || container)
-    })
-
-    if (count) {
-      const suffix = state.filter === 'all' ? 'projects' : `${state.filter} projects`
-      count.textContent = `Showing ${visibleProjects.length} / ${filteredProjects.length} ${suffix}`
-    }
-
-    if (loadMore) loadMore.hidden = visibleProjects.length >= filteredProjects.length
-  }
-
-  function updateProjectTotal() {
-    document.querySelectorAll('[data-project-count]').forEach((element) => {
-      element.textContent = String(state.projects.length).padStart(2, '0')
-    })
-  }
-
-  function handleProjectClick(event) {
-    const trigger = event.target.closest('.project-card__trigger')
-    if (!trigger) return
-
-    const project = state.projects.find((item) => String(item.id) === trigger.dataset.projectId)
-    if (!project) return
-
-    state.activeProjectTrigger = trigger
-    openProjectDialog(project)
-  }
-
-  function initProjectDialog() {
-    const dialog = document.getElementById('project-modal')
-    const closeButton = dialog?.querySelector('.close-modal')
-    if (!dialog || !closeButton) return
-
-    const closeDialog = () => {
-      if (typeof dialog.close === 'function') dialog.close()
-      else dialog.removeAttribute('open')
-    }
-
-    closeButton.addEventListener('click', closeDialog)
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) closeDialog()
-    })
-    dialog.addEventListener('close', () => {
-      document.body.classList.remove('modal-open')
-      state.activeProjectTrigger?.focus({ preventScroll: true })
-    })
-    dialog.addEventListener('cancel', () => {
-      document.body.classList.remove('modal-open')
-    })
-  }
-
-  function openProjectDialog(project) {
-    const dialog = document.getElementById('project-modal')
-    const image = document.getElementById('modal-image')
-    const title = document.getElementById('modal-title')
-    const category = document.getElementById('modal-category')
-    const description = document.getElementById('modal-description')
-    const tags = document.getElementById('modal-tags')
-    const link = document.getElementById('modal-link')
-    const index = document.getElementById('modal-index')
-
-    if (!dialog || !image || !title || !category || !description || !tags || !link || !index) return
-
-    const projectIndex = state.projects.findIndex((item) => item.id === project.id) + 1
-    image.src = `${getProjectPictureBase(project)}.jpg`
-    image.alt = project.title
-    title.textContent = project.title
-    category.textContent = project.category
-    description.textContent = project.description
-    index.textContent = String(projectIndex).padStart(2, '0')
-    tags.innerHTML = (project.tags || [])
-      .map((tag) => `<span class="project-tag">${escapeHtml(tag)}</span>`)
-      .join('')
-    link.href = project.link
-
-    document.body.classList.add('modal-open')
-    if (typeof dialog.showModal === 'function') dialog.showModal()
-    else dialog.setAttribute('open', '')
-  }
-
-  async function loadPartners() {
-    const container = document.getElementById('partners-container')
-    if (!container) return
-
-    try {
-      const partners = await fetchJson('data/partners.json')
-      const visiblePartners = partners.filter((partner) => !partner.archived)
-      container.innerHTML = visiblePartners.map(createPartnerCard).join('')
-      registerReveals(container)
-    } catch (error) {
-      console.error('Error loading partners:', error)
-      container.innerHTML = '<p class="loading-note">The partner network could not be loaded.</p>'
-    }
-  }
-
-  function createPartnerCard(partner, index) {
-    const title = escapeHtml(partner.title || 'Partner')
-    const media = partner.video
-      ? `<video autoplay loop muted playsinline preload="metadata" aria-label="${title} logo animation"><source src="${escapeAttribute(partner.video)}" type="video/webm"></video>`
-      : `<img src="${escapeAttribute(partner.image || '')}" alt="${title} logo" loading="lazy">`
-
-    return `
-      <article class="partner-card reveal" style="--reveal-delay: ${(index % 4) * 60}ms">
-        <span class="partner-card__index">${String(index + 1).padStart(2, '0')} / Partner</span>
-        <div class="partner-logo">${media}</div>
-        <h3>${title}</h3>
-        <p>${escapeHtml(partner.description || '')}</p>
-        <a class="partner-link" href="${escapeAttribute(partner.link || '#')}" target="_blank" rel="noopener noreferrer">Visit partner <span aria-hidden="true">↗</span></a>
-      </article>`
-  }
-
-  async function loadSocialLinks() {
-    const container = document.getElementById('connect-links-container')
-    if (!container) return
-
-    try {
-      const socials = await fetchJson('data/socials.json')
-      container.innerHTML = socials.map(createSocialLink).join('')
-      registerReveals(container)
-    } catch (error) {
-      console.error('Error loading social links:', error)
-      container.innerHTML = '<p class="loading-note">The contact channels could not be loaded.</p>'
-    }
-  }
-
-  function createSocialLink(social, index) {
-    const titleParts = String(social.title || 'Contact').split(' - ')
-    const platform = titleParts.shift() || 'Contact'
-    const handle = titleParts.join(' - ') || 'Open channel'
-    const href = escapeAttribute(social.link || '#')
-    const externalAttributes = href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''
-
-    return `
-      <a class="social-link reveal" href="${href}"${externalAttributes} aria-label="Open ${escapeAttribute(social.title || platform)}" style="--reveal-delay: ${(index % 4) * 60}ms">
-        <div class="social-link__top"><span>${String(index + 1).padStart(2, '0')} / Channel</span><span class="social-link__arrow" aria-hidden="true">↗</span></div>
-        <div class="social-link__bottom">
-          <div><h3>${escapeHtml(platform)}</h3><p>${escapeHtml(handle)}</p></div>
-        </div>
-      </a>`
-  }
-
-  function getProjectPictureBase(project) {
-    const rawPath = String(project.picture || '')
-    const filename = rawPath.split('/').pop()
-    return `assets/img/${filename}`
-  }
-
-  function setCurrentYear() {
-    const year = document.getElementById('current-year')
-    if (year) year.textContent = new Date().getFullYear()
-  }
-
-  function syncInitialHashPosition() {
-    if (!window.location.hash) return
-
-    const target = document.querySelector(window.location.hash)
-    if (!target) return
-
-    window.requestAnimationFrame(() => {
-      target.scrollIntoView({ behavior: 'instant', block: 'start' })
-    })
-  }
-
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;')
-  }
-
-  function escapeAttribute(value) {
-    return escapeHtml(value).replaceAll('`', '&#096;')
-  }
-})()
+/** Debug/test handle (read-only use). */
+export const __lmf = { mounted, SECTIONS, FLAGS };

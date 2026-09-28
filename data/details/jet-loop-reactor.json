@@ -1,0 +1,45 @@
+{
+  "id": "jet-loop-reactor",
+  "story": [
+    "Die Korrelationen stammen aus der Fachliteratur (Calderbank, Mendelson, Zuber–Findlay, Lamont & Scott, Blenke) und sind in der App unter „Modell & Korrelationen“ dokumentiert.",
+    "Die App warnt vor Kavitation, Flutgrenze, thermischem Durchgehen und Transportlimitierung. Blasen sind etwa zehnfach vergrößert, die Strömung läuft im dreifachen Zeitraffer."
+  ],
+  "highlights": [
+    "6 Parameter, live gekoppelt",
+    "Hatta-Zahl mit Regimeklassifikation",
+    "Umsatz-Zeit-Diagramm mit t₉₀/t₉₉",
+    "Geometrie 1:1 in Metern",
+    "Kein Build-Schritt"
+  ],
+  "stack": [
+    "Three.js (Importmap)",
+    "Vanilla JS"
+  ],
+  "languages": {
+    "JavaScript": 85.3,
+    "CSS": 11,
+    "HTML": 3.7
+  },
+  "commits": 1,
+  "refs": {
+    "live": 1,
+    "repo": 2
+  },
+  "sources": [
+    {
+      "label": "README (Funktionsprinzip, Parameter, Modellkorrelationen, Literatur)",
+      "url": "https://github.com/LoggeL/jet-loop-reactor",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite: HTTP 200, WebGL",
+      "url": "https://loggel.github.io/jet-loop-reactor/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/jet-loop-reactor",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

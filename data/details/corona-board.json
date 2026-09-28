@@ -1,0 +1,51 @@
+{
+  "id": "corona-board",
+  "story": [
+    "Ende März 2020 entstanden: ein kleines COVID-19-Dashboard auf Basis der Johns-Hopkins-Daten, mit Weltkarte und Verläufen auf logarithmischer Skala, später mit eigener Deutschland-Kurve.",
+    "Heute ist es ein Archiv. Die Daten enden am 9. März 2023."
+  ],
+  "highlights": [
+    "Weltkarte der aktiven Fälle (log10-Skala) mit Chart.js Geo",
+    "Historische Verläufe weltweit und für Deutschland",
+    "Durchsuchbare Rohdatentabelle mit simple-datatables",
+    "Verweise auf WHO, RKI und JHU CSSE"
+  ],
+  "stack": [
+    "JavaScript",
+    "Chart.js",
+    "chartjs-chart-geo",
+    "simple-datatables",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "JavaScript": 99.1,
+    "CSS": 0.6,
+    "HTML": 0.3
+  },
+  "commits": 6,
+  "funFact": {
+    "text": "Das ganze Projekt besteht aus sechs Commits. Der letzte vom 15.08.2020 hat die Todesfälle zum Zähler hinzugefügt.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/CoronaBoard · Metadaten, Dateiliste, index.html, Commit-Historie",
+      "url": "https://github.com/LoggeL/CoronaBoard",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/CoronaBoard",
+      "url": "https://loggel.github.io/CoronaBoard/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/CoronaBoard",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

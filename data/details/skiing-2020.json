@@ -1,0 +1,21 @@
+{
+  "id": "skiing-2020",
+  "story": [
+    "Für Bad Gastein habe ich das Material mit Flowframes von 25 auf 50 Bilder pro Sekunde hochgerechnet. In der Videobeschreibung auf YouTube steht dazu ein Vergleich."
+  ],
+  "refs": {
+    "video": 0
+  },
+  "sources": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/watch?v=KYahVktrq_I",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "jupeters.de (Filme der Gruppe)",
+      "url": "https://jupeters.de",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "sharex-afterimage",
+  "story": [
+    "Das dritte ShareX-Konzept ist das organischste: „Capture is a living thing.“",
+    "Ein bio-digitales Editorial-Layout mit eigens per Bildgenerierung erstellter Artwork, in dem Capture-Modi wie Exemplare im Labor durchgeblättert werden. Wie die anderen beiden ein unabhängiges Designkonzept."
+  ],
+  "highlights": [
+    "Karussell mit acht Capture-Modi (Region, Fullscreen, Window, Monitor, Scrolling, Shape, Text/OCR, Color Picker)",
+    "„Annotation Lab“ mit Umschalter zwischen Roh- und bearbeitetem Bild",
+    "Schalter „Motion on“ für Animationen",
+    "Originale, per Bildgenerierung erzeugte Artwork (laut Repo-Beschreibung)"
+  ],
+  "stack": [
+    "CSS",
+    "JavaScript",
+    "HTML",
+    "Vite",
+    "Bildgenerierung",
+    "GitHub Pages"
+  ],
+  "languages": {
+    "CSS": 64.1,
+    "HTML": 20.5,
+    "JavaScript": 15.4
+  },
+  "commits": 1,
+  "funFact": {
+    "text": "Die Kapitel heißen wie Laborstufen: „Sample the organism“, „Bloom“, „Specimens“.",
+    "source": 0
+  },
+  "refs": {
+    "repo": 2,
+    "live": 1
+  },
+  "sources": [
+    {
+      "label": "Repo LoggeL/sharex-afterimage-lab · README, Repo-Beschreibung",
+      "url": "https://github.com/LoggeL/sharex-afterimage-lab",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "Live-Seite loggel.github.io/sharex-afterimage-lab",
+      "url": "https://loggel.github.io/sharex-afterimage-lab/",
+      "checkedAt": "2026-09-28"
+    },
+    {
+      "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
+      "url": "https://api.github.com/repos/LoggeL/sharex-afterimage-lab",
+      "checkedAt": "2026-09-28"
+    }
+  ]
+}
