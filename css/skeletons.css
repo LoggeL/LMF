@@ -273,17 +273,6 @@
     color: var(--muted);
   }
 
-  /* Zwischenstück */
-
-  .dreiwelten-head .lead {
-    max-inline-size: 60ch;
-  }
-
-  .dreiwelten-card:hover img,
-  .dreiwelten-card:focus-visible img {
-    border-color: var(--accent);
-  }
-
   /* Kapitel IV skeleton */
   .chapter--film {
     border: 0;

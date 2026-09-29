@@ -391,7 +391,7 @@ test("without JavaScript every in-page link resolves and Noch warm is not empty"
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto("/");
-  // #werk/<id> links (chapters, Dreiwelten, films, Noch warm) land on the project's row in the list.
+  // #werk/<id> links (chapters, films, Noch warm) land on the project's row in the list.
   const dead = await page.evaluate(() =>
     [...document.querySelectorAll('a[href^="#"]')]
       .map((a) => a.getAttribute("href"))

@@ -1264,7 +1264,7 @@
       scroll-behavior: smooth;
     }
     /* Heat grammar: cool slowly by default … */
-    :root:not([data-motion="paused"]) :is(.brand, .site-nav a, .icon-button, .button, button.chip, .warm-end, .dreiwelten-card, .knopf, .contact-mail) {
+    :root:not([data-motion="paused"]) :is(.brand, .site-nav a, .icon-button, .button, button.chip, .warm-end, .knopf, .contact-mail) {
       transition:
         --heat var(--d-cool) var(--ease-cool),
         border-color var(--d-cool) var(--ease-cool),
@@ -1274,7 +1274,7 @@
         box-shadow var(--d-rebound) var(--ease-rebound);
     }
     /* … and heat up fast. */
-    :root:not([data-motion="paused"]) :is(.brand, .site-nav a, .icon-button, .button, button.chip, .warm-end, .dreiwelten-card, .knopf, .contact-mail):is(:hover, :focus-visible) {
+    :root:not([data-motion="paused"]) :is(.brand, .site-nav a, .icon-button, .button, button.chip, .warm-end, .knopf, .contact-mail):is(:hover, :focus-visible) {
       transition-duration: var(--d-heat-in), var(--d-heat-in), var(--d-heat-in), var(--d-ui), var(--d-rebound), var(--d-rebound);
     }
     /* Strike: accelerate into impact. */

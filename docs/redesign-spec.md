@@ -269,7 +269,7 @@ chip text   Nachbau: ein vereinfachtes Feld für diese Seite. Die Regel stimmt: 
 CTAs        Werkstück öffnen → · Lokal spielen ↗
 ```
 
-#### Zwischenstück: „Ein Brief, drei Welten.“ (ShareX)
+#### Zwischenstück: „Ein Brief, drei Welten.“ (ShareX) — REMOVED 29.09.2026 (owner: „kann raus“); the three ShareX projects stay in the Lager
 
 Static section (`#dreiwelten`) between II and III. Three screenshots side by side (ShareXCaptureEngine, ShareXWin98, ShareXAfterimage), each a link into `#werk/<id>`.
 

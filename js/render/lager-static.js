@@ -3,7 +3,7 @@
  * Pure: `(data, opts) => string`. scripts/prerender.mjs writes the result between
  * `<!-- prerender:lager -->` markers in index.html. Every project, JSON order, external links:
  *   <li id="werk/{id}"><a href="{link}">{title}</a><span class="ls"> · </span>{category} · {year} — {summary}</li>
- * The row id makes every #werk/<id> link on the page resolve without JS (chapters, Dreiwelten, films).
+ * The row id makes every #werk/<id> link on the page resolve without JS (chapters, films).
  * The Lager hides this list after its interactive render; on a data failure it stays visible.
  */
 import { html, safeUrl } from "../lib/dom.js";

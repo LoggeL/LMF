@@ -1,5 +1,5 @@
 /*
- * css/sections/meister.css — Meisterstücke I–III, Zwischenstück, Universum  [WP4]
+ * css/sections/meister.css — Meisterstücke I–III, Universum  [WP4]
  * Skeleton (grid, chapter head, story, stage box) lives in base.css; this file refines it.
  * Kapitel IV (#kapitel-iv) is WP3's and is excluded from every rule here.
  */
@@ -239,163 +239,6 @@
     /* Kapitel III has nothing else to open on wide screens */
     :root[data-booted] #kapitel-iii .story-more {
       display: none;
-    }
-  }
-
-  /* Zwischenstück „Ein Abend, drei Welten.“ */
-  #dreiwelten {
-    position: relative;
-    padding-block: clamp(48px, 4.5vw, 80px);
-    background:
-      var(--grain) 0 0 / 160px,
-      linear-gradient(var(--surface-2), var(--bg));
-    background-blend-mode: overlay, normal;
-    border-block: 1px solid var(--line);
-    overflow: clip;
-  }
-  #dreiwelten .dreiwelten-head {
-    display: grid;
-    gap: var(--s4);
-    max-inline-size: 60ch;
-    margin-block-end: clamp(24px, 4vw, 48px);
-  }
-  #dreiwelten .dreiwelten-head .chapter-title {
-    max-inline-size: none;
-  }
-  #dreiwelten .dreiwelten-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--s6);
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  @media (max-width: 759.98px) {
-    #dreiwelten .dreiwelten-list {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: min(82%, 420px);
-      gap: var(--s4);
-      inline-size: calc(100% + 2 * var(--gutter));
-      margin-inline: calc(var(--gutter) * -1);
-      padding: 0 var(--gutter) var(--s5);
-      scroll-padding-inline: var(--gutter);
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-    }
-    #dreiwelten .dreiwelten-list > li {
-      display: grid;
-      scroll-snap-align: start;
-    }
-  }
-  @media (min-width: 760px) {
-    #dreiwelten .dreiwelten-list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(20px, 2.4vw, 40px);
-      padding-inline: clamp(0px, 2vw, 32px);
-    }
-    #dreiwelten .dreiwelten-list > li {
-      --tilt: 0deg;
-      --lift: 0px;
-      position: relative;
-      z-index: 1;
-      transform: translateY(var(--lift)) rotate(var(--tilt));
-      transition: transform var(--d-cool) var(--ease-cool);
-    }
-    #dreiwelten .dreiwelten-list > li:nth-child(1) {
-      --tilt: -3deg;
-      --lift: 10px;
-    }
-    #dreiwelten .dreiwelten-list > li:nth-child(2) {
-      z-index: 2;
-      --lift: -6px;
-    }
-    #dreiwelten .dreiwelten-list > li:nth-child(3) {
-      --tilt: 3deg;
-      --lift: 12px;
-    }
-    #dreiwelten .dreiwelten-list > li:is(:hover, :focus-within) {
-      z-index: 3;
-      --tilt: 0deg;
-      --lift: -14px;
-      transition-duration: 260ms;
-      transition-timing-function: var(--ease-rebound);
-    }
-  }
-  #dreiwelten .dreiwelten-card {
-    --heat: 0;
-    display: grid;
-    gap: var(--s2);
-    padding: 34px 10px 14px;
-    position: relative;
-    background: var(--surface);
-    border: 1px solid color-mix(in srgb, var(--heat-3) calc(var(--heat) * 100%), var(--control));
-    color: var(--ink);
-    text-decoration: none;
-    box-shadow: 0 30px 50px -34px rgb(var(--shadow-ink) / 0.7);
-    transition:
-      --heat var(--d-cool) var(--ease-cool),
-      border-color var(--d-cool) var(--ease-cool);
-  }
-  /* browser chrome: three dots */
-  #dreiwelten .dreiwelten-card::before {
-    content: "";
-    position: absolute;
-    inset-block-start: 13px;
-    inset-inline-start: 12px;
-    inline-size: 8px;
-    block-size: 8px;
-    border-radius: 50%;
-    background: var(--control);
-    box-shadow:
-      14px 0 0 var(--control),
-      28px 0 0 var(--control);
-  }
-  #dreiwelten .dreiwelten-card:is(:hover, :focus-visible) {
-    --heat: 1;
-    transition-duration: var(--d-heat-in);
-  }
-  #dreiwelten .dreiwelten-card img {
-    display: block;
-    inline-size: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    object-position: top;
-    border: 1px solid var(--line);
-  }
-  #dreiwelten .dreiwelten-no {
-    position: absolute;
-    inset-block-start: 8px;
-    inset-inline-end: 12px;
-    color: var(--muted);
-  }
-  #dreiwelten .dreiwelten-name {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
-    line-height: 1;
-    padding-inline: 4px;
-    margin-block-start: var(--s2);
-  }
-  @media (min-width: 1024px) {
-    #dreiwelten > .shell {
-      display: grid;
-      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-      grid-template-areas: "head list";
-      align-items: center;
-      column-gap: clamp(40px, 4.4vw, 80px);
-    }
-    #dreiwelten .dreiwelten-head {
-      grid-area: head;
-      margin: 0;
-    }
-    #dreiwelten .dreiwelten-list {
-      grid-area: list;
-      align-self: start;
-    }
-    #dreiwelten .dreiwelten-card img {
-      aspect-ratio: 16 / 9;
     }
   }
 
@@ -858,15 +701,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #dreiwelten .dreiwelten-list > li,
-    #dreiwelten .dreiwelten-card,
     .uv-spoke,
     .uv-dot {
       transition: none;
     }
-  }
-  :root[data-motion="paused"] #dreiwelten .dreiwelten-list > li {
-    transition: none;
   }
   @media (forced-colors: active) {
     #meisterstuecke .chapter:not(#kapitel-iv)::before {

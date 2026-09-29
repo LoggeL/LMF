@@ -514,14 +514,6 @@ test.describe("Probestücke in den Kapiteln", () => {
     await expect(page.locator("#kapitel-i .fact-strip .fact-value").nth(1)).toHaveText(String(seats));
   });
 
-  test("Zwischenstück: three windows, one evening, no timeline", async ({ page }) => {
-    await home(page, "dreiwelten");
-    await expect(page.locator("#dreiwelten-title")).toHaveText("Ein Abend, drei Welten.");
-    await expect(page.locator("#dreiwelten .dreiwelten-card")).toHaveCount(3);
-    await expect(page.locator("#dreiwelten .dreiwelten-ruler, #dreiwelten .dreiwelten-ruler-mark")).toHaveCount(0);
-    // work, not forensics: no clock times, no seconds, no „angelegt“, no disclaimer sentence
-    await expect(page.locator("#dreiwelten")).not.toContainText(/\d\d:\d\d|Sekunden|angelegt|\+\d+ s|offizielle|Minuten auseinander/);
-  });
 });
 
 /* ── Isolated harness: Hashsuche + destroy hygiene ─────────────────────────────────────────────── */
@@ -767,7 +759,7 @@ test.describe("Fokus und Maße", () => {
         if (!block) await page.locator("#meisterstuecke[data-mounted]").waitFor({ state: "attached" });
         await page.waitForFunction(() => [...document.styleSheets].some((s) => /meister\.css/.test(s.href ?? "")));
         await page.waitForTimeout(block ? 800 : 1500);
-        const h = await page.evaluate(() => ["#kapitel-i", "#kapitel-ii", "#dreiwelten", "#kapitel-iii"].map((s) => document.querySelector(s).getBoundingClientRect().height));
+        const h = await page.evaluate(() => ["#kapitel-i", "#kapitel-ii", "#kapitel-iii"].map((s) => document.querySelector(s).getBoundingClientRect().height));
         await ctx.close();
         return h;
       };

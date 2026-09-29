@@ -1,12 +1,11 @@
 /**
- * Meisterstücke · Kapitel I–III, Zwischenstück, Universum, Probestück-Mounts  [WP4]  (spec §2.3, §5.6)
+ * Meisterstücke · Kapitel I–III, Universum, Probestück-Mounts  [WP4]  (spec §2.3, §5.6)
  *
  * Binds data/chapters.json to the static chapter markup in index.html:
  *   · Fact strip (Seit · the project's own number · Stack): the year is refreshed from
  *     projects.json ([data-project-year]); the rest is curated copy
  *   · Probestück: mounted when the stage is within one viewport, destroyed when > 2 away
  *   · Kolpingtheater-Universum (Kapitel I) via ./universe.js
- * The Zwischenstück (ShareX) is static: three window cards, no timeline.
  * Kapitel IV (#kapitel-iv) belongs to WP3 (sections/film.js) and is not touched here.
  * Without details a chapter keeps its static copy; nothing is invented to fill a gap.
  * The sources stay in data/details/*.json; nothing on the page cites them.
