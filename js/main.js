@@ -29,7 +29,7 @@ export const SECTIONS = [
   { name: "werkbank", selector: "#werkbank", when: "intent", src: "./werkbank/werkbank.pack.js", css: [SKELETONS], critical: true },
   { name: "warm", selector: "#warm", when: "eager", src: "./sections/warm.js", css: ["css/sections/lager.css"], critical: true },
   { name: "esse", selector: "#esse", when: "idle", src: "./sections/esse.js" },
-  { name: "meister", selector: "#meisterstuecke", when: "visible", src: "./sections/meister.js", css: [SKELETONS, "css/sections/meister.css", "css/werkbank.css"] },
+  { name: "meister", selector: "#meisterstuecke", when: "visible", src: "./sections/meister.js", css: [SKELETONS, "css/sections/meister.css"] },
   { name: "film", selector: "#kapitel-iv", when: "visible", src: "./sections/film.js", css: [SKELETONS, "css/sections/film.css"] },
   { name: "schichtbuch", selector: "#schichtbuch", when: "visible", src: "./sections/schichtbuch.js", css: [SKELETONS, "css/sections/schichtbuch.css"] },
   { name: "werkstatt", selector: "#werkstatt", when: "visible", src: "./sections/werkstatt.js", css: [SKELETONS, "css/sections/werkstatt.css"] },
@@ -40,13 +40,7 @@ export const SECTIONS = [
 for (const entry of SECTIONS) entry.load = (attempt = 0) => import(attempt ? `${entry.src}?r=${attempt}` : entry.src);
 
 /** Boolean flags for [data-show-if], computed from bindings. Missing inputs → false (element stays hidden). */
-const FLAGS = {
-  "repos.surge": (b) => Number.isFinite(+b["repos.currentYear"]) && Number.isFinite(+b["repos.before"]) && +b["repos.currentYear"] > +b["repos.before"],
-  "stars.isMelodai": (b) => b["stars.maxId"] === "melodai",
-  // Kapitel IV dek: „Alle 7 laufen …“ when every ski film is also on jupeters.de, else „5 davon laufen …“ [WP3]
-  "films.skiAllOnJp": (b) => +b["films.skiOnJp"] > 0 && +b["films.skiOnJp"] === +b["films.ski"],
-  "films.skiSomeOnJp": (b) => Number.isFinite(+b["films.skiOnJp"]) && +b["films.skiOnJp"] < +b["films.ski"],
-};
+const FLAGS = {};
 
 /** A section whose module failed to load (flaky network) is retried this often, with backoff. */
 const MAX_ATTEMPTS = 3;
@@ -85,7 +79,9 @@ function loadSheet(href) {
   return settled;
 }
 
-const ALL_SHEETS = [...new Set(SECTIONS.flatMap((e) => e.css ?? []))];
+// werkbank.css rides along on idle so the first Werkstück opens without waiting for its sheet;
+// no section waits for it.
+const ALL_SHEETS = [...new Set([...SECTIONS.flatMap((e) => e.css ?? []), "css/werkbank.css"])];
 let allRequested = false;
 /** Every section sheet, now (after `load`, on an in-page jump, or on reload/back mid-page). */
 function loadAllSheets() {
@@ -174,8 +170,12 @@ let reloading = false;
  * would all be lost, so then the section stays in its no-JS form instead.
  */
 function busy() {
-  return scrollY >= innerHeight || router.isWerk() || !!document.querySelector("dialog[open], .probe-stage.is-live");
+  return scrollY >= innerHeight || router.isWerk() || !!document.querySelector("dialog[open], .probe-stage.is-live[data-touched]");
 }
+// A probe only counts as „running“ once the visitor has used it; a probe that merely mounted near
+// the first screen holds no work that a reload could lose.
+for (const type of ["pointerdown", "keydown"])
+  addEventListener(type, (e) => e.target.closest?.(".probe-stage.is-live")?.setAttribute("data-touched", ""), { capture: true, passive: true });
 
 async function reloadOnce(entry, error) {
   if (reloading) return true;
@@ -311,9 +311,8 @@ function boot() {
 
   const data = loadData();
   schedule(data);
-  // werkbank.css and probes.css stay lazy: js/werkbank/werkbank.js loads its sheet before the
-  // dialog opens (the Meisterstücke list it too, for the shared spec-sheet styles), and
-  // js/probes/index.js loads probes.css with the first probe.
+  // probes.css stays lazy (js/probes/index.js loads it with the first probe); werkbank.css comes
+  // with loadAllSheets, and js/werkbank/werkbank.js still awaits it before the dialog opens.
   whenIdle(loadAllSheets, 3000);
 
   data.then((d) => {

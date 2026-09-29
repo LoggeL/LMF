@@ -12,7 +12,7 @@
 import { announcer, calmSource, nextId } from "./index.js";
 
 export const KIND = "echt";
-export const CHIP = "Echt: Dein Browser rechnet gerade wirklich. Wie im Transcripator, nur prüft hier kein Server.";
+export const CHIP = "Dein Browser rechnet gerade wirklich. Wie im Transcripator.";
 
 export async function sha256Hex(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));

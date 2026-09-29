@@ -2,13 +2,13 @@
   "id": "sharex-afterimage",
   "story": [
     "Das dritte ShareX-Konzept ist das organischste: „Capture is a living thing.“",
-    "Ein bio-digitales Editorial-Layout mit eigens per Bildgenerierung erstellter Artwork, in dem Capture-Modi wie Exemplare im Labor durchgeblättert werden. Wie die anderen beiden ein unabhängiges Designkonzept."
+    "Ein bio-digitales Editorial-Layout mit eigens per Bildgenerierung erstellter Artwork, in dem Capture-Modi wie Exemplare im Labor durchgeblättert werden."
   ],
   "highlights": [
     "Karussell mit acht Capture-Modi (Region, Fullscreen, Window, Monitor, Scrolling, Shape, Text/OCR, Color Picker)",
     "„Annotation Lab“ mit Umschalter zwischen Roh- und bearbeitetem Bild",
     "Schalter „Motion on“ für Animationen",
-    "Originale, per Bildgenerierung erzeugte Artwork (laut Repo-Beschreibung)"
+    "Originale, per Bildgenerierung erzeugte Artwork"
   ],
   "stack": [
     "CSS",

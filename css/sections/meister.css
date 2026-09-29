@@ -1,5 +1,5 @@
 /*
- * css/sections/meister.css — Meisterstücke I–III, Zwischenstück, Universum, Punze  [WP4]
+ * css/sections/meister.css — Meisterstücke I–III, Zwischenstück, Universum  [WP4]
  * Skeleton (grid, chapter head, story, stage box) lives in base.css; this file refines it.
  * Kapitel IV (#kapitel-iv) is WP3's and is excluded from every rule here.
  */
@@ -148,18 +148,18 @@
     justify-self: center;
     margin-block-start: 0;
   }
-  :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(964px + -42.17cqi); }
-  @container (min-width: 345px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(961px + -52.62cqi); } }
-  @container (min-width: 425px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(656px + 29.51cqi); } }
-  @container (min-width: 825px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(858px + 3.42cqi); } }
-  :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(720px + -53.00cqi); }
-  @container (min-width: 295px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(259px + 78.43cqi); } }
-  @container (min-width: 595px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(651px + 12.74cqi); } }
-  @container (min-width: 835px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(683px + 4.36cqi); } }
-  :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1000px + -70.11cqi); }
-  @container (min-width: 405px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(683px + -5.63cqi); } }
-  @container (min-width: 565px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(751px + -33.48cqi); } }
-  @container (min-width: 745px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(566px + -5.39cqi); } }
+  :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(755px + -9.83cqi); }
+  @container (min-width: 345px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(937px + -74.64cqi); } }
+  @container (min-width: 415px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(412px + 57.98cqi); } }
+  @container (min-width: 615px) { :root[data-booted] .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(594px + 23.90cqi); } }
+  :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(432px + 13.00cqi); }
+  @container (min-width: 295px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(136px + 89.14cqi); } }
+  @container (min-width: 595px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(591px + 12.80cqi); } }
+  @container (min-width: 835px) { :root[data-booted] .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(644px + 4.51cqi); } }
+  :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(838px + -48.50cqi); }
+  @container (min-width: 405px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(534px + 10.09cqi); } }
+  @container (min-width: 565px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(690px + -33.18cqi); } }
+  @container (min-width: 745px) { :root[data-booted] .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(395px + 7.51cqi); } }
 
   #meisterstuecke .chapter .probe-stage {
     --heat: 0;
@@ -183,7 +183,9 @@
     background: linear-gradient(90deg, var(--alloy) 0 64px, transparent 64px);
   }
   #meisterstuecke .probe-chip-row {
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s2) var(--s3);
     margin-block-start: calc(-1 * var(--s2));
   }
   #meisterstuecke .probe-chip-row .chip--probe {
@@ -191,88 +193,14 @@
   }
   #meisterstuecke .probe-chip-text {
     max-inline-size: 60ch;
-    padding-block-start: 6px;
   }
 
-  /* Werkstattdaten (bound) */
-  #meisterstuecke .specsheet {
-    --alloy-line: color-mix(in srgb, var(--alloy) 40%, var(--line));
-    border-color: var(--alloy-line);
-    background:
-      var(--grain) 0 0 / 160px,
-      var(--surface);
-    background-blend-mode: overlay, normal;
+  /* Fact strip: when it started, one number, the stack */
+  #meisterstuecke .fact-strip {
+    border-color: color-mix(in srgb, var(--alloy) 40%, var(--line));
   }
-  #meisterstuecke .specsheet::before,
-  #meisterstuecke .specsheet::after {
-    content: "";
-    position: absolute;
-    inline-size: 6px;
-    block-size: 6px;
-    border-radius: 50%;
-    background: var(--control);
-    inset-block-start: 10px;
-  }
-  #meisterstuecke .specsheet::before {
-    inset-inline-start: 10px;
-  }
-  #meisterstuecke .specsheet::after {
-    inset-inline-end: 10px;
-  }
-  #meisterstuecke .specsheet > summary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 var(--s2);
-    min-block-size: 24px;
-    list-style: none;
-    cursor: pointer;
-  }
-  #meisterstuecke .specsheet > summary::-webkit-details-marker {
-    display: none;
-  }
-  #meisterstuecke .specsheet > summary::after {
-    content: "";
-    align-self: center;
-    inline-size: 9px;
-    block-size: 9px;
-    margin-inline: auto 4px;
-    border-inline-end: 2px solid var(--muted);
-    border-block-end: 2px solid var(--muted);
-    rotate: 45deg;
-    translate: 0 -2px;
-    transition: rotate var(--d-cool) var(--ease-cool);
-  }
-  #meisterstuecke .specsheet[open] > summary::after {
-    rotate: 225deg;
-    translate: 0 2px;
-    transition-duration: var(--d-heat-in);
-  }
-  #meisterstuecke .specsheet > summary:hover .specsheet-title {
-    text-decoration: underline;
-    text-decoration-color: var(--alloy);
-    text-underline-offset: 4px;
-  }
-  #meisterstuecke .specsheet > summary:focus-visible {
-    outline: 3px solid var(--focus);
-    outline-offset: 6px;
-  }
-  #meisterstuecke .specsheet {
-    display: block;
-    padding-block: var(--s4);
-  }
-  #meisterstuecke .specsheet-asof {
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-  #meisterstuecke .specsheet[open] > summary + .spec-list {
-    margin-block-start: var(--s3);
-  }
-
-  :root[data-booted] #meisterstuecke:not([data-mounted]) .punze-slot:empty {
-    display: block;
-    block-size: 44px;
+  #meisterstuecke .fact dt {
+    color: var(--alloy);
   }
 
   #meisterstuecke .story-more {
@@ -314,64 +242,7 @@
     }
   }
 
-  #meisterstuecke .spec-list dd {
-    overflow-wrap: anywhere;
-    font-variant-numeric: tabular-nums;
-  }
-  #meisterstuecke .spec-list dd a {
-    color: inherit;
-    text-decoration-color: var(--control);
-    text-underline-offset: 3px;
-  }
-  #meisterstuecke .spec-list dd a:hover {
-    color: var(--accent);
-  }
-  #meisterstuecke .spec-list .i {
-    inline-size: 0.95em;
-    block-size: 0.95em;
-    vertical-align: -0.1em;
-  }
-  #meisterstuecke .spec-sub {
-    color: var(--muted);
-  }
-  #meisterstuecke .src-mark {
-    margin-inline-start: 3px;
-    font-size: 0.7em;
-    vertical-align: super;
-    line-height: 0;
-  }
-  #meisterstuecke .src-mark a {
-    display: inline-grid;
-    place-items: center;
-    min-inline-size: 24px;
-    min-block-size: 24px;
-    margin-block: -8px;
-    color: var(--alloy);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  #meisterstuecke .src-mark a:hover {
-    text-decoration: underline;
-  }
-
-  /* Punze */
-  .punze-slot:empty {
-    display: none;
-  }
-  .chapter .punze-list > li:focus {
-    outline: 2px solid var(--focus);
-    outline-offset: 2px;
-  }
-  .chapter .punze-list > li.is-flash {
-    animation: mpunze-flash var(--d-cool) var(--ease-cool);
-  }
-  @keyframes mpunze-flash {
-    from {
-      background: color-mix(in srgb, var(--heat-4) 40%, transparent);
-    }
-  }
-
-  /* Zwischenstück „81 Sekunden, drei Welten.“ */
+  /* Zwischenstück „Ein Abend, drei Welten.“ */
   #dreiwelten {
     position: relative;
     padding-block: clamp(48px, 4.5vw, 80px);
@@ -507,88 +378,12 @@
     padding-inline: 4px;
     margin-block-start: var(--s2);
   }
-  #dreiwelten .dreiwelten-stamp {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--s2);
-    padding-inline: 4px;
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-  }
-  :root[data-booted] #dreiwelten .dreiwelten-stamp {
-    min-block-size: 1.5em;
-  }
-  #dreiwelten .dreiwelten-stamp:empty {
-    display: none;
-  }
-  :root[data-booted] #dreiwelten .dreiwelten-stamp:empty {
-    display: block;
-  }
-  #dreiwelten .dreiwelten-ruler:empty {
-    display: none;
-  }
-  :root[data-booted] #dreiwelten .dreiwelten-ruler:empty {
-    display: block;
-    block-size: 96px; /* measured: track + scale, one stacked row */
-  }
-  #dreiwelten .dreiwelten-stamp b {
-    color: var(--heat-text);
-    white-space: nowrap;
-  }
-  #dreiwelten .dreiwelten-ruler {
-    margin-block-start: clamp(24px, 2.5vw, 36px);
-    max-inline-size: 760px;
-    margin-inline: auto;
-  }
-  #dreiwelten .dreiwelten-ruler-track {
-    position: relative;
-    block-size: calc(40px + var(--rows, 0) * 30px);
-    border-block-end: 1px solid var(--ink);
-  }
-  #dreiwelten .dreiwelten-ruler-track i {
-    position: absolute;
-    inset-block-end: 0;
-    inset-inline-start: var(--at);
-    inline-size: 1px;
-    block-size: 8px;
-    background: var(--control);
-  }
-  #dreiwelten .dreiwelten-ruler-mark {
-    position: absolute;
-    /* marks on the same second stack upwards (--row from meister.js) */
-    inset-block-end: calc(10px + var(--row, 0) * 30px);
-    inset-inline-start: clamp(13px, var(--at), calc(100% - 13px));
-    translate: -50% 0;
-    display: grid;
-    place-items: center;
-    inline-size: 26px;
-    block-size: 26px;
-    border-radius: 50%;
-    background: var(--heat-text);
-    color: var(--bg);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-  #dreiwelten .dreiwelten-ruler-scale {
-    display: flex;
-    justify-content: space-between;
-    margin-block-start: var(--s2);
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-  #dreiwelten .dreiwelten-note {
-    margin-block-start: var(--s5);
-    text-align: center;
-    color: var(--muted);
-  }
   @media (min-width: 1024px) {
     #dreiwelten > .shell {
       display: grid;
       grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-      grid-template-rows: auto auto 1fr;
-      grid-template-areas: "head list" "head ruler" "note ruler";
+      grid-template-areas: "head list";
+      align-items: center;
       column-gap: clamp(40px, 4.4vw, 80px);
     }
     #dreiwelten .dreiwelten-head {
@@ -598,20 +393,6 @@
     #dreiwelten .dreiwelten-list {
       grid-area: list;
       align-self: start;
-    }
-    #dreiwelten .dreiwelten-ruler,
-    :root[data-booted] #dreiwelten .dreiwelten-ruler:empty {
-      grid-area: ruler;
-      inline-size: 100%;
-      max-inline-size: none;
-      margin: var(--s6) 0 0;
-      align-self: start;
-    }
-    #dreiwelten .dreiwelten-note {
-      grid-area: note;
-      align-self: end;
-      margin: var(--s5) 0 0;
-      text-align: start;
     }
     #dreiwelten .dreiwelten-card img {
       aspect-ratio: 16 / 9;
@@ -1083,9 +864,6 @@
     .uv-dot {
       transition: none;
     }
-    .chapter .punze-list > li.is-flash {
-      animation: none;
-    }
   }
   :root[data-motion="paused"] #dreiwelten .dreiwelten-list > li {
     transition: none;
@@ -1093,9 +871,6 @@
   @media (forced-colors: active) {
     #meisterstuecke .chapter:not(#kapitel-iv)::before {
       display: none;
-    }
-    #meisterstuecke .punze-i {
-      color: ButtonText;
     }
   }
 }

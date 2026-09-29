@@ -1,7 +1,7 @@
 /**
  * Noch warm: what is on the anvil right now (spec §2.2, §5.5)  [WP2]
  * Top 8 by repo.pushedAt (desc), native horizontal scroll with snap plus visible ‹ › buttons.
- * Plates reuse js/render/plate.js with variant "rail" (stamp row: „glüht · zuletzt dran …“).
+ * Plates reuse js/render/plate.js with variant "rail" (stamp row: only the glow badge, „glüht“ / „warm“).
  */
 import { html, icon, $ } from "../lib/dom.js";
 import { plateContext, renderPlate } from "../render/plate.js";

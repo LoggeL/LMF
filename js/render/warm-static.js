@@ -7,7 +7,6 @@
  * Each row links to #werk/<id>, which resolves to the project's row in #lager-static without JS.
  */
 import { html } from "../lib/dom.js";
-import { date } from "../lib/format.js";
 
 export const WARM_STATIC_SIZE = 3;
 
@@ -19,7 +18,7 @@ export function renderWarmStatic(data = {}, { n = WARM_STATIC_SIZE } = {}) {
     .slice(0, n)
     .map(
       ({ p }) =>
-        html`<li class="warm-static"><a href="#werk/${p.id}">${p.title}</a><span class="meta">${p.category} · zuletzt dran <time datetime="${p.repo.pushedAt.slice(0, 10)}">${date(p.repo.pushedAt)}</time></span></li>`,
+        html`<li class="warm-static"><a href="#werk/${p.id}">${p.title}</a><span class="meta">${p.category}</span></li>`,
     );
   return items.map(String).join("");
 }

@@ -57,7 +57,7 @@ test.describe("Esse", () => {
     await expect(page.locator(".esse-canvas")).toHaveCount(0);
     // the rendered poster (real embers) is painted into a canvas, and the caption says what it shows
     await expect(page.locator(".esse-still")).toHaveCount(1);
-    await expect(page.locator(".esse-caption")).toContainText(`${REPOS.repos.length} öffentliche Repos`);
+    await expect(page.locator(".esse-caption")).toContainText("jedes Repo ein Funke");
     expect(errors).toEqual([]);
   });
 
@@ -307,8 +307,9 @@ test.describe("Kapitel IV · Projektor", () => {
     await expect(zillertal).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator(".projector-still")).toHaveAttribute("src", "assets/img/Skiing2022.webp");
     await expect(page.locator(".projector-quote")).toHaveText("„Hallo Welt“");
-    await expect(page.locator(".projector-label")).toHaveText("Beschreibung auf YouTube");
-    await expect(page.locator(".projector-play")).toHaveAttribute("aria-label", "Film abspielen (lädt YouTube): Zillertal");
+    // the film's own line reads as a tagline, not as a cited source
+    await expect(page.locator(".projector-label")).toHaveCount(0);
+    await expect(page.locator(".projector-play")).toHaveAttribute("aria-label", "Film abspielen: Zillertal");
     // Feldberg has no description: the caption row is omitted
     await page.getByRole("button", { name: /^2019 Feldberg/ }).click();
     await expect(page.locator(".projector-quote")).toHaveCount(0);
@@ -344,12 +345,11 @@ test.describe("Kapitel IV · Projektor", () => {
   test("dek and reel legend read naturally", async ({ page }) => {
     const errors = watchErrors(page);
     await open(page);
-    const onJp = SKI.filter((f) => (f.alsoOn ?? []).some((a) => /jupeters\.de/.test(a.url ?? ""))).length;
-    const dek = (await page.locator("#kapitel-iv .chapter-dek").innerText()).replace(/\s+/g, " ");
-    if (onJp === SKI.length) {
-      expect(dek).toContain(`Alle ${SKI.length} laufen auch auf jupeters.de`);
-      expect(dek).not.toContain("davon");
-    }
+    // the dek is the count and the first year, nothing about where else the films run
+    const dek = (await page.locator("#kapitel-iv .chapter-dek").innerText()).replace(/\s+/g, " ").trim();
+    expect(dek).toBe(`${SKI.length} Ski-Aftermovies seit ${Math.min(...SKI.map((f) => +f.uploaded.slice(0, 4)))}.`);
+    // Selantis and Harras live in the Schichtbuch, not in a closing line here
+    await expect(page.locator("#kapitel-iv")).not.toContainText(/Harras|jupeters/);
     await expect(page.locator("#kapitel-iv .projector-edge")).toHaveText(`Rolle ${SKI.length} von ${SKI.length} · ${SKI.map((f) => f.uploaded).sort().at(-1).slice(0, 4)}`);
     await expect(page.locator("#kapitel-iv .projector-edge")).toHaveAttribute("aria-hidden", "true");
     expect(errors).toEqual([]);

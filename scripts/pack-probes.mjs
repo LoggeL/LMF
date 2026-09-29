@@ -12,6 +12,8 @@
  *   js/probes/werk.js      Hashsuche + Jahresregler, only for their Werkbank pages; imports the
  *                          helpers from ./index.js
  *                          and carries the Hashsuche worker as a Blob (one file less)
+ *   js/probes/singer.js    the Mixer's singing voice, a standalone module the Mixer imports only
+ *                          after „Ton an“ (LAZY: never part of a page load, own budget below)
  * No dependencies: the comment and whitespace stripper from scripts/pack-gl.mjs (no renaming, so
  * every property the tests poke at stays), each probe module inlined as a scope whose exports are
  * live getters (Jahresregler rewrites its CHIP after loading its data).
@@ -30,6 +32,12 @@ export const OUT = { index: "js/probes/index.js", werk: "js/probes/werk.js" };
 const WORKER_NEW = 'new Worker(new URL("./hash-worker.js", import.meta.url))';
 /** §8: probes ≤ 22 KB gz, all shipped probe files together (1 KB = 1024 B). */
 export const BUDGET = 22 * 1024;
+/**
+ * Modules a probe imports on demand after an explicit opt-in („Ton an“), so they never load with
+ * the page and stay outside the §8 page-load budget. Their own ceiling keeps them honest.
+ */
+export const LAZY = { singer: "js/probes/singer.js" };
+export const LAZY_BUDGET = 6 * 1024;
 
 const PUBLIC = ["mount", "KIND", "CHIP"];
 const HELPERS = /^import\s*\{([^}]*)\}\s*from\s*"\.\/index\.js";\n/m;
@@ -75,7 +83,8 @@ export function pack() {
     `\nexport{${WERK.map((n) => `__${n} as ${n}`).join(",")}};\n`;
   // indentation inside HTML template literals is the only whitespace left after minify()
   const tidy = (s) => s.replace(/\n[ \t]+/g, "\n");
-  return { index: tidy(index), werk: tidy(werk) };
+  const lazy = Object.fromEntries(Object.keys(LAZY).map((n) => [n, tidy(head() + minify(read(`${SRC}${n}.js`)) + "\n")]));
+  return { index: tidy(index), werk: tidy(werk), ...lazy };
 }
 
 export const gz = (s) => gzipSync(s, { level: 9 }).length;
@@ -89,19 +98,21 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
       return "";
     }
   };
-  const total = Object.values(next).reduce((n, s) => n + gz(s), 0);
+  const total = Object.keys(OUT).reduce((n, k) => n + gz(next[k]), 0);
+  const ALL = { ...OUT, ...LAZY };
   if (process.argv.includes("--check")) {
-    const stale = Object.keys(OUT).filter((k) => cur(OUT[k]) !== next[k]);
+    const stale = Object.keys(ALL).filter((k) => cur(ALL[k]) !== next[k]);
     if (stale.length) {
-      console.error(`${stale.map((k) => OUT[k]).join(", ")} stale: run node scripts/pack-probes.mjs`);
+      console.error(`${stale.map((k) => ALL[k]).join(", ")} stale: run node scripts/pack-probes.mjs`);
       process.exit(1);
     }
     console.log(`probe packs up to date (${total} B gz, budget ${BUDGET})`);
   } else {
-    for (const k of Object.keys(OUT)) {
-      writeFileSync(new URL(OUT[k], ROOT), next[k]);
-      console.log(`${OUT[k]}: ${next[k].length} B raw, ${gz(next[k])} B gz`);
+    for (const k of Object.keys(ALL)) {
+      writeFileSync(new URL(ALL[k], ROOT), next[k]);
+      console.log(`${ALL[k]}: ${next[k].length} B raw, ${gz(next[k])} B gz`);
     }
     console.log(`total ${total} B gz (budget ${BUDGET})${total > BUDGET ? "  OVER BUDGET" : ""}`);
+    for (const k of Object.keys(LAZY)) if (gz(next[k]) > LAZY_BUDGET) console.log(`${LAZY[k]} OVER its lazy budget ${LAZY_BUDGET}`);
   }
 }

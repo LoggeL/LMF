@@ -7,14 +7,15 @@
  * What is NOT from MelodAI: the song. The lyrics are lines from this website's own copy, and
  * both stems are synthesized right here (original, no samples):
  *   Instrumental = triangle bass on the chord roots + square-wave pad through a 1.2 kHz lowpass
- *   Gesang       = sine lead with vibrato, one note per word from C-major pentatonic
+ *   Gesang       = singer.js: a formant voice that sings the German syllables (Vocaloid-style,
+ *                  loaded after „Ton an“); the old sine lead only if that module fails to load
  * Each stem → its own GainNode ← its fader → master gain 0.15. No sound before „Ton an“, ever.
  */
 
 import { announcer, calmSource, nextId } from "./index.js";
 
 export const KIND = "nachbau";
-export const CHIP = "Nachbau: Statt eines echten Songs singt hier diese Website, mit selbst erzeugten Tönen. Wie im Original laufen Gesang und Instrumental über zwei getrennte Regler.";
+export const CHIP = "Hier singt die Website selbst. Zwei Regler, wie im Original.";
 
 /* ── Score (pure data) ─────────────────────────────────────────────────────────────────────────── */
 
@@ -107,9 +108,9 @@ export function mount(root, ctx = {}) {
       <button class="button probe-btn" type="button" data-pm="play"><svg class="i" aria-hidden="true" focusable="false"><use href="#i-play"></use></svg><span data-pm="playLabel">Abspielen</span></button>
       <button class="button button--ghost probe-btn" type="button" data-pm="restart">Von vorn</button>
       <button class="button button--ghost probe-btn pm-sound" type="button" data-pm="sound" aria-pressed="false"><span class="pm-led" aria-hidden="true"></span>Ton an</button>
-      <p class="probe-readout meta pm-note" data-pm="soundnote">Ohne „Ton an“ bleibt es still.</p>
+      <p class="probe-readout meta pm-note" data-pm="soundnote">Gesang auf 0: jetzt singst du.</p>
     </div>
-    <p class="probe-howto" id="${ids.how}">Regler ziehen oder mit Pfeiltasten stellen · Leertaste auf der Anzeige: Abspielen/Pause · Gesang auf 0: jetzt singst du</p>`;
+    <p class="probe-howto vh" id="${ids.how}">Regler ziehen oder mit Pfeiltasten stellen. Leertaste auf der Anzeige spielt ab oder pausiert.</p>`;
 
   function channel(key, label, id, value) {
     return `<div class="pm-ch" data-ch="${key}">
@@ -171,10 +172,14 @@ export function mount(root, ctx = {}) {
   let nextBeat = 0; // absolute beat index scheduled up to
   let originAudio = 0; // ac.currentTime − pos
   let soundOn = false;
+  let S = null; // singer.js: null while loading, false if it failed
+  let singerP = null; // its import, requested on „Ton an“
+  let sess = null; // its voice for the current bus
 
   const now = () => {
     if (!playing) return pos;
-    if (soundOn && ac) return ac.currentTime - originAudio;
+    // while a session sounds, the audio clock leads; the ear hears it outputLatency later
+    if (bus && ac) return Math.max(0, ac.currentTime - originAudio - (ac.outputLatency || ac.baseLatency || 0));
     return performance.now() / 1000 - originPerf;
   };
   const loopPos = (t) => ((t % LOOP) + LOOP) % LOOP;
@@ -249,19 +254,23 @@ export function mount(root, ctx = {}) {
       gains[k].connect(analysers[k]);
       analysers[k].connect(master);
     }
+    singerP = import("./singer.js").then((m) => (S = m), () => (S = false));
     return true;
   }
   const curve = (v) => v * v; // fader law: gentle at the bottom, like a real desk
 
   function startAudio() {
     if (!ac) return;
+    // the voice is still loading: start with it, not without it
+    if (S === null) return void singerP.finally(() => soundOn && playing && !destroyed && !bus && startAudio());
+    const t = now(); // the silent clock still (no bus yet)
     ac.resume?.();
     bus = { voc: ac.createGain(), ins: ac.createGain() };
     bus.voc.connect(gains.voc);
     bus.ins.connect(gains.ins);
-    const t = now();
-    originAudio = ac.currentTime - t;
-    nextBeat = Math.floor(t / BEAT);
+    originAudio = ac.currentTime - t + 0.05; // a short lead: the first beat's scoop and onsets fit before it
+    // from the next whole beat: the one under way is half gone (and a fresh context cannot start in the past)
+    nextBeat = Math.ceil(t / BEAT - 1e-6);
     schedule();
     clearInterval(schedTimer);
     schedTimer = setInterval(schedule, 25);
@@ -284,7 +293,8 @@ export function mount(root, ctx = {}) {
         if (!bus && ac === ctxAt && ac.state === "running") ac.suspend?.();
       }, 80);
     } else if (ac && ac.state === "running") ac.suspend?.();
-    bus = null;
+    sess?.stop(ac.currentTime);
+    sess = bus = null;
   }
   /** Look-ahead scheduler (25 ms tick, 120 ms horizon). */
   function schedule() {
@@ -294,7 +304,17 @@ export function mount(root, ctx = {}) {
       const b = nextBeat;
       const inLoop = ((b % score.beats) + score.beats) % score.beats;
       const at = originAudio + b * BEAT;
-      for (const n of score.lead) if (n.start === inLoop) voice(at, n.dur * BEAT, hz(n.midi));
+      if (S)
+        try {
+          (sess ||= S.singer(ac, bus.voc, score, BEAT)).beat(b, at);
+        } catch {
+          // e.g. no PeriodicWave/convolver, or a stricter automation rule: the sine voice takes over,
+          // the band keeps playing
+          sess?.stop();
+          sess = null;
+          S = false;
+        }
+      if (S === false) for (const n of score.lead) if (n.start === inLoop) voice(at, n.dur * BEAT, hz(n.midi));
       for (const n of score.bass) if (Math.floor(n.start) === inLoop) bassNote(at + (n.start - inLoop) * BEAT, n.dur * BEAT, hz(n.midi));
       for (const n of score.pad) if (n.start === inLoop) padChord(at, n.dur * BEAT, n.triad.map(hz));
       nextBeat++;
@@ -307,23 +327,15 @@ export function mount(root, ctx = {}) {
     g.gain.setValueAtTime(peak, t0 + Math.max(a, dur - r));
     g.gain.linearRampToValueAtTime(0, t0 + dur);
   }
+  /** Fallback lead (only if singer.js fails): a plain sine, one note per word. */
   function voice(at, dur, f) {
     const o = ac.createOscillator();
-    o.type = "sine";
     o.frequency.value = f;
-    const lfo = ac.createOscillator();
-    lfo.frequency.value = 5.5;
-    const depth = ac.createGain();
-    depth.gain.setValueAtTime(0, at);
-    depth.gain.linearRampToValueAtTime(f * 0.012, at + Math.min(0.25, dur)); // vibrato blooms in
-    lfo.connect(depth).connect(o.frequency);
     const g = ac.createGain();
     env(g, at, dur, 0.9, 0.03, 0.09);
     o.connect(g).connect(bus.voc);
     o.start(at);
-    lfo.start(at);
     o.stop(at + dur + 0.02);
-    lfo.stop(at + dur + 0.02);
   }
   function bassNote(at, dur, f) {
     const o = ac.createOscillator();
@@ -361,14 +373,12 @@ export function mount(root, ctx = {}) {
     }
     soundOn = on;
     el.sound.setAttribute("aria-pressed", String(on));
-    el.note.textContent = on ? "Ton läuft. Synthetisiert, keine Aufnahme." : "Ohne „Ton an“ bleibt es still.";
+    el.note.textContent = on ? "Ton läuft. Gesang auf 0: jetzt du." : "Gesang auf 0: jetzt singst du.";
     if (on) {
-      if (playing) {
-        const t = now();
-        originPerf = performance.now() / 1000 - t;
-        pos = t;
-        startAudio();
-      } else play();
+      ac.resume?.(); // still inside the click: some browsers unlock audio only here
+      // wait for the voice, else the beat under way when it arrives goes unsung („Aus“)
+      const was = playing;
+      singerP.finally(() => soundOn && !destroyed && !bus && playing === was && (was ? startAudio() : play()));
     } else {
       if (playing) {
         const t = now();

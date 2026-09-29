@@ -2,7 +2,7 @@
   "id": "beatguessr",
   "story": [
     "BeatGuessr ist mein Musik-Ratespiel mit 660 Songs aus 66 Jahrgängen, zehn pro Jahr von 1960 bis 2025, jeweils mit deutschem Zeitkontext wie „NDW-Höhepunkt“ oder „Grunge-Revolution“.",
-    "Im Classic-Modus erkennt man Titel und Künstler, im Timeline-Modus sortiert man Songs chronologisch, und im Buzzer-Modus spielen mehrere Geräte gegeneinander. Die Idee begleitet mich schon länger: Ein öffentliches Vorgänger-Repo gibt es seit 2020."
+    "Im Classic-Modus erkennt man Titel und Künstler, im Timeline-Modus sortiert man Songs chronologisch, und im Buzzer-Modus spielen mehrere Geräte gegeneinander."
   ],
   "highlights": [
     "660 Songs mit 30-Sekunden-Vorschau, zehn pro Jahr von 1960 bis 2025",
@@ -37,8 +37,8 @@
     }
   ],
   "funFact": {
-    "text": "Angelegt habe ich das Repo in der Weihnachtsnacht, um 00:46 Uhr deutscher Zeit, gleich mit README und Pages-Deploy. BeatGuessr2 (2020–2021) war ein früherer Anlauf mit Discord- und Socket-Ordnern.",
-    "source": 0
+    "text": "Einen ersten Anlauf gab es schon 2020, damals noch mit Discord.",
+    "source": 2
   },
   "relatedRepos": [
     {

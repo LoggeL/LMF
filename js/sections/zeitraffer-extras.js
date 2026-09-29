@@ -62,7 +62,7 @@ export default function extras({ wrap, scroller, playBtn, st, motion, announce, 
       st.playing = requestAnimationFrame(step);
       if (f >= 1) {
         stop();
-        announce?.("Zeitraffer am Stand angekommen.");
+        announce?.("Zeitraffer ist im Jetzt angekommen.");
       }
     };
     st.playing = requestAnimationFrame(step);

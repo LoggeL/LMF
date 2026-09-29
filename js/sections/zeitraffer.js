@@ -1,7 +1,8 @@
 /**
  * Zeitraffer: every public repo on a horizontal timeline (spec §2.6, §6.4)  [WP5]
  * A year is as wide as it is busy (120 + 14 px per repo, ×0.7 below 1024 px), linear inside.
- * Lanes: Meilensteine · Im Portfolio · one per language (greedy packing into sub-rows).
+ * Lanes: Meilensteine · Im Portfolio · one quiet, unlabelled row of glowing ticks for every repo
+ * (greedy packing into sub-rows). The heat bar in the ruler carries the volume, no counts.
  * Opens at the Stand. One roving tab stop: ←/→ in time, ↑/↓ lanes, Home/End, Enter opens.
  * Tooltip, drag-to-pan, the arrow keys, year jumps and „abspielen“ live in ./zeitraffer-extras.js,
  * loaded on the first pointer, focus, key or play intent (budget §8).
@@ -9,14 +10,15 @@
  * run node scripts/pack-zr.mjs. Portfolio chip images come from one sprite (make-zr-sprite.mjs).
  */
 import { html, raw, escapeHtml, EXT_SUFFIX } from "../lib/dom.js";
-import { dayValue, daysBetween, formatDate, yearOf, fillBindings, reposByYear, GLOW_DAYS, GLOW_LABEL } from "../lib/derive.js";
-import { laneOf, KIND_LABEL, milestoneDate, yearSpan, repoWord, markLang } from "../render/schichtbuch-static.js";
+import { dayValue, daysBetween, yearOf, fillBindings, reposByYear, GLOW_DAYS, GLOW_LABEL } from "../lib/derive.js";
+import { KIND_LABEL, milestoneDate, milestoneLink, yearSpan, repoWord, markLang } from "../render/schichtbuch-static.js";
 import { ZR_SPRITE } from "../render/zr-sprite.js";
 
-export const LANES = ["Marker", "Portfolio", "JavaScript", "TypeScript", "HTML/CSS", "Python", "Andere"].map((key) => ({
-  key,
-  label: { Marker: "Meilensteine", Portfolio: "Im Portfolio" }[key] ?? key,
-}));
+export const LANES = [
+  { key: "Marker", label: "Meilensteine" },
+  { key: "Portfolio", label: "Im Portfolio" },
+  { key: "Glut", label: "" },
+];
 
 // Clips: thumbnail + two-line title, every one labelled; crowded years just get more rows.
 const G = {
@@ -89,7 +91,7 @@ export function layout(data, scale = 1) {
   let right = nowX;
   repos.forEach((r, i) => {
     const item = { type: "repo", i, x: xOf(r.c), repo: r, glow: glowOfRepo(r, asOf) };
-    lanes.get(laneOf(r.l)).items.push(item);
+    lanes.get("Glut").items.push(item);
     const project = r.id && byId.get(r.id);
     if (project) lanes.get("Portfolio").items.push({ type: "project", x: item.x, repo: r, project, glow: item.glow });
   });
@@ -111,7 +113,7 @@ export function layout(data, scale = 1) {
     lane.height = lane.rows * g.h + G.pad * 2;
     lane.items.sort((a, b) => a.x - b.x || a.row - b.row);
   }
-  return { width: Math.round(right + 16), years: segs, lanes: [...lanes.values()], xOf, dateAt, nowX, total: repos.length, asOf, repoXs: repos.map((r) => xOf(r.c)) };
+  return { width: Math.round(right + 16), years: segs, lanes: [...lanes.values()], xOf, dateAt, nowX, total: repos.length, asOf };
 }
 
 /* ── Rendering ─────────────────────────────────────────────────────────────────────────────── */
@@ -128,30 +130,29 @@ const chipImg = (image) => {
 function itemHtml(lane, it) {
   const top = G.pad + it.row * lane.rowH;
   // Keyboard stops: everything that opens something, plus milestone flags. Unnamed repos stay in
-  // the lanes and the counts (and in the list's tables) but are not stops: Enter would do nothing.
+  // the glow row (and in the list's tables) but are not stops: Enter would do nothing.
   const stop = it.type !== "repo" || it.repo.id || it.repo.n;
   const common = raw(`data-zr-item${stop ? ` data-zr-nav tabindex="-1"` : ""} data-x="${it.x.toFixed(1)}" style="left:${px(it.lx)};top:${px(top)}"`);
   if (it.type === "marker") {
     const lead = it.lx - it.x > 1 ? html`<i class="zr-lead" style="left:${px(it.x)};top:${px(top + lane.rowH - 2)};width:${px(it.lx - it.x)}"></i>` : "";
     const { m } = it;
-    const src = (m.sources ?? []).find((s) => /^https:\/\//.test(s.url));
+    const src = milestoneLink(m);
     const date = milestoneDate(m);
-    const when = it.span ? `${date}, genaues Datum nicht belegt` : date;
-    const label = `${when}, ${KIND_LABEL[m.kind] ?? m.kind}: ${it.text}${src ? ` Quelle: ${src.label}` : ""}`;
-    const inner = html`<span class="zr-flag-date">${date}${it.span ? html`<span class="zr-flag-vague"> · im Lauf des Jahres</span>` : ""}</span><span class="zr-flag-text">${markLang(it.text)}</span>`;
+    const label = `${date}, ${KIND_LABEL[m.kind] ?? m.kind}: ${it.text}`;
+    const inner = html`<span class="zr-flag-date">${date}</span><span class="zr-flag-text">${markLang(it.text)}</span>`;
     const attrs = raw(`class="zr-flag" data-kind="${escapeHtml(m.kind)}" ${common}`);
     return html`${lead}${src
-      ? html`<a href="${src.url}" target="_blank" rel="noopener noreferrer" aria-label="${label}${EXT_SUFFIX}" ${attrs}>${inner}</a>`
+      ? html`<a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${label}${EXT_SUFFIX}" ${attrs}>${inner}</a>`
       : html`<span role="img" aria-label="${label}" ${attrs}>${inner}</span>`}`;
   }
   const r = it.repo;
-  const made = `Repo angelegt ${formatDate(r.c)}`;
+  const year = yearOf(r.c);
   if (it.type === "project") {
     const p = it.project;
-    return html`<a class="zr-pclip" data-alloy="${p.groups?.[0] ?? ""}" data-glow="${it.glow}" data-project-id="${p.id}" href="#werk/${p.id}" aria-label="${p.title}, ${made}. Werkstück öffnen" data-tip="${p.title} · ${made} · zuletzt dran ${formatDate(r.p)}" ${common}>${chipImg(p.image)}<span class="zr-pclip-title">${p.title}</span></a>`;
+    return html`<a class="zr-pclip" data-alloy="${p.groups?.[0] ?? ""}" data-glow="${it.glow}" data-project-id="${p.id}" href="#werk/${p.id}" aria-label="${p.title}, ${year}. Werkstück öffnen" data-tip="${p.title} · ${year}" ${common}>${chipImg(p.image)}<span class="zr-pclip-title">${p.title}</span></a>`;
   }
   // The name doubles as the tooltip (extras), so the glow word is in both: colour never alone.
-  const label = `${r.n ? `Repo ${r.n}` : "Öffentliches Repo"}, angelegt am ${formatDate(r.c)}, Sprache ${r.l || "keine Angabe"}, zuletzt dran am ${formatDate(r.p)} (${GLOW_LABEL[it.glow]})`;
+  const label = `${r.n || "Projekt"} · ${year} · ${GLOW_LABEL[it.glow]}`;
   const attrs = raw(`class="zr-clip" ${common} data-repo data-glow="${it.glow}"${r.n ? ` data-name="${escapeHtml(r.n)}"` : ""}`);
   // In the portfolio → the Werkbank; allowlisted name → GitHub; otherwise an unnamed mark.
   const href = r.id ? `#werk/${r.id}` : r.n && `https://github.com/LoggeL/${encodeURIComponent(r.n)}`;
@@ -162,14 +163,14 @@ function itemHtml(lane, it) {
 
 export function renderTrack(L) {
   const now = px(L.nowX);
-  return html`<div class="zr-track" style="width:${px(L.width)}"><div class="zr-ruler" aria-hidden="true"><span class="zr-lane-label">Jahr · Repos</span>${L.years.map(
+  return html`<div class="zr-track" style="width:${px(L.width)}"><div class="zr-ruler" aria-hidden="true"><span class="zr-lane-label"></span>${L.years.map(
     (s) =>
-      html`<div class="zr-year" data-year="${s.y}" data-count="${s.n}" style="left:${px(s.x)};width:${px(s.w)}"><span class="zr-year-label"><span class="zr-year-num">${s.y}</span> <span class="zr-year-n">· ${s.n}</span></span><span class="zr-heat" data-heat="${s.heat}" style="width:${px(Math.max(s.n ? 6 : 0, Math.min(s.share * (s.w - 16), L.nowX - s.x - 12)))}"></span></div>`,
-  )}${L.asOf ? html`<span class="zr-now-label" style="left:${now}">Stand ${formatDate(L.asOf)}</span>` : ""}</div><div class="zr-lines" aria-hidden="true">${L.lanes[0].items.map(
+      html`<div class="zr-year" data-year="${s.y}" data-count="${s.n}" style="left:${px(s.x)};width:${px(s.w)}"><span class="zr-year-label"><span class="zr-year-num">${s.y}</span></span><span class="zr-heat" data-heat="${s.heat}" style="width:${px(Math.max(s.n ? 6 : 0, Math.min(s.share * (s.w - 16), L.nowX - s.x - 12)))}"></span></div>`,
+  )}${L.asOf ? html`<span class="zr-now-label" style="left:${now}">jetzt</span>` : ""}</div><div class="zr-lines" aria-hidden="true">${L.lanes[0].items.map(
     (it) => html`<span data-kind="${it.m.kind}"${it.span ? raw(` data-span style="left:${px(it.x)};width:${px(it.span)}"`) : raw(` style="left:${px(it.x)}"`)}></span>`,
   )}<i class="zr-future" style="left:${now}"></i></div>${L.lanes.map(
     (lane) =>
-      html`<div class="zr-lane" data-lane="${lane.key}" style="height:${px(lane.height)}"><span class="zr-lane-label"><span class="zr-lane-name">${lane.label}</span> <span class="zr-lane-count">${lane.items.length}</span></span>${lane.items.map((it) => itemHtml(lane, it))}</div>`,
+      html`<div class="zr-lane" data-lane="${lane.key}" style="height:${px(lane.height)}"><span class="zr-lane-label"><span class="zr-lane-name">${lane.label}</span></span>${lane.items.map((it) => itemHtml(lane, it))}</div>`,
   )}</div>`;
 }
 
@@ -185,8 +186,8 @@ export function mountZeitraffer(host, data, ctx) {
   const use = (n) => `<svg class="i i-${n}" aria-hidden="true" focusable="false"><use href="#i-${n}"></use></svg>`;
   wrap.innerHTML = `<div class="zr-bar"><div class="zr-years" role="group" aria-label="Zu einem Jahr springen"></div><p class="zr-readout meta" aria-hidden="true"></p><button class="zr-play button button--ghost" type="button" aria-pressed="false" data-heat>${use("play")}${use("pause")}<span>Zeitraffer abspielen</span></button></div>
 <div class="zr-viewport"><div class="zr-scroll"></div><div class="zr-playhead" aria-hidden="true"></div><div class="zr-tip" id="zr-tip" role="tooltip" hidden></div></div>
-<div class="zr-foot"><ul class="zr-legend meta" role="list"><li><span class="zr-swatch" data-glow="glueht"></span>glüht: bis ${GLOW_DAYS.glueht} Tage vor dem Stand gepusht</li><li><span class="zr-swatch" data-glow="warm"></span>warm: bis ${GLOW_DAYS.warm} Tage</li><li><span class="zr-swatch" data-glow="abgekuehlt"></span>abgekühlt: länger her</li><li><span class="zr-swatch zr-swatch--flag"></span>Fähnchen: Meilenstein mit Quelle</li><li><span class="zr-swatch zr-swatch--span"></span>Klammer: nur das Jahr ist belegt</li></ul>
-<p class="zr-keys meta"><span class="vh">Bedienung: </span><kbd>←</kbd><kbd>→</kbd> durch die Zeit · <kbd>↑</kbd><kbd>↓</kbd> Spur wechseln · <kbd>Enter</kbd> öffnet</p></div>`;
+<div class="zr-foot"><ul class="zr-legend meta" role="list"><li><span class="zr-swatch" data-glow="glueht"></span>glüht</li><li><span class="zr-swatch" data-glow="warm"></span>warm</li><li><span class="zr-swatch" data-glow="abgekuehlt"></span>abgekühlt</li></ul>
+<p class="vh">Bedienung: Pfeiltasten links und rechts durch die Zeit, hoch und runter Spur wechseln, Enter öffnet.</p></div>`;
 
   const $ = (s) => wrap.querySelector(s);
   const scroller = $(".zr-scroll");
@@ -249,8 +250,8 @@ export function mountZeitraffer(host, data, ctx) {
     const at = scroller.scrollLeft + ph;
     const end = scroller.scrollLeft >= max - 2;
     const d = L.dateAt(end ? Infinity : at);
-    const n = end ? L.total : L.repoXs.filter((x) => x <= at + 0.5).length;
-    const text = `${String(d.month).padStart(2, "0")}.${d.year} · ${n} von ${L.total} Repos bis hier`;
+    // where the playhead is, nothing more (the counts live in the year ruler)
+    const text = String(d.year);
     if (out.textContent === text) return;
     out.textContent = text;
     // Exactly one current year chip.

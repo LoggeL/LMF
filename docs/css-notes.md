@@ -55,26 +55,22 @@ Longer explanatory comments moved out of the non-lazy stylesheets on 28.09.2026 
 
 ## css/sections/meister.css
 
+(Owner update „Portfolio statt Report“: the notes on `.specsheet`, `.punze-slot`, `.punze-list`, `.punze-i` and the ruler marks are removed with the rules they described.)
+
 - `#meisterstuecke .chapter:not(#kapitel-iv)::before` (was line 12): the huge outlined numeral, decorative (the kicker carries the real text)
 - `#meisterstuecke .chapter:not(#kapitel-iv) .chapter-body` (was line 43): Chapter layout Phones/tablets: head, stage, story, facts, universe. From 1024 px head + story beside the stage (5 : 7, alternating), so a chapter is about one stage tall. DOM = reading = tab order.
 - `#meisterstuecke .chapter:not(#kapitel-iv)::before` (was line 111): the outlined numeral: a watermark in the top corner of the text column, where the short title lines leave room, never behind the stage
 - `:root[data-booted] .probe-stage[data-probe]` (was line 127): Probestück stage: final size reserved before the toy mounts The ::after spacer shares the grid cell with the poster/probe and carries the measured live height per stage width (work/wp4r2/fit.mjs, +6 px), so mounting and unmounting never move the page. Werkbank variants live in werkbank.css.
 - `:root[data-booted] .probe-stage[data-probe] > img` (was line 146): With JS the toy draws its own view: display: none keeps the lazy poster from downloading. Until the toy is there the stage is one even plate with a centred „Probestück lädt …“.
 - `#meisterstuecke .chapter .probe-stage.is-live::before` (was line 189): a stamped tab on the live stage: „Probestück · Nachbau/Echt“ is carried by the chip row below
-- `#meisterstuecke .specsheet > summary` (was line 235): the fold: Werkstattdaten are a closed <details> on every width („Werkstattdaten · Stand …“ + chevron); the facts are one click away and the chapter stays about one stage tall
-- `:root[data-booted] #meisterstuecke:not([data-mounted]) .punze-slot:empty` (was line 288): Until meister.js binds it, the Punze button has its measured size already, so the mount does not move anything below
 - `#meisterstuecke .story-more` (was line 295): „Weiterlesen“: every chapter shows its first paragraph; the rest (more paragraphs, the rivets, on phones and tablets also the MelodAI pipeline) opens on request, or in the Werkbank
-- `.chapter .punze-list > li:focus` (was line 380): the Punze itself is the shared one (lager.css / werkbank.css); chapters only add the mark landing
 - `@media (max-width: 759.98px)` (was line 422): phones: the three worlds side by side in a snapping row (one card and a peek of the next) instead of three screens of stacked cards
-- `:root[data-booted] #dreiwelten .dreiwelten-stamp` (was line 541): reserved before meister.js fills them, so the section never grows on mount
-- `inset-inline-start: clamp(13px, var(--at), calc(100% - 13px))` (was line 584): inset by the mark radius, so 0 s and 81 s never poke out of the track
-- `@media (min-width: 1024px)` (was line 610): From 1024 px: the head (and the note) on the left, the three worlds and their 81-second ruler on the right, so the Zwischenstück is a breath between chapters, not a chapter of its own
+- `@media (min-width: 1024px)` (was line 610): From 1024 px: the head on the left, the three worlds on the right, so the Zwischenstück is a breath between chapters, not a chapter of its own (the 81-second ruler is gone: owner update, fix round 2)
 - `#kapitel-iii .pipeline` (was line 647): Pipeline (Kapitel III): six stations on one wire. While the mixer plays (lmf:probe), 05–06 heat up in 90 ms and cool over 1.6 s. Phones: the same wire, vertical.
 - `@media (prefers-reduced-motion: no-preference)` (was line 769): a pulse runs down the hot wire while the song plays (never when calm)
 - `:root[data-booted] #meisterstuecke:not([data-mounted]) .universe:empty` (was line 791): reserved until the section mounts (then it is either filled or, without data, gone): the folded universe is head + four previews (1 / 2 / 4 columns). Measured, box height against its width (work/wp4r3/uvh.mjs): 288→859, 358→734, 442→684, 588→614 · 589→481, 707→435, 941→370 · 942→304, 1086→280, 1325→257 px
 - `.uv-map` (was line 1000): Folded on every width: head + a preview of four in a row („Alle 11 zeigen“ in the head). Open: the map from 640 px, the whole grouped list below.
 - `.uv-list:not(.is-open) :is(.uv-li--more, .uv-group--more)` (was line 1032): the preview: four (one per kind); „Alle 11 zeigen“ opens the rest
-- `#meisterstuecke .punze-i` (was line 1133): the Punze shield is drawn in currentColor, which keeps the author's orange otherwise
 
 ## css/sections/film.css
 
@@ -83,7 +79,7 @@ Longer explanatory comments moved out of the non-lazy stylesheets on 28.09.2026 
 - `#kapitel-iv .projector-film` (was line 88): the film is in flow: the picture between the sprocket margins is exactly 16:9, so a poster shows whole at every width (the frame is 16:9 plus the two margins)
 - `#kapitel-iv .projector-pic .projector-still` (was line 137): the gate crops 1.5 % off every edge, like a real aperture (and like gl/projector.js GATE): hides the coloured edge rows some YouTube thumbnails carry
 - `#kapitel-iv .projector-meta` (was line 207): separators live in the gap, left of each item: one that starts a line falls outside the box and is clipped, so a wrapped line never opens with „·“
-- `#kapitel-iv .film-more` (was line 375): full shell width: the reel list on one line, the Selantis line in two
+- `#kapitel-iv .film-more` (was line 375): full shell width: the reel list on one line
 - `@layer sections` (was line 456): Motion (opt-in, calm-gated): heat in fast, cool out slow; the red bar strikes in.
 
 ## css/sections/schichtbuch.css
@@ -104,14 +100,13 @@ Longer explanatory comments moved out of the non-lazy stylesheets on 28.09.2026 
 
 ## css/sections/werkstatt.css
 
-- `#werkstatt :is(.buehne, .werkzeugwand, .zunft, .abspann)` (was line 6): Block rhythm inside the Werkstatt: a little tighter than the skeleton default (five blocks).
+- `#werkstatt :is(.werkzeugwand, .zunft, .abspann)` (was line 6): Block rhythm inside the Werkstatt: a little tighter than the skeleton default (the „Bühne“ block is gone: the Zunft covers it).
 - `.knopf-said` (was line 66): „Siehste.“: a separate ink stamp next to the cap (aria-hidden; the name stays „Knopf“).
 - `.zunft-mark--blank` (was line 245): No logo (or it failed to load): a monogram on brushed steel, the plates' Rohling language.
 - `white-space: normal` (was line 412): the trailing space is the only break opportunity between the nowrap items
 - `.is-windowed .abspann-stage` (was line 465): Windowed credits (JS): a fixed window instead of 2–3 screens of page. The layout is the end-credits axis: role right-aligned on the left, names on the right (stacked on phones).
 - `.is-rolling .credits-reel` (was line 542): The roll: transform only (compositor), paused off screen, on hover and while focused.
-- `.zunft-punze--all` (was line 632): Zunft ≥ 640 px: each card carries its own Punze; the combined footer is for phones only.
-- `.zunft-list` (was line 644): Zunft on phones: two columns, small marks, category + description; one Punze footer.
+- `.zunft-list` (was line 644): Zunft on phones: two columns, small marks, category + description.
 
 ## css/sections/abseits.css
 

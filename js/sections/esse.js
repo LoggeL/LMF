@@ -117,11 +117,8 @@ export async function mount(root, ctx) {
       return;
     }
     const r = e.repo;
-    const parts = [r.n || "öffentliches Repo"];
-    if (r.l) parts.push(r.l);
-    parts.push(`Repo angelegt ${format.date(r.c, "month")}`);
-    if (r.p) parts.push(`letzter Push ${format.date(r.p)}`);
-    parts.push(GLOW_WORD(e.days));
+    // „BeatGuessr · 2025 · glüht“: what it is, when it started, how hot it still is
+    const parts = [r.n || "Projekt", format.year(r.c), GLOW_WORD(e.days)].filter(Boolean);
     readout.textContent = parts.join(" · ");
     readout.hidden = false;
   }

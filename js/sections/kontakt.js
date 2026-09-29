@@ -8,10 +8,8 @@
  *   hot spots breathe only while the section is on screen and not calm (calm-gated CSS; this
  *   module pauses it off-screen), and flare up when the mail address is hovered or focused:
  *   heat in fast, cooling slowly.
- * - On wide screens the empty column names the newest public repo („Zuletzt angelegt“, repos.json).
  */
 import { html, icon, safeUrl, EXT_SUFFIX } from "../lib/dom.js";
-import { formatDate } from "../lib/derive.js";
 
 const LABELS = { "discord-contact": "Discord", "telegram-contact": "Telegram" };
 const W = 1440;
@@ -87,33 +85,6 @@ export function coalsHtml() {
   return `<svg class="coal-bed" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" focusable="false"><defs><radialGradient id="coal-hot"><stop offset="0" stop-color="#FFB347"/><stop offset=".35" stop-color="#F2600C"/><stop offset="1" stop-color="#F2600C" stop-opacity="0"/></radialGradient><linearGradient id="coal-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff"/></linearGradient><mask id="coal-mask"><rect width="${W}" height="${H}" fill="url(#coal-fade)"/></mask></defs><g mask="url(#coal-mask)"><rect width="${W}" height="${H}" fill="#3A0A04"/><g class="coal-glow">${glow}</g><g class="coal-cells">${cells.join("")}</g></g></svg>`;
 }
 
-/** „Zuletzt angelegt“: the newest public repo from repos.json (one line, not a second „Noch warm“).
- *  Repos without an allowlisted name are never named; then the line counts instead. */
-export function latestRepo(data) {
-  return latestOf(data)?.last ?? null;
-}
-
-function latestOf(data) {
-  const asOf = data?.snapshot?.asOf ?? data?.reposAsOf;
-  const repos = (data?.repos ?? []).filter((r) => typeof r.c === "string" && (!asOf || r.c <= asOf));
-  if (!repos.length || !asOf) return null;
-  return { asOf, total: repos.length, last: repos.reduce((a, b) => (b.c > a.c ? b : a)) };
-}
-
-function latestAside(data) {
-  const l = latestOf(data);
-  if (!l) return "";
-  const { asOf, total, last: r } = l;
-  const login = data.snapshot?.github?.login || "LoggeL";
-  const when = html`<time datetime="${r.c}">${formatDate(r.c)}</time>`;
-  const line = r.n
-    ? html`<a class="kontakt-warm-name" href="https://github.com/${login}/${encodeURIComponent(r.n)}" target="_blank" rel="noopener noreferrer">${r.n}<span class="vh">${EXT_SUFFIX}</span></a> <span class="kontakt-warm-date meta">am ${when}</span>`
-    : html`<span class="kontakt-warm-name">${total} öffentliche Repos,</span> <span class="kontakt-warm-date meta">das letzte am ${when}</span>`;
-  return String(
-    html`<aside class="kontakt-warm" aria-labelledby="kontakt-warm-title"><p class="kontakt-warm-title meta" id="kontakt-warm-title">Zuletzt angelegt</p><p class="kontakt-warm-line">${line}</p><p class="kontakt-warm-src meta">Stand ${formatDate(asOf)} · Quelle: GitHub API</p></aside>`,
-  );
-}
-
 export async function mount(root, ctx) {
   const offs = [];
   const data = await ctx.data;
@@ -156,15 +127,6 @@ export async function mount(root, ctx) {
       btn.removeEventListener("click", onCopy);
       btn.remove();
     });
-  }
-
-  const inner = root.querySelector(".kontakt-inner");
-  if (inner && !inner.querySelector(".kontakt-warm")) {
-    const aside = latestAside(data);
-    if (aside) {
-      inner.insertAdjacentHTML("beforeend", aside);
-      offs.push(() => inner.querySelector(".kontakt-warm")?.remove());
-    }
   }
 
   const coals = root.querySelector('[data-mount="coals"]');

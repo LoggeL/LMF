@@ -39,7 +39,7 @@ export default function renderAbseitsStatic(data = {}, opts = {}) {
   if (!list.length) return "";
   const frames = sample(list);
   return String(
-    html`<ol class="contact-sheet screen" role="list" aria-label="Kontaktbogen, eine Auswahl aus dem Fotoarchiv">${frames.map(
+    html`<ol class="contact-sheet screen" role="list" aria-label="Kontaktbogen, eine Auswahl aus der Galerie">${frames.map(
       (f) => html`<li class="cs-frame"><a href="${base}assets/img/large/${f.name}.jpg"><img src="${base}assets/img/small/${f.name}.webp" alt="Galerieaufnahme ${f.nn}" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">${f.nn}A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="${f.date}T${f.time}">${f.time}</time></span></a></li>`,
     )}</ol>`,
   );

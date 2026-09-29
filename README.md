@@ -4,6 +4,8 @@ Mein Portfolio: Web-Apps, Spiele, KI-Experimente und Filme, als Werkstatt gebaut
 
 Grundregel: **Nichts ist erfunden.** Jede Zahl, jedes Datum und jede Rolle stammt aus einem README, Repo-Metadaten, einer geprüften Live-Seite, der GitHub- oder YouTube-API oder vorhandenen Daten. Fehlt etwas, wird das Element weggelassen, nie mit einem Platzhalter gefüllt.
 
+Die Belege stehen in den Daten (`sources` in `data/details/*.json`, `milestones.json`, `partners.json`) und werden von `npm run check` geprüft, aber **nicht auf der Seite gezeigt**: keine Punze, keine Fußnoten-Ziffern, keine „Quelle:“-Zeilen, kein „Stand“ an jedem Block. Die Seite ist ein Portfolio, kein Report. Das einzige „Stand“-Datum steht unter der Esse, weil die Glut davon abhängt. Auch sonst zeigt die Seite Arbeit statt Forensik: Daten als Monat („Sept. 2026“), keine Uhrzeiten von Repo-Anlagen, keine Commits und keine Sprach-Prozente, Sterne erst ab 25, höchstens vier Eckdaten pro Werkstück (zuerst die eigenen Zahlen des Projekts, „Zuletzt dran“ nur bei abgekühlten Stücken; keine Leiste, wenn sie nur das Jahr wiederholen würde). Das Schichtbuch zeigt Jahre und Meilensteine, keine Repo-Tabellen; der Zeitraffer zeigt jedes Repo als Strich in einer unbeschrifteten Glut-Reihe, ohne Sprach-Spuren, ohne Zahlen pro Jahr und ohne Anlagedatum im Tooltip.
+
 ## Lokal starten
 
 ```sh
@@ -41,8 +43,8 @@ Die Seite liest zur Laufzeit nur `data/`. `docs/research/*.json` ist Rohmaterial
 | `data/details/<id>.json` | Tiefe pro Projekt: Geschichte, Highlights, Stack, Sprachen, Commits, Fakten, Medien, Quellen |
 | `data/films.json` | YouTube-ID, Originaltitel, Upload, Länge, Reihe, Ort, wörtliches Beschreibungszitat |
 | `data/repos.json` | eigene öffentliche Repos ohne Forks (Zeitraffer, Glut der Esse); Namen nur laut `scripts/repo-allowlist.json` |
-| `data/snapshot.json` | `asOf` (Stichtag für jedes „Stand“ und jede Glut), GitHub-Konto, Repos pro Jahr |
-| `data/milestones.json` | Schichtbuch-Meilensteine mit Quellen; `{gallery.nights}`-Platzhalter füllt `fillBindings()` |
+| `data/snapshot.json` | `asOf` (Stichtag für die Glut und das eine „Stand“ unter der Esse), GitHub-Konto, Repos pro Jahr |
+| `data/milestones.json` | Schichtbuch-Meilensteine mit Quellen (auf der Seite verlinkt nur der Text selbst, wenn es ein Video oder Repo gibt); `{gallery.nights}`-Platzhalter füllt `fillBindings()` |
 | `data/chapters.json`, `data/universe.json` | Meisterstück-Kapitel, Kolpingtheater-Universum |
 | `data/partners.json`, `data/socials.json` | Zunft und Kontakt |
 | `docs/decisions.json` | Entscheidungen des Besitzers (Serotonin, GPS, Ortsnamen …), von `validate` gelesen |
@@ -55,7 +57,7 @@ Optional: `summary`, `imageAlt`, `artTitle`, `linkLabel`, `source`, `isNew`, `ar
 
 ### Details-Felder
 
-`story` (1–4 Absätze), `highlights` (3–6), `stack`, `languages` (Prozent), `commits`, `commitsBy`, `facts` (`{key, label, value, source}`), `funFact` (`{text, source}`), `relatedRepos`, `media` (`{src, alt, caption, kind, width, height, source}`), `note`, `refs` (`repo`, `live`, `video`: Index der Quelle für die Werkstattdaten-Zeilen) und `sources` (`{label, url, checkedAt, private?}`). Jede `source`-Zahl ist ein Index in `sources`. Quellen mit `private: true` zeigen auf ein privates Repo und werden ohne Link angezeigt.
+`story` (1–4 Absätze), `highlights` (3–6), `stack`, `languages` (Prozent, nur Daten), `commits`, `commitsBy` (nur Daten), `facts` (`{key, label, value, source}`; mit `kind: "ribbon"` und `text` wird der Fakt ein Satz unter dem Titel statt einer Zelle im Faktenstreifen; `kind: "probe"` belegt nur ein Probestück und wird nicht gezeigt), `funFact` (`{text, source}`; auf der Seite „Nebenbei“), `relatedRepos` (nur Daten, nicht gezeigt), `media` (`{src, alt, caption, kind, width, height, source}`), `note`, `refs` (`repo`, `live`, `video`: Index der Quelle hinter einem Fakt) und `sources` (`{label, url, checkedAt, private?}`). Jede `source`-Zahl ist ein Index in `sources`. Ein Fakt ohne auflösbare Quelle wird weggelassen; die Quellen selbst erscheinen nicht auf der Seite. Quellen mit `private: true` zeigen auf ein privates Repo.
 
 ### Abgeleitete Werte
 
@@ -65,7 +67,7 @@ Optional: `summary`, `imageAlt`, `artTitle`, `linkLabel`, `source`, `isNew`, `ar
 
 | Befehl | Was passiert |
 | --- | --- |
-| `npm run import` | Recherche → `data/` (Korrekturen, neue Projekte, Details, Filme, Meilensteine, Universum, Partner). Idempotent, verweigert Fakten ohne Quelle. |
+| `npm run import` | Recherche → `data/` (Korrekturen, neue Projekte, Details, Filme, Meilensteine, Universum, Partner). Idempotent, verweigert Fakten ohne Quelle. Zuletzt formuliert `scripts/lib/portfolio-copy.mjs` die Recherche-Sätze für Besucher um („laut Commits …“ raus); jede Ersetzung muss greifen. |
 | `npm run snapshot` | `gh`-CLI (angemeldet): `repos.json`, `snapshot.json`, Sterne/Daten in `projects.json`, Commits/Sprachen in den Details. `--as-of YYYY-MM-DD` optional. |
 | `npm run prerender` | füllt Prerender-Blöcke und `data-bind` in `index.html`; fehlende Renderer werden übersprungen. |
 | `npm run check` | `scripts/validate.mjs`, alle Regeln aus Spec §3.15 plus Budgets und Umlaut-Prüfung. |

@@ -3,7 +3,7 @@
     "id": "gummibaerenbande",
     "title": "Gummibärenbande",
     "category": "Gaming",
-    "description": "Eine deutschsprachige Gaming-Community auf Discord. Der Einladungslink hier stammt von meinem Account.",
+    "description": "Eine deutschsprachige Gaming-Community auf Discord.",
     "video": "assets/video/gummibaeren.webm",
     "link": "https://discord.gg/K7Tjtfq",
     "sources": [
@@ -18,7 +18,7 @@
     "id": "kolpingtheater",
     "title": "Kolpingtheater Ramsen",
     "category": "Theater",
-    "description": "Theatergruppe in Ramsen. Website, Werkzeuge, ein Kartenspiel und 2026 eine Rolle auf der Bühne.",
+    "description": "Theatergruppe in Ramsen. Website, Werkzeuge und ein Kartenspiel.",
     "image": "assets/svg/KolpingLogo.svg",
     "link": "https://kolpingtheater-ramsen.de",
     "place": "Ramsen",
@@ -100,7 +100,7 @@
     "id": "xenon",
     "title": "Xenon",
     "category": "Discord Bot",
-    "description": "Mein eigenes Projekt: ein KI-Support-Bot, der nur aus der offiziellen Xenon-Doku antwortet. Kein offizieller Xenon-Bot.",
+    "description": "Ein KI-Support-Bot, der Fragen direkt aus der Xenon-Doku beantwortet.",
     "image": "assets/svg/xenon.svg",
     "link": "https://github.com/LoggeL/xenon-support-bot",
     "sources": [

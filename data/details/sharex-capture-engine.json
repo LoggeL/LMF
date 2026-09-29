@@ -1,8 +1,8 @@
 {
   "id": "sharex-capture-engine",
   "story": [
-    "Eine von drei unabhängigen Neuinterpretationen der ShareX-Website: Hier wird der Screenshot zum Auslöser eines Workflows.",
-    "Die Seite ist kinoartig inszeniert, mit Three.js-„Reaktor“, den man ziehen und per Klick „auslösen“ kann, und Kapiteln, die beim Scrollen vom Capture bis zum Upload führen. Ein Designkonzept, kein offizieller ShareX-Auftritt."
+    "Eine von drei eigenen Neuinterpretationen der ShareX-Website: Hier wird der Screenshot zum Auslöser eines Workflows.",
+    "Die Seite ist kinoartig inszeniert, mit Three.js-„Reaktor“, den man ziehen und per Klick „auslösen“ kann, und Kapiteln, die beim Scrollen vom Capture bis zum Upload führen."
   ],
   "highlights": [
     "Interaktiver Three.js-Reaktor: „Drag the reactor. Click to capture.“",

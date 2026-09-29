@@ -90,9 +90,15 @@
     background: linear-gradient(to right, var(--heat-1), var(--heat-2) 35%, var(--heat-3) 70%, var(--heat-4));
     background-size: calc(100% / max(var(--share), 0.05)) 100%;
   }
+  /* a year without repos has no count and no bar */
   .sb-year[data-count="0"] .sb-year-title::after {
-    background: var(--line);
-    inline-size: 2px;
+    content: none;
+  }
+  /* side by side (phones) the count needs a separator; stacked (tablet up) it stands alone */
+  @media (max-width: 767px) {
+    .sb-year-count::before {
+      content: "· " / "";
+    }
   }
   .sb-year[data-count="0"] .sb-year-num {
     color: var(--muted);
@@ -158,29 +164,46 @@
     letter-spacing: -0.01em;
     max-inline-size: 30ch;
   }
-  .ms-sources {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--s1) var(--s4);
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.01em;
+  /* Wide screens: the year column narrows, busy years set their milestones side by side and
+     the text may run longer, so the log uses the whole measure instead of a narrow middle strip */
+  @media (min-width: 1200px) {
+    .sb-year {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    }
+    .sb-ms {
+      grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+      column-gap: var(--gap);
+    }
+    .ms-text {
+      max-inline-size: 36ch;
+    }
+    .ms:only-child .ms-text {
+      max-inline-size: 46ch;
+    }
   }
-  .ms-src {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    min-block-size: 32px;
-    color: var(--accent);
+  .ms-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--kind, var(--accent)) 45%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--d-cool) var(--ease-cool);
   }
-  .ms-src::after {
+  .ms-link::after {
     /* ↗ (same drawing as the sprite's i-arrow-ne) */
     content: "";
-    inline-size: 0.95em;
-    block-size: 0.95em;
-    background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat;
+    display: inline-block;
+    inline-size: 0.55em;
+    block-size: 0.55em;
+    margin-inline-start: 0.2em;
+    vertical-align: 0.1em;
+    background: var(--kind, var(--accent));
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .ms-link:hover,
+  .ms-link:focus-visible {
+    text-decoration-color: var(--kind, var(--accent));
+    transition-duration: var(--d-heat-in);
   }
 
   .sb-older-summary {
@@ -238,81 +261,6 @@
     .ms-text {
       font-size: 1.3125rem;
     }
-  }
-
-  /* Repo tables */
-  .sb-repos {
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-  .sb-repos summary {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    min-block-size: 44px;
-    padding-inline: var(--s4);
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: var(--t-meta);
-    font-weight: 500;
-    letter-spacing: var(--track-meta);
-    text-transform: uppercase;
-    list-style: none;
-  }
-  .sb-repos summary::-webkit-details-marker {
-    display: none;
-  }
-  .sb-repos summary::before {
-    content: "+";
-    display: inline-grid;
-    place-items: center;
-    inline-size: 20px;
-    block-size: 20px;
-    border: 1px solid var(--control);
-    font-size: 0.9rem;
-    line-height: 1;
-  }
-  .sb-repos[open] summary::before {
-    content: "−";
-  }
-  .sb-repos summary:hover {
-    color: var(--accent);
-  }
-  .sb-summary-close,
-  .sb-repos[open] .sb-summary-open {
-    display: none;
-  }
-  .sb-repos[open] .sb-summary-close {
-    display: inline;
-  }
-  .sb-table {
-    inline-size: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-mono);
-    font-size: var(--t-meta);
-    font-variant-numeric: tabular-nums;
-  }
-  .sb-table th {
-    text-align: start;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: var(--track-meta);
-    padding: var(--s2) var(--s4);
-    border-block-end: 1px solid var(--line);
-  }
-  .sb-table td {
-    padding: 6px var(--s4);
-    border-block-end: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
-    overflow-wrap: anywhere;
-  }
-  .sb-table td:first-child {
-    white-space: nowrap;
-    color: var(--muted);
-    inline-size: 6.5em;
-  }
-  .sb-table tr:last-child td {
-    border-block-end: 0;
   }
 
   /* Zeitraffer (.zr) — always-dark editing timeline */
@@ -477,9 +425,6 @@
     border-block-start: 2px solid color-mix(in srgb, var(--kind) 70%, transparent);
     background: color-mix(in srgb, var(--kind) 6%, transparent);
   }
-  .zr-flag-vague {
-    color: var(--muted);
-  }
 
   /* Lanes */
   .zr-lane {
@@ -513,10 +458,6 @@
     font-size: 0.75rem;
     white-space: nowrap;
     pointer-events: none;
-  }
-  .zr-lane-count {
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
   }
   .zr-lane[data-lane="Marker"] .zr-lane-name,
   .zr-lane[data-lane="Portfolio"] .zr-lane-name {
@@ -784,33 +725,6 @@
     background: var(--heat-4);
     box-shadow: 0 0 8px var(--heat-3);
   }
-  .zr-swatch--span {
-    inline-size: 18px;
-    border: 1px dotted var(--alloy-games);
-    border-block-start: 2px solid var(--alloy-games);
-    background: color-mix(in srgb, var(--alloy-games) 12%, transparent);
-  }
-  .zr-swatch--flag {
-    inline-size: 14px;
-    background: var(--alloy-film);
-    clip-path: polygon(0 0, 100% 0, 70% 50%, 100% 100%, 0 100%);
-  }
-  .zr-keys {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px;
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .zr-keys kbd {
-    color: var(--ink);
-  }
-  @media (pointer: coarse) {
-    .zr-keys {
-      display: none;
-    }
-  }
   @media (max-width: 1023px) {
     .zr {
       --gutter-w: 104px;
@@ -844,17 +758,6 @@
         background-color var(--d-cool) var(--ease-cool),
         color var(--d-cool) var(--ease-cool),
         border-color var(--d-cool) var(--ease-cool);
-    }
-    :root:not([data-motion="paused"]) .sb-repos[open] .sb-table {
-      animation: sb-unroll var(--d-route) var(--ease-cool);
-    }
-    @keyframes sb-unroll {
-      from {
-        clip-path: inset(0 0 100% 0);
-      }
-      to {
-        clip-path: inset(0);
-      }
     }
   }
 

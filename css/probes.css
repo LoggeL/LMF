@@ -760,10 +760,6 @@
     font-size: 1.125em;
     color: var(--ps-ink);
   }
-  .ps-hint-src {
-    display: block;
-    margin-block-start: var(--s1);
-  }
   .ps-warn {
     justify-self: center;
     max-inline-size: 58ch;

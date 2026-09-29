@@ -28,7 +28,7 @@
   },
   "commits": 296,
   "funFact": {
-    "text": "Die Daten sind handkuratiert: Es gibt eigene Audit-Skripte für Länderfakten und StadtPin, und laut Commits wurde BorderRun extra angepasst, um die Westsahara als eigenes Gebiet zu führen.",
+    "text": "Die Daten sind handkuratiert: Es gibt eigene Audit-Skripte für Länderfakten und StadtPin, und BorderRun wurde extra angepasst, um die Westsahara als eigenes Gebiet zu führen.",
     "source": 0
   },
   "note": "Das Repo ist privat. Die Spiele selbst sind öffentlich.",

@@ -4,7 +4,7 @@
  * formatted as calendar days without time-zone drift.
  *
  *   date("2026-09-28")            → "28.09.2026"
- *   date("2026-09-28", "dayMonth")→ "28.09."   · "month" → "09.2026" · "year" → "2026"
+ *   date("2026-09-28", "dayMonth")→ "28.09."   · "month" → "09.2026" · "year" → "2026" · "monthShort" → "Sept. 2026"
  *   dateLong("2026-09-28")        → "28. September 2026"
  *   weekday("2026-09-28")         → "Montag"
  *   number(1234.5, 1)             → "1.234,5"
@@ -17,6 +17,7 @@
  */
 
 const MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const MONTHS_SHORT = ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."];
 const WEEKDAYS = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 
 function parts(iso) {
@@ -28,6 +29,7 @@ export function date(iso, precision = "day") {
   const p = parts(iso);
   if (!p) return "";
   if (precision === "year" || !p.m) return p.y;
+  if (precision === "monthShort") return `${MONTHS_SHORT[+p.m - 1]} ${p.y}`;
   if (precision === "month" || !p.d) return `${p.m}.${p.y}`;
   if (precision === "dayMonth") return `${p.d}.${p.m}.`;
   return `${p.d}.${p.m}.${p.y}`;

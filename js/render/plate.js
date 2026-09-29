@@ -6,7 +6,7 @@
  * Everything goes through html`` (escaped); the Liste table is ./table.js (lazy, §8).
  */
 import { html, raw, icon } from "../lib/dom.js";
-import { alloyOf, glowOf, glowLabel, stockNumbers, stockLabel, ALLOY_SHORT, ART_STYLES, formatDate } from "../lib/derive.js";
+import { alloyOf, glowOf, glowLabel, stockNumbers, stockLabel, ALLOY_SHORT, ART_STYLES } from "../lib/derive.js";
 import { highlight } from "../lib/search.js";
 import { THUMBS } from "./thumbs.js";
 
@@ -67,9 +67,9 @@ export function plateStamps(p, ctx = {}) {
   const out = [];
   const glow = glowOf(p, ctx.asOf);
   const film = filmOf(ctx, p.id);
+  // Noch warm: the section title already says when; the badge says how hot
   if (ctx.variant === "rail") {
     if (glow) out.push({ text: glowLabel(glow), cls: "stamp--glow" });
-    if (p.repo?.pushedAt) out.push({ text: `zuletzt dran ${formatDate(p.repo.pushedAt)}`, cls: "stamp--date", iso: p.repo.pushedAt });
     return out;
   }
   const y = yearText(p);
@@ -77,8 +77,6 @@ export function plateStamps(p, ctx = {}) {
   if (film?.duration) out.push({ text: film.duration, cls: "stamp--duration", label: "Länge" });
   const lang = ctx.lang?.get?.(p.id);
   if (lang) out.push({ text: lang, cls: "stamp--lang" });
-  const stars = p.repo && !p.repo.private ? p.repo.stars : null;
-  if (Number.isFinite(stars) && stars > 0) out.push({ text: String(stars), cls: "stamp--stars", star: true });
   if (glow) out.push({ text: glowLabel(glow), cls: "stamp--glow" });
   return out;
 }
@@ -88,9 +86,7 @@ function stampRow(p, ctx, id = "") {
   if (!items.length) return "";
   return html`<ul class="stamps plate-stamps" role="list"${id ? raw(` id="${id}"`) : ""}>${items.map(
     (s) =>
-      html`<li class="${s.cls}">${s.cls === "stamp--glow" ? html`<span class="stamp-ember" aria-hidden="true"></span>` : ""}${s.star ? html`${icon("star", "i plate-star")}<span class="vh">Sterne: </span>` : ""}${
-        s.iso ? html`<time datetime="${s.iso}">${s.text}</time>` : s.text
-      }</li>`,
+      html`<li class="${s.cls}">${s.cls === "stamp--glow" ? html`<span class="stamp-ember" aria-hidden="true"></span>` : ""}${s.text}</li>`,
   )}</ul>`;
 }
 

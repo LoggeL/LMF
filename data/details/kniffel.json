@@ -8,7 +8,7 @@
     "Räume per Code oder Link (?room=CODE), 1 bis 6 Spieler, Zuschauer-Modus",
     "Vollständige Regeln: 13 Kategorien, 3 Würfe, Halten, Bonus ab 63 im oberen Block",
     "3D-Würfel mit Three.js/React Three Fiber und Rapier-Physik",
-    "Serverseitige Achievements (laut Commit 25+), Emoji-Reaktionsblasen statt Chat",
+    "Serverseitige Achievements (25+), Emoji-Reaktionsblasen statt Chat",
     "SQLite-Persistenz, Reconnect, Rematch, Sounds und Haptik"
   ],
   "stack": [
@@ -29,10 +29,6 @@
     "Dockerfile": 0.4
   },
   "commits": 43,
-  "funFact": {
-    "text": "Laut Commit-Historie ist der Tulpen-Hintergrund mit „Nano Banana 2“ generiert.",
-    "source": 0
-  },
   "refs": {
     "repo": 2,
     "live": 1

@@ -84,8 +84,6 @@
         <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></symbol>
         <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></symbol>
         <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.8a8.2 8.2 0 0 1 0 16.4z" fill="currentColor"/></symbol>
-        <symbol id="i-punze" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5v5.8c0 4.9-3.4 8.6-8 10.2-4.6-1.6-8-5.3-8-10.2V5.5z" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="14.6" text-anchor="middle" font-family="Arial, sans-serif" font-size="5.6" font-weight="800" letter-spacing=".2" fill="currentColor">LMF</text></symbol>
-        <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
         <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></symbol>
       </defs>
     </svg>
@@ -111,7 +109,7 @@
             <li><a href="#kontakt" data-nav="kontakt"><span class="nav-no" aria-hidden="true">07</span>Kontakt</a></li>
           </ul>
         </nav>
-        <p class="section-readout" aria-hidden="true"><span class="section-readout-mark">§</span> <span data-readout>00 Anheizen</span></p>
+        <p class="section-readout" aria-hidden="true"><span class="section-readout-mark"></span><span data-readout>00 Anheizen</span></p>
         <div class="header-controls">
           <button id="motion-toggle" class="icon-button" type="button" aria-pressed="false" aria-label="Bewegung pausieren" title="Bewegung pausieren">
             <svg class="i i-when-running" aria-hidden="true"><use href="#i-pause" /></svg>
@@ -160,8 +158,8 @@
             </div>
             <div class="esse-axis" aria-hidden="true"></div>
             <figcaption class="esse-caption meta">
-              <span class="esse-caption-line">Die Glut: <span data-bind="repos.total">140</span> öffentliche Repos von mir, links alt, rechts neu.</span>
-              <span class="esse-caption-line">Je heller, desto kürzer ist es her, dass ich dran war. Stand <span data-bind="snapshot.asOf">28.09.2026</span>.</span>
+              <span class="esse-caption-line">Die Glut: jedes Repo ein Funke, links alt, rechts neu.</span>
+              <span class="esse-caption-line">Je heller, desto kürzer ist es her. Stand <span data-bind="snapshot.asOfMonth">September 2026</span>.</span>
             </figcaption>
             <p id="strike-hint" class="esse-hint meta">
               <span class="esse-hint-pointer">Maus drüber: Funken. Klicken: Schlag.</span>
@@ -186,7 +184,7 @@
           </header>
         </div>
         <div class="warm-rail" role="region" aria-label="Zuletzt bearbeitet" tabindex="0" data-mount="warm-rail">
-          <ol class="warm-list" role="list" data-mount="warm-plates"><!-- prerender:warm-static --><li class="warm-static"><a href="#werk/bulli-drive">Bulli Drive</a><span class="meta">Multiplayer-Rennspiel · zuletzt dran <time datetime="2026-09-28">28.09.2026</time></span></li><li class="warm-static"><a href="#werk/learn-ai">Learn AI</a><span class="meta">KI &amp; Lernen · zuletzt dran <time datetime="2026-09-26">26.09.2026</time></span></li><li class="warm-static"><a href="#werk/voxel-blitz">Voxel Blitz</a><span class="meta">Multiplayer-Shooter · zuletzt dran <time datetime="2026-09-24">24.09.2026</time></span></li><!-- /prerender:warm-static --></ol>
+          <ol class="warm-list" role="list" data-mount="warm-plates"><!-- prerender:warm-static --><li class="warm-static"><a href="#werk/bulli-drive">Bulli Drive</a><span class="meta">Multiplayer-Rennspiel</span></li><li class="warm-static"><a href="#werk/learn-ai">Learn AI</a><span class="meta">KI &amp; Lernen</span></li><li class="warm-static"><a href="#werk/voxel-blitz">Voxel Blitz</a><span class="meta">Multiplayer-Shooter</span></li><!-- /prerender:warm-static --></ol>
           <a class="warm-end" href="#lager" data-heat><span>Alles im Lager</span> <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
         </div>
       </section>
@@ -206,7 +204,7 @@
             <header class="chapter-head">
               <p class="chapter-kicker meta"><span class="chapter-no" aria-hidden="true">I</span>Kapitel I · Web · Strohgelb</p>
               <h3 id="kapitel-i-title" class="chapter-title">Ein Theater, ganz viele <em>Tabs.</em></h3>
-              <p class="chapter-dek lead">Für das Kolpingtheater Ramsen baue ich seit 2020 Websites, Werkzeuge und inzwischen auch ein Spiel. 2026 stand ich sogar mit auf der Bühne.</p>
+              <p class="chapter-dek lead">Für das Kolpingtheater Ramsen baue ich seit 2020 Websites, Werkzeuge und inzwischen auch ein Spiel.</p>
             </header>
             <div class="chapter-body">
               <div class="chapter-main">
@@ -214,30 +212,22 @@
                   <img src="assets/img/thumbs/KolpingtheaterSaalplan-640.webp" srcset="assets/img/thumbs/KolpingtheaterSaalplan-640.webp 640w, assets/img/thumbs/KolpingtheaterSaalplan-960.webp 960w" sizes="(min-width: 1024px) min(54vw, 820px), calc(100vw - 32px)" alt="Saalplan der Buchung: sieben Reihen A bis G vor der Bühne, freie Plätze als Kästchen" width="1440" height="900" loading="lazy" decoding="async" />
                   <p class="chip chip--note">Probestück braucht JavaScript</p>
                 </div>
-                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Nachbau: der Saalplan von „Romeo und Julia“ mit denselben <span data-bind="theater.seats">68</span> Plätzen wie in der echten Buchung. Gebucht wird hier nichts, und der QR-Code auf dem Ticket ist nur Deko.</span></p>
+                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Dieselben <span data-bind="theater.seats">68</span> Plätze wie im echten Saal. Gebucht wird hier nichts.</span></p>
               </div>
               <div class="chapter-side">
                 <div class="chapter-story" data-mount="story">
-                  <p>Die aktuelle Website kann mehr als Programm und Fotos: Man bucht dort Plätze direkt im Saalplan, bekommt ein QR-Ticket, einen Kalendereintrag und inzwischen auch ein Ticket für Google Wallet. <span data-bind="theater.commitsLogge">249</span> der <span data-bind="theater.commitsTotal">314</span> Commits im Repo sind von mir.</p>
+                  <p>Die aktuelle Website kann mehr als Programm und Fotos: Man bucht dort Plätze direkt im Saalplan, bekommt ein QR-Ticket, einen Kalendereintrag und inzwischen auch ein Ticket für Google Wallet.</p>
                   <p>Den Saalplan hier habe ich für diese Seite nachgebaut: dieselben Reihen, derselbe Gang in der Mitte, dieselbe Warnung, wenn zwischen zwei Buchungen ein einzelner Platz frei bliebe.</p>
                   <p>Drumherum ist ein ganzes Universum entstanden: ein Drehbuch-System für die Proben, eine Videozuspielung für das Stück „Nexus“, eine Flutter-App mit Terminen und Rollen. Und „Rampenlicht“, ein Online-Kartenspiel mit den Theatermitgliedern als Karten. Angefangen hat es 2020 mit einer Theaterseite in meinem ersten Portfolio.</p>
                   <button class="story-more" type="button" aria-expanded="false">Weiterlesen</button>
                 </div>
-                <figure class="chapter-stage-line">
-                  <p class="chapter-stage-text">„Auf der Bühne: Bote / Diener. Hinter der Bühne: Website.“</p>
-                  <figcaption class="meta">Teamseite kolpingtheater-ramsen.de, Creepshow 2026</figcaption>
-                </figure>
-                <aside class="chapter-facts" aria-label="Werkstattdaten Kolpingtheater Ramsen">
-                  <details class="specsheet" data-mount="specsheet">
-                    <summary class="specsheet-head"><h4 class="specsheet-title meta">Werkstattdaten</h4><span class="specsheet-asof meta"> · Stand <span data-bind="snapshot.asOf">28.09.2026</span></span></summary>
-                    <dl class="spec-list">
-                      <div><dt>Begonnen</dt><dd data-project-year="theater-website">2025</dd></div>
-                      <div><dt>Repo</dt><dd>Kolpingtheater-Ramsen/next-theater</dd></div>
-                      <div><dt>Commits</dt><dd><span data-bind="theater.commitsTotal">314</span> (<span data-bind="theater.commitsLogge">249</span> von mir)</dd></div>
-                      <div><dt>Live</dt><dd>kolpingtheater-ramsen.de</dd></div>
-                    </dl>
-                  </details>
-                  <div class="punze-slot" data-mount="punze"></div>
+                <p class="chapter-stage-line"><span class="chapter-stage-kicker meta">„Creepshow“ · 2026</span> <span class="chapter-stage-text">Auf der Bühne: Bote / Diener. Hinter der Bühne: Website.</span></p>
+                <aside class="chapter-facts" aria-label="Eckdaten Kolpingtheater Ramsen">
+                  <dl class="fact-strip" data-mount="facts">
+                    <div class="fact"><dt>Aktuelle Seite</dt><dd class="fact-value" data-project-year="theater-website">2025</dd></div>
+                    <div class="fact"><dt>Plätze</dt><dd class="fact-value"><span data-bind="theater.seats">68</span></dd><dd class="fact-sub">pro Vorstellung</dd></div>
+                    <div class="fact fact--stack"><dt>Stack</dt><dd class="fact-stack"><span class="fact-stack-list"><span>Next.js 15</span> <span>TypeScript</span> <span>React</span></span></dd></div>
+                  </dl>
                   <p class="chapter-aside">Das Theater ist für den Deutschen Engagementpreis 2026 nominiert. Die Website, auf der das steht, ist von mir.</p>
                   <p class="chapter-ctas">
                     <a class="button" href="#werk/theater-website" data-project-id="theater-website" data-heat>Werkstück öffnen <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
@@ -262,28 +252,24 @@
                   <img src="assets/img/thumbs/Bomberman-640.webp" srcset="assets/img/thumbs/Bomberman-640.webp 640w, assets/img/thumbs/Bomberman-960.webp 960w" sizes="(min-width: 1024px) min(54vw, 820px), calc(100vw - 32px)" alt="Bomberman-Motiv: Bomben-Roboter in einer Neon-Arena, daneben eine Explosion in Kreuzform" width="1600" height="900" loading="lazy" decoding="async" />
                   <p class="chip chip--note">Probestück braucht JavaScript</p>
                 </div>
-                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Nachbau: ein vereinfachtes Feld für diese Seite. Die Regel stimmt: Trifft eine Explosion eine Bombe, geht die im selben Tick hoch.</span></p>
+                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Kleineres Feld, echte Regel: Kettenreaktionen im selben Tick.</span></p>
               </div>
               <div class="chapter-side">
                 <div class="chapter-story" data-mount="story">
-                  <p>Bomberman, aber so gebaut, dass lokal und online exakt dieselbe Spiel-Engine läuft: eine deterministische Simulation mit 60 Ticks pro Sekunde, die im Browser für den Couch-Modus und auf einem Node-Server für Online-Runden rechnet. Kein Game-Framework, nur Vanilla JS und ein Canvas. Auf GitHub Pages läuft der lokale Modus; für Raumcode-Matches braucht es einen eigenen Node-Host.</p>
+                  <p>Bomberman, aber so gebaut, dass lokal und online exakt dieselbe Spiel-Engine läuft: eine deterministische Simulation mit 60 Ticks pro Sekunde, die im Browser für den Couch-Modus und auf einem Node-Server für Online-Runden rechnet. Kein Game-Framework, nur Vanilla JS und ein Canvas.</p>
                   <ul class="rivets" role="list" data-mount="highlights">
-                    <li>Eine gemeinsame, deterministische Engine (shared/engine.js) für lokalen und Online-Modus, Map-Generierung per Seed</li>
+                    <li>Eine gemeinsame, deterministische Engine für lokalen und Online-Modus, Map-Generierung per Seed</li>
                     <li>Sechs 15×13-Arenen: Neon Reactor, Magma Foundry, Cryo Circuit, Switchyard Reactor, Astral Garden, Tidal Works</li>
                     <li>Kettenreaktionen im selben Tick; ausgeschiedene Spieler fliegen als Geister weiter und legen Betäubungsbomben</li>
                   </ul>
                   <button class="story-more" type="button" aria-expanded="false">Weiterlesen</button>
                 </div>
-                <aside class="chapter-facts" aria-label="Werkstattdaten Bomberman">
-                  <details class="specsheet" data-mount="specsheet">
-                    <summary class="specsheet-head"><h4 class="specsheet-title meta">Werkstattdaten</h4><span class="specsheet-asof meta"> · Stand <span data-bind="snapshot.asOf">28.09.2026</span></span></summary>
-                    <dl class="spec-list">
-                      <div><dt>Begonnen</dt><dd data-project-year="bomberman-web">2026</dd></div>
-                      <div><dt>Repo</dt><dd>LoggeL/bomberman-web</dd></div>
-                      <div><dt>Live</dt><dd>loggel.github.io/bomberman-web</dd></div>
-                    </dl>
-                  </details>
-                  <div class="punze-slot" data-mount="punze"></div>
+                <aside class="chapter-facts" aria-label="Eckdaten Bomberman">
+                  <dl class="fact-strip" data-mount="facts">
+                    <div class="fact"><dt>Seit</dt><dd class="fact-value" data-project-year="bomberman-web">2026</dd></div>
+                    <div class="fact"><dt>Arenen</dt><dd class="fact-value">6</dd><dd class="fact-sub">je 15×13 Felder</dd></div>
+                    <div class="fact fact--stack"><dt>Stack</dt><dd class="fact-stack"><span class="fact-stack-list"><span>JavaScript</span> <span>Canvas</span> <span>Node.js</span></span></dd></div>
+                  </dl>
                   <p class="chapter-ctas">
                     <a class="button" href="#werk/bomberman-web" data-project-id="bomberman-web" data-heat>Werkstück öffnen <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
                     <a class="button button--ghost" href="https://loggel.github.io/bomberman-web/" target="_blank" rel="noopener noreferrer" data-heat>Lokal spielen <svg class="i" aria-hidden="true"><use href="#i-arrow-ne" /></svg><span class="vh"> (öffnet neue Seite)</span></a>
@@ -299,8 +285,8 @@
           <div class="shell">
             <header class="dreiwelten-head">
               <p class="eyebrow">Zwischenstück · Webdesign</p>
-              <h3 id="dreiwelten-title" class="chapter-title"><span data-bind="sharex.seconds">81</span> Sekunden, drei <em>Welten.</em></h3>
-              <p class="lead">Drei Ideen, wie die ShareX-Website aussehen könnte: ein Reaktor in Three.js, ein Windows-98-Desktop, der wirklich funktioniert, und ein bio-digitales Labor. Alle drei Repos habe ich am <span data-bind="sharex.date">15.07.2026</span> innerhalb von <span data-bind="sharex.seconds">81</span> Sekunden angelegt.</p>
+              <h3 id="dreiwelten-title" class="chapter-title">Ein Abend, drei <em>Welten.</em></h3>
+              <p class="lead">Drei eigene Ideen, wie die ShareX-Website aussehen könnte: ein Reaktor in Three.js, ein Windows-98-Desktop, der wirklich funktioniert, und ein bio-digitales Labor. Alle drei an einem Abend angefangen.</p>
             </header>
             <ol class="dreiwelten-list" role="list">
               <li>
@@ -308,7 +294,6 @@
                   <img src="assets/img/thumbs/ShareXCaptureEngine-640.webp" srcset="assets/img/thumbs/ShareXCaptureEngine-640.webp 640w, assets/img/thumbs/ShareXCaptureEngine-960.webp 960w" sizes="(min-width: 760px) 30vw, calc(100vw - 52px)" alt="Startseite des ShareX-Konzepts Capture Engine mit 3D-Reaktor" width="1440" height="900" loading="lazy" decoding="async" />
                   <span class="dreiwelten-no meta" aria-hidden="true">Welt 1</span>
                   <span class="dreiwelten-name">Capture Engine</span>
-                  <span class="dreiwelten-stamp meta" data-mount="stamp"></span>
                 </a>
               </li>
               <li>
@@ -316,7 +301,6 @@
                   <img src="assets/img/thumbs/ShareXWin98-640.webp" srcset="assets/img/thumbs/ShareXWin98-640.webp 640w, assets/img/thumbs/ShareXWin98-960.webp 960w" sizes="(min-width: 760px) 30vw, calc(100vw - 52px)" alt="ShareX-98-Konzept: Windows-98-Desktop mit geöffnetem Capture Center" width="1440" height="900" loading="lazy" decoding="async" />
                   <span class="dreiwelten-no meta" aria-hidden="true">Welt 2</span>
                   <span class="dreiwelten-name">Windows 98</span>
-                  <span class="dreiwelten-stamp meta" data-mount="stamp"></span>
                 </a>
               </li>
               <li>
@@ -324,12 +308,9 @@
                   <img src="assets/img/thumbs/ShareXAfterimage-640.webp" srcset="assets/img/thumbs/ShareXAfterimage-640.webp 640w, assets/img/thumbs/ShareXAfterimage-960.webp 960w" sizes="(min-width: 760px) 30vw, calc(100vw - 52px)" alt="ShareX-Konzept Afterimage Lab, Startseite" width="1440" height="900" loading="lazy" decoding="async" />
                   <span class="dreiwelten-no meta" aria-hidden="true">Welt 3</span>
                   <span class="dreiwelten-name">Afterimage</span>
-                  <span class="dreiwelten-stamp meta" data-mount="stamp"></span>
                 </a>
               </li>
             </ol>
-            <div class="dreiwelten-ruler" data-mount="ruler" aria-hidden="true"></div>
-            <p class="dreiwelten-note meta">Unabhängige Designkonzepte. Kein offizieller ShareX-Auftritt.</p>
           </div>
         </section>
 
@@ -347,7 +328,7 @@
                   <img src="assets/img/thumbs/MelodAI-player-640.webp" srcset="assets/img/thumbs/MelodAI-player-640.webp 640w, assets/img/thumbs/MelodAI-player-960.webp 960w" sizes="(min-width: 1024px) min(54vw, 820px), calc(100vw - 32px)" alt="MelodAI-Player: Songauswahl mit Bibliothek und getrennten Reglern für Gesang und Instrumental" width="1200" height="750" loading="lazy" decoding="async" />
                   <p class="chip chip--note">Probestück braucht JavaScript</p>
                 </div>
-                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Nachbau: Statt eines echten Songs singt hier diese Website, mit selbst erzeugten Tönen. Wie im Original laufen Gesang und Instrumental über zwei getrennte Regler.</span></p>
+                <p class="probe-chip-row"><span class="chip chip--probe">Nachbau</span> <span class="probe-chip-text">Hier singt die Website selbst. Zwei Regler, wie im Original.</span></p>
                 <ol class="pipeline" aria-label="Die Pipeline von MelodAI">
                   <li><span class="pipeline-no">01</span> Suche</li>
                   <li><span class="pipeline-no">02</span> Download</li>
@@ -358,34 +339,27 @@
                 </ol>
               </div>
               <div class="chapter-side">
-                <p class="chapter-fact chapter-fact--stars meta" data-show-if="stars.isMelodai" hidden>
-                  <svg class="i" aria-hidden="true"><use href="#i-star" /></svg>
-                  <span data-bind="stars.max">7</span> · das Repo aus diesem Portfolio mit den meisten Sternen · Stand <span data-bind="snapshot.asOf">28.09.2026</span>
-                </p>
                 <div class="chapter-story" data-mount="story">
-                  <p>MelodAI macht aus fast jedem Song Karaoke: Song suchen, dann trennt die Pipeline Gesang und Instrumental, erzeugt Lyrics mit Wort-Zeitstempeln und formt sie per LLM zu singbaren Zeilen. Im Player wird Wort für Wort hervorgehoben, und Gesang und Instrumental lassen sich getrennt regeln. Das Projekt ist Open Source mit CI, CodeQL und Integrationstests.</p>
+                  <p>Song suchen, dann trennt die Pipeline Gesang und Instrumental, erzeugt Lyrics mit Wort-Zeitstempeln und formt sie per LLM zu singbaren Zeilen. Im Player wird Wort für Wort hervorgehoben, und Gesang und Instrumental lassen sich getrennt regeln. Open Source.</p>
                   <button class="story-more" type="button" aria-expanded="false">Weiterlesen</button>
                 </div>
-                <aside class="chapter-facts" aria-label="Werkstattdaten MelodAI">
-                  <details class="specsheet" data-mount="specsheet">
-                    <summary class="specsheet-head"><h4 class="specsheet-title meta">Werkstattdaten</h4><span class="specsheet-asof meta"> · Stand <span data-bind="snapshot.asOf">28.09.2026</span></span></summary>
-                    <dl class="spec-list">
-                      <div><dt>Begonnen</dt><dd data-project-year="melodai">2024</dd></div>
-                      <div><dt>Repo</dt><dd>LoggeL/MelodAI</dd></div>
-                      <div><dt>Live</dt><dd>melodai.logge.top</dd></div>
-                    </dl>
-                  </details>
-                  <div class="punze-slot" data-mount="punze"></div>
+                <aside class="chapter-facts" aria-label="Eckdaten MelodAI">
+                  <dl class="fact-strip" data-mount="facts">
+                    <div class="fact"><dt>Seit</dt><dd class="fact-value" data-project-year="melodai">2024</dd></div>
+                    <div class="fact fact--stack"><dt>Stack</dt><dd class="fact-stack"><span class="fact-stack-list"><span>Python</span> <span>React</span> <span>TypeScript</span></span></dd></div>
+                  </dl>
                   <p class="chapter-ctas">
                     <a class="button" href="#werk/melodai" data-project-id="melodai" data-heat>Werkstück öffnen <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
                     <a class="button button--ghost" href="https://melodai.logge.top/about" target="_blank" rel="noopener noreferrer" data-heat>So funktioniert’s <svg class="i" aria-hidden="true"><use href="#i-arrow-ne" /></svg><span class="vh"> (öffnet neue Seite)</span></a>
                   </p>
-                  <p class="chapter-more">
-                    <span class="meta">Mehr mit KI:</span>
-                    <a href="#werk/learn-ai" data-project-id="learn-ai">Learn AI</a> ·
-                    <a href="#werk/transcripator" data-project-id="transcripator">Transcripator</a> ·
-                    <a href="#werk/codex-quota-widget" data-project-id="codex-quota-widget">Codex Quota Widget <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
-                  </p>
+                  <div class="chapter-more">
+                    <p class="meta" id="kapitel-iii-more">Mehr mit KI:</p>
+                    <ul class="chapter-more-list" role="list" aria-labelledby="kapitel-iii-more">
+                      <li><a href="#werk/learn-ai" data-project-id="learn-ai">Learn AI</a></li>
+                      <li><a href="#werk/transcripator" data-project-id="transcripator">Transcripator</a></li>
+                      <li><a href="#werk/codex-quota-widget" data-project-id="codex-quota-widget">Codex Quota Widget&nbsp;<svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></li>
+                    </ul>
+                  </div>
                 </aside>
               </div>
             </div>
@@ -398,7 +372,7 @@
             <header class="chapter-head">
               <p class="chapter-kicker meta"><span class="chapter-no" aria-hidden="true">IV</span>Kapitel IV · Film · Rotglut</p>
               <h3 id="kapitel-iv-title" class="chapter-title">Ski, Schnitt, <em>Wiederholung.</em></h3>
-              <p class="chapter-dek lead"><span data-bind="films.ski">7</span> Ski-Aftermovies seit <span data-bind="films.skiFirstYear">2019</span>. <span data-show-if="films.skiAllOnJp">Alle </span><span data-bind="films.skiOnJp">7</span> <span data-show-if="films.skiSomeOnJp" hidden>davon </span>laufen auch auf jupeters.de, bei den Filmen der Gruppe.</p>
+              <p class="chapter-dek lead"><span data-bind="films.ski">7</span> Ski-Aftermovies seit <span data-bind="films.skiFirstYear">2019</span>.</p>
             </header>
             <div class="projector" data-mount="projector">
               <figure class="projector-gate">
@@ -415,7 +389,6 @@
                 <a href="#werk/bodensee-2020" data-project-id="bodensee-2020">Bodensee&nbsp;2020</a>
                 <a class="film-more-all" href="?g=film#lager" data-filter-link="film">Alle Filme im Lager <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
               </p>
-              <p class="film-selantis">Bei „Die Chroniken von Selantis“ habe ich die VFX gemacht und im dritten Teil meine erste Hauptrolle gespielt: Harras.</p>
             </div>
           </div>
         </article>
@@ -470,7 +443,7 @@
             <p class="meta lager-motto">Eine Sammlung, kein Schlussstrich.</p>
             <details class="legend">
               <summary>Warum diese Farben?</summary>
-              <p>Wenn Stahl angelassen wird, läuft er in Farben an: erst strohgelb, dann purpur, dann blau. Glühender Stahl leuchtet kirschrot. Die Farben hier folgen dem: Web ist <span class="legend-swatch" data-alloy="web">Strohgelb</span>, Games <span class="legend-swatch" data-alloy="games">Purpur</span>, KI <span class="legend-swatch" data-alloy="ai">Blau</span>, Film <span class="legend-swatch" data-alloy="film">Rotglut</span>. Wie stark ein Werkstück glüht, zeigt, wie kürzlich ich daran gearbeitet habe: <strong>glüht</strong> heißt in den letzten 30 Tagen, <strong>warm</strong> in den letzten 180 Tagen, <strong>abgekühlt</strong> länger her. <strong>Fertig</strong> sind abgeschlossene Filme, <strong>ausgemustert</strong> ist Archiv. Gemessen am letzten Push ins Repo, Stand <span data-bind="snapshot.asOf">28.09.2026</span>.</p>
+              <p>Wenn Stahl angelassen wird, läuft er in Farben an: erst strohgelb, dann purpur, dann blau. Glühender Stahl leuchtet kirschrot. Die Farben hier folgen dem: Web ist <span class="legend-swatch" data-alloy="web">Strohgelb</span>, Games <span class="legend-swatch" data-alloy="games">Purpur</span>, KI <span class="legend-swatch" data-alloy="ai">Blau</span>, Film <span class="legend-swatch" data-alloy="film">Rotglut</span>. Wie stark ein Werkstück glüht, zeigt, wie kürzlich ich daran gearbeitet habe: <strong>glüht</strong> heißt in den letzten 30 Tagen, <strong>warm</strong> in den letzten 180 Tagen, <strong>abgekühlt</strong> länger her. <strong>Fertig</strong> sind abgeschlossene Filme, <strong>ausgemustert</strong> ist Archiv. Gemessen am letzten Push ins Repo.</p>
               <p><span aria-hidden="true">Nº</span><span class="vh">Nummer</span> = Reihenfolge nach Jahr, ältestes zuerst.</p>
             </details>
           </div>
@@ -491,7 +464,7 @@
             <button id="load-more" class="button button--ghost" type="button" data-heat hidden>Mehr entdecken <svg class="i" aria-hidden="true"><use href="#i-arrow-down" /></svg></button>
           </div>
 
-          <!-- prerender:lager --><ol id="lager-static" class="lager-static" aria-label="Alle Projekte"><li id="werk/bomberman-web"><a href="https://loggel.github.io/bomberman-web/">Bomberman</a><span class="ls"> · </span>Multiplayer · 2026 — Bomben, Bots und Kettenreaktionen. Lokal und online läuft dieselbe Engine.</li><li id="werk/melodai"><a href="https://melodai.logge.top/about">MelodAI</a><span class="ls"> · </span>KI &amp; Musik · 2024 — Eine Karaoke-App mit KI-Stimmtrennung, zeitlich abgestimmten Lyrics und synchroner Wiedergabe. Gesang und Instrumental lassen sich getrennt regeln.</li><li id="werk/theater-website"><a href="https://kolpingtheater-ramsen.de">Kolpingtheater Ramsen</a><span class="ls"> · </span>Website &amp; Tickets · 2025 — Website und Ticketsystem für das Kolpingtheater Ramsen. Programm, Informationen und Karten an einem Ort.</li><li id="werk/learn-ai"><a href="https://learn.logge.top">Learn AI</a><span class="ls"> · </span>KI &amp; Lernen · 2026 — KI-Konzepte zum Ausprobieren: Sprachmodelle, Tokenisierung, Attention und Prompting anhand interaktiver Visualisierungen verstehen.</li><li id="werk/skiing-2026"><a href="https://youtu.be/ZjB-0SG0icU">Portes du Soleil</a><span class="ls"> · </span>Aftermovie · 2026 — Der Aftermovie unseres Skiurlaubs 2026 in Portes du Soleil, diesmal im Hochformat geschnitten.</li><li id="werk/kniffel"><a href="https://kniffel.logge.top">Kniffel Multiplayer</a><span class="ls"> · </span>Multiplayer · 2026 — Kniffel für ein bis sechs Personen, mit gemeinsamen Spielrunden, Reaktionen und Live-Rangliste.</li><li id="werk/sharex-capture-engine"><a href="https://loggel.github.io/sharex-capture-engine/">ShareX · Capture Engine</a><span class="ls"> · </span>Webdesign · 2026 — Ein unabhängiges Designkonzept für die ShareX-Website. Eine interaktive Inszenierung mit Three.js, Animationen und Fokus auf den Aufnahmeprozess. Kein offizieller ShareX-Auftritt.</li><li id="werk/sharex-win98"><a href="https://loggel.github.io/sharex-win98/">ShareX · Windows 98</a><span class="ls"> · </span>Webdesign · 2026 — Ein unabhängiges ShareX-Website-Konzept als interaktiver Windows-98-Desktop. Fenster, Bedienelemente und die Optik eines anderen Computerzeitalters.</li><li id="werk/sharex-afterimage"><a href="https://loggel.github.io/sharex-afterimage-lab/">ShareX · Afterimage</a><span class="ls"> · </span>Webdesign · 2026 — Ein unabhängiges ShareX-Website-Konzept mit KI-generiertem Bildmaterial und einem experimentellen Editorial-Layout.</li><li id="werk/geo-game"><a href="https://geo.logge.top">GeoGames</a><span class="ls"> · </span>Geografie &amp; Games · 2026 — Tägliche Geografie-Minispiele: Länder erkennen, Flaggen zuordnen und Orte auf der Karte finden.</li><li id="werk/jet-loop-reactor"><a href="https://loggel.github.io/jet-loop-reactor/">Strahlschlaufenreaktor</a><span class="ls"> · </span>Simulation · Verfahrenstechnik · 2026 — Chemieingenieurwesen zum Anfassen. Mit Blasen.</li><li id="werk/spotify-viz"><a href="https://loggel.github.io/spotify-viz/logge/">Spotify Listening Report</a><span class="ls"> · </span>Datenvisualisierung · 2026 — Meine Spotify-Hörhistorie als interaktiver Bericht: Lieblingskünstler, Hörgewohnheiten und übersprungene Songs, direkt aus dem Datenexport.</li><li id="werk/beatguessr"><a href="https://loggel.github.io/BeatGuessr/">BeatGuessr</a><span class="ls"> · </span>Musik &amp; Games · 2025 — Songs am Ausschnitt erkennen oder zeitlich einordnen. Ein Musikratespiel mit Classic- und Timeline-Modus.</li><li id="werk/coop-sudoku"><a href="https://sudoku.logge.top">Coop Sudoku</a><span class="ls"> · </span>Multiplayer · 2025 — Sudoku gemeinsam lösen oder gegeneinander spielen. Mit synchronisiertem Spielfeld und Punkten für gelöste Zellen.</li><li id="werk/arcanum"><a href="https://loggel.github.io/arcanum/">Arcanum</a><span class="ls"> · </span>3D-Escape-Room · 2026 — Entkomme dem Turm des Erzmagiers. Ein Kammerspiel in einem Zug.</li><li id="werk/voxel-blitz"><a href="https://github.com/LoggeL/voxel-blitz">Voxel Blitz</a><span class="ls"> · </span>Multiplayer-Shooter · 2026 — Schnelle Runden, zerstörbare Arenen, direkt im Browser.</li><li id="werk/bulli-drive"><a href="https://github.com/LoggeL/Bulli-Drive">Bulli Drive</a><span class="ls"> · </span>Multiplayer-Rennspiel · 2025 — Ein Bulli, eine Küstenstadt, 19 Kilometer Straße.</li><li id="werk/oilbert"><a href="https://loggel.github.io/OilbertsAdventure/">Oilbert’s Adventure</a><span class="ls"> · </span>Browsergame · 2025 — Ein Endless-Runner mit einem rot-weißen VW-Bus in der Hauptrolle, gebaut mit JavaScript, HTML und CSS.</li><li id="werk/transcripator"><a href="https://transcripator.logge.top">Transcripator</a><span class="ls"> · </span>KI &amp; Audio · 2024 — Audio rein, Text raus, Zusammenfassung obendrauf. Angefangen als Telegram-Bot, heute auch als Web-App zum Hochladen oder direkt Aufnehmen.</li><li id="werk/codex-quota-widget"><a href="https://github.com/LoggeL/codex-quota-widget">Codex Quota Widget</a><span class="ls"> · </span>Android &amp; Tool · 2026 — Ein Android-Homescreen-Widget für Codex-Nutzungslimits. Zeigt Verbrauch und Reset-Zeiten an, mit manueller Aktualisierung und zwischengespeicherten Werten bei Verbindungsproblemen.</li><li id="werk/loggerythm"><a href="https://github.com/LoggeL/LoggeRythm">LoggeRythm</a><span class="ls"> · </span>Musik &amp; App · 2026 — Ein persönliches Musik-App-Experiment mit Playlists, einer gemeinsamen Warteschlange, synchronen Lyrics und Android-App. Ein privates Demo-Projekt, kein öffentlicher Streamingdienst.</li><li id="werk/setlist"><a href="https://bands.logge.top">Bands</a><span class="ls"> · </span>Musik &amp; Web · 2026 — Mein Musiktagebuch: Bands, die ich noch live sehen will, Bands, die ich schon gesehen habe, dazu Vorschauen und ein Song-Tagebuch. Hieß mal Sonic Noir, dann Setlist, jetzt Bands.</li><li id="werk/marathon-trainer"><a href="https://marathon.logge.top">Marathon Trainer</a><span class="ls"> · </span>Sport &amp; App · 2026 — Mein Trainings-Cockpit mit Countdown, 14-Wochen-Plan und Workout-Log. Workouts speichere ich mit Strava-Link, ausgewertet werden sie von einem externen KI-Agenten.</li><li id="werk/powerpoint-karaoke"><a href="https://loggel.github.io/PowerPointKaraoke/">PowerPoint Karaoke</a><span class="ls"> · </span>Partyspiel · 2025 — Absurde Decks. Vortragen musst du trotzdem selbst.</li><li id="werk/poolparty-website"><a href="https://poolparty.jupeters.de">JP Poolparty</a><span class="ls"> · </span>Website &amp; Events · 2019 — Anmeldung, Mitbringliste, Helfer und Musikwünsche für die JP Poolparty. Gemeinsam mit realjupeters gebaut. Dahinter läuft mein Backend jpCore.</li><li id="werk/infected"><a href="https://youtu.be/6iNdfsbZWHs">Infected</a><span class="ls"> · </span>Kurzfilm · 2023 — Ein in 48 Stunden gedrehter Action-Kurzfilm mit anschließender Postproduktion, praktischen Effekten und Kampfszenen.</li><li id="werk/exception"><a href="https://youtu.be/uhlAo1chnlM">Exception</a><span class="ls"> · </span>Kurzfilm · 2022 — Ein Kurzfilm aus einem 48-Stunden-Film-Hackathon. Eine Geschichte entwickeln, drehen und mit den vorhandenen Mitteln umsetzen.</li><li id="werk/selantis"><a href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw">Die Chroniken von Selantis</a><span class="ls"> · </span>Fantasy &amp; VFX · 2015–2020 — Eine Fantasy-Trilogie, an der ich als VFX-Artist und Schauspieler mitgewirkt habe.</li><li id="werk/skiing-2024-epic"><a href="https://www.youtube.com/watch?v=rZaMHwuKFcw">Ski 2024 · Epic Cut</a><span class="ls"> · </span>Aftermovie · 2024 — Unser Skiurlaub in Flachau als Aftermovie mit Drohnenaufnahmen.</li><li id="werk/skiing-2024-fun"><a href="https://www.youtube.com/watch?v=dJX9U7F-FIM">Ski 2024 · Fun Cut</a><span class="ls"> · </span>Aftermovie · 2024 — Die verspielte Version unseres Skiurlaubs 2024, geschnitten auf KI-generierte Musik.</li><li id="werk/skiing-2023"><a href="https://www.youtube.com/watch?v=CLalueWRmLI">Ski 2023</a><span class="ls"> · </span>Aftermovie · 2023 — Der Ski-Aftermovie 2023. Auf YouTube mit Grüßen an den FI-Toaster und die unsichtbaren Backbleche.</li><li id="werk/skiing-2022"><a href="https://www.youtube.com/watch?v=GVPzXOix2sk">Ski 2022 · Zillertal</a><span class="ls"> · </span>Aftermovie · 2022 — Erinnerungen an unseren Skiurlaub in den österreichischen Alpen im Zillertal.</li><li id="werk/sailing-2022"><a href="https://www.youtube.com/watch?v=MbZPufQscBw">Segeln 2022</a><span class="ls"> · </span>Aftermovie · 2022 — Unterwegs auf dem IJsselmeer. Ein Film über unsere Segelreise in den Niederlanden.</li><li id="werk/poolparty-2021"><a href="https://www.youtube.com/watch?v=ZCvVEFKuC_o">Poolparty 2021</a><span class="ls"> · </span>Aftermovie · 2021 — Der offizielle Aftermovie der JP Poolparty 2021, mit Whirlpool und Cocktailbar.</li><li id="werk/skiing-2020"><a href="https://www.youtube.com/watch?v=KYahVktrq_I">Ski 2020 · Bad Gastein</a><span class="ls"> · </span>Aftermovie · 2020 — Unser Winterurlaub in Bad Gastein, festgehalten mit Zeitlupen und Drohnenaufnahmen.</li><li id="werk/bodensee-2020"><a href="https://www.youtube.com/watch?v=8p3xwe7amDE">Bodensee 2020</a><span class="ls"> · </span>Aftermovie · 2020 — Wassersport und Ausflüge am Bodensee, aufgenommen über und unter Wasser.</li><li id="werk/poolparty-2020"><a href="https://www.youtube.com/watch?v=6Qai_0gckB4">Poolparty 2020</a><span class="ls"> · </span>Aftermovie · 2020 — Ein Sommer, eine Poolparty und ein Film, der die Erinnerungen daran festhält.</li><li id="werk/skiing-2019"><a href="https://www.youtube.com/watch?v=-VTPliFOTA0">Ski 2019 · Feldberg</a><span class="ls"> · </span>Aftermovie · 2019 — Ein kurzer Skiurlaub am Feldberg im Schwarzwald, zusammengefasst als Aftermovie.</li><li id="werk/sailing-2019"><a href="https://www.youtube.com/watch?v=Vt3wFY_ldt4">Segeln 2019</a><span class="ls"> · </span>Aftermovie · 2019 — Unsere erste gemeinsame Segelreise über das IJsselmeer in den Niederlanden.</li><li id="werk/voll-o-meter"><a href="https://loggel.github.io/VollOMeter/">Voll-O-Meter</a><span class="ls"> · </span>Web-App · 2023 — Ein augenzwinkernder Promillerechner mit anpassbaren Getränken. Installierbar, die Daten bleiben im Browser. Nur eine Schätzung: keine Messung und keine Grundlage für Entscheidungen zur Fahrtüchtigkeit.</li><li id="werk/spyfall"><a href="https://loggel.github.io/spyfall/">Spyfall</a><span class="ls"> · </span>Partyspiel · 2019 — Das Deduktionsspiel im Browser, mit Hot-Seat-Modus und Offline-Unterstützung als Progressive Web App.</li><li id="werk/palatina-films-website"><a href="https://loggel.github.io/PalatinaFilms/">Palatina Films</a><span class="ls"> · </span>Website &amp; VFX · 2018 — Meine erste professionelle Website, mit eigenen visuellen Effekten und Animationen aus After Effects.</li><li id="werk/corona-board"><a href="https://loggel.github.io/CoronaBoard/">Corona Board</a><span class="ls"> · </span>Daten · Archiv · 2020 — Ein früheres COVID-19-Dashboard auf Basis der Daten der Johns Hopkins University. Als Projekt archiviert; kein aktuelles Informationsangebot.</li></ol><!-- /prerender:lager -->
+          <!-- prerender:lager --><ol id="lager-static" class="lager-static" aria-label="Alle Projekte"><li id="werk/bomberman-web"><a href="https://loggel.github.io/bomberman-web/">Bomberman</a><span class="ls"> · </span>Multiplayer · 2026 — Bomben, Bots und Kettenreaktionen. Lokal und online läuft dieselbe Engine.</li><li id="werk/melodai"><a href="https://melodai.logge.top/about">MelodAI</a><span class="ls"> · </span>KI &amp; Musik · 2024 — Eine Karaoke-App mit KI-Stimmtrennung, zeitlich abgestimmten Lyrics und synchroner Wiedergabe. Gesang und Instrumental lassen sich getrennt regeln.</li><li id="werk/theater-website"><a href="https://kolpingtheater-ramsen.de">Kolpingtheater Ramsen</a><span class="ls"> · </span>Website &amp; Tickets · 2025 — Website und Ticketsystem für das Kolpingtheater Ramsen. Programm, Informationen und Karten an einem Ort.</li><li id="werk/learn-ai"><a href="https://learn.logge.top">Learn AI</a><span class="ls"> · </span>KI &amp; Lernen · 2026 — KI-Konzepte zum Ausprobieren: Sprachmodelle, Tokenisierung, Attention und Prompting anhand interaktiver Visualisierungen verstehen.</li><li id="werk/skiing-2026"><a href="https://youtu.be/ZjB-0SG0icU">Portes du Soleil</a><span class="ls"> · </span>Aftermovie · 2026 — Der Aftermovie unseres Skiurlaubs 2026 in Portes du Soleil, diesmal im Hochformat geschnitten.</li><li id="werk/kniffel"><a href="https://kniffel.logge.top">Kniffel Multiplayer</a><span class="ls"> · </span>Multiplayer · 2026 — Kniffel für ein bis sechs Personen, mit gemeinsamen Spielrunden, Reaktionen und Live-Rangliste.</li><li id="werk/sharex-capture-engine"><a href="https://loggel.github.io/sharex-capture-engine/">ShareX · Capture Engine</a><span class="ls"> · </span>Webdesign · 2026 — Designkonzept für die ShareX-Website: eine interaktive Inszenierung mit Three.js, Animationen und Fokus auf den Aufnahmeprozess.</li><li id="werk/sharex-win98"><a href="https://loggel.github.io/sharex-win98/">ShareX · Windows 98</a><span class="ls"> · </span>Webdesign · 2026 — Designkonzept für die ShareX-Website als interaktiver Windows-98-Desktop. Fenster, Bedienelemente und die Optik eines anderen Computerzeitalters.</li><li id="werk/sharex-afterimage"><a href="https://loggel.github.io/sharex-afterimage-lab/">ShareX · Afterimage</a><span class="ls"> · </span>Webdesign · 2026 — Designkonzept für die ShareX-Website mit KI-generiertem Bildmaterial und einem experimentellen Editorial-Layout.</li><li id="werk/geo-game"><a href="https://geo.logge.top">GeoGames</a><span class="ls"> · </span>Geografie &amp; Games · 2026 — Tägliche Geografie-Minispiele: Länder erkennen, Flaggen zuordnen und Orte auf der Karte finden.</li><li id="werk/jet-loop-reactor"><a href="https://loggel.github.io/jet-loop-reactor/">Strahlschlaufenreaktor</a><span class="ls"> · </span>Simulation · Verfahrenstechnik · 2026 — Chemieingenieurwesen zum Anfassen. Mit Blasen.</li><li id="werk/spotify-viz"><a href="https://loggel.github.io/spotify-viz/logge/">Spotify Listening Report</a><span class="ls"> · </span>Datenvisualisierung · 2026 — Meine Spotify-Hörhistorie als interaktiver Bericht: Lieblingskünstler, Hörgewohnheiten und übersprungene Songs, direkt aus dem Datenexport.</li><li id="werk/beatguessr"><a href="https://loggel.github.io/BeatGuessr/">BeatGuessr</a><span class="ls"> · </span>Musik &amp; Games · 2025 — Songs am Ausschnitt erkennen oder zeitlich einordnen. Ein Musikratespiel mit Classic- und Timeline-Modus.</li><li id="werk/coop-sudoku"><a href="https://sudoku.logge.top">Coop Sudoku</a><span class="ls"> · </span>Multiplayer · 2025 — Sudoku gemeinsam lösen oder gegeneinander spielen. Mit synchronisiertem Spielfeld und Punkten für gelöste Zellen.</li><li id="werk/arcanum"><a href="https://loggel.github.io/arcanum/">Arcanum</a><span class="ls"> · </span>3D-Escape-Room · 2026 — Entkomme dem Turm des Erzmagiers. Ein Kammerspiel in einem Zug.</li><li id="werk/voxel-blitz"><a href="https://github.com/LoggeL/voxel-blitz">Voxel Blitz</a><span class="ls"> · </span>Multiplayer-Shooter · 2026 — Schnelle Runden, zerstörbare Arenen, direkt im Browser.</li><li id="werk/bulli-drive"><a href="https://github.com/LoggeL/Bulli-Drive">Bulli Drive</a><span class="ls"> · </span>Multiplayer-Rennspiel · 2025 — Ein Bulli, eine Küstenstadt, 19 Kilometer Straße.</li><li id="werk/oilbert"><a href="https://loggel.github.io/OilbertsAdventure/">Oilbert’s Adventure</a><span class="ls"> · </span>Browsergame · 2025 — Ein Endless-Runner mit einem rot-weißen VW-Bus in der Hauptrolle, gebaut mit JavaScript, HTML und CSS.</li><li id="werk/transcripator"><a href="https://transcripator.logge.top">Transcripator</a><span class="ls"> · </span>KI &amp; Audio · 2024 — Audio rein, Text raus, Zusammenfassung obendrauf. Angefangen als Telegram-Bot, heute auch als Web-App zum Hochladen oder direkt Aufnehmen.</li><li id="werk/codex-quota-widget"><a href="https://github.com/LoggeL/codex-quota-widget">Codex Quota Widget</a><span class="ls"> · </span>Android &amp; Tool · 2026 — Ein Android-Homescreen-Widget für Codex-Nutzungslimits. Zeigt Verbrauch und Reset-Zeiten an, mit manueller Aktualisierung und zwischengespeicherten Werten bei Verbindungsproblemen.</li><li id="werk/loggerythm"><a href="https://github.com/LoggeL/LoggeRythm">LoggeRythm</a><span class="ls"> · </span>Musik &amp; App · 2026 — Ein persönliches Musik-App-Experiment mit Playlists, einer gemeinsamen Warteschlange, synchronen Lyrics und Android-App. Ein privates Demo-Projekt, kein öffentlicher Streamingdienst.</li><li id="werk/setlist"><a href="https://bands.logge.top">Bands</a><span class="ls"> · </span>Musik &amp; Web · 2026 — Mein Musiktagebuch: Bands, die ich noch live sehen will, Bands, die ich schon gesehen habe, dazu Vorschauen und ein Song-Tagebuch. Hieß mal Sonic Noir, dann Setlist, jetzt Bands.</li><li id="werk/marathon-trainer"><a href="https://marathon.logge.top">Marathon Trainer</a><span class="ls"> · </span>Sport &amp; App · 2026 — Mein Trainings-Cockpit mit Countdown, 14-Wochen-Plan und Workout-Log. Workouts speichere ich mit Strava-Link, ausgewertet werden sie von einem externen KI-Agenten.</li><li id="werk/powerpoint-karaoke"><a href="https://loggel.github.io/PowerPointKaraoke/">PowerPoint Karaoke</a><span class="ls"> · </span>Partyspiel · 2025 — Absurde Decks. Vortragen musst du trotzdem selbst.</li><li id="werk/poolparty-website"><a href="https://poolparty.jupeters.de">JP Poolparty</a><span class="ls"> · </span>Website &amp; Events · 2019 — Anmeldung, Mitbringliste, Helfer und Musikwünsche für die JP Poolparty. Gemeinsam mit realjupeters gebaut. Dahinter läuft mein Backend jpCore.</li><li id="werk/infected"><a href="https://youtu.be/6iNdfsbZWHs">Infected</a><span class="ls"> · </span>Kurzfilm · 2023 — Ein in 48 Stunden gedrehter Action-Kurzfilm mit anschließender Postproduktion, praktischen Effekten und Kampfszenen.</li><li id="werk/exception"><a href="https://youtu.be/uhlAo1chnlM">Exception</a><span class="ls"> · </span>Kurzfilm · 2022 — Ein Kurzfilm aus einem 48-Stunden-Film-Hackathon. Eine Geschichte entwickeln, drehen und mit den vorhandenen Mitteln umsetzen.</li><li id="werk/selantis"><a href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw">Die Chroniken von Selantis</a><span class="ls"> · </span>Fantasy &amp; VFX · 2015–2020 — Eine Fantasy-Trilogie, an der ich als VFX-Artist und Schauspieler mitgewirkt habe.</li><li id="werk/skiing-2024-epic"><a href="https://www.youtube.com/watch?v=rZaMHwuKFcw">Ski 2024 · Epic Cut</a><span class="ls"> · </span>Aftermovie · 2024 — Unser Skiurlaub in Flachau als Aftermovie mit Drohnenaufnahmen.</li><li id="werk/skiing-2024-fun"><a href="https://www.youtube.com/watch?v=dJX9U7F-FIM">Ski 2024 · Fun Cut</a><span class="ls"> · </span>Aftermovie · 2024 — Die verspielte Version unseres Skiurlaubs 2024, geschnitten auf KI-generierte Musik.</li><li id="werk/skiing-2023"><a href="https://www.youtube.com/watch?v=CLalueWRmLI">Ski 2023</a><span class="ls"> · </span>Aftermovie · 2023 — Der Ski-Aftermovie 2023. Auf YouTube mit Grüßen an den FI-Toaster und die unsichtbaren Backbleche.</li><li id="werk/skiing-2022"><a href="https://www.youtube.com/watch?v=GVPzXOix2sk">Ski 2022 · Zillertal</a><span class="ls"> · </span>Aftermovie · 2022 — Erinnerungen an unseren Skiurlaub in den österreichischen Alpen im Zillertal.</li><li id="werk/sailing-2022"><a href="https://www.youtube.com/watch?v=MbZPufQscBw">Segeln 2022</a><span class="ls"> · </span>Aftermovie · 2022 — Unterwegs auf dem IJsselmeer. Ein Film über unsere Segelreise in den Niederlanden.</li><li id="werk/poolparty-2021"><a href="https://www.youtube.com/watch?v=ZCvVEFKuC_o">Poolparty 2021</a><span class="ls"> · </span>Aftermovie · 2021 — Der offizielle Aftermovie der JP Poolparty 2021, mit Whirlpool und Cocktailbar.</li><li id="werk/skiing-2020"><a href="https://www.youtube.com/watch?v=KYahVktrq_I">Ski 2020 · Bad Gastein</a><span class="ls"> · </span>Aftermovie · 2020 — Unser Winterurlaub in Bad Gastein, festgehalten mit Zeitlupen und Drohnenaufnahmen.</li><li id="werk/bodensee-2020"><a href="https://www.youtube.com/watch?v=8p3xwe7amDE">Bodensee 2020</a><span class="ls"> · </span>Aftermovie · 2020 — Wassersport und Ausflüge am Bodensee, aufgenommen über und unter Wasser.</li><li id="werk/poolparty-2020"><a href="https://www.youtube.com/watch?v=6Qai_0gckB4">Poolparty 2020</a><span class="ls"> · </span>Aftermovie · 2020 — Ein Sommer, eine Poolparty und ein Film, der die Erinnerungen daran festhält.</li><li id="werk/skiing-2019"><a href="https://www.youtube.com/watch?v=-VTPliFOTA0">Ski 2019 · Feldberg</a><span class="ls"> · </span>Aftermovie · 2019 — Ein kurzer Skiurlaub am Feldberg im Schwarzwald, zusammengefasst als Aftermovie.</li><li id="werk/sailing-2019"><a href="https://www.youtube.com/watch?v=Vt3wFY_ldt4">Segeln 2019</a><span class="ls"> · </span>Aftermovie · 2019 — Unsere erste gemeinsame Segelreise über das IJsselmeer in den Niederlanden.</li><li id="werk/voll-o-meter"><a href="https://loggel.github.io/VollOMeter/">Voll-O-Meter</a><span class="ls"> · </span>Web-App · 2023 — Ein augenzwinkernder Promillerechner mit anpassbaren Getränken. Installierbar, die Daten bleiben im Browser. Nur eine Schätzung: keine Messung und keine Grundlage für Entscheidungen zur Fahrtüchtigkeit.</li><li id="werk/spyfall"><a href="https://loggel.github.io/spyfall/">Spyfall</a><span class="ls"> · </span>Partyspiel · 2019 — Das Deduktionsspiel im Browser, mit Hot-Seat-Modus und Offline-Unterstützung als Progressive Web App.</li><li id="werk/palatina-films-website"><a href="https://loggel.github.io/PalatinaFilms/">Palatina Films</a><span class="ls"> · </span>Website &amp; VFX · 2018 — Meine erste professionelle Website, mit eigenen visuellen Effekten und Animationen aus After Effects.</li><li id="werk/corona-board"><a href="https://loggel.github.io/CoronaBoard/">Corona Board</a><span class="ls"> · </span>Daten · 2020 — Ein COVID-19-Dashboard aus dem Frühjahr 2020: Weltkarte, Verläufe, Rohdaten.</li></ol><!-- /prerender:lager -->
           <script>
             if (document.documentElement.classList.contains("js"))
               for (const li of document.querySelectorAll('#lager-static [id^="werk/"]')) (li.dataset.werk = li.id.slice(5)), li.removeAttribute("id");
@@ -506,10 +479,10 @@
           <header class="section-head section-head--stats">
             <p class="eyebrow">04 / Das Schichtbuch</p>
             <h2 id="schichtbuch-title" class="section-title">Erst Kamera. <em>Dann</em> Code.</h2>
-            <p class="section-lead lead">Mein erstes Video auf YouTube ist ein paar Sekunden After Effects und heißt „AE Test“. Das war am <span data-bind="youtube.firstUpload">22.11.2014</span>, einen GitHub-Account habe ich erst seit <span data-bind="github.sinceYear">2015</span>. Seitdem ist einiges dazugekommen. Zuletzt ziemlich schnell.</p>
+            <p class="section-lead lead">Erst Filme, dann Websites, dann Spiele und KI. Zuletzt ziemlich schnell.</p>
             <ul class="counters" role="list">
-              <li class="counter"><span class="counter-value" data-bind="repos.total">140</span> <span class="counter-label">eigene öffentliche Repos</span></li>
-              <li class="counter counter--hot"><span class="counter-value" data-bind="repos.currentYear">62</span> <span class="counter-label">davon aus <span data-bind="currentYear">2026</span><span class="counter-surge" data-show-if="repos.surge">, mehr als <span data-bind="repos.firstYear">2017</span> bis <span data-bind="repos.beforeUntil">2024</span> zusammen (<span data-bind="repos.before">53</span>)</span></span></li>
+              <li class="counter"><span class="counter-value" data-bind="repos.total">140</span> <span class="counter-label">öffentliche Repos</span></li>
+              <li class="counter counter--hot"><span class="counter-value" data-bind="repos.currentYear">62</span> <span class="counter-label">allein <span data-bind="currentYear">2026</span></span></li>
             </ul>
           </header>
           <div class="schichtbuch-view" role="group" aria-label="Darstellung" data-zr-controls hidden>
@@ -517,132 +490,99 @@
             <button class="chip" type="button" data-zr-view="liste" aria-pressed="true">Liste</button>
           </div>
           <div class="zeitraffer" data-mount="zeitraffer">
-            <p class="zeitraffer-caption">Jeder Strich ist ein öffentliches Repo, das ich angelegt habe, auf der Spur seiner Hauptsprache. Ein Jahr ist hier so breit, wie viel in ihm passiert ist.</p>
+            <p class="zeitraffer-caption">Jeder Strich ist ein Projekt. Je voller das Jahr, desto breiter.</p>
           </div>
           <div class="schichtbuch-list" data-mount="schichtbuch-list">
             <!-- prerender:schichtbuch-table --><div class="sb-log" data-sb-log><div class="sb-year" id="jahr-2014" data-year="2014" data-count="0" style="--share:0.000">
-<h3 class="sb-year-title"><span class="sb-year-num">2014</span> <span class="sb-year-count">· 0 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2014</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2014-11-22">
-<p class="ms-date meta"><time datetime="2014-11-22">22.11.2014</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Mein erstes Video: „AE Test“, sieben Sekunden After Effects.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=wHEcSFBkM0s">YouTube</a></p>
+<p class="ms-date meta"><time datetime="2014-11-22">Nov. 2014</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=wHEcSFBkM0s">Mein erstes Video: „AE Test“, sieben Sekunden After Effects.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2015" data-year="2015" data-count="0" style="--share:0.000">
-<h3 class="sb-year-title"><span class="sb-year-num">2015</span> <span class="sb-year-count">· 0 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2015</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2015">
 <p class="ms-date meta"><time datetime="2015">2015</time> <span class="ms-kind">Film</span></p>
 <p class="ms-text">Selantis Teil 1 wird gedreht. Palatina Films entsteht dafür.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/PalatinaFilms/blob/master/selantis.html">Palatina-Films-Website: selantis.html</a></p>
-</li><li class="ms" data-kind="code" data-date="2015-04-15">
-<p class="ms-date meta"><time datetime="2015-04-15">15.04.2015</time> <span class="ms-kind">Code</span></p>
-<p class="ms-text">GitHub-Account angelegt.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://api.github.com/users/LoggeL">GitHub API users/LoggeL</a></p>
 </li></ol></div>
-</div><div class="sb-year" id="jahr-2016" data-year="2016" data-count="0" style="--share:0.000">
-<h3 class="sb-year-title"><span class="sb-year-num">2016</span> <span class="sb-year-count">· 0 Repos</span></h3>
-<div class="sb-year-body"></div>
 </div><div class="sb-year" id="jahr-2017" data-year="2017" data-count="1" style="--share:0.016">
-<h3 class="sb-year-title"><span class="sb-year-num">2017</span> <span class="sb-year-count">· 1 Repo</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2017</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2017-03-29">
-<p class="ms-date meta"><time datetime="2017-03-29">29.03.2017</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Selantis Teil 1 geht auf YouTube, Teil 2 am Tag danach.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw">YouTube-Playlist „Selantis“</a></p>
+<p class="ms-date meta"><time datetime="2017-03-29">März 2017</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/playlist?list=PLUron51rWgon7UQuXYib-eS6MZtTybpvw">Selantis Teil 1 und 2 sind fertig.</a></p>
 </li><li class="ms" data-kind="code" data-date="2017-07-12">
-<p class="ms-date meta"><time datetime="2017-07-12">12.07.2017</time> <span class="ms-kind">Code</span></p>
-<p class="ms-text">Erstes öffentliches Repo: BetterDiscordThemes.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/BetterDiscordThemes">Repo LoggeL/BetterDiscordThemes</a></p>
+<p class="ms-date meta"><time datetime="2017-07-12">Juli 2017</time> <span class="ms-kind">Code</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/BetterDiscordThemes">Erstes öffentliches Repo: BetterDiscordThemes.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2018" data-year="2018" data-count="2" style="--share:0.032">
-<h3 class="sb-year-title"><span class="sb-year-num">2018</span> <span class="sb-year-count">· 2 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2018</span> <span class="sb-year-count">2 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="web" data-date="2018-06-15">
-<p class="ms-date meta"><time datetime="2018-06-15">15.06.2018</time> <span class="ms-kind">Web</span></p>
-<p class="ms-text">Die Palatina-Films-Website, meine erste richtige Website.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/PalatinaFilms">Repo LoggeL/PalatinaFilms</a></p>
+<p class="ms-date meta"><time datetime="2018-06-15">Juni 2018</time> <span class="ms-kind">Web</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/PalatinaFilms">Die Palatina-Films-Website, meine erste richtige Website.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2019" data-year="2019" data-count="6" style="--share:0.097">
-<h3 class="sb-year-title"><span class="sb-year-num">2019</span> <span class="sb-year-count">· 6 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2019</span> <span class="sb-year-count">6 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2019-02-19">
-<p class="ms-date meta"><time datetime="2019-02-19">19.02.2019</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Feldberg 2019, der erste Ski-Aftermovie in meiner LMF-Playlist.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=-VTPliFOTA0">YouTube</a><a class="ms-src" href="https://www.youtube.com/playlist?list=PLUron51rWgonAUClr3JBHolLHY-KBhoH5">YouTube-Playlist „LMF“</a></p>
+<p class="ms-date meta"><time datetime="2019-02-19">Feb. 2019</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=-VTPliFOTA0">Feldberg 2019: mein erster Ski-Aftermovie.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2020" data-year="2020" data-count="9" style="--share:0.145">
-<h3 class="sb-year-title"><span class="sb-year-num">2020</span> <span class="sb-year-count">· 9 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2020</span> <span class="sb-year-count">9 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2020-03-22">
-<p class="ms-date meta"><time datetime="2020-03-22">22.03.2020</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Selantis Teil 3. Meine erste Hauptrolle: Harras.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=c9oV3Lh2Lyw">YouTube</a><a class="ms-src" href="https://github.com/LoggeL/PalatinaFilms/blob/master/team.html">Palatina-Films-Website: team.html</a></p>
+<p class="ms-date meta"><time datetime="2020-03-22">März 2020</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=c9oV3Lh2Lyw">Selantis Teil 3. Meine erste Hauptrolle: Harras.</a></p>
 </li><li class="ms" data-kind="film" data-date="2020-08-27">
-<p class="ms-date meta"><time datetime="2020-08-27">27.08.2020</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Der Kanaltrailer fürs Kolpingtheater, „Produziert von LMF“. Am selben Tag lege ich das Repo dieser Seite an.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=hlvHRI5d3qc">YouTube</a><a class="ms-src" href="https://github.com/LoggeL/LMF">Repo LoggeL/LMF</a></p>
+<p class="ms-date meta"><time datetime="2020-08-27">Aug. 2020</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=hlvHRI5d3qc">Der Kanaltrailer fürs Kolpingtheater, „Produziert von LMF“.</a></p>
 </li><li class="ms" data-kind="galerie" data-date="2020-09-24">
-<p class="ms-date meta"><time datetime="2020-09-24">24.09.2020</time> <span class="ms-kind">Galerie</span></p>
+<p class="ms-date meta"><time datetime="2020-09-24">Sept. 2020</time> <span class="ms-kind">Galerie</span></p>
 <p class="ms-text">Die erste von 17 Nächten mit der Handykamera. Die Galerie baue ich parallel.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/LMF/tree/master/gallery">Galerie im Repo (Dateinamen der Fotos)</a><a class="ms-src" href="https://github.com/LoggeL/LMF/commit/52c7a825bafb72e907aa208f7f4b54297e94434b">Erstes Galerie-Commit</a></p>
-</li><li class="ms" data-kind="galerie" data-date="2020-09-27">
-<p class="ms-date meta"><time datetime="2020-09-27">27.09.2020</time> <span class="ms-kind">Galerie</span></p>
-<p class="ms-text">Commit in der Galerie: „<span lang="en">im getting tired of this</span>“.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/LMF/commit/1f3440a3f44f81a58e0e9fd967f0bb447e9ed0df">Commit 1f3440a</a></p>
 </li><li class="ms" data-kind="film" data-date="2020-12-05">
-<p class="ms-date meta"><time datetime="2020-12-05">05.12.2020</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Bad Gastein 2020, mit Flowframes von 25 auf 50 Bilder pro Sekunde gerechnet.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=KYahVktrq_I">YouTube</a></p>
+<p class="ms-date meta"><time datetime="2020-12-05">Dez. 2020</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=KYahVktrq_I">Bad Gastein 2020, mit Flowframes von 25 auf 50 Bilder pro Sekunde gerechnet.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2021" data-year="2021" data-count="9" style="--share:0.145">
-<h3 class="sb-year-title"><span class="sb-year-num">2021</span> <span class="sb-year-count">· 9 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2021</span> <span class="sb-year-count">9 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2021-01-25">
-<p class="ms-date meta"><time datetime="2021-01-25">25.01.2021</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Den Aftermovie zu „Der Kristall der Träume“ entruckelt und auf 60 fps gebracht.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=YOi_lhZ7eJI">YouTube</a></p>
+<p class="ms-date meta"><time datetime="2021-01-25">Jan. 2021</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=YOi_lhZ7eJI">Den Aftermovie zu „Der Kristall der Träume“ entruckelt und auf 60 fps gebracht.</a></p>
 </li><li class="ms" data-kind="code" data-date="2021-07-05">
-<p class="ms-date meta"><time datetime="2021-07-05">05.07.2021</time> <span class="ms-kind">Code</span></p>
-<p class="ms-text">kolpingCore, mein erstes Backend fürs Theater.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/kolpingCore">Repo LoggeL/kolpingCore</a></p>
+<p class="ms-date meta"><time datetime="2021-07-05">Juli 2021</time> <span class="ms-kind">Code</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/kolpingCore">kolpingCore, mein erstes Backend fürs Theater.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2022" data-year="2022" data-count="8" style="--share:0.129">
-<h3 class="sb-year-title"><span class="sb-year-num">2022</span> <span class="sb-year-count">· 8 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2022</span> <span class="sb-year-count">8 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2022-12-27">
-<p class="ms-date meta"><time datetime="2022-12-27">27.12.2022</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Kurzfilm „Exception“.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=uhlAo1chnlM">YouTube</a></p>
+<p class="ms-date meta"><time datetime="2022-12-27">Dez. 2022</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=uhlAo1chnlM">Kurzfilm „Exception“.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2023" data-year="2023" data-count="8" style="--share:0.129">
-<h3 class="sb-year-title"><span class="sb-year-num">2023</span> <span class="sb-year-count">· 8 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2023</span> <span class="sb-year-count">8 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="film" data-date="2023-12-29">
-<p class="ms-date meta"><time datetime="2023-12-29">29.12.2023</time> <span class="ms-kind">Film</span></p>
-<p class="ms-text">Kurzfilm „Infected“, 12:22.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://www.youtube.com/watch?v=6iNdfsbZWHs">YouTube</a></p>
+<p class="ms-date meta"><time datetime="2023-12-29">Dez. 2023</time> <span class="ms-kind">Film</span></p>
+<p class="ms-text"><a class="ms-link" href="https://www.youtube.com/watch?v=6iNdfsbZWHs">Kurzfilm „Infected“.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2024" data-year="2024" data-count="10" style="--share:0.161">
-<h3 class="sb-year-title"><span class="sb-year-num">2024</span> <span class="sb-year-count">· 10 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2024</span> <span class="sb-year-count">10 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="code" data-date="2024-10-21">
-<p class="ms-date meta"><time datetime="2024-10-21">21.10.2024</time> <span class="ms-kind">Code</span></p>
-<p class="ms-text">MelodAI.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/MelodAI">Repo LoggeL/MelodAI</a></p>
+<p class="ms-date meta"><time datetime="2024-10-21">Okt. 2024</time> <span class="ms-kind">Code</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/MelodAI">MelodAI.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2025" data-year="2025" data-count="25" style="--share:0.403">
-<h3 class="sb-year-title"><span class="sb-year-num">2025</span> <span class="sb-year-count">· 25 Repos</span></h3>
+<h3 class="sb-year-title"><span class="sb-year-num">2025</span> <span class="sb-year-count">25 Repos</span></h3>
 <div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="code" data-date="2025-12-25">
-<p class="ms-date meta"><time datetime="2025-12-25">25.12.2025</time> <span class="ms-kind">Code</span></p>
-<p class="ms-text">Weihnachtsnacht: Kurz nach Mitternacht (00:46 Uhr) lege ich BeatGuessr an, um 02:37 Uhr kommt das erste Commit von Coop Sudoku.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/BeatGuessr">Repo LoggeL/BeatGuessr</a><a class="ms-src" href="https://github.com/LoggeL/coop-sudoku">Repo LoggeL/coop-sudoku</a></p>
+<p class="ms-date meta"><time datetime="2025-12-25">Dez. 2025</time> <span class="ms-kind">Code</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/BeatGuessr">BeatGuessr und Coop Sudoku: zwei Spiele in einer Weihnachtsnacht.</a></p>
 </li></ol></div>
 </div><div class="sb-year" id="jahr-2026" data-year="2026" data-count="62" style="--share:1.000">
-<h3 class="sb-year-title"><span class="sb-year-num">2026</span> <span class="sb-year-count">· 62 Repos</span></h3>
-<div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="life" data-date="2026">
-<p class="ms-date meta"><time datetime="2026">2026</time> <span class="ms-kind">Bühne</span></p>
-<p class="ms-text">„Creepshow“: auf der Bühne als Bote / Diener, dahinter die Website.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://kolpingtheater-ramsen.de/team">Teamseite kolpingtheater-ramsen.de</a></p>
-</li><li class="ms" data-kind="web" data-date="2026-07-15">
-<p class="ms-date meta"><time datetime="2026-07-15">15.07.2026</time> <span class="ms-kind">Web</span></p>
-<p class="ms-text">Drei ShareX-Konzepte in 81 Sekunden angelegt.</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> <a class="ms-src" href="https://github.com/LoggeL/sharex-capture-engine">Repo LoggeL/sharex-capture-engine</a><a class="ms-src" href="https://github.com/LoggeL/sharex-win98">Repo LoggeL/sharex-win98</a><a class="ms-src" href="https://github.com/LoggeL/sharex-afterimage-lab">Repo LoggeL/sharex-afterimage-lab</a></p>
+<h3 class="sb-year-title"><span class="sb-year-num">2026</span> <span class="sb-year-count">62 Repos</span></h3>
+<div class="sb-year-body"><ol class="sb-ms" role="list"><li class="ms" data-kind="web" data-date="2026-07-15">
+<p class="ms-date meta"><time datetime="2026-07-15">Juli 2026</time> <span class="ms-kind">Web</span></p>
+<p class="ms-text"><a class="ms-link" href="https://github.com/LoggeL/sharex-capture-engine">Drei ShareX-Konzepte, drei Welten.</a></p>
 </li></ol></div>
 </div></div><!-- /prerender:schichtbuch-table -->
           </div>
           <div class="milestones" data-mount="milestones"></div>
-          <p class="schichtbuch-footnote meta">Gezählt: eigene öffentliche Repositories ohne Forks, nach Anlagedatum. Private Repos zählen nicht mit. Ein Repo anzulegen ist nicht dasselbe wie ein Projekt anzufangen. Namen zeige ich nur bei Repos, die hier im Portfolio vorkommen. Stand <span data-bind="snapshot.asOf">28.09.2026</span>. Quelle: GitHub API.</p>
           <p class="schichtbuch-outro">Und das sind nur die öffentlichen.</p>
         </div>
       </section>
@@ -667,30 +607,14 @@
             </div>
             <div class="knoepfe" data-mount="knoepfe">
               <h3 class="knoepfe-title" lang="en">I’m just pressing buttons.</h3>
-              <p>Das stand 2020 auf der allerersten Version dieser Seite. In meinem GitHub-Profil steht es bis heute. REC ist ein Knopf. Play auch.</p>
+              <p>Das stand 2020 auf der allerersten Version dieser Seite. Gilt immer noch. REC ist ein Knopf. Play auch.</p>
               <button id="knopf" class="knopf" type="button" aria-pressed="false" data-label-on="Siehste." data-label-off="Knopf" data-heat><span class="knopf-cap">Knopf</span></button>
             </div>
           </div>
 
-          <div class="buehne">
-            <h3 class="block-title">Auf der Bühne und <em>dahinter.</em></h3>
-            <ul class="buehne-cards" role="list">
-              <li class="buehne-card" data-alloy="film">
-                <h4>Palatina Films</h4>
-                <p>Seit der Gründung war ich für alles zuständig, was mit IT und VFX zu tun hat, und stand als Statist mit vor der Kamera. Im dritten Teil von „Die Chroniken von Selantis“ durfte ich zum ersten Mal eine Hauptrolle spielen: Harras.</p>
-                <p class="meta">Team-Seite der Palatina-Films-Website · Rolle: VFX, Homepage, Schauspieler</p>
-              </li>
-              <li class="buehne-card" data-alloy="web">
-                <h4>Kolpingtheater Ramsen</h4>
-                <p>2026 stand ich in „Creepshow“ als Bote / Diener auf der Bühne. Und in der Crew-Liste steht bei mir: Website.</p>
-                <p class="meta">Teamseite kolpingtheater-ramsen.de · Stand <span data-bind="snapshot.asOf">28.09.2026</span></p>
-              </li>
-            </ul>
-          </div>
-
           <div class="werkzeugwand">
             <h3 class="block-title">Was an der Wand <em>hängt.</em></h3>
-            <p class="lead">Gezählt, nicht geschätzt. Klick auf ein Werkzeug zeigt alles, wofür ich es benutzt habe.</p>
+            <p class="lead">Klick auf ein Werkzeug und du siehst alles, wofür ich es benutzt habe.</p>
             <div class="werkzeugwand-tags" data-mount="werkzeugwand"></div>
           </div>
 
@@ -699,7 +623,6 @@
             <p class="eyebrow">Selten ganz allein</p>
             <h3 class="block-title">Gute Leute. Gemeinsame Sachen.</h3>
             <div class="zunft-cards" data-mount="partners"></div>
-            <p class="zunft-ramsen" data-mount="ramsen">Vieles davon passiert in Ramsen: das Kolpingtheater, die JP Poolparty. Und auf jupeters.de steht Logge Media Forge selbst in der Partnerleiste.</p>
           </div>
 
           <div id="abspann" class="abspann" data-section="abspann">
@@ -709,10 +632,10 @@
               <!-- prerender:abspann --><dl class="credits">
 <div class="credit credit--title" data-block="titel"><dt>Logge Media Forge</dt><dd class="credit-lead">Ein Rohschnitt von Logge</dd></div>
 <div class="credit" data-block="code"><dt>Code · Kamera · KI</dt><dd class="credit-name">Logge</dd></div>
-<div class="credit" data-block="auch-als"><dt>Auch als</dt><dd><span class="credit-name">VFX · Homepage · Schauspieler</span> <span class="credit-role">Palatina Films</span></dd><dd><span class="credit-name">Bote / Diener · Website</span> <span class="credit-role">Kolpingtheater Ramsen</span></dd></div>
+<div class="credit" data-block="auch-als"><dt>Auch als</dt><dd><span class="credit-name">VFX · Homepage · Schauspieler</span> <span class="credit-role">Palatina Films</span></dd><dd><span class="credit-name">Website · Ticketsystem</span> <span class="credit-role">Kolpingtheater Ramsen</span></dd></div>
 <div class="credit" data-block="drehorte"><dt>Drehorte</dt><dd class="credit-name">Feldberg 2019</dd><dd class="credit-name">IJsselmeer 2019</dd><dd class="credit-name">Ramsen 2020</dd><dd class="credit-name">Bodensee 2020</dd><dd class="credit-name">Bad Gastein 2020</dd><dd class="credit-name">Ramsen 2021</dd><dd class="credit-name">Zillertal 2022</dd><dd class="credit-name">IJsselmeer 2022</dd><dd class="credit-name">Flachau 2024</dd><dd class="credit-name">Portes du Soleil 2026</dd></div>
-<div class="credit" data-block="sprachen"><dt>Sprachen</dt><dd><span class="credit-name">JavaScript</span> <span class="credit-count">46</span></dd><dd><span class="credit-name">TypeScript</span> <span class="credit-count">35</span></dd><dd><span class="credit-name">HTML</span> <span class="credit-count">26</span></dd><dd><span class="credit-name">Python</span> <span class="credit-count">10</span></dd><dd><span class="credit-name">CSS</span> <span class="credit-count">7</span></dd><dd><span class="credit-name">Vue</span> <span class="credit-count">4</span></dd><dd><span class="credit-name">Dart</span> <span class="credit-count">2</span></dd><dd><span class="credit-name">C#</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Jinja</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Jupyter Notebook</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Kotlin</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Rust</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Svelte</span> <span class="credit-count">1</span></dd><dd><span class="credit-name">Swift</span> <span class="credit-count">1</span></dd><dd class="credit-note">Hauptsprache laut GitHub · Stand 28.09.2026</dd></div>
-<div class="credit" data-block="material"><dt>Material</dt><dd><span class="credit-count">43</span> <span class="credit-name">Projekte</span></dd><dd><span class="credit-count">15</span> <span class="credit-name">Filme</span></dd><dd><span class="credit-count">77</span> <span class="credit-name">Fotos</span></dd><dd><span class="credit-count">140</span> <span class="credit-name">öffentliche Repos</span></dd><dd class="credit-note">Im Lager zählt unter Film auch Palatina Films (Website) mit.</dd></div>
+<div class="credit" data-block="sprachen"><dt>Sprachen</dt><dd class="credit-name">JavaScript</dd><dd class="credit-name">TypeScript</dd><dd class="credit-name">HTML</dd><dd class="credit-name">Python</dd><dd class="credit-name">CSS</dd></div>
+<div class="credit" data-block="material"><dt>Material</dt><dd><span class="credit-count">43</span> <span class="credit-name">Projekte</span></dd><dd><span class="credit-count">15</span> <span class="credit-name">Filme</span></dd><dd><span class="credit-count">77</span> <span class="credit-name">Fotos</span></dd></div>
 </dl>
 <p class="credits-end"><span class="credits-motto">Aus Neugier. <em>Gemacht.</em></span> <span class="credits-cut meta">Rohschnitt, kein Final Cut.</span></p><!-- /prerender:abspann -->
             </div>
@@ -727,13 +650,13 @@
             <header class="section-head section-head--stage">
               <p class="eyebrow">06 / Abseits der Tabs</p>
               <h2 id="abseits-title" class="section-title">Nachts, mit dem <em>Handy.</em></h2>
-              <p class="section-lead lead"><span data-bind="gallery.total">77</span> Fotos aus <span data-bind="gallery.nights">17</span> Nächten zwischen dem <span data-bind="gallery.first">24.09.</span> und dem <span data-bind="gallery.last">26.10.2020</span>. Laut Dateinamen alle zwischen <span data-bind="gallery.hourFrom">20</span> und <span data-bind="gallery.hourTo">2</span> Uhr aufgenommen. In denselben Wochen habe ich die Galerie dafür gebaut. Ein Commit von damals heißt „<span lang="en">im getting tired of this</span>“.</p>
+              <p class="section-lead lead"><span data-bind="gallery.total">77</span> Fotos aus <span data-bind="gallery.nights">17</span> Nächten im Herbst <span data-bind="gallery.year">2020</span>. Alle zwischen <span data-bind="gallery.hourFrom">20</span> und <span data-bind="gallery.hourTo">2</span> Uhr aufgenommen. In denselben Wochen habe ich die Galerie dafür gebaut.</p>
             </header>
             <div class="nachtuhr" data-mount="nachtuhr">
-              <!-- prerender:abseits --><ol class="contact-sheet screen" role="list" aria-label="Kontaktbogen, eine Auswahl aus dem Fotoarchiv"><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200924_233029.jpg"><img src="gallery/assets/img/small/IMG_20200924_233029.webp" alt="Galerieaufnahme 01" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">01A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-24T23:30">23:30</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200924_235428.jpg"><img src="gallery/assets/img/small/IMG_20200924_235428.webp" alt="Galerieaufnahme 08" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">08A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-24T23:54">23:54</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200925_225959.jpg"><img src="gallery/assets/img/small/IMG_20200925_225959.webp" alt="Galerieaufnahme 15" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">15A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-25T22:59">22:59</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200926_000813.jpg"><img src="gallery/assets/img/small/IMG_20200926_000813.webp" alt="Galerieaufnahme 22" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">22A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-26T00:08">00:08</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200929_231107.jpg"><img src="gallery/assets/img/small/IMG_20200929_231107.webp" alt="Galerieaufnahme 29" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">29A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-29T23:11">23:11</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201006_002332.jpg"><img src="gallery/assets/img/small/IMG_20201006_002332.webp" alt="Galerieaufnahme 36" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">36A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-06T00:23">00:23</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201006_230021.jpg"><img src="gallery/assets/img/small/IMG_20201006_230021.webp" alt="Galerieaufnahme 42" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">42A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-06T23:00">23:00</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201008_221047.jpg"><img src="gallery/assets/img/small/IMG_20201008_221047.webp" alt="Galerieaufnahme 49" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">49A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-08T22:10">22:10</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201009_001441.jpg"><img src="gallery/assets/img/small/IMG_20201009_001441.webp" alt="Galerieaufnahme 56" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">56A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-09T00:14">00:14</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201011_234528.jpg"><img src="gallery/assets/img/small/IMG_20201011_234528.webp" alt="Galerieaufnahme 63" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">63A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-11T23:45">23:45</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201018_225853.jpg"><img src="gallery/assets/img/small/IMG_20201018_225853.webp" alt="Galerieaufnahme 70" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">70A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-18T22:58">22:58</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201026_215521.jpg"><img src="gallery/assets/img/small/IMG_20201026_215521.webp" alt="Galerieaufnahme 77" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">77A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-26T21:55">21:55</time></span></a></li></ol><!-- /prerender:abseits -->
+              <!-- prerender:abseits --><ol class="contact-sheet screen" role="list" aria-label="Kontaktbogen, eine Auswahl aus der Galerie"><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200924_233029.jpg"><img src="gallery/assets/img/small/IMG_20200924_233029.webp" alt="Galerieaufnahme 01" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">01A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-24T23:30">23:30</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200924_235428.jpg"><img src="gallery/assets/img/small/IMG_20200924_235428.webp" alt="Galerieaufnahme 08" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">08A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-24T23:54">23:54</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200925_225959.jpg"><img src="gallery/assets/img/small/IMG_20200925_225959.webp" alt="Galerieaufnahme 15" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">15A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-25T22:59">22:59</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200926_000813.jpg"><img src="gallery/assets/img/small/IMG_20200926_000813.webp" alt="Galerieaufnahme 22" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">22A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-26T00:08">00:08</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20200929_231107.jpg"><img src="gallery/assets/img/small/IMG_20200929_231107.webp" alt="Galerieaufnahme 29" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">29A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-09-29T23:11">23:11</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201006_002332.jpg"><img src="gallery/assets/img/small/IMG_20201006_002332.webp" alt="Galerieaufnahme 36" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">36A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-06T00:23">00:23</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201006_230021.jpg"><img src="gallery/assets/img/small/IMG_20201006_230021.webp" alt="Galerieaufnahme 42" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">42A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-06T23:00">23:00</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201008_221047.jpg"><img src="gallery/assets/img/small/IMG_20201008_221047.webp" alt="Galerieaufnahme 49" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">49A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-08T22:10">22:10</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201009_001441.jpg"><img src="gallery/assets/img/small/IMG_20201009_001441.webp" alt="Galerieaufnahme 56" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">56A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-09T00:14">00:14</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201011_234528.jpg"><img src="gallery/assets/img/small/IMG_20201011_234528.webp" alt="Galerieaufnahme 63" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">63A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-11T23:45">23:45</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201018_225853.jpg"><img src="gallery/assets/img/small/IMG_20201018_225853.webp" alt="Galerieaufnahme 70" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">70A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-18T22:58">22:58</time></span></a></li><li class="cs-frame"><a href="gallery/assets/img/large/IMG_20201026_215521.jpg"><img src="gallery/assets/img/small/IMG_20201026_215521.webp" alt="Galerieaufnahme 77" width="400" height="500" loading="lazy" decoding="async"><span class="cs-edge" aria-hidden="true">77A</span><span class="cs-time meta"><span class="vh">, aufgenommen um </span><time datetime="2020-10-26T21:55">21:55</time></span></a></li></ol><!-- /prerender:abseits -->
             </div>
           </div>
-          <p class="abseits-cta"><a class="button button--ghost" href="gallery/" data-heat>Zum Fotoarchiv <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+          <p class="abseits-cta"><a class="button button--ghost" href="gallery/" data-heat>Zur Galerie <svg class="i" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
         </div>
       </section>
 
@@ -763,10 +686,6 @@
           <span>Logge Media Forge <span class="footer-motto">· Aus Neugier. Gemacht.</span></span>
         </a>
         <p class="footer-copy meta">© <span id="current-year">2026</span> LMF</p>
-        <p class="footer-punze meta">
-          <svg class="i" aria-hidden="true"><use href="#i-punze" /></svg>
-          Alles hier ist gepunzt. <a href="mailto:hyper.xjo@gmail.com?subject=Da%20stimmt%20was%20nicht">Wenn was nicht stimmt, sag Bescheid.</a>
-        </p>
         <a class="footer-top meta" href="#esse">Nach oben <svg class="i" aria-hidden="true"><use href="#i-arrow-up" /></svg></a>
       </div>
     </footer>
@@ -780,7 +699,6 @@
           <button class="wb-prev" type="button" data-wb="prev">Voriges Werkstück</button>
           <button class="wb-next" type="button" data-wb="next">Nächstes Werkstück</button>
         </div>
-        <div class="wb-punze" data-wb="punze"></div>
       </div>
       <div class="wb-scroll">
         <div class="wb-hero" data-wb="hero"></div>

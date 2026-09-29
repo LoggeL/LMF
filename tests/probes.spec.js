@@ -3,10 +3,11 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { makeState, placeBomb, resolveTick, idx, FLOOR, SOLID, FUSE_MS } from "../js/probes/src/bomberman.js";
 import { LAYOUT, SEATS, SEAT_COUNT, AISLE_AFTER, MAX_PICK, SHOW, CHIP as SAAL_CHIP, loneGaps, step, seatList, decoPattern } from "../js/probes/src/saalplan.js";
-import { buildScore, SONG } from "../js/probes/src/mixer.js";
+import { buildScore, SONG, BEAT } from "../js/probes/src/mixer.js";
+import { syllables, plan, timeline, GRID } from "../js/probes/src/singer.js";
 import { PROBE_IDS } from "../js/probes/src/index.js";
 import { PROBE_IDS as PACKED_IDS } from "../js/probes/index.js";
-import { pack, gz, OUT, BUDGET } from "../scripts/pack-probes.mjs";
+import { pack, gz, OUT, BUDGET, LAZY, LAZY_BUDGET } from "../scripts/pack-probes.mjs";
 
 /* ── Pure rules ────────────────────────────────────────────────────────────────────────────────── */
 
@@ -72,8 +73,9 @@ test.describe("Saalplan rules", () => {
     expect(SHOW.title).toBe(fact("play"));
     expect(new Set(SEATS.map((s) => s.id)).size).toBe(SEAT_COUNT);
     expect(MAX_PICK).toBe(5);
-    expect(SAAL_CHIP).toContain("Nachbau");
-    expect(SAAL_CHIP).toContain(`${SEAT_COUNT} Plätzen`);
+    // the chip tag says „Nachbau“; the line next to it stays short
+    expect(SAAL_CHIP).toContain(`${SEAT_COUNT} Plätze`);
+    expect(SAAL_CHIP.length).toBeLessThan(80);
   });
 
   test("lone-gap warning: a free seat walled in by a pick, the aisle counts as a wall", () => {
@@ -133,6 +135,121 @@ test("the probe packs are fresh and within budget (§8: probes ≤ 22 KB gz tota
   }
   expect(total, "gzip -9 of js/probes/index.js + werk.js").toBeLessThanOrEqual(BUDGET);
   expect(PACKED_IDS).toEqual(PROBE_IDS);
+  // loaded only after „Ton an“, so outside the page-load budget, but with a ceiling of its own
+  for (const [key, path] of Object.entries(LAZY)) {
+    const shipped = readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+    expect(shipped, `${path} is stale: run node scripts/pack-probes.mjs`).toBe(packs[key]);
+    expect(gz(shipped), `gzip -9 of ${path}`).toBeLessThanOrEqual(LAZY_BUDGET);
+  }
+});
+
+test.describe("Singer (pure): German lyrics → syllables → phonemes → timed events", () => {
+  const syl = (line) => line.split(" ").map((w) => syllables(w));
+
+  test("„Aus Neugier. Gemacht.“ syllabifies sensibly", () => {
+    const words = syl("Aus Neugier. Gemacht.");
+    expect(words.map((w) => w.map((s) => s.text))).toEqual([["Aus"], ["Neu", "gier"], ["Ge", "macht"]]);
+    expect(words.map((w) => w.map((s) => s.ph))).toEqual([[["aU", "s"]], [["n", "OY"], ["g", "i", "6"]], [["g", "@"], ["m", "a", "x", "t"]]]);
+    // stress: first syllable, but not on the prefix ge-
+    expect(words.map((w) => w.findIndex((s) => s.stress))).toEqual([0, 0, 1]);
+  });
+
+  test("G2P rules: diphthongs, schwa, -er, sch/ch/ng/st/sp/z/pf/qu/ß, final devoicing", () => {
+    const ph = (w) => syllables(w).map((s) => s.ph.join(" "));
+    expect(ph("wissen,")).toEqual(["v I s", "s @ n"]);
+    expect(ph("Projekte")).toEqual(["p R o", "j E k", "t @"]);
+    expect(syllables("Projekte").findIndex((s) => s.stress)).toBe(1);
+    expect(ph("Feuer")).toEqual(["f OY", "6"]);
+    expect(ph("meiner")).toEqual(["m aI", "n 6"]);
+    expect(ph("ziemlich")).toEqual(["t s i m", "l I C"]);
+    expect(ph("noch")).toEqual(["n O x"]);
+    expect(ph("fangen")).toEqual(["f a N", "@ n"]); // ng always closes its syllable
+    expect(ph("ob")).toEqual(["O p"]);
+    expect(ph("geht.")).toEqual(["g e t"]);
+    expect(ph("So")).toEqual(["z o"]);
+    expect(ph("Stein")).toEqual(["S t aI n"]);
+    expect(ph("Spiel")).toEqual(["S p i l"]);
+    expect(ph("Schule")).toEqual(["S u", "l @"]);
+    expect(ph("Pfanne")).toEqual(["p f a n", "n @"]);
+    expect(ph("Quelle")).toEqual(["k v E l", "l @"]);
+    expect(ph("Fuß")).toEqual(["f u s"]);
+    expect(ph("Häuser")).toEqual(["h OY", "z 6"]);
+    // words outside the lyrics, so new lines keep sounding right
+    expect(ph("singen")).toEqual(["z I N", "@ n"]);
+    expect(ph("Engel")).toEqual(["E N", "@ l"]);
+    expect(ph("gehen")).toEqual(["g e", "@ n"]); // no ge- prefix, silent h
+    expect(syllables("gehen").findIndex((s) => s.stress)).toBe(0);
+    expect(ph("Sprache")).toEqual(["S p R a", "x @"]);
+    expect(ph("Kuchen")).toEqual(["k u", "x @ n"]);
+    expect(ph("erzählen")).toEqual(["E 6", "t s E", "l @ n"]);
+    expect(ph("Rhythmus")).toEqual(["R Y t", "m U s"]);
+    // s + t/p after ver-/zer-/ent- opens the stressed stem; not after be-/ge-/er- (bes-te, ges-tern)
+    expect(ph("verstehen")).toEqual(["f E 6", "S t e", "@ n"]);
+    expect(syllables("verstehen").findIndex((s) => s.stress)).toBe(1);
+    expect(ph("entspannen")).toEqual(["E n t", "S p a n", "n @ n"]);
+    expect(ph("gestern")).toEqual(["g E s", "t 6 n"]);
+    expect(ph("König")).toEqual(["k 2", "n I C"]); // final -ig is [ɪç]
+  });
+
+  test("one note per syllable, on the ¼-beat grid; every word starts on its own beat", () => {
+    const score = buildScore();
+    const notes = plan(score);
+    expect(notes.length).toBeGreaterThan(score.words.length); // multi-syllable words split
+    const onGrid = (x) => Math.abs(x / GRID - Math.round(x / GRID)) < 1e-9;
+    for (const n of notes) {
+      expect(onGrid(n.start), `${n.text} @ ${n.start}`).toBe(true);
+      expect(onGrid(n.dur) && n.dur >= GRID, `${n.text} dur ${n.dur}`).toBe(true);
+    }
+    score.words.forEach((w, wi) => {
+      const mine = notes.filter((n) => n.word === wi);
+      expect(mine.length, w.text).toBeGreaterThan(0);
+      // karaoke sync: the first syllable sits on the word's beat, the syllables fill the word exactly
+      expect(mine[0].start).toBe(w.start);
+      expect(mine.reduce((s, n) => s + n.dur, 0)).toBeCloseTo(w.dur, 9);
+      mine.slice(1).forEach((n, k) => expect(n.start).toBeCloseTo(mine[k].start + mine[k].dur, 9));
+      // the stressed syllable sings the word's own note
+      expect(mine.find((n) => n.stress).midi).toBe(score.lead[wi].midi);
+    });
+    expect(notes.filter((n) => n.lineEnd)).toHaveLength(SONG.length);
+  });
+
+  test("vowels land on the beat grid, consonants lead in before it, events never overlap", () => {
+    const score = buildScore();
+    const LOOP = score.beats * BEAT;
+    const notes = plan(score);
+    const ev = timeline(notes, BEAT, LOOP);
+    const onsets = ev.filter((e) => e.on);
+    expect(onsets).toHaveLength(notes.filter((n) => n.ph.length).length);
+    for (const n of notes) expect(onsets.some((e) => Math.abs(e.t - n.start * BEAT) < 1e-9 && e.m === n.midi), n.text).toBe(true);
+    // „Neu“: n before the beat, OY on it
+    // a word that opens on its vowel („Aus“, „ist“) is marked for the early, glottal onset
+    expect(onsets.filter((e) => e.bare).map((e) => notes.find((n) => Math.abs(n.start * BEAT - e.t) < 1e-9).text)).toContain("Aus");
+    const neu = notes.find((n) => n.text === "Neu").start * BEAT;
+    const n = ev.find((e) => e.p === "n" && e.t < neu && e.t > neu - 0.1);
+    expect(n.t + n.d).toBeCloseTo(neu, 9);
+    for (const e of ev) expect(e.t >= 0 && e.t < LOOP).toBe(true);
+    const sounds = ev.filter((e) => e.p !== "_" && e.p !== "breath");
+    for (let i = 1; i < sounds.length; i++) expect(sounds[i].t + 1e-9, `${sounds[i - 1].p} → ${sounds[i].p}`).toBeGreaterThanOrEqual(sounds[i - 1].t + sounds[i - 1].d - 1e-6);
+    // every line ends in a rest (a breath before the next one)
+    expect(ev.filter((e) => e.p === "_")).toHaveLength(SONG.length);
+    // … and the line is over before that breath, also across the loop wrap (last line → line 1)
+    for (const b of ev.filter((e) => e.p === "breath").map((e) => e.t)) {
+      const held = sounds.filter((e) => e.t <= b && e.t + e.d > b - 0.02);
+      expect(held, `breath @ ${b.toFixed(2)} overlaps ${held.map((e) => e.p)}`).toEqual([]);
+    }
+    // one s in „wis|sen“ (no geminates): the coda s is dropped, the onset s stays
+    const wi = notes.findIndex((n) => n.text === "wis");
+    const sAt = ev.filter((e) => e.p === "s" && e.t > notes[wi].start * BEAT && e.t < notes[wi + 1].start * BEAT + 0.01);
+    expect(sAt).toHaveLength(1);
+    // a word that opens on its vowel mid-line: the previous word is done 50 ms before its beat, so
+    // the glottal break does not eat the coda („wissen | ob“)
+    for (const e of onsets.filter((e) => e.bare && e.prev !== null)) {
+      const before = sounds.filter((s) => s.t < e.t).at(-1);
+      expect(before.t + before.d, `${before.p} → ${e.p} @ ${e.t.toFixed(3)}`).toBeLessThanOrEqual(e.t - 0.05 + 1e-9);
+    }
+    // a glide into a note may start only after the previous vowel's first 60 %
+    for (const e of onsets.filter((e) => e.prev !== null)) expect(e.room, `${e.p} @ ${e.t.toFixed(3)}`).toBeGreaterThan(0.03);
+  });
 });
 
 test("registry exports every probe id", () => {
@@ -328,7 +445,7 @@ test.describe("Probestücke in den Kapiteln", () => {
     await page.keyboard.press("Tab");
     expect(await page.evaluate(() => document.activeElement?.closest(".ps-map"))).toBeNull();
     await expect(page.locator("#kapitel-i .probe-chip-row")).toContainText("Nachbau");
-    await expect(page.locator("#kapitel-i .probe-chip-row")).toContainText("68 Plätzen");
+    await expect(page.locator("#kapitel-i .probe-chip-row")).toContainText("68 Plätze");
     expect(await page.evaluate(() => window.__net)).toEqual([]);
     expect(errors).toEqual([]);
   });
@@ -366,58 +483,44 @@ test.describe("Probestücke in den Kapiteln", () => {
     await expect(page.locator("#kapitel-i .uv-list a")).toHaveCount(nodes.length);
   });
 
-  test("Kapitel: Werkstattdaten carry source marks and a Punze", async ({ page }) => {
+  test("Kapitel: a compact fact strip, no sources apparatus", async ({ page }) => {
+    const projects = JSON.parse(readFileSync(new URL("../data/projects.json", import.meta.url), "utf8"));
     await home(page);
-    for (const id of ["kapitel-i", "kapitel-ii", "kapitel-iii"]) {
-      await page.locator(`#${id}`).scrollIntoViewIfNeeded();
-      const sheet = page.locator(`#${id} .specsheet.is-bound`);
-      await sheet.waitFor();
-      const rows = sheet.locator(".spec-list > div");
-      const n = await rows.count();
-      for (let i = 0; i < n; i++) {
-        const dt = (await rows.nth(i).locator("dt").textContent()).trim();
-        if (dt === "Stand") continue;
-        await expect(rows.nth(i).locator("sup a"), dt).toHaveCount(1);
-      }
-      const btn = page.locator(`#${id} .punze-slot .punze-button`);
-      await expect(btn).toContainText(/Gepunzt · \d+ Quellen?/);
+    for (const [id, pid] of [["kapitel-i", "theater-website"], ["kapitel-ii", "bomberman-web"], ["kapitel-iii", "melodai"]]) {
+      const ch = page.locator(`#${id}`);
+      await ch.scrollIntoViewIfNeeded();
+      const strip = ch.locator(".chapter-facts .fact-strip");
+      await expect(strip).toBeVisible();
+      // Kapitel III: Seit · Stack (the 01–06 rail under the toy already says the pipeline)
+      await expect(strip.locator(".fact")).toHaveCount(id === "kapitel-iii" ? 2 : 3);
+      await expect(strip.locator(".fact").first()).toContainText(String(projects.find((p) => p.id === pid).year));
+      await expect(strip.locator(".fact--stack dd")).not.toBeEmpty();
+      // a portfolio, not a report: no marks, no Punze, no „Quelle“, no „Stand“
+      await expect(ch.locator("sup:not([data-ph]), .src-mark, .punze-slot, .punze-button, .specsheet")).toHaveCount(0);
+      await expect(ch).not.toContainText(/Gepunzt|Quelle|Stand \d|\d+ von mir|davon von mir|Commits|Sterne|Node-Host|CodeQL|shared\/engine/);
+      // the stack never ends a line on a dangling separator: the separators are CSS, not text
+      await expect(strip.locator(".fact--stack dd")).not.toContainText("·");
     }
-    for (const width of [1440, 390]) {
-      await page.setViewportSize({ width, height: 900 });
-      const btn = page.locator("#kapitel-iii .punze-slot .punze-button");
-      await btn.scrollIntoViewIfNeeded();
-      await btn.click();
-      const pop = page.locator("#kapitel-iii .punze-pop");
-      await expect(pop).toContainText("Woher ich das weiß");
-      await expect(pop).toContainText("Wenn was nicht stimmt, sag Bescheid.");
-      await expect(page.locator("#kapitel-iii .punze-list li").first()).toContainText("geprüft am");
-      // centred in the viewport like the Werkbank Punze, never pinned to the top-left corner
-      const box = await pop.boundingBox();
-      const vw = page.viewportSize().width;
-      expect(Math.abs(box.x + box.width / 2 - vw / 2), `centred at ${width}`).toBeLessThan(2);
-      expect(box.y).toBeGreaterThan(8);
-      await page.keyboard.press("Escape");
-      await expect(pop).toBeHidden();
-    }
-    // a source mark names its source and opens the Punze on its entry
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.locator("#kapitel-ii details.specsheet > summary").click();
-    const mark = page.locator("#kapitel-ii .src-mark a").first();
-    await expect(mark).toHaveAttribute("aria-label", /^Quelle \d+: \S/);
-    const n = Number(await mark.getAttribute("data-src")) + 1;
-    await mark.click();
-    await expect(page.locator("#kapitel-ii .punze-pop")).toBeVisible();
-    await expect(page.locator(`#msrc-bomberman-web-${n}`)).toBeFocused();
-    await page.keyboard.press("Escape");
+    // the numbers still come from the data
+    const details = (id) => JSON.parse(readFileSync(new URL(`../data/details/${id}.json`, import.meta.url), "utf8"));
+    // each chapter shows the project's own number, the same one the Werkbank strip shows
+    await expect(page.locator("#kapitel-ii .fact-strip .fact-value").nth(1)).toHaveText(details("bomberman-web").facts.find((f) => f.key === "arenas").value);
+    await expect(page.locator("#kapitel-iii .pipeline > li")).toHaveCount(Number(details("melodai").facts.find((f) => f.key === "pipeline").value.split(" ")[0]));
+    // „Mehr mit KI“ is a list: the separators are CSS on the next item, so no line ends on a dot
+    await expect(page.locator("#kapitel-iii .chapter-more-list > li")).toHaveCount(3);
+    await expect(page.locator("#kapitel-iii .chapter-more")).not.toContainText("·");
+    // Kapitel I shows a number a visitor cares about (the seats), not commit accounting
+    const seats = details("theater-website").facts.find((f) => f.key === "seats").value;
+    await expect(page.locator("#kapitel-i .fact-strip .fact-value").nth(1)).toHaveText(String(seats));
   });
 
-  test("Zwischenstück: 81 seconds computed from the repo timestamps", async ({ page }) => {
-    const projects = JSON.parse(readFileSync(new URL("../data/projects.json", import.meta.url), "utf8"));
-    const ts = ["sharex-capture-engine", "sharex-win98", "sharex-afterimage"].map((id) => Date.parse(projects.find((p) => p.id === id).repo.createdTs));
-    const seconds = Math.round((Math.max(...ts) - Math.min(...ts)) / 1000);
+  test("Zwischenstück: three windows, one evening, no timeline", async ({ page }) => {
     await home(page, "dreiwelten");
-    await expect(page.locator("#dreiwelten .dreiwelten-stamp")).toHaveCount(3);
-    await expect(page.locator("#dreiwelten .dreiwelten-ruler-scale")).toContainText(`${seconds} Sekunden`);
+    await expect(page.locator("#dreiwelten-title")).toHaveText("Ein Abend, drei Welten.");
+    await expect(page.locator("#dreiwelten .dreiwelten-card")).toHaveCount(3);
+    await expect(page.locator("#dreiwelten .dreiwelten-ruler, #dreiwelten .dreiwelten-ruler-mark")).toHaveCount(0);
+    // work, not forensics: no clock times, no seconds, no „angelegt“, no disclaimer sentence
+    await expect(page.locator("#dreiwelten")).not.toContainText(/\d\d:\d\d|Sekunden|angelegt|\+\d+ s|offizielle|Minuten auseinander/);
   });
 });
 
@@ -491,6 +594,72 @@ test.describe("Harness", () => {
     });
     expect(hash.startsWith("00")).toBe(true);
     expect(check).toBe(hash);
+  });
+
+  test("Mixer: the singing voice loads only after „Ton an“, sings, and follows the Gesang fader", async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    const singerReq = [];
+    page.on("request", (r) => /singer\.js/.test(r.url()) && singerReq.push(r.url()));
+    await page.addInitScript(() => {
+      window.__an = [];
+      const make = AudioContext.prototype.createAnalyser;
+      AudioContext.prototype.createAnalyser = function () {
+        const a = make.call(this);
+        window.__an.push(a);
+        return a;
+      };
+    });
+    await harness(page);
+    await page.evaluate(async () => {
+      const { mountProbe } = await import("/js/probes/index.js");
+      window.__h = await mountProbe(document.getElementById("stage"), "melodai-mixer", {});
+    });
+    await page.getByRole("button", { name: "Abspielen" }).click();
+    await page.waitForTimeout(400);
+    expect(singerReq, "no singer before „Ton an“").toEqual([]);
+    expect(await page.evaluate(() => window.__live.audio.size)).toBe(0);
+
+    await page.getByRole("button", { name: "Ton an" }).click();
+    await expect.poll(() => singerReq.length).toBe(1);
+    expect(singerReq[0]).toMatch(/\/js\/probes\/singer\.js$/);
+    // the first analyser is the Gesang stem (after its fader)
+    const vocRms = () =>
+      page.evaluate(() => {
+        const a = window.__an[0];
+        const buf = new Float32Array(a.fftSize);
+        a.getFloatTimeDomainData(buf);
+        return Math.sqrt(buf.reduce((s, v) => s + v * v, 0) / buf.length);
+      });
+    await expect.poll(vocRms, { timeout: 4000 }).toBeGreaterThan(0.002);
+    await page.getByRole("slider", { name: "Gesang" }).fill("0");
+    await page.waitForTimeout(250);
+    expect(await vocRms()).toBeLessThan(0.0005);
+    expect(errors).toEqual([]);
+  });
+
+  test("Singer: stop() fades out and ends every source (offline render)", async ({ page }) => {
+    await harness(page);
+    const r = await page.evaluate(async () => {
+      const { singer } = await import("/js/probes/singer.js");
+      const { buildScore, BEAT } = await import("/js/probes/src/mixer.js");
+      const score = buildScore();
+      const SR = 22050;
+      const oc = new OfflineAudioContext(1, SR * 3, SR);
+      const s = singer(oc, oc.destination, score, BEAT);
+      for (let b = 0; b < 4; b++) s.beat(b, b * BEAT);
+      s.stop(2);
+      const live = s.alive;
+      const x = (await oc.startRendering()).getChannelData(0);
+      await new Promise((res) => setTimeout(res, 50));
+      const rms = (a, b) => Math.sqrt(x.subarray(a * SR, b * SR).reduce((t, v) => t + v * v, 0) / ((b - a) * SR));
+      return { live, alive: s.alive, sung: rms(0.1, 1.9), after: Math.max(...x.subarray(2.1 * SR).map(Math.abs)), finite: x.every(Number.isFinite) };
+    });
+    expect(r.live).toBe(4); // pulse, vibrato, jitter, noise
+    expect(r.sung).toBeGreaterThan(0.01);
+    expect(r.after).toBeLessThan(1e-4);
+    expect(r.finite).toBe(true);
+    expect(r.alive).toBe(0);
   });
 
   for (const id of ["bomberman-chain", "melodai-mixer", "theater-saalplan", "transcripator-pow"]) {
@@ -608,15 +777,13 @@ test.describe("Fokus und Maße", () => {
     });
   }
 
-  test("Werkstattdaten folded, universe preview of four, story behind „Weiterlesen“", async ({ page }) => {
+  test("Fact strip always open, universe preview of four, story behind „Weiterlesen“", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await home(page, "kapitel-i");
-    const sheet = page.locator("#kapitel-i details.specsheet");
-    await expect(sheet).not.toHaveAttribute("open", "");
-    await expect(sheet.locator("summary")).toContainText(/Werkstattdaten · Stand \d\d\.\d\d\.\d{4}/);
-    await expect(sheet.locator(".spec-list")).toBeHidden();
-    await sheet.locator("summary").click();
-    await expect(sheet.locator(".spec-list")).toBeVisible();
+    const strip = page.locator("#kapitel-i .fact-strip");
+    await expect(strip).toBeVisible();
+    // three facts fit a phone without a horizontal scroll
+    expect(await strip.evaluate((el) => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
 
     const list = page.locator("#kapitel-i .uv-list");
     await expect(list.locator(".uv-li-link:visible")).toHaveCount(4);
@@ -633,11 +800,8 @@ test.describe("Fokus und Maße", () => {
     await page.locator("#kapitel-i .story-more").click();
     await expect(story.nth(2)).toBeVisible();
 
-    // wide screens fold the same way: one click, never a forced-open table
     await page.setViewportSize({ width: 1440, height: 900 });
-    await expect(sheet).toHaveAttribute("open", "");
-    await sheet.locator("summary").click();
-    await expect(sheet.locator(".spec-list")).toBeHidden();
+    await expect(strip).toBeVisible();
     await expect(page.locator("#kapitel-i .story-more")).toBeVisible();
     await expect(page.locator("#kapitel-ii .chapter-story .rivets")).toBeHidden();
     // Kapitel III: the pipeline stands under the mixer on wide screens, behind „Weiterlesen“ below 1024 px
@@ -649,11 +813,11 @@ test.describe("Fokus und Maße", () => {
     await expect(page.locator("#kapitel-iii .pipeline")).toBeVisible();
   });
 
-  test("Kapitel I: one „Stand“, no repeated booking box; the facts follow the story", async ({ page }) => {
+  test("Kapitel I: no „Stand“, no repeated booking box; the facts follow the story", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await home(page, "kapitel-i");
     await expect(page.locator("#kapitel-i")).not.toContainText("Gebucht wird gerade");
-    await expect(page.locator("#kapitel-i .spec-list dt", { hasText: /^Stand$/ })).toHaveCount(0);
+    await expect(page.locator("#kapitel-i")).not.toContainText(/\bStand\b/);
     // reading order = tab order: story, then the facts, then the universe (never below and back up)
     const order = await page.evaluate(() => {
       const ch = document.querySelector("#kapitel-i");

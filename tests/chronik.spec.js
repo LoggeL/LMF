@@ -58,7 +58,8 @@ test.describe("Schichtbuch", () => {
     const years = await page.locator(".zr-year").evaluateAll((els) => els.map((e) => [+e.dataset.year, +e.dataset.count, e.textContent.replace(/\s+/g, " ").trim()]));
     for (const [year, count, label] of years) {
       expect(count, `count ${year}`).toBe(BY_YEAR[year] ?? 0);
-      expect(label).toBe(`${year} · ${BY_YEAR[year] ?? 0}`);
+      // the ruler shows just the year; the heat bar carries the volume (no „· 62“)
+      expect(label).toBe(`${year}`);
     }
     for (const y of Object.keys(BY_YEAR)) expect(years.some(([year]) => year === +y), `year ${y} on the ruler`).toBe(true);
     await expect(page.locator(".zr-clip[data-repo]")).toHaveCount(SNAPSHOT.github.ownPublicRepos);
@@ -68,7 +69,8 @@ test.describe("Schichtbuch", () => {
 
   test("Zeitraffer opens at the Stand and its readout never passes it (1440 and 390)", async ({ page }) => {
     const asOf = SNAPSHOT.asOf ?? SNAPSHOT.github?.asOf;
-    const stand = `${asOf.slice(5, 7)}.${asOf.slice(0, 4)} · ${REPOS.length} von ${REPOS.length} Repos bis hier`;
+    // the readout is just the year under the playhead: no „n von N Repos bis hier“ counter
+    const stand = asOf.slice(0, 4);
     for (const width of [1440, 390]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/");
@@ -135,20 +137,30 @@ test.describe("Schichtbuch", () => {
     await ctx.close();
   });
 
-  test("list view: per-year blocks match reposByYear and every milestone has an https source", async ({ page }) => {
+  test("list view: per-year blocks match reposByYear; milestones read as a story, not as citations", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 800 });
     await page.goto("/");
     await mounted(page, "#schichtbuch");
-    const blocks = await page.locator(".sb-year").evaluateAll((els) => els.map((e) => [+e.dataset.year, +e.dataset.count, e.querySelectorAll("tbody tr").length]));
-    for (const [year, count, rows] of blocks) {
+    const blocks = await page.locator(".sb-year").evaluateAll((els) =>
+      els.map((e) => [+e.dataset.year, +e.dataset.count, e.querySelector(".sb-year-count")?.textContent ?? "", e.querySelectorAll("table, details.sb-repos").length]),
+    );
+    for (const [year, count, label, ledgers] of blocks) {
       expect(count).toBe(BY_YEAR[year] ?? 0);
-      expect(rows).toBe(BY_YEAR[year] ?? 0);
+      // a quiet count from two up („25 Repos“), never „0 Repos“ or „1 Repo“, and no per-repo ledger
+      expect(label).toBe(count >= 2 ? `${count} Repos` : "");
+      expect(ledgers, `${year}: no repo table`).toBe(0);
     }
+    await expect(page.locator("#schichtbuch")).not.toContainText(/Repos zeigen|öffentliches Repo\s*·|Öffentliche Repos, angelegt/);
+    // the one milestone that names a first repo is a story beat, not a ledger row
+    await expect(page.locator(".sb-log")).toContainText("Erstes öffentliches Repo: BetterDiscordThemes.");
     const items = page.locator(".sb-log .ms");
     await expect(items).toHaveCount(MILESTONES.length);
-    for (const href of await items.evaluateAll((els) => els.map((li) => [...li.querySelectorAll("a.ms-src")].map((a) => a.href)))) {
-      expect(href.length).toBeGreaterThan(0);
-      for (const h of href) expect(h).toMatch(/^https:\/\//);
+    // No „Quelle:“ lines; a milestone links at most its own text (a video, a playlist, a repo).
+    await expect(page.locator(".sb-log")).not.toContainText("Quelle");
+    await expect(page.locator(".sb-log .ms-sources, .sb-log a.ms-src")).toHaveCount(0);
+    for (const hrefs of await items.evaluateAll((els) => els.map((li) => [...li.querySelectorAll("a")].map((a) => a.href)))) {
+      expect(hrefs.length).toBeLessThanOrEqual(1);
+      for (const h of hrefs) expect(h).toMatch(/^https:\/\/(www\.youtube\.com|youtu\.be|github\.com)\//);
     }
     // No unfilled {binding} tokens in milestone copy.
     await expect(page.locator(".sb-log")).not.toContainText("{");
@@ -244,7 +256,7 @@ test.describe("Schichtbuch", () => {
     await expect(page.locator('.zr-yearchip[aria-current="true"]')).toHaveCount(1);
   });
 
-  test("390: older years sit behind one disclosure; the newest three stay open", async ({ page }) => {
+  test("390: the middle years sit behind one disclosure; the first and the newest three stay open", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto("/");
     await mounted(page, "#schichtbuch");
@@ -252,10 +264,11 @@ test.describe("Schichtbuch", () => {
     const older = page.locator("#schichtbuch .sb-older");
     await expect(older).toHaveCount(1);
     await expect(older).not.toHaveAttribute("open", "");
-    await expect(older.locator("> summary")).toHaveText(`Ältere Jahre (2014–${last - 3})`);
+    await expect(older.locator("> summary")).toHaveText(`2015–${last - 3} zeigen`);
+    await expect(page.locator("#jahr-2014")).toBeVisible();
     for (let y = last - 2; y <= last; y++) await expect(page.locator(`#jahr-${y}`)).toBeVisible();
     await expect(page.locator(`#jahr-${last - 3}`)).toBeHidden();
-    await expect(page.locator('.sb-log .ms-text [lang="en"]')).toHaveCount(1);
+    await expect(page.locator('.sb-log .ms-text [lang="en"]')).toHaveCount(0); // the commit quote left the timeline
     await older.locator("> summary").click();
     await expect(page.locator(`#jahr-${last - 3}`)).toBeVisible();
     await page.setViewportSize({ width: 1024, height: 800 });
@@ -263,12 +276,16 @@ test.describe("Schichtbuch", () => {
     await expect(older.locator("> summary")).toBeHidden();
   });
 
-  test("Zeitraffer markers: one per milestone, each linking an https source", async ({ page }) => {
+  test("Zeitraffer markers: one per milestone; a flag links only what is worth opening", async ({ page }) => {
     await page.goto("/");
     await mounted(page, "#schichtbuch");
     const flags = page.locator(".zr-flag");
     await expect(flags).toHaveCount(MILESTONES.length);
-    for (const h of await flags.evaluateAll((els) => els.map((a) => a.getAttribute("href")))) expect(h).toMatch(/^https:\/\//);
+    for (const [tag, h, label] of await flags.evaluateAll((els) => els.map((a) => [a.tagName, a.getAttribute("href"), a.getAttribute("aria-label")]))) {
+      if (tag === "A") expect(h).toMatch(/^https:\/\/(www\.youtube\.com|youtu\.be|github\.com)\//);
+      else expect(h).toBeNull();
+      expect(label).not.toMatch(/Quelle|belegt/);
+    }
   });
 });
 
@@ -338,20 +355,19 @@ test.describe("Werkstatt", () => {
     await expect(knopf).toHaveAccessibleName("Knopf");
   });
 
-  test("Zunft renders every partner with sources; the clip only plays on hover", async ({ page }) => {
+  test("Zunft renders every partner as a card, no sources list; the clip only plays on hover", async ({ page }) => {
     const partners = read("data/partners.json");
     await page.goto("/");
     await mounted(page, "#werkstatt");
     await expect(page.locator(".zunft-card")).toHaveCount(partners.length);
-    await expect(page.locator(".zunft-card .zunft-punze")).toHaveCount(partners.filter((p) => p.sources?.length).length);
-    // One combined hallmark under the grid (shown below 640 px) lists every source once.
-    const all = partners.flatMap((p) => (p.sources ?? []).filter((s) => /^https:\/\//.test(s.url)));
-    await expect(page.locator(".zunft-punze--all li")).toHaveCount(all.length);
-    await expect(page.locator(".zunft-punze--all summary")).toContainText(`${all.length} Quellen`);
-    // Xenon is Logge's own, unofficial bot: the card says so and links the repo, not xenon.bot.
+    // The sources stay in partners.json; the page shows the partners, not a hallmark per card.
+    await expect(page.locator(".zunft details, .zunft-punze")).toHaveCount(0);
+    await expect(page.locator(".zunft")).not.toContainText(/Gepunzt|Quelle/);
+    // Xenon: one plain line about the bot (no disclaimer) and a link to its repo, not xenon.bot.
     const xenon = page.locator('.zunft-card[data-partner="xenon"]');
     if (await xenon.count()) {
-      await expect(xenon).toContainText("Kein offizieller Xenon-Bot");
+      await expect(xenon).toContainText("aus der Xenon-Doku");
+      await expect(xenon).not.toContainText(/Kein offizieller|offiziellen|Mein eigenes Projekt/);
       await expect(xenon.locator(".zunft-name a")).toHaveAttribute("href", "https://github.com/LoggeL/xenon-support-bot");
     }
     const clip = page.locator(".zunft-clip");
@@ -384,7 +400,13 @@ test.describe("Werkstatt", () => {
     }
     // The partners are the Zunft right above; the credits do not repeat them.
     await expect(page.locator('#abspann .credit[data-block="partner"]')).toHaveCount(0);
-    await expect(page.locator('#abspann .credit[data-block="material"]')).toContainText(`${REPOS.length} öffentliche Repos`);
+    // Material is the portfolio inventory (Projekte, Filme, Fotos), not a repo count
+    await expect(page.locator('#abspann .credit[data-block="material"]')).not.toContainText("Repos");
+    // Sprachen: the top five names, no counts, no caption
+    await expect(page.locator('#abspann .credit[data-block="sprachen"] dd')).toHaveCount(5);
+    await expect(page.locator('#abspann .credit[data-block="sprachen"]')).not.toContainText(/\d|Hauptsprache/);
+    // below the Zunft: no Ramsen footnote; above it: no second „Bühne“ block
+    await expect(page.locator(".zunft-ramsen, #werkstatt .buehne")).toHaveCount(0);
   });
 
   test("Abspann rolls in a fixed window; „Alles zeigen“ opens it; calm stands still", async ({ page }) => {
@@ -462,14 +484,8 @@ test.describe("Abseits + Kontakt", () => {
     }
     await expect(page.locator(`#kontakt .contact-links a[href="https://github.com/${SNAPSHOT.github.login}"]`)).toHaveCount(1);
     await expect(page.locator(".contact-mail")).toHaveAttribute("href", "mailto:hyper.xjo@gmail.com");
-    // „Zuletzt angelegt“: the newest repo in repos.json (not a second „Noch warm“).
-    const newest = REPOS.reduce((a, b) => (b.c > a.c ? b : a));
-    const [y, m, d] = newest.c.split("-");
-    await expect(page.locator("#kontakt .kontakt-warm-line")).toContainText(`${d}.${m}.${y}`);
-    // Unnamed repos are counted, never described as „ein öffentliches …-Repo“.
-    if (!newest.n) await expect(page.locator("#kontakt .kontakt-warm-line")).toContainText(`${REPOS.filter((r) => r.c <= SNAPSHOT.asOf).length} öffentliche Repos, das letzte am`);
-    await expect(page.locator("#kontakt .kontakt-warm-line")).not.toContainText("ein öffentliches");
-    await expect(page.locator("#kontakt .kontakt-warm ol")).toHaveCount(0);
+    // no lonely GitHub stat beside the address: the links are enough
+    await expect(page.locator("#kontakt .kontakt-warm")).toHaveCount(0);
   });
 
   test("Kontakt keeps GitHub when snapshot.json fails", async ({ page }) => {

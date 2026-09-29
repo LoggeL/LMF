@@ -86,7 +86,7 @@ export async function mount(root, ctx) {
 <figure class="nu-well">
   <div class="nu-frame"><img class="nu-img" alt="" decoding="async" hidden><img class="nu-img" alt="" decoding="async" hidden></div>
   <figcaption class="nu-cap meta"></figcaption>
-  <a class="nu-open text-link" href="gallery/">Im Fotoarchiv ansehen</a>
+  <a class="nu-open text-link" href="gallery/">In der Galerie ansehen</a>
 </figure>`);
   // The dial replaces the contact sheet (≥ 640 px). If keyboard focus is on a frame of the sheet
   // right now (Tab got there before this lazy mount), it moves to that photo's tick first, so
@@ -134,7 +134,7 @@ export async function mount(root, ctx) {
     }
     cap.textContent = `Nacht ${String(p.night).padStart(2, "0")} · ${formatDate(p.date)} · ${p.time} Uhr`;
     open.href = `gallery/#foto-${p.nn}`;
-    open.textContent = `Foto ${p.nn} im Fotoarchiv ansehen`;
+    open.textContent = `Foto ${p.nn} groß ansehen`;
     const my = ++token;
     const next = new Image();
     next.decoding = "async";

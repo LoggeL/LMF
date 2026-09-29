@@ -65,7 +65,7 @@ export function safeUrl(value, base = typeof location !== "undefined" ? location
   }
 }
 
-/** Sprite icon. Names: arrow-ne, arrow-se, arrow-down, arrow-up, arrow-right, arrow-left, close, play, pause, theme, punze, rivet, star, search, logo. */
+/** Sprite icon. Names: arrow-ne, arrow-se, arrow-down, arrow-up, arrow-right, arrow-left, close, play, pause, theme, rivet, star, search, logo. */
 export function icon(name, cls = "i") {
   return html`<svg class="${cls}" aria-hidden="true" focusable="false"><use href="#i-${name}"></use></svg>`;
 }

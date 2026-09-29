@@ -5,10 +5,10 @@
  * reused at runtime by js/sections/abspann.js. Every block is built from data and is
  * omitted when its data is missing. The partners are not repeated here: the Zunft sits
  * directly above the credits. Nothing here is typed in by hand except the two
- * sourced role lines (AUCH ALS), whose sources are named next to them.
+ * role lines (AUCH ALS); their sources live in the code comment next to them, not on the page.
  */
 import { html } from "../lib/dom.js";
-import { formatDate, yearOf } from "../lib/derive.js";
+import { yearOf } from "../lib/derive.js";
 
 /**
  * Partner categories in data/partners.json are partly English. Visible copy is German, so
@@ -27,10 +27,11 @@ export const partnerCategory = (c) => PARTNER_CATEGORY_DE[c] ?? c ?? "";
 /**
  * AUCH ALS — sourced roles:
  *  Palatina Films team.html („VFX, Homepage, Schauspieler“), data/films.json → selantis.roles
- *  kolpingtheater-ramsen.de/team 2026: Cast „Bote / Diener“ (Creepshow), Crew „Website“
+ *  kolpingtheater-ramsen.de/team 2026: Crew „Website“; data/details/theater-website.json (Ticketsystem).
+ *  The stage role is said once, in Kapitel I.
  */
 const ALSO_AS = [
-  { roles: ["Bote / Diener", "Website"], who: "Kolpingtheater Ramsen" },
+  { roles: ["Website", "Ticketsystem"], who: "Kolpingtheater Ramsen" },
 ];
 
 const filmList = (films) => (films instanceof Map ? [...films.values()] : Array.isArray(films) ? films : []);
@@ -53,6 +54,9 @@ function locations(data) {
     .filter((s) => (seen.has(s) ? false : seen.add(s)));
 }
 
+/** The Abspann names the top few languages, no counts: credits, not statistics. */
+export const TOP_LANGUAGES = 5;
+
 /** Primary languages of the public repos, counted and sorted desc (then by name). */
 export function languageCounts(repos = []) {
   const tally = new Map();
@@ -69,24 +73,14 @@ const block = (key, label, body, cls = "") =>
  */
 export default function renderCredits(data = {}, opts = {}) {
   const b = opts.bindings ?? data.bindings ?? {};
-  const asOf = data.snapshot?.asOf ?? data.reposAsOf ?? null;
   const also = [...palatinaRoles(data), ...ALSO_AS];
   const places = locations(data);
-  const langs = Array.isArray(data.repos) ? languageCounts(data.repos) : [];
+  const langs = Array.isArray(data.repos) ? languageCounts(data.repos).slice(0, TOP_LANGUAGES) : [];
   const material = [
     ["projects.total", "Projekte"],
     ["films.total", "Filme"],
     ["gallery.total", "Fotos"],
-    ["repos.total", "öffentliche Repos"],
   ].filter(([k]) => b[k] !== undefined);
-  // „15 Filme“ counts data/films.json; the Lager's Film chip counts every Werkstück in the Film
-  // alloy. Name the difference instead of leaving two numbers that seem to disagree.
-  const filmIds = new Set(filmList(data.films).map((f) => f.id));
-  const filmExtra = b["films.total"] !== undefined ? (data.projects ?? []).filter((p) => p.groups?.includes("film") && !filmIds.has(p.id)) : [];
-  const filmNote = filmExtra.length
-    ? html`<dd class="credit-note">Im Lager zählt unter Film auch ${filmExtra.map((p, i) => html`${i ? (i === filmExtra.length - 1 ? " und " : ", ") : ""}${p.title}${p.groups.includes("web") ? " (Website)" : ""}`)} mit.</dd>`
-    : "";
-
   const out = html`<dl class="credits">
 ${block("titel", "Logge Media Forge", html`<dd class="credit-lead">Ein Rohschnitt von Logge</dd>`, "credit--title")}
 ${block("code", "Code · Kamera · KI", html`<dd class="credit-name">Logge</dd>`)}
@@ -100,13 +94,13 @@ ${block(
   "sprachen",
   "Sprachen",
   langs.length
-    ? html`${langs.map(([l, n]) => html`<dd><span class="credit-name">${l}</span> <span class="credit-count">${n}</span></dd>`)}${asOf ? html`<dd class="credit-note">Hauptsprache laut GitHub · Stand ${formatDate(asOf)}</dd>` : ""}`
+    ? langs.map(([l]) => html`<dd class="credit-name">${l}</dd>`)
     : "",
 )}
 ${block(
   "material",
   "Material",
-  material.length ? html`${material.map(([k, label]) => html`<dd><span class="credit-count">${b[k]}</span> <span class="credit-name">${label}</span></dd>`)}${filmNote}` : "",
+  material.length ? html`${material.map(([k, label]) => html`<dd><span class="credit-count">${b[k]}</span> <span class="credit-name">${label}</span></dd>`)}` : "",
 )}
 </dl>
 <p class="credits-end"><span class="credits-motto">Aus Neugier. <em>Gemacht.</em></span> <span class="credits-cut meta">Rohschnitt, kein Final Cut.</span></p>`;

@@ -6,13 +6,13 @@
  *           16:9 and carries the ridge, a 9:16 crop of it would be sky) + facade button. Only while a
  *           9:16 film plays does the gate turn upright (below 1024 px).
  *   reel    one button per ski film (aria-pressed), year · place · duration in mono
- *   caption the verbatim YouTube description in Instrument Serif Italic, mono label
+ *   caption the film's own line from its YouTube description, as a tagline in Instrument Serif Italic
  * Switching: decode first, then a 250 ms pull-down in steps(6) (instant when calm).
  * YouTube loads only after „Film abspielen“ (youtube-nocookie iframe).
  * GL (js/gl/projector.js, WebGL1) adds weave, flicker, grain and halation when the device and the
  * motion setting allow it; otherwise a CSS grain tile (js/fx/grain.js), static when calm.
  */
-import { html, icon, extLink, safeUrl, fragment } from "../lib/dom.js";
+import { html, icon, safeUrl, fragment } from "../lib/dom.js";
 import { applyGrain } from "../fx/grain.js";
 import { glOk } from "../fx/gpu.js";
 import { THUMBS } from "../render/thumbs.js";
@@ -105,7 +105,7 @@ export async function mount(root, ctx) {
           </figcaption>
         </figure>
         <div class="projector-facade">
-          <button class="button projector-play" type="button" data-heat>Film abspielen (lädt YouTube) ${icon("play")}</button>
+          <button class="button projector-play" type="button" data-heat>Film abspielen ${icon("play")}</button>
           <p class="projector-consent">Beim Abspielen lädt YouTube (Google) Inhalte und setzt ggf. Cookies.</p>
         </div>
       </div>
@@ -132,20 +132,17 @@ export async function mount(root, ctx) {
 
   function caption(it) {
     const f = it.film;
-    const also = (f.alsoOn ?? []).find((a) => /jupeters\.de/.test(a.url ?? a.label ?? ""));
+    // month, length, one link on (where else a film runs is not the point here)
     const parts = [
-      f.uploaded ? html`<span>Hochgeladen <time datetime="${format.isoDay(f.uploaded)}">${format.date(f.uploaded)}</time></span>` : "",
+      f.uploaded ? html`<span><time datetime="${format.isoDay(f.uploaded)}">${format.dateLong(format.isoDay(f.uploaded).slice(0, 7))}</time></span>` : "",
       format.duration(f.duration) ? html`<span>${format.duration(f.duration)}</span>` : "",
-      also ? html`<span>auch auf ${extLink(also.url, also.label)}</span>` : "",
       it.project ? html`<span><a href="#werk/${it.film.id}" data-project-id="${it.film.id}">Mehr zum Film</a></span>` : "",
     ];
     meta.innerHTML = String(html`${parts}`);
     if (f.quote) {
-      quote.innerHTML = String(html`<p class="projector-label meta">Beschreibung auf YouTube</p>
-        <blockquote class="projector-quote" cite="${safeUrl(`https://www.youtube.com/watch?v=${f.youtubeId}`)}"><p>„${f.quote}“</p></blockquote>`);
+      quote.innerHTML = String(html`<blockquote class="projector-quote" cite="${safeUrl(`https://www.youtube.com/watch?v=${f.youtubeId}`)}"><p>„${f.quote}“</p></blockquote>`);
     } else if (f.paraphrase) {
-      quote.innerHTML = String(html`<p class="projector-label meta">laut Videobeschreibung</p>
-        <p class="projector-quote projector-quote--paraphrase">${f.paraphrase}</p>`);
+      quote.innerHTML = String(html`<p class="projector-quote projector-quote--paraphrase">${f.paraphrase}</p>`);
     } else quote.replaceChildren();
     edge.textContent = `Rolle ${it.no} von ${items.length} · ${it.year}`;
   }
@@ -165,7 +162,7 @@ export async function mount(root, ctx) {
       slate.querySelector(".projector-slate-title").textContent = it.name;
       slate.querySelector(".projector-slate-meta").textContent = `${it.year} · ${format.duration(it.film.duration)}`;
     }
-    play.setAttribute("aria-label", `Film abspielen (lädt YouTube): ${it.name}`);
+    play.setAttribute("aria-label", `Film abspielen: ${it.name}`);
     caption(it);
   }
 

@@ -48,7 +48,7 @@ export function renderTable(list, ctx = {}) {
     const pushed = p.repo?.pushedAt ?? null;
     const uploaded = pushed ? null : (filmOf(ctx, p.id)?.uploaded ?? null);
     const when = pushed ?? uploaded;
-    const whenText = when ? `${uploaded ? "hochgeladen" : "zuletzt dran"} ${formatDate(when)}` : "";
+    const whenText = when ? `${uploaded ? "hochgeladen" : "zuletzt dran"} ${formatDate(when, "monthShort")}` : "";
     return html`<tr class="project-card lager-row" data-glow="${glow ?? "none"}" data-alloy="${alloy}" data-id="${p.id}" data-heat style="--alloy: var(--alloy-${alloy})">
       <td class="lt-no">${n ? noLabel(stockLabel(n)) : ""}</td>
       <td class="lt-projekt">
@@ -60,7 +60,7 @@ export function renderTable(list, ctx = {}) {
       <td class="lt-jahr">${yearText(p)}</td>
       <td class="lt-stack">${stack}</td>
       <td class="lt-glut">${g ? html`<span class="lt-glow">${g}</span>` : ""}</td>
-      <td class="lt-zuletzt">${when ? html`<time class="lt-date" datetime="${when}">${formatDate(when)}</time>${uploaded ? html`<span class="lt-note"> hochgeladen</span>` : ""}` : ""}</td>
+      <td class="lt-zuletzt">${when ? html`<time class="lt-date" datetime="${String(when).slice(0, 10)}">${formatDate(when, "monthShort")}</time>${uploaded ? html`<span class="lt-note"> hochgeladen</span>` : ""}` : ""}</td>
     </tr>`;
   });
   return String(html`<table class="lager-table">

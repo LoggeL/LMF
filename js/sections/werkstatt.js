@@ -1,20 +1,19 @@
 /**
  * 05 · Die Werkstatt (spec §2.7, §5.10)  [WP5]
  *
- * Static copy (about, Knöpfe, Bühne, headings) lives in index.html. This module adds:
+ * Static copy (about, Knöpfe, headings) lives in index.html. This module adds:
  *  - Knopf: the pressable „I'm just pressing buttons“ stamp (aria-pressed; the cap always reads
  *    „Knopf“, its name; „Siehste.“ is a separate aria-hidden stamp + polite announcement),
  *  - Werkzeugwand: the top 18 tools counted from details.stack (fallback: tags of code
  *    projects; film projects carry genre tags, not tools, so they are not counted), each a
  *    button that dispatches `lmf:filter {q: tool}` to the Lager. Counted at build time by
  *    scripts/make-tools.mjs into js/render/tools.js, so a plain scroll fetches no details file,
- *  - Zunft: partner cards from data/partners.json with their sources (Punze), the tiny
+ *  - Zunft: partner cards from data/partners.json (the sources stay in the data), the tiny
  *    Gummibären clip plays only on hover/focus and never when calm; a logo that fails to load
- *    becomes a typographic monogram (the Rohling language of the plates),
- *  - the Ramsen line is kept only if partners.json really has partners in Ramsen.
+ *    becomes a typographic monogram (the Rohling language of the plates).
  */
 import { html, icon, safeUrl, EXT_SUFFIX } from "../lib/dom.js";
-import { toolCounts, formatDate } from "../lib/derive.js";
+import { toolCounts } from "../lib/derive.js";
 import { partnerCategory } from "../render/credits.js";
 import { TOOLS } from "../render/tools.js";
 
@@ -67,13 +66,12 @@ function mountKnopf(root, announce) {
 
 /* ── Werkzeugwand ──────────────────────────────────────────────────────────────────────────────── */
 
-function wallHtml(tools, asOf) {
+function wallHtml(tools) {
   const max = tools[0]?.count ?? 1;
   return html`<ul class="wand" role="list">${tools.map(
     (t, i) =>
       html`<li class="wand-hook" style="--i:${i};--w:${(t.count / max).toFixed(3)};--tilt:${((((i * 7) % 5) - 2) * 0.9).toFixed(1)}deg"><button class="wand-tag" type="button" data-tool="${t.tool}" data-count="${t.count}" data-heat><span class="wand-name">${t.tool}</span> <span class="wand-count">×${t.count}</span><span class="vh"> im Lager zeigen</span></button></li>`,
-  )}</ul>
-<p class="wand-note meta">Gezählt aus den Werkstattdaten meiner Code-Projekte, jedes Projekt zählt ein Werkzeug einmal.${asOf ? ` Stand ${formatDate(asOf)}.` : ""}</p>`;
+  )}</ul>`;
 }
 
 /**
@@ -131,26 +129,6 @@ function settle(search) {
 
 /* ── Zunft ─────────────────────────────────────────────────────────────────────────────────────── */
 
-const httpsSources = (sources = []) => sources.filter((s) => /^https:\/\//.test(s.url ?? ""));
-const quellen = (n) => `${n} ${n === 1 ? "Quelle" : "Quellen"}`;
-const sourceItem = (s, who = "") =>
-  html`<li>${who ? html`<span class="zunft-punze-who">${who}</span> ` : ""}<a href="${safeUrl(s.url)}" target="_blank" rel="noopener noreferrer">${s.label} ${icon("arrow-ne")}<span class="vh">${EXT_SUFFIX}</span></a>${s.checkedAt ? html` <span class="meta">geprüft am ${formatDate(s.checkedAt)}</span>` : ""}</li>`;
-
-function punze(sources = []) {
-  const list = httpsSources(sources);
-  if (!list.length) return "";
-  return html`<details class="zunft-punze"><summary>${icon("punze")} <span>Gepunzt · ${quellen(list.length)}</span></summary>
-<ul role="list">${list.map((s) => sourceItem(s))}</ul></details>`;
-}
-
-/** Below 640 px the cards are a compact two-column grid; their hallmarks move into one footer. */
-function punzeAll(partners) {
-  const rows = partners.flatMap((p) => httpsSources(p.sources).map((s) => [p.title, s]));
-  if (!rows.length) return "";
-  return html`<details class="zunft-punze zunft-punze--all"><summary>${icon("punze")} <span>Gepunzt · ${quellen(rows.length)}</span></summary>
-<ul role="list">${rows.map(([who, s]) => sourceItem(s, who))}</ul></details>`;
-}
-
 function partnerMark(p) {
   if (p.video) {
     const base = p.video.replace(/\.(webm|mp4)$/i, "");
@@ -191,9 +169,8 @@ ${partnerMark(p)}
 <h4 class="zunft-name"><a href="${safeUrl(p.link)}" target="_blank" rel="noopener noreferrer">${p.title} ${icon("arrow-ne")}<span class="vh">${EXT_SUFFIX}</span></a></h4>
 <p class="zunft-cat meta">${partnerCategory(p.category)}${p.place ? html` · ${p.place}` : ""}</p>
 ${p.description ? html`<p class="zunft-desc">${p.description}</p>` : ""}
-${punze(p.sources)}
 </li>`,
-  )}</ul>${punzeAll(partners)}`;
+  )}</ul>`;
 }
 
 function mountClips(container, motion) {
@@ -233,24 +210,21 @@ function mountClips(container, motion) {
 export async function mount(root, ctx) {
   const offs = [mountKnopf(root, ctx.announce)];
   const data = await ctx.data;
-  const asOf = data?.snapshot?.asOf ?? null;
 
   const partnersMount = root.querySelector('[data-mount="partners"]');
   if (partnersMount && Array.isArray(data?.partners) && data.partners.length) {
     partnersMount.innerHTML = String(partnersHtml(data.partners));
     offs.push(mountClips(partnersMount, ctx.motion), mountLogoFallback(partnersMount));
   }
-  const ramsen = root.querySelector('[data-mount="ramsen"]');
-  if (ramsen && Array.isArray(data?.partners)) ramsen.hidden = data.partners.filter((p) => p.place === "Ramsen").length < 2;
 
   const wall = root.querySelector('[data-mount="werkzeugwand"]');
   if (wall) {
-    // „Gezählt, nicht geschätzt“: counted at build time (scripts/make-tools.mjs); an empty list
+    // Counted at build time (scripts/make-tools.mjs); an empty list
     // means no wall at all (omission rule §1.4), never a guess.
     const tools = TOOLS.map(([tool, count]) => ({ tool, count }));
     if (!tools.length) wall.closest(".werkzeugwand")?.setAttribute("hidden", "");
     else {
-      wall.innerHTML = String(wallHtml(tools, asOf));
+      wall.innerHTML = String(wallHtml(tools));
       const onClick = (e) => {
         const b = e.target.closest("[data-tool]");
         if (!b) return;

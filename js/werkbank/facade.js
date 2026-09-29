@@ -7,7 +7,7 @@
  *   renderFacade(project, film, { poster })   → string
  *   playFacade(button)                        → the iframe; werkbank.js calls it on clicks on [data-yt]
  */
-import { html, extLink, icon, raw } from "../lib/dom.js";
+import { html, icon, raw } from "../lib/dom.js";
 import { durationLabel } from "../lib/format.js";
 
 export const FACADE_NOTE = "Beim Abspielen lädt YouTube (Google) Inhalte und setzt ggf. Cookies.";
@@ -24,11 +24,11 @@ export function renderFacade(p, film, { poster = "", bed = "" } = {}) {
     <div class="wb-film-poster">${raw(poster)}</div>
     <button type="button" class="wb-film-play" data-yt="${id}" data-yt-title="${title}">
       <span class="wb-film-disc" aria-hidden="true">${icon("play")}</span>
-      <span class="wb-film-label">Film abspielen<span class="wb-film-label-note"> (lädt YouTube)</span></span>
+      <span class="wb-film-label">Film abspielen</span>
       ${len}
     </button>
   </div>
-  <p class="wb-film-note meta">${FACADE_NOTE} ${extLink(`https://www.youtube.com/watch?v=${id}`, "Auf YouTube öffnen", "wb-film-out")}</p>
+  <p class="wb-film-note">${FACADE_NOTE}</p>
 </div>`);
 }
 

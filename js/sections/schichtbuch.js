@@ -2,7 +2,7 @@
  * 04 · Das Schichtbuch (spec §2.6)  [WP5]
  *
  * Static copy + counters live in index.html. This module:
- *  - makes sure the prerendered list view (years, milestones, repo tables) is there
+ *  - makes sure the prerendered list view (years with their milestones) is there
  *    (renders it from data if the prerender block is still empty),
  *  - shows the „Zeitraffer | Liste“ switch once repos.json is loaded
  *    (Liste is the default below 1024 px and when calm), and
@@ -10,14 +10,15 @@
  *    scripts/pack-zr.mjs) the first time it is shown; if that request fails, the list comes back.
  * If repos.json fails, the list stays and the switch stays hidden (§2.11).
  */
-import renderSchichtbuchStatic, { repoTable } from "../render/schichtbuch-static.js";
+import renderSchichtbuchStatic from "../render/schichtbuch-static.js";
 
 /** Years kept open on phones: the Stand year and the two before it. */
 export const OPEN_YEARS = 3;
 
 /**
- * Phones (< 640 px): the older years of the list sit behind one „Ältere Jahre (…)“ disclosure,
- * so the log is not eight screens of scrolling. From 640 px the disclosure is always open and
+ * Phones (< 640 px): the middle years of the list sit behind one „2015–2023 zeigen“ disclosure,
+ * so the log is not eight screens of scrolling. The first year (where it started: the first
+ * video) and the newest three stay open, so „Erst Kamera. Dann Code.“ reads without a tap. From 640 px the disclosure is always open and
  * its summary hidden (CSS). Without JS, everything stays visible. Fragment links and find-in-page
  * open a closed <details> by themselves.
  */
@@ -25,7 +26,7 @@ function groupOlderYears(list) {
   const log = list.querySelector("[data-sb-log]");
   const blocks = log ? [...log.querySelectorAll(":scope > .sb-year")] : [];
   const last = Math.max(...blocks.map((b) => +b.dataset.year));
-  const older = blocks.filter((b) => +b.dataset.year <= last - OPEN_YEARS);
+  const older = blocks.slice(1).filter((b) => +b.dataset.year <= last - OPEN_YEARS);
   if (!older.length || log.querySelector(".sb-older")) return () => {};
   const first = older[0].dataset.year;
   const to = older[older.length - 1].dataset.year;
@@ -33,9 +34,9 @@ function groupOlderYears(list) {
   box.className = "sb-older";
   const summary = document.createElement("summary");
   summary.className = "sb-older-summary";
-  summary.textContent = `Ältere Jahre (${first}–${to})`;
+  summary.textContent = first === to ? `${first} zeigen` : `${first}–${to} zeigen`;
   box.append(summary, ...older);
-  log.prepend(box);
+  blocks[0].after(box);
   const narrow = matchMedia("(max-width: 639px)");
   const sync = () => (box.open = !narrow.matches);
   sync();
@@ -57,16 +58,6 @@ export async function mount(root, ctx) {
   if (list && !list.querySelector("[data-sb-log]") && data) {
     const markup = renderSchichtbuchStatic(data, { bindings: data.bindings });
     if (markup) list.insertAdjacentHTML("beforeend", markup);
-  }
-
-  // The prerendered log has no per-repo tables (page weight); add them from repos.json.
-  if (list && data?.repos?.length) {
-    const sorted = [...data.repos].sort((a, b) => a.c.localeCompare(b.c));
-    for (const block of list.querySelectorAll(".sb-year")) {
-      if (block.querySelector(".sb-repos")) continue;
-      const rows = sorted.filter((r) => r.c.startsWith(block.dataset.year));
-      if (rows.length) block.querySelector(".sb-year-body")?.insertAdjacentHTML("beforeend", String(repoTable(block.dataset.year, rows)));
-    }
   }
 
   const offOlder = list ? groupOlderYears(list) : () => {};

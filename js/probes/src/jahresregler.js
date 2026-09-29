@@ -9,7 +9,7 @@
 import { nextId } from "./index.js";
 
 export const KIND = "echt";
-export let CHIP = "Echt: die Jahre und Etiketten aus dem Spiel.";
+export let CHIP = "Die Jahre und Etiketten aus dem Spiel.";
 
 
 export async function mount(root, ctx = {}) {
@@ -19,7 +19,7 @@ export async function mount(root, ctx = {}) {
   ]);
   if (!Array.isArray(years) || !years.length) throw new Error("beatguessr.json fehlt");
   const songs = years.reduce((n, y) => n + (y.songs?.length ?? 0), 0);
-  CHIP = `Echt: die Jahre und Etiketten aus dem Spiel (${new Intl.NumberFormat("de-DE").format(songs)} Songs).`;
+  CHIP = `Die Jahre und Etiketten aus dem Spiel (${new Intl.NumberFormat("de-DE").format(songs)} Songs).`;
   const colours = meta?.decadeColours ?? {};
   const first = years[0].year;
   const last = years[years.length - 1].year;

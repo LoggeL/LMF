@@ -1,7 +1,7 @@
 {
   "id": "coop-sudoku",
   "story": [
-    "Sudoku, aber zusammen: Alle sehen die Züge und Cursor der anderen in Echtzeit und lösen dasselbe Rätsel, oder sie treten im Versus-Modus gegeneinander an und schnappen sich Zellen. Das erste Commit ist vom ersten Weihnachtstag 2025."
+    "Sudoku, aber zusammen: Alle sehen die Züge und Cursor der anderen in Echtzeit und lösen dasselbe Rätsel, oder sie treten im Versus-Modus gegeneinander an und schnappen sich Zellen."
   ],
   "highlights": [
     "Echtzeit-Koop mit sichtbaren Zügen und Cursorn der Mitspieler",
@@ -29,7 +29,7 @@
   },
   "commits": 10,
   "funFact": {
-    "text": "Initial Commit am 25.12.2025 um 02:37 Uhr deutscher Zeit, keine drei Stunden nach dem Start von BeatGuessr. Beides sind Projekte aus der Weihnachtsnacht.",
+    "text": "Entstanden in derselben Weihnachtsnacht wie BeatGuessr, keine drei Stunden später.",
     "source": 0
   },
   "refs": {

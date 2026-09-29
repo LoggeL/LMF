@@ -1,16 +1,14 @@
 {
   "id": "melodai",
   "story": [
-    "MelodAI macht aus fast jedem Song Karaoke: Song suchen, dann trennt die Pipeline Gesang und Instrumental, erzeugt Lyrics mit Wort-Zeitstempeln und formt sie per LLM zu singbaren Zeilen.",
-    "Im Player wird Wort für Wort hervorgehoben, und Gesang und Instrumental lassen sich getrennt regeln. Das Projekt ist Open Source mit CI, CodeQL und Integrationstests."
+    "MelodAI macht aus fast jedem Song Karaoke: Song suchen, dann trennt die Pipeline Gesang und Instrumental, erzeugt Lyrics mit Wort-Zeitstempeln und formt sie per LLM zu singbaren Zeilen; im Player läuft das Wort für Wort mit."
   ],
   "highlights": [
-    "Sechsstufige Pipeline: Suche, Download, Stimmtrennung (Demucs), Transkription (WhisperX), LLM-Zeilenbildung, Wiedergabe",
+    "Stimmtrennung mit Demucs, Wort-Timing mit WhisperX, Zeilen per LLM",
     "Wortgenaues Karaoke-Highlighting mit Sprecher-Einfärbung",
     "Web Audio API mit zwei GainNodes: Gesang und Instrumental getrennt regelbar (Mix- und Master-Regler)",
-    "Lyrics-Übersetzungen (seit Juni 2026)",
-    "Bibliothek, Admin-Bereich für Songs und Nutzer",
-    "CI, CodeQL, Offline-Integrationstests; MIT-Lizenz"
+    "Lyrics-Übersetzungen",
+    "Bibliothek, Admin-Bereich für Songs und Nutzer"
   ],
   "stack": [
     "Python 3.12",
@@ -57,6 +55,14 @@
       "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
       "url": "https://api.github.com/repos/LoggeL/MelodAI",
       "checkedAt": "2026-09-28"
+    }
+  ],
+  "facts": [
+    {
+      "key": "pipeline",
+      "label": "Pipeline",
+      "value": "6 Schritte",
+      "source": 0
     }
   ]
 }

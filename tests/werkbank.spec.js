@@ -120,10 +120,13 @@ test("hero images always carry alt text; Selantis skips the drop cap; short stor
   await expect(page.locator("#werkbank .wb-hero-img")).toHaveAttribute("alt", /.+/);
   await page.evaluate(() => (location.hash = "werk/skiing-2026"));
   await expect(page.locator("#modal-title")).toHaveText(PROJECTS.find((p) => p.id === "skiing-2026").title);
-  await expect(page.locator("#werkbank .wb-cols")).toHaveClass(/wb-cols--short/);
-  // The language source mark is not part of the heading text.
+  // Short story without tools beside it: one column, no empty aside.
+  await expect(page.locator("#werkbank .wb-cols")).toHaveClass(/wb-cols--(short|solo)/);
   await page.evaluate(() => (location.hash = "werk/melodai"));
-  await expect(page.locator("#werkbank .wb-langs h4")).toHaveText("Legierung laut GitHub");
+  // the tools say what it is built with; no language percentages beside them
+  await expect(page.locator("#werkbank .wb-aside .wb-tools")).toBeVisible();
+  await expect(page.locator("#werkbank .wb-langs")).toHaveCount(0);
+  await expect(page.locator("#werkbank .wb-aside")).not.toContainText("%");
 });
 
 test("focus trap, Esc restores the plate, title restored", async ({ page }) => {
@@ -150,10 +153,12 @@ test("film facade: zero YouTube/Google requests before the click, then an iframe
     if (/youtube|ytimg|google/.test(r.url())) requests.push(r.url());
   });
   await direct(page, film.id);
-  const play = page.getByRole("button", { name: /Film abspielen \(lädt YouTube\)/ });
+  const play = page.getByRole("button", { name: /^Film abspielen/ });
   await expect(play).toBeVisible();
+  // one consent line, said once; the inline player is the way to watch, so no second „Film ansehen“
   await expect(dialog(page)).toContainText("Beim Abspielen lädt YouTube (Google) Inhalte und setzt ggf. Cookies.");
-  await expect(dialog(page).getByRole("link", { name: /Auf YouTube öffnen/ })).toHaveAttribute("href", `https://www.youtube.com/watch?v=${film.youtubeId}`);
+  await expect(dialog(page).getByRole("link", { name: /Auf YouTube öffnen/ })).toHaveCount(0);
+  await expect(page.locator("#modal-link")).toBeHidden();
   await page.waitForTimeout(800);
   expect(requests).toEqual([]);
   await page.route(/youtube-nocookie\.com/, (route) => route.fulfill({ status: 200, contentType: "text/html", body: "<title>stub</title>" }));
@@ -167,7 +172,7 @@ test("film facade: zero YouTube/Google requests before the click, then an iframe
   await expect(page.locator("iframe.wb-film-iframe")).toHaveCount(0);
 });
 
-test("every Werkstück renders: Punze sources with „geprüft am“, sourced spec rows, https CTA, no errors", async ({ page }) => {
+test("every Werkstück renders as a project page: fact strip, https CTA, no citations, no errors", async ({ page }) => {
   test.setTimeout(180000);
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -177,26 +182,23 @@ test("every Werkstück renders: Punze sources with „geprüft am“, sourced sp
     await expect(page.locator("#modal-title")).toHaveText(p.title);
     await expect(page.locator("#modal-link")).toHaveAttribute("href", /^https:\/\//);
     const d = detailsOf(p.id);
-    if (d?.sources?.length) {
-      const list = page.locator("#werkbank .wb-sources .punze-list > li");
-      await expect(list).toHaveCount(d.sources.length);
-      await expect(list.first()).toContainText("geprüft am");
-      await expect(dialog(page).getByRole("button", { name: `Gepunzt · ${d.sources.length} ${d.sources.length === 1 ? "Quelle" : "Quellen"}` })).toHaveCount(1);
-      // Every Werkstattdaten value except Stand and Legierung carries a source mark that resolves.
-      const rows = page.locator("#werkbank .wb-spec .spec-row");
-      const n = await rows.count();
-      expect(n, p.id).toBeGreaterThan(1);
-      for (let i = 0; i < n; i++) {
-        const row = rows.nth(i);
-        const label = (await row.locator("dt").textContent()).trim();
-        if (label === "Stand" || label === "Legierung") continue;
-        const href = await row.locator("dd sup a").first().getAttribute("href");
-        expect(href, `${p.id}: ${label}`).toMatch(new RegExp(`^#src-${p.id}-\\d+$`));
-        await expect(page.locator(href)).toHaveCount(1);
-      }
-    }
+    // The data keeps its sources; the page shows a compact fact strip instead of footnotes, and no
+    // strip at all when it would only repeat the year.
+    const cells = page.locator("#werkbank .wb-facts .wb-fact");
+    if (d?.sources?.length && (await cells.count())) await expect(cells.first(), p.id).toBeVisible();
+    if ((await cells.count()) === 1) await expect(cells.first(), p.id).not.toHaveClass(/wb-fact--jahr/);
+    // Portfolio, not report: no hallmark, no ¹²³ marks (a probe's maths exponent, sup[data-ph], is fine), no source lists, no „Stand“ stamps.
+    await expect(page.locator("#werkbank sup:not([data-ph]), #werkbank .punze-button, #werkbank [popover], #werkbank .wb-sources, #werkbank .wb-spec")).toHaveCount(0);
+    const text = await dialog(page).innerText();
+    expect(text, p.id).not.toMatch(/Gepunzt|Punze|Quelle|geprüft am|Woher ich das weiß|Repo angelegt|\bStand\b|Werkstattdaten|davon von mir|Gebucht wird|Videobeschreibung|Laut Commit|öffentliche Repos|Informationsangebot|Commits|Randnotiz|Aus dem Archiv|Läuft auch bei|Sprachen|\d+,\d\s?%/);
+    // stars only when they say something; „Zuletzt dran“ only for a piece that has cooled off
+    const sterne = page.locator("#werkbank .wb-fact--sterne dd");
+    if (await sterne.count()) expect(Number(await sterne.textContent()), p.id).toBeGreaterThanOrEqual(25);
+    if (await page.locator("#werkbank .wb-fact--zuletzt").count()) await expect(page.locator("#werkbank")).toHaveAttribute("data-glow", /abgekuehlt|ausgemustert/);
+    // one row of at most four cells
+    expect(await page.locator("#werkbank .wb-facts .wb-fact").count(), p.id).toBeLessThanOrEqual(4);
     // Private repos never show their name.
-    if (p.repo?.private) await expect(dialog(page)).not.toContainText(p.repo.fullName);
+    if (p.repo?.private) expect(text).not.toContain(p.repo.fullName);
   }
   expect(errors).toEqual([]);
 });
@@ -204,31 +206,31 @@ test("every Werkstück renders: Punze sources with „geprüft am“, sourced sp
 test("LoggeRythm links only its repo; Marathon shows no goals, times or dates", async ({ page }) => {
   test.skip(!has("loggerythm") || !has("marathon-trainer"), "projects missing");
   await direct(page, "loggerythm");
-  await expect(page.locator("#werkbank .wb-sources")).toBeVisible();
+  await expect(page.locator("#werkbank .wb-story")).toBeVisible();
   await expect(page.locator("#modal-link")).toHaveAttribute("href", /^https:\/\/github\.com\/LoggeL\/LoggeRythm/);
   await expect(page.locator("#modal-link")).toContainText("Repo ansehen");
   await expect(page.locator('#werkbank [data-wb="repo"]')).toBeHidden();
   await expect(page.locator("#werkbank .wb-note")).toContainText("privates Demo-Projekt");
   await page.evaluate(() => (location.hash = "werk/marathon-trainer"));
   await expect(page.locator("#modal-title")).toHaveText("Marathon Trainer");
-  await expect(page.locator("#werkbank .wb-sources")).toBeVisible();
+  await expect(page.locator("#werkbank .wb-story")).toBeVisible();
   const text = await dialog(page).innerText();
   expect(text).not.toMatch(/2:59|3:05|Pace|JGA|Urlaub|Festival|25\.10\./);
   expect(text).not.toContain("LoggeL/marathon-trainer");
 });
 
-test("Punze popover lists sources and closes with Esc without closing the Werkbank", async ({ page }) => {
+test("fact strip: a few numbers at a glance, then the next Werkstück as a card", async ({ page }) => {
   await direct(page, "melodai");
-  const button = page.locator("#werkbank .punze-button");
-  await expect(button).toHaveText(/Gepunzt · \d+ Quellen?/);
-  await button.click();
-  const pop = page.getByRole("dialog", { name: "Woher ich das weiß" });
-  await expect(pop).toBeVisible();
-  await expect(pop.locator(".punze-list > li").first()).toContainText("geprüft am");
-  await expect(pop).toContainText("Alles hier ist belegt. Wenn was nicht stimmt, sag Bescheid.");
-  await expect(pop.getByRole("link", { name: "sag Bescheid." })).toHaveAttribute("href", /^mailto:hyper\.xjo@gmail\.com\?subject=/);
-  await page.keyboard.press("Escape");
-  await expect(pop).toBeHidden();
+  const facts = page.locator("#werkbank .wb-facts");
+  await expect(facts).toHaveAttribute("aria-label", "Eckdaten");
+  // the project's own numbers first; no commit count, and no „Zuletzt dran“ while it still glows
+  await expect(facts.locator("dt")).toHaveText(["Jahr", "Pipeline"]);
+  await expect(facts.locator(".wb-fact--jahr dd")).toHaveText(String(PROJECTS.find((p) => p.id === "melodai").year));
+  const next = page.locator("#werkbank .wb-next-card");
+  await expect(next).toContainText("Nächstes Werkstück");
+  const title = (await next.locator(".wb-next-title").textContent()).trim();
+  await next.click();
+  await expect(page.locator("#modal-title")).toHaveText(title);
   await expect(dialog(page)).toBeVisible();
 });
 
@@ -244,28 +246,27 @@ test("stack chip closes the Werkbank and searches the Lager for the tool", async
   await expect(page.locator('#projects-container [data-project-id="melodai"]')).toHaveCount(1);
 });
 
-test("Codex strip sits on its own stage; language list uses a decimal comma", async ({ page }) => {
+test("Codex strip sits on its own stage; no language percentages", async ({ page }) => {
   test.skip(!has("codex-quota-widget"), "codex-quota-widget not in data");
   await direct(page, "codex-quota-widget");
   const strip = page.locator("#werkbank .wb-hero-media--strip img");
   await expect(strip).toBeVisible();
   await expect.poll(() => strip.evaluate((img) => img.naturalWidth)).toBe(945);
-  await expect(page.locator("#werkbank .wb-lang-list")).toContainText(/Kotlin 95,7\s%/);
-  await expect(page.locator("#werkbank .wb-lang-bar")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("#werkbank .wb-lang-list, #werkbank .wb-lang-bar")).toHaveCount(0);
 });
 
 for (const theme of ["light", "dark"])
-  test(`axe is clean with a film Werkbank and the Punze open (${theme})`, async ({ page }) => {
+  test(`axe is clean with a film Werkbank and a code Werkbank (${theme})`, async ({ page }) => {
     const film = FILMS.find((f) => /^[\w-]{11}$/.test(f.youtubeId ?? "") && has(f.id));
     await page.emulateMedia({ colorScheme: theme });
-    await direct(page, film.id);
-    await expect(page.locator("#werkbank .wb-sources")).toBeVisible();
-    let { violations } = await new AxeBuilder({ page }).include("#werkbank").withTags(AXE_TAGS).analyze();
-    expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
-    await page.locator("#werkbank .punze-button").click();
-    await expect(page.getByRole("dialog", { name: "Woher ich das weiß" })).toBeVisible();
-    ({ violations } = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze());
-    expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
+    for (const id of [film.id, "melodai"].filter(has)) {
+      await direct(page, id);
+      await expect(page.locator("#werkbank .wb-cols")).toBeVisible();
+      // Switching pieces fades the new one in: measure contrast once it has landed.
+      await page.evaluate(() => Promise.all(document.getAnimations().filter((a) => a.animationName === "wb-swap").map((a) => a.finished.catch(() => {}))));
+      const { violations } = await new AxeBuilder({ page }).include("#werkbank").withTags(AXE_TAGS).analyze();
+      expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`), id).toEqual([]);
+    }
   });
 
 test("mobile: full-screen sheet with a bottom bar and no overflow", async ({ page }) => {
@@ -323,13 +324,15 @@ test("search helper still exported from js/projects.js (compat)", async () => {
   expect(compat.safeUrl("javascript:alert(1)")).toBe("#");
 });
 
-test("390 px: no spec-sheet value runs past its card (film quotes wrap, marks stay glued)", async ({ page }) => {
+test("390 px: no fact runs past the page (film roles wrap, links stay glued)", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const ids = ["skiing-2023", "skiing-2024-fun", "skiing-2024-epic", "selantis", "melodai", "theater-website"].filter(has);
   for (const id of ids) {
     await direct(page, id);
-    await expect(page.locator("#werkbank .wb-spec")).toBeVisible();
-    const over = await page.locator("#werkbank .wb-spec").evaluate((dl) => {
+    await expect(page.locator("#werkbank .wb-cols")).toBeVisible();
+    // a film with a player and only a year has no strip (the badge shows the length)
+    if (!(await page.locator("#werkbank .wb-facts").count())) continue;
+    const over = await page.locator("#werkbank .wb-facts").evaluate((dl) => {
       const right = dl.getBoundingClientRect().right;
       return [...dl.querySelectorAll("dd, dd *")]
         .filter((el) => el.getClientRects().length && !el.closest(".vh") && el.getBoundingClientRect().right > right + 0.5)
@@ -339,21 +342,21 @@ test("390 px: no spec-sheet value runs past its card (film quotes wrap, marks st
   }
 });
 
-test("source marks never wrap alone (film parts, „Teil 3“)", async ({ page }) => {
+test("the ↗ never wraps alone (film parts)", async ({ page }) => {
   test.skip(!has("selantis"), "selantis not in data");
+  await page.setViewportSize({ width: 390, height: 844 });
   await direct(page, "selantis");
-  const lonely = await page.locator("#werkbank .wb-spec sup.ref").evaluateAll((marks) =>
-    marks
+  const arrows = page.locator("#werkbank .spec-parts .ext-i");
+  expect(await arrows.count()).toBeGreaterThan(0);
+  const lonely = await arrows.evaluateAll((list) =>
+    list
       .filter((m) => {
-        const prev = m.previousSibling ?? m.parentElement.previousSibling;
         const range = document.createRange();
-        range.selectNodeContents(m.parentElement);
-        const rects = [...range.getClientRects()].filter((r) => r.width > 0);
+        range.selectNodeContents(m.closest(".nw") ?? m.parentElement);
         const mr = m.getBoundingClientRect();
-        // alone = the mark's line holds nothing else of its value
-        return !rects.some((r) => Math.abs(r.top - mr.top) < 4 && r.left < mr.left - 2) && prev !== null;
+        return ![...range.getClientRects()].some((r) => r.width > 0 && Math.abs(r.top - mr.top) < 6 && r.left < mr.left - 2);
       })
-      .map((m) => m.closest(".spec-row")?.className),
+      .map((m) => m.closest("li")?.textContent.trim()),
   );
   expect(lonely).toEqual([]);
 });

@@ -4,7 +4,7 @@
  * currentOrder() → ids of all matches in result order (for the Werkbank's prev/next).
  */
 import { html, icon, $, $$, isTyping } from "../lib/dom.js";
-import { GROUPS, formatDate } from "../lib/derive.js";
+import { GROUPS } from "../lib/derive.js";
 import { filterProjects, sortProjects, SORTS } from "../lib/search.js";
 import { plateContext, renderPlates, plateMedia } from "../render/plate.js";
 import { scrollToTarget } from "../lib/scroll.js";
@@ -144,14 +144,6 @@ export async function mount(root, ctx) {
   const films = data.films instanceof Map ? data.films : null;
   const baseCtx = plateContext(data, { strips: new Map() });
 
-  // Every number carries its date (§1.4 #3): the stars and glow on the plates are „Stand {asOf}“.
-  const asOf = data.snapshot?.asOf;
-  if (asOf && !root.querySelector(".lager-stand")) {
-    count.insertAdjacentHTML(
-      "afterend",
-      String(html`<p class="meta lager-stand">Stand <time datetime="${asOf}">${formatDate(asOf)}</time> <span class="lager-stand-no"><span class="lager-stand-sep">· </span><span aria-hidden="true">Nº</span><span class="vh">Nummer</span> = Reihenfolge nach Jahr</span></p>`),
-    );
-  }
   const loaded = new Map(); // id → details (for stack names in the haystack)
   const state = { ...parseState(location.search), limit: BATCH };
   let prevIds = new Set();

@@ -52,14 +52,19 @@ export function daysBetween(a, b) {
 /** Year of an ISO date string, or NaN. */
 export const yearOf = (iso) => (typeof iso === "string" ? Number(iso.slice(0, 4)) : NaN);
 
+const MONTHS_LONG = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const MONTHS_SHORT = ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."];
+
 /**
  * German date formatting without Intl surprises: "28.09.2026".
- * `precision` "month" → "09.2026", "year" → "2026", "dayMonth" → "28.09.".
+ * `precision` "month" → "09.2026", "year" → "2026", "dayMonth" → "28.09.", "monthShort" → "Sept. 2026", "monthLong" → "September 2026".
  */
 export function formatDate(iso, precision = "day") {
   if (typeof iso !== "string" || !/^\d{4}/.test(iso)) return "";
   const [y, m, d] = iso.slice(0, 10).split("-");
   if (precision === "year" || !m) return y;
+  if (precision === "monthShort") return `${MONTHS_SHORT[+m - 1]} ${y}`;
+  if (precision === "monthLong") return `${MONTHS_LONG[+m - 1]} ${y}`;
   if (precision === "month" || !d) return `${m}.${y}`;
   if (precision === "dayMonth") return `${d}.${m}.`;
   return `${d}.${m}.${y}`;
@@ -342,6 +347,7 @@ export function bindings(data = {}) {
   const currentYear = asOf ? yearOf(asOf) : null;
   if (asOf) {
     b["snapshot.asOf"] = formatDate(asOf);
+    b["snapshot.asOfMonth"] = formatDate(asOf, "monthLong");
     b["currentYear"] = currentYear;
   }
 
@@ -366,6 +372,7 @@ export function bindings(data = {}) {
   if (gh?.createdAt) b["github.sinceYear"] = yearOf(gh.createdAt);
   if (data.snapshot?.youtube?.firstUpload) {
     b["youtube.firstUpload"] = formatDate(data.snapshot.youtube.firstUpload);
+    b["youtube.firstUploadMonth"] = formatDate(data.snapshot.youtube.firstUpload, "monthLong");
     b["youtube.firstYear"] = yearOf(data.snapshot.youtube.firstUpload);
   }
 
@@ -398,6 +405,7 @@ export function bindings(data = {}) {
     const sameYear = g.first.slice(0, 4) === g.last.slice(0, 4);
     b["gallery.first"] = formatDate(g.first, sameYear ? "dayMonth" : "day");
     b["gallery.last"] = formatDate(g.last);
+    b["gallery.year"] = yearOf(g.last);
     b["gallery.hourFrom"] = g.hourFrom;
     b["gallery.hourTo"] = g.hourTo;
   }

@@ -2,13 +2,13 @@
   "id": "theater-website",
   "story": [
     "Für das Kolpingtheater Ramsen baue ich die Website samt Ticketsystem. Die aktuelle Version zeigt Chronik, Ensemble, Galerien pro Stück und eine Online-Platzreservierung mit Saalplan, QR-Tickets, Kalendereintrag und inzwischen Google-Wallet-Tickets.",
-    "Davor gab es schon eigene Vorgänger: eine Theaterseite ab 2020 und ein kleines Ticketsystem mit Turnstile-Captcha und Mailbestätigung."
+    "Davor gab es schon eine eigene Theaterseite (ab 2020) und ein kleines Ticketsystem."
   ],
   "highlights": [
     "Buchung mit visueller Platzwahl, Belegungsanzeige pro Vorstellung und Warnungen vor Einzelplatzlücken",
     "QR-Code-Tickets für den Einlass, druckoptimierte Ticketansicht",
     "Kalenderintegration (ICS) mit Plattformerkennung und 2-Stunden-Erinnerung",
-    "Google-Wallet-Tickets (Commits vom September 2026)",
+    "Google-Wallet-Tickets",
     "Chronik-Zeitleiste, Team-Seiten mit Rollen und Technik-Jobs, Masonry-Galerie mit Lightbox je Stück",
     "BlurHash-Platzhalter, Pressebereich mit Plakaten und Trailern, Hell/Dunkel-Theme"
   ],
@@ -38,25 +38,28 @@
   "facts": [
     {
       "key": "play",
+      "kind": "probe",
       "label": "Gebucht wird",
       "value": "Romeo und Julia",
       "source": 6
     },
     {
       "key": "seats",
-      "label": "Plätze pro Vorstellung",
+      "label": "Plätze",
       "value": "68",
       "source": 6
     },
     {
       "key": "nomination",
-      "label": "Nominiert (das Theater)",
+      "kind": "ribbon",
+      "label": "Nominiert",
       "value": "Deutscher Engagementpreis 2026",
+      "text": "Das Theater ist für den Deutschen Engagementpreis 2026 nominiert.",
       "source": 5
     }
   ],
   "funFact": {
-    "text": "Rund ums Theater sind weitere Spielereien entstanden, alle als öffentliche Repos, zum Beispiel „Rampenlicht“ (ein Online-Kartenspiel mit den echten Theatermitgliedern als Karten) und eine Jubiläums-Slideshow.",
+    "text": "Rund ums Theater sind weitere Spielereien entstanden, zum Beispiel „Rampenlicht“ (ein Online-Kartenspiel mit den echten Theatermitgliedern als Karten) und eine Jubiläums-Slideshow.",
     "source": 3
   },
   "relatedRepos": [

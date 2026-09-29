@@ -2,21 +2,19 @@
  * Meisterstücke · Kapitel I–III, Zwischenstück, Universum, Probestück-Mounts  [WP4]  (spec §2.3, §5.6)
  *
  * Binds data/chapters.json to the static chapter markup in index.html:
- *   · Werkstattdaten: the static <dl> is rebuilt from projects.json + details/<id>.json, every
- *     value with a source mark (¹²³, the same source as in the Werkbank) that opens the Punze
- *   · Punze button + popover per chapter
+ *   · Fact strip (Seit · the project's own number · Stack): the year is refreshed from
+ *     projects.json ([data-project-year]); the rest is curated copy
  *   · Probestück: mounted when the stage is within one viewport, destroyed when > 2 away
  *   · Kolpingtheater-Universum (Kapitel I) via ./universe.js
- *   · Zwischenstück: repo creation stamps + the 81-second ruler, computed from repo.createdTs
+ * The Zwischenstück (ShareX) is static: three window cards, no timeline.
  * Kapitel IV (#kapitel-iv) belongs to WP3 (sections/film.js) and is not touched here.
  * Without details a chapter keeps its static copy; nothing is invented to fill a gap.
+ * The sources stay in data/details/*.json; nothing on the page cites them.
  */
 
-import { html, raw, escapeHtml, safeUrl } from "../lib/dom.js";
+import { escapeHtml } from "../lib/dom.js";
 import { mountProbe } from "../probes/index.js";
 import { renderUniverse } from "./universe.js";
-import { renderPunze, supportsPopover, sourceLabel } from "../werkbank/punze.js";
-import { repoValue, specRows } from "../render/specsheet.js";
 
 const fmtDate = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso ?? ""));
@@ -30,7 +28,6 @@ const hostOf = (url) => {
     return "";
   }
 };
-const extIcon = raw('<svg class="i" aria-hidden="true" focusable="false"><use href="#i-arrow-ne"></use></svg><span class="vh"> (öffnet neue Seite)</span>');
 
 export async function mount(root, ctx) {
   const data = await ctx.data;
@@ -98,11 +95,7 @@ export async function mount(root, ctx) {
       const project = id ? data.byId?.get(id) : null;
       if (!project) return;
       const details = await Promise.resolve(data.details?.get(id)).catch(() => null);
-      if (details && Array.isArray(details.sources) && details.sources.length) {
-        bindSpecsheet(article, project, details);
-        bindPunze(article, project, details);
-        article.dataset.bound = "";
-      }
+      if (details) article.dataset.bound = "";
     });
 
   /* ── Universum (Kapitel I) ── */
@@ -112,9 +105,6 @@ export async function mount(root, ctx) {
     const uv = renderUniverse(uvMount, data.universe, { motion: ctx.motion, byId: data.byId });
     cleanups.push(() => uv.destroy());
   }
-
-  /* ── Zwischenstück: three repos, 81 seconds ── */
-  bindDreiwelten(root, data);
 
   /* ── „Begonnen“ fallbacks come from projects.json, never typed ── */
   for (const dd of root.querySelectorAll("[data-project-year]")) {
@@ -162,135 +152,6 @@ export async function mount(root, ctx) {
       handles.clear();
     },
   };
-}
-
-/* ── Werkstattdaten ──────────────────────────────────────────────────────────────────────────────── */
-
-function bindSpecsheet(article, p, d) {
-  const sheet = article.querySelector('[data-mount="specsheet"]');
-  const dl = sheet?.querySelector("dl");
-  if (!dl) return;
-  const n = d.sources.length;
-  // A mark names its source („Quelle 10: GitHub API“), so a screen reader's links list says what it is.
-  const srcName = (i) => sourceLabel(d.sources[i]).split(" · ")[0];
-  const sup = (i) => (Number.isInteger(i) && i >= 0 && i < n ? html`<sup class="src-mark"><a href="#msrc-${p.id}-${i + 1}" data-src="${i}" aria-label="Quelle ${i + 1}: ${srcName(i)}">${i + 1}</a></sup>` : "");
-  // Every row cites the same source as in the Werkbank: the indices come from the shared
-  // render/specsheet.js rules (specRows), never from a second, local guess.
-  const src = Object.fromEntries(specRows(p, d).map((r) => [r.key, r.src]));
-  const rows = [];
-  const row = (dt, dd, ref) => rows.push(html`<div><dt>${dt}</dt><dd>${dd}${sup(ref)}</dd></div>`);
-
-  if (Number.isFinite(p.year) && "begonnen" in src) row("Begonnen", String(p.yearLabel ?? p.year), src.begonnen);
-  if (p.repo?.fullName && !p.repo.private && "repo" in src) {
-    const url = p.source && /github\.com/.test(p.source) ? p.source : `https://github.com/${p.repo.fullName}`;
-    // owner on a muted line, the repo name and its ¹ glued (the Werkbank's renderer, one look)
-    rows.push(html`<div><dt>Repo</dt><dd>${repoValue(p.repo.fullName, safeUrl(url), sup(src.repo))}</dd></div>`);
-  }
-  if (Number.isFinite(d.commits) && "commits" in src) {
-    const by = d.commitsBy && Number.isFinite(d.commitsBy.LoggeL) ? html` <span class="spec-sub">(${d.commitsBy.LoggeL} von mir)</span>` : "";
-    row("Commits", html`${d.commits}${by}`, src.commits);
-  }
-  if (p.repo?.pushedAt && "zuletzt" in src) row("Zuletzt dran", fmtDate(p.repo.pushedAt), src.zuletzt);
-  if (p.repo?.createdAt && "angelegt" in src) row("Repo angelegt", fmtDate(p.repo.createdAt), src.angelegt);
-  if (p.link && p.live?.status === "live" && "live" in src) {
-    row(
-      "Live",
-      html`<a href="${safeUrl(p.link)}" target="_blank" rel="noopener noreferrer">${hostOf(p.link)} ${extIcon}</a>${p.live.checkedAt ? html` <span class="spec-sub">geprüft ${fmtDate(p.live.checkedAt)}</span>` : ""}`,
-      src.live,
-    );
-  }
-  // „Stand“ is in the summary line („Werkstattdaten · Stand …“), not repeated as a row
-  if (rows.length < 2) return;
-  dl.innerHTML = String(html`${rows}`);
-  sheet.classList.add("is-bound");
-}
-
-/* ── Punze („Gepunzt · n Quellen“) ───────────────────────────────────────────────────────────────── */
-
-// Same Punze as in the Werkbank (js/werkbank/punze.js): one look, one closing line, one behaviour.
-// The chapter only adds ids to the list items so the ¹²³ marks in the Werkstattdaten can land on them.
-function bindPunze(article, p, d) {
-  const slot = article.querySelector('[data-mount="punze"]');
-  if (!slot) return;
-  const popover = supportsPopover();
-  slot.innerHTML = renderPunze({ id: p.id, title: p.title, sources: d.sources, prefix: "ch", popover });
-  if (!slot.firstElementChild) return;
-  slot.querySelectorAll(".punze-list > li").forEach((li, i) => {
-    li.id = `msrc-${p.id}-${i + 1}`;
-    li.tabIndex = -1;
-  });
-  slot.classList.add("is-bound");
-
-  // source marks open the Punze and land on their entry
-  article.addEventListener("click", (e) => {
-    const a = e.target.closest?.("sup.src-mark a[data-src]");
-    if (!a || !article.contains(a)) return;
-    e.preventDefault();
-    const pop = slot.querySelector(".punze-pop[popover]");
-    const details = slot.querySelector("details");
-    if (pop?.showPopover && !pop.matches(":popover-open")) pop.showPopover();
-    if (details) details.open = true;
-    const li = slot.querySelector(`#msrc-${CSS.escape(p.id)}-${Number(a.dataset.src) + 1}`);
-    if (li) {
-      li.focus({ preventScroll: Boolean(pop?.showPopover) });
-      li.classList.remove("is-flash");
-      void li.offsetWidth;
-      li.classList.add("is-flash");
-    }
-  });
-}
-
-/* ── Zwischenstück ───────────────────────────────────────────────────────────────────────────────── */
-
-function bindDreiwelten(root, data) {
-  const section = root.querySelector("#dreiwelten");
-  if (!section) return;
-  const cards = [...section.querySelectorAll(".dreiwelten-card[data-project-id]")];
-  const stamps = cards.map((card) => {
-    const p = data.byId?.get(card.dataset.projectId);
-    const ts = p?.repo?.createdTs ? Date.parse(p.repo.createdTs) : NaN;
-    return { card, p, ts };
-  });
-  if (stamps.some((s) => !Number.isFinite(s.ts))) return;
-  const t0 = Math.min(...stamps.map((s) => s.ts));
-  const span = Math.max(...stamps.map((s) => s.ts)) - t0;
-  // German local time, like every other time on the site (UTC 19:00:38 → 21:00:38 MESZ)
-  const clock = new Intl.DateTimeFormat("de-DE", { timeZone: "Europe/Berlin", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-  const hms = (t) => clock.format(new Date(t));
-
-  // index.html reserves the stamp line and the ruler (no jump when they fill in)
-  for (const { card, ts } of stamps) {
-    let s = card.querySelector(".dreiwelten-stamp");
-    if (s?.childElementCount) continue;
-    if (!s) {
-      s = document.createElement("span");
-      s.className = "dreiwelten-stamp meta";
-      card.append(s);
-    }
-    const delta = Math.round((ts - t0) / 1000);
-    s.innerHTML = String(html`Repo angelegt ${hms(ts)} Uhr <b>+${delta} s</b>`);
-  }
-
-  let ruler = section.querySelector(".dreiwelten-ruler");
-  if (ruler?.childElementCount || !(span > 0)) return;
-  const seconds = Math.round(span / 1000);
-  if (!ruler) {
-    ruler = document.createElement("div");
-    ruler.className = "dreiwelten-ruler";
-    ruler.setAttribute("aria-hidden", "true");
-    section.querySelector(".dreiwelten-list")?.after(ruler);
-  }
-  const ticks = [];
-  for (let s = 0; s <= seconds; s += 10) ticks.push(s);
-  // marks that (nearly) share a second stack upwards instead of overlapping
-  const at = stamps.map(({ ts }) => ((ts - t0) / span) * 100);
-  const rows = at.map((a, i) => at.slice(0, i).filter((b) => Math.abs(a - b) < 6).length);
-  ruler.innerHTML = String(html`
-    <div class="dreiwelten-ruler-track" style="--rows:${Math.max(...rows)}">
-      ${ticks.map((s) => html`<i style="--at:${((s / seconds) * 100).toFixed(2)}%"></i>`)}
-      ${stamps.map((_, i) => html`<b class="dreiwelten-ruler-mark" style="--at:${at[i].toFixed(2)}%;--row:${rows[i]}">${i + 1}</b>`)}
-    </div>
-    <p class="dreiwelten-ruler-scale meta"><span>${hms(t0)}</span><span>${seconds} Sekunden</span><span>${hms(t0 + span)} Uhr</span></p>`);
 }
 
 /* ── Pipeline (Kapitel III) ──────────────────────────────────────────────────────────────────────── */

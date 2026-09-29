@@ -18,11 +18,14 @@
  * - Values that scripts/snapshot-github.mjs refreshes (project.repo, details.commits,
  *   details.languages, details.commitsBy, relatedRepos[].commits) are preserved from the
  *   existing files when present, so running import after snapshot changes nothing.
+ * - Portfolio, not report: every written file goes through scripts/lib/portfolio-copy.mjs last
+ *   (visitor phrasing, no forensics); the sources stay untouched.
  * - Not imported: interactionIdeas, caveats, private README facts marked „nicht verwenden“,
  *   Marathon personal data, other people's Spotify reports, place names for the night walks.
  */
 import { readFile, writeFile, mkdir, readdir, access } from "node:fs/promises";
 import { stringifyProjects } from "./lib/json.mjs";
+import { polish, assertPolished } from "./lib/portfolio-copy.mjs";
 
 const ROOT = new URL("../", import.meta.url);
 const at = (p) => new URL(p, ROOT);
@@ -113,7 +116,8 @@ const FIXES = {
   "palatina-films-website": {
     link: "https://loggel.github.io/PalatinaFilms/",
     linkLabel: "Archiv ansehen",
-    groups: ["web", "film"],
+    // a website (about films), not a film: the Film chip and the Abspann both count the 15 films
+    groups: ["web"],
     archived: true,
     source: "https://github.com/LoggeL/PalatinaFilms",
   },
@@ -1021,7 +1025,7 @@ for (const p of projects) {
   if (!det.sources.length) throw new Error(`${p.id}: refusing details without a source`);
   if (det.story && !det.story.length) delete det.story;
   scrubExcluded(p.id, det);
-  await writeFile(at(file), JSON.stringify(det, null, 2) + "\n");
+  await writeFile(at(file), JSON.stringify(polish(file, det), null, 2) + "\n");
   detailsWritten.push(p.id);
 }
 // stale details files (projects that left the order) are removed from the index, not deleted
@@ -1037,7 +1041,7 @@ const KEY_ORDER = [
 ];
 const sortKeys = (o) => Object.fromEntries(Object.keys(o).sort((a, b) => KEY_ORDER.indexOf(a) - KEY_ORDER.indexOf(b)).map((k) => [k, o[k]]));
 const ordered = projects.map(sortKeys);
-await writeFile(at("data/projects.json"), stringifyProjects(ordered));
+await writeFile(at("data/projects.json"), stringifyProjects(polish("data/projects.json", ordered)));
 
 /* ============================================================ films.json */
 
@@ -1131,7 +1135,7 @@ const milestones = [
     sources: [gh("LoggeL/sharex-capture-engine"), gh("LoggeL/sharex-win98"), gh("LoggeL/sharex-afterimage-lab")],
   },
 ].map((m) => ({ ...m, sources: m.sources.map((s) => ({ ...s, checkedAt: CHECKED })) }));
-await writeFile(at("data/milestones.json"), JSON.stringify(milestones, null, 2) + "\n");
+await writeFile(at("data/milestones.json"), JSON.stringify(polish("data/milestones.json", milestones), null, 2) + "\n");
 
 /* ============================================================ chapters.json */
 
@@ -1222,7 +1226,8 @@ for (const p of partners) {
   applyPatch(p, patch);
   if (p.sources) p.sources = p.sources.map((s) => ({ ...s, checkedAt: CHECKED }));
 }
-await writeFile(at("data/partners.json"), JSON.stringify(partners, null, 2) + "\n");
+await writeFile(at("data/partners.json"), JSON.stringify(polish("data/partners.json", partners), null, 2) + "\n");
+assertPolished();
 
 console.log(
   `Imported ${projects.length} projects, ${detailsWritten.length} details, ${films.length} films, ${milestones.length} milestones, ${universe.nodes.length} universe nodes, ${partners.length} partners.`,

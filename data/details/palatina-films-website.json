@@ -2,12 +2,12 @@
   "id": "palatina-films-website",
   "story": [
     "Meine erste richtige Website, 2018 für Palatina Films („We bring you fantasy.“): Startseite, Über uns, Projekte, Team mit Profilbildern, mehrere Galerien und schon damals ein dunkles Theme.",
-    "Laut Commits gab es sogar einen Service Worker mit Benachrichtigungen und einen Kalender. Die Domain ist nicht mehr erreichbar, die Seite lebt als Archiv auf GitHub Pages weiter."
+    "Es gab sogar einen Service Worker mit Benachrichtigungen und einen Kalender. Die Domain ist nicht mehr erreichbar, die Seite lebt als Archiv auf GitHub Pages weiter."
   ],
   "highlights": [
     "Seiten für Start, Über uns, Projekte, Team und drei Galerien",
     "Umschaltbares dunkles Theme (2018)",
-    "Service Worker und Benachrichtigungen, Kalender (laut Commits Juni/Juli 2018)",
+    "Service Worker und Benachrichtigungen, Kalender (Juni/Juli 2018)",
     "Team-Seite mit automatisch erzeugten Thumbnails",
     "Gemeinsam mit realjupeters gepflegt (Bilder, Team)"
   ],

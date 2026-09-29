@@ -6,9 +6,11 @@
  * function when the block is empty at runtime.
  *
  * One block per year from the first sourced year (the first YouTube upload, 2014) to the
- * year of `snapshot.asOf`: heading „{yyyy} · {n} Repos“, the milestones of that year (each
- * with its source links) and a collapsible table of the repos created that year.
- * Repo names appear only when repos.json carries one (allowlisted by the snapshot script).
+ * year of `snapshot.asOf`: heading „{yyyy}“ with a quiet „{n} Repos“ (from 2 up) and the thin heat
+ * bar, then the milestones of that year. No per-repo ledger: the Zeitraffer already shows every
+ * repo. A year with neither milestones nor repos is left out. A milestone whose source is something
+ * a visitor wants to open (a video, a playlist, a repo) links its text there; the sources stay in
+ * data/milestones.json, the page shows no citation lines.
  */
 import { html, raw, safeUrl, escapeHtml } from "../lib/dom.js";
 import { reposByYear, fillBindings, formatDate, yearOf } from "../lib/derive.js";
@@ -31,8 +33,8 @@ export function markLang(text) {
   return raw(out);
 }
 
-/** Display date of a milestone by its precision. */
-export const milestoneDate = (m) => formatDate(m.date, m.precision === "year" ? "year" : m.precision === "month" ? "month" : "day");
+/** Display date of a milestone: month and year („Nov. 2014“), or the year alone; the day stays in <time datetime>. */
+export const milestoneDate = (m) => formatDate(m.date, m.precision === "year" ? "year" : "monthShort");
 
 /** Years shown: first sourced year (YouTube / milestones / repos) … year(asOf). */
 export function yearSpan(data) {
@@ -50,36 +52,27 @@ export function yearSpan(data) {
 }
 
 export const repoWord = (n) => (n === 1 ? "Repo" : "Repos");
+/** A year's repo count is worth a word from two up („1 Repo“ reads like a ledger line). */
+export const COUNT_FROM = 2;
 
-/** Compact on purpose (it is prerendered into index.html): same-tab links, the ↗ comes from CSS. */
-function sourceLinks(sources = []) {
-  return sources
-    .filter((s) => /^https:\/\//.test(s.url ?? ""))
-    .map((s) => html`<a class="ms-src" href="${safeUrl(s.url, "https://lmf.logge.top/")}">${s.label}</a>`);
+/** Sources worth opening for a visitor: a YouTube video or playlist, or a repo's front page. */
+const WATCHABLE = /^https:\/\/(www\.)?(youtube\.com\/(watch\?v=|playlist\?list=)|youtu\.be\/)/;
+const REPO_HOME = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/;
+
+/** The one link a milestone text carries (or null): the first video, else the first repo. */
+export function milestoneLink(m) {
+  const urls = (m.sources ?? []).map((s) => s.url ?? "");
+  return urls.find((u) => WATCHABLE.test(u)) ?? urls.find((u) => REPO_HOME.test(u)) ?? null;
 }
 
+/** Compact on purpose (it is prerendered into index.html): same-tab link, the ↗ comes from CSS. */
 function milestoneItem(m, bindings) {
+  const text = markLang(fillBindings(m.text, bindings));
+  const url = milestoneLink(m);
   return html`<li class="ms" data-kind="${m.kind}" data-date="${m.date}">
 <p class="ms-date meta"><time datetime="${m.date}">${milestoneDate(m)}</time> <span class="ms-kind">${KIND_LABEL[m.kind] ?? m.kind}</span></p>
-<p class="ms-text">${markLang(fillBindings(m.text, bindings))}</p>
-<p class="ms-sources meta"><span class="ms-sources-label">Quelle:</span> ${sourceLinks(m.sources)}</p>
+<p class="ms-text">${url ? html`<a class="ms-link" href="${safeUrl(url, "https://lmf.logge.top/")}">${text}</a>` : text}</p>
 </li>`;
-}
-
-function repoName(r) {
-  if (!r.n) return "öffentliches Repo";
-  return `<a href="https://github.com/LoggeL/${encodeURIComponent(r.n)}">${escapeHtml(r.n)}</a>`;
-}
-
-/** Compact on purpose (140 rows live in index.html): optional end tags are omitted, which is valid HTML. */
-export function repoTable(year, rows) {
-  const body = rows.map((r) => `<tr><td>${formatDate(r.c, "dayMonth")}<td>${repoName(r)}<td>${escapeHtml(r.l || "keine Angabe")}`).join("\n");
-  return raw(`<details class="sb-repos"><summary><span class="sb-summary-open">Repos zeigen</span><span class="sb-summary-close">Repos ausblenden</span></summary>
-<table class="sb-table"><caption class="vh">Öffentliche Repos, angelegt ${year}</caption>
-<thead><tr><th scope="col">Angelegt<th scope="col">Repo<th scope="col">Sprache</thead>
-<tbody>
-${body}
-</tbody></table></details>`);
 }
 
 /**
@@ -89,9 +82,6 @@ ${body}
  */
 export default function renderSchichtbuchStatic(data = {}, opts = {}) {
   const bindings = opts.bindings ?? data.bindings ?? {};
-  // In index.html (prerender, opts.marker set) the per-repo tables are left out to keep the
-  // page small; the year headings carry the counts. js/sections/schichtbuch.js adds the tables.
-  const tables = opts.tables ?? !opts.marker;
   const repos = Array.isArray(data.repos) ? [...data.repos].sort((a, b) => a.c.localeCompare(b.c)) : null;
   const milestones = Array.isArray(data.milestones) ? data.milestones : [];
   if (!repos && !milestones.length) return "";
@@ -101,12 +91,11 @@ export default function renderSchichtbuchStatic(data = {}, opts = {}) {
 
   const blocks = years.map((y) => {
     const ms = milestones.filter((m) => yearOf(m.date) === y);
-    const rows = repos ? repos.filter((r) => yearOf(r.c) === y) : [];
     const n = by[y] ?? 0;
-    if (!ms.length && !rows.length && !repos) return "";
+    if (!ms.length && !n) return "";
     return html`<div class="sb-year" id="jahr-${y}" data-year="${y}" data-count="${n}" style="--share:${(n / max).toFixed(3)}">
-<h3 class="sb-year-title"><span class="sb-year-num">${y}</span>${repos ? html` <span class="sb-year-count">· ${n} ${repoWord(n)}</span>` : ""}</h3>
-<div class="sb-year-body">${ms.length ? html`<ol class="sb-ms" role="list">${ms.map((m) => milestoneItem(m, bindings))}</ol>` : ""}${tables && rows.length ? repoTable(y, rows) : ""}</div>
+<h3 class="sb-year-title"><span class="sb-year-num">${y}</span>${repos && n >= COUNT_FROM ? html` <span class="sb-year-count">${n} ${repoWord(n)}</span>` : ""}</h3>
+<div class="sb-year-body">${ms.length ? html`<ol class="sb-ms" role="list">${ms.map((m) => milestoneItem(m, bindings))}</ol>` : ""}</div>
 </div>`;
   });
 

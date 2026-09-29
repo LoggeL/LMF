@@ -34,7 +34,7 @@
   },
   "commits": 147,
   "funFact": {
-    "text": "Die Standard-Datenbank im Backend heißt laut README „spotifrei.db“. Bis v1.0.13 sind 19 Release-Tags entstanden.",
+    "text": "Die Standard-Datenbank im Backend heißt „spotifrei.db“. Bis v1.0.13 sind 19 Release-Tags entstanden.",
     "source": 0
   },
   "media": [

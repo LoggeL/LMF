@@ -232,10 +232,6 @@
   #kapitel-iv .projector-quote-wrap:empty {
     display: none;
   }
-  #kapitel-iv .projector-label {
-    margin: 0;
-    color: var(--alloy-film);
-  }
   #kapitel-iv .projector-quote {
     margin: 0;
     font-family: var(--font-display);
@@ -265,7 +261,7 @@
     margin: 0;
     max-inline-size: 42ch;
     color: var(--muted);
-    font-size: var(--t-small, 0.9375rem);
+    font-size: 0.8125rem;
     line-height: 1.45;
   }
 
@@ -366,9 +362,6 @@
     }
     #kapitel-iv .film-more {
       max-inline-size: none;
-    }
-    #kapitel-iv .film-selantis {
-      max-inline-size: 32em;
     }
   }
   @media (max-width: 1023.98px) {

@@ -1,9 +1,9 @@
 /* css/sections/werkstatt.css  [WP5]
- * Die Werkstatt: Knopf, Bühne, Werkzeugwand (.wand-), Zunft (.zunft-), Abspann (.credits).
+ * Die Werkstatt: Knopf, Werkzeugwand (.wand-), Zunft (.zunft-), Abspann (.credits).
  * Tokens only. Heat in fast, cool out slow; everything that moves is calm-gated.
  */
 @layer sections {
-  #werkstatt :is(.buehne, .werkzeugwand, .zunft, .abspann) {
+  #werkstatt :is(.werkzeugwand, .zunft, .abspann) {
     margin-block-start: clamp(48px, 3.4vw, 64px);
   }
 
@@ -169,14 +169,6 @@
   .wand-tag:is(:hover, :focus-visible) .wand-count {
     color: var(--heat-text);
   }
-  .wand-note {
-    margin-block-start: var(--s6);
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.01em;
-    max-inline-size: 70ch;
-  }
-
   /* Zunft */
   .zunft {
     --tile: var(--surface);
@@ -201,8 +193,7 @@
     grid-template-areas:
       "mark name no"
       "mark cat cat"
-      "desc desc desc"
-      "punze punze punze";
+      "desc desc desc";
     align-content: start;
     align-items: start;
     gap: var(--s2) var(--s4);
@@ -286,53 +277,6 @@
     grid-area: desc;
     font-size: var(--t-small);
   }
-  .zunft-punze {
-    grid-area: punze;
-    margin-block-start: var(--s2);
-    font-size: var(--t-small);
-  }
-  .zunft-punze summary {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-block-size: 32px;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: var(--t-meta);
-    letter-spacing: 0.02em;
-    color: var(--muted);
-    list-style: none;
-  }
-  .zunft-punze summary::-webkit-details-marker {
-    display: none;
-  }
-  .zunft-punze summary .i {
-    font-size: 1.35em;
-    color: var(--accent);
-  }
-  .zunft-punze summary:hover {
-    color: var(--ink);
-  }
-  .zunft-punze ul {
-    display: grid;
-    gap: var(--s2);
-    margin: var(--s2) 0 0;
-    padding: var(--s3) 0 0;
-    list-style: none;
-    border-block-start: 1px dashed var(--line);
-  }
-  .zunft-punze li .meta {
-    display: block;
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .zunft-punze li a {
-    overflow-wrap: anywhere;
-  }
-  .zunft-ramsen {
-    margin-block-start: var(--s3);
-  }
 
   /* Abspann */
   .abspann-roll {
@@ -391,18 +335,12 @@
     display: block;
     margin-block-start: 2px;
   }
-  .credit-note {
-    font-family: var(--font-mono) !important;
-    font-size: var(--t-meta) !important;
-    color: var(--muted);
-    margin-block-start: var(--s2) !important;
-  }
-  .credit[data-block="sprachen"] dd:not(.credit-note),
+  .credit[data-block="sprachen"] dd,
   .credit[data-block="drehorte"] dd {
     display: inline;
     white-space: nowrap;
   }
-  .credit[data-block="sprachen"] dd:not(.credit-note):not(:nth-last-child(2))::after,
+  .credit[data-block="sprachen"] dd:not(:last-child)::after,
   .credit[data-block="drehorte"] dd:not(:last-child)::after {
     content: "\00a0· ";
     color: var(--muted);
@@ -488,6 +426,12 @@
     margin-block-start: var(--s4);
   }
   html:not(.js) .abspann-more {
+    display: none;
+  }
+  /* The tool wall and the partner cards are built by JS: without it they would be empty frames
+     („Klick auf ein Werkzeug“ with nothing to click). The #partners anchor stays. */
+  html:not(.js) .werkzeugwand,
+  html:not(.js) .zunft > :not(.alias) {
     display: none;
   }
   .is-windowed .credits {
@@ -622,16 +566,6 @@
 }
 
 @layer sections {
-  .zunft-punze--all {
-    display: none;
-  }
-  .zunft-punze-who {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: var(--t-meta);
-    letter-spacing: 0.02em;
-    color: var(--muted);
-  }
   @media (max-width: 639px) {
     .zunft-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -650,8 +584,7 @@
       align-self: center;
       line-height: 1.3;
     }
-    .zunft-card > .zunft-no,
-    .zunft-card > .zunft-punze {
+    .zunft-card > .zunft-no {
       display: none;
     }
     .zunft-mark {
@@ -683,16 +616,6 @@
     .zunft-desc {
       font-size: 0.8125rem;
       line-height: 1.4;
-    }
-    .zunft-punze--all {
-      display: block;
-      margin-block-start: var(--s3);
-    }
-    .zunft-punze--all li {
-      display: block;
-    }
-    .zunft-ramsen {
-      font-size: var(--t-small);
     }
   }
   @media (max-width: 639px) {

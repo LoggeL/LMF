@@ -343,13 +343,6 @@
       color: color-mix(in oklch, var(--heat-text) calc(var(--heat) * 100%), var(--muted));
     }
   }
-  .plate-star {
-    inline-size: 0.95em;
-    block-size: 0.95em;
-    margin-inline-end: 3px;
-    vertical-align: -0.12em;
-    color: var(--heat-text);
-  }
   .plate .stamp--glow {
     display: inline-flex;
     align-items: center;
@@ -565,33 +558,6 @@
     letter-spacing: var(--track-meta);
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
-  }
-  #lager .lager-stand {
-    margin: 0 auto 0 0;
-    font-family: var(--font-mono);
-    font-size: var(--t-meta);
-    letter-spacing: var(--track-meta);
-    text-transform: uppercase;
-    font-variant-numeric: tabular-nums;
-    color: var(--muted);
-  }
-  @media (min-width: 640px) {
-    #lager .lager-stand::before {
-      content: "· ";
-    }
-  }
-  #lager .lager-stand-no {
-    display: inline-block;
-    max-inline-size: 100%;
-  }
-  /* narrow: the caption gets its own line, so no leading „·“ */
-  @media (max-width: 639.98px) {
-    #lager .lager-stand-no {
-      display: block;
-    }
-    #lager .lager-stand-sep {
-      display: none;
-    }
   }
   #lager .lager-film-note {
     margin: 0 0 var(--s4);
@@ -938,7 +904,7 @@
     #projects-container .plate .project-link {
       gap: var(--s2);
     }
-    #projects-container :is(.plate-no, .plate-kicker, .plate-summary, .plate-arrow, .stamp--lang, .stamp--stars, .stamp--duration) {
+    #projects-container :is(.plate-no, .plate-kicker, .plate-summary, .plate-arrow, .stamp--lang, .stamp--duration) {
       display: none;
     }
     #projects-container .plate-top {

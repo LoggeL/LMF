@@ -86,28 +86,18 @@
     padding: 0.06em 0.08em 0 0;
     color: var(--alloy, var(--accent));
   }
-  .chapter-stage-line figcaption {
-    color: var(--muted);
-  }
   .chapter-stage-line {
     display: grid;
     gap: var(--s2);
+  }
+  .chapter-stage-kicker {
+    color: var(--muted);
   }
   .chapter-stage-text {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
     line-height: 1.1;
-  }
-  .chapter-fact {
-    padding: var(--s4);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .chapter-fact--stars .i {
-    margin-inline-end: 0.35em;
-    color: var(--heat-text);
+    text-wrap: balance;
   }
   .chapter-aside {
     font-size: var(--t-small);
@@ -119,14 +109,34 @@
     gap: var(--s3);
   }
   .chapter-more {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--s1) var(--s2);
+    display: grid;
+    gap: var(--s1);
     font-weight: 560;
+    /* hides the separator of every item that starts a line (the focus ring still fits) */
+    overflow: clip;
+    overflow-clip-margin: 4px;
   }
   .chapter-more .meta {
-    inline-size: 100%;
+    color: var(--muted);
+  }
+  /* Every item carries its separator in front; the list sits 1.6em to the left and .chapter-more
+     clips it, so no line ever ends or starts on a dot. */
+  .chapter-more-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s1) 0;
+    margin: 0 0 0 -1.6em;
+    padding: 0;
+    list-style: none;
+  }
+  .chapter-more-list li {
+    white-space: nowrap;
+  }
+  .chapter-more-list li::before {
+    content: "·" / "";
+    display: inline-block;
+    inline-size: 1.6em;
+    text-align: center;
     color: var(--muted);
   }
   .probe-stage {
@@ -181,37 +191,86 @@
     background: var(--bg);
   }
 
-  /* Werkstattdaten */
-  .specsheet {
+  /* Fact strip (chapters): Seit · a number · Stack, one row; the stack takes what is left */
+  .fact-strip {
     display: grid;
-    gap: var(--s3);
-    padding: var(--s5);
-    border: 1px solid var(--line);
-    position: relative;
+    grid-template-columns: auto auto minmax(12ch, 1fr);
+    gap: var(--s4) 0;
+    margin: 0;
+    padding-block: var(--s4);
+    border-block: 1px solid var(--line);
   }
-  .specsheet-title {
-    color: var(--alloy, var(--muted));
-    font-weight: 600;
+  .fact-strip:not(:has(> .fact:nth-child(3))) {
+    grid-template-columns: auto minmax(12ch, 1fr);
   }
-  .spec-list {
+  .fact {
     display: grid;
-    font-size: 0.8125rem;
+    align-content: start;
+    gap: 2px;
+    min-inline-size: 0;
+    padding-inline: var(--s5);
+    border-inline-start: 1px solid var(--line);
   }
-  .spec-list > div {
-    display: grid;
-    grid-template-columns: minmax(9ch, auto) 1fr;
-    gap: var(--s4);
-    padding-block: 9px;
-    border-block-start: 1px dashed var(--line);
+  .fact:first-child {
+    padding-inline-start: 0;
+    border-inline-start: 0;
   }
-  .spec-list dt {
-    color: var(--muted);
+  /* Phones: the numbers side by side, the stack as its own line below them (a strip of just
+     year + stack stays one row) */
+  @media (max-width: 559px) {
+    .fact-strip,
+    .fact-strip:not(:has(> .fact:nth-child(3))) {
+      grid-template-columns: auto 1fr;
+    }
+    .fact-strip:has(> .fact:nth-child(3)) > .fact--stack {
+      grid-column: 1 / -1;
+      padding: var(--s4) 0 0;
+      border-inline-start: 0;
+      border-block-start: 1px dashed var(--line);
+    }
+  }
+  .fact dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: var(--track-meta);
-    font-size: 0.75rem;
+    color: var(--muted);
   }
-  .spec-list dd {
-    font-weight: 500;
+  .fact dd {
+    margin: 0;
+  }
+  .fact-value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+    line-height: 1;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .fact-sub {
+    max-inline-size: 16ch;
+    font-size: var(--t-meta);
+    color: var(--muted);
+  }
+  .fact-stack {
+    padding-block-start: 0.35em;
+    font-size: var(--t-small);
+    font-weight: 560;
+    line-height: 1.35;
+    overflow: hidden; /* clips the separator of every item that starts a line */
+  }
+  .fact-stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline-start: -1.2em;
+  }
+  .fact-stack-list > span {
+    white-space: nowrap;
+  }
+  .fact-stack-list > span::before {
+    content: "·" / "";
+    display: inline-block;
+    inline-size: 1.2em;
+    text-align: center;
+    color: var(--muted);
   }
 
   /* Zwischenstück */
@@ -255,12 +314,6 @@
     margin-inline-start: var(--s2);
     color: var(--accent) !important;
     font-weight: 650;
-  }
-  .film-selantis {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--t-quote);
-    line-height: 1.15;
   }
 
   /* Lager skeleton */
@@ -490,13 +543,6 @@
     color: var(--muted);
     margin-block-end: var(--s5);
   }
-  .schichtbuch-footnote {
-    margin-block-start: var(--s6);
-    max-inline-size: 80ch;
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
   .schichtbuch-outro {
     margin-block-start: var(--s6);
     font-family: var(--font-display);
@@ -531,7 +577,6 @@
     gap: var(--s5);
   }
   .knoepfe,
-  .buehne,
   .werkzeugwand,
   .zunft,
   .abspann {
@@ -584,31 +629,8 @@
     transform: translateY(4px);
     box-shadow: 0 1px 0 var(--ink);
   }
-  .buehne-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: var(--gap);
-  }
-  .buehne-card {
-    display: grid;
-    gap: var(--s3);
-    align-content: start;
-    padding: var(--s5);
-    border: 1px solid var(--line);
-    border-block-start: 3px solid var(--alloy);
-    background: var(--surface);
-  }
-  .buehne-card .meta {
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .werkzeugwand > .lead,
-  .zunft-ramsen {
+  .werkzeugwand > .lead {
     max-inline-size: 60ch;
-  }
-  .zunft-ramsen {
-    color: var(--muted);
   }
   .zunft .eyebrow {
     margin-block-end: calc(var(--s3) * -1);
@@ -714,24 +736,10 @@
     color: var(--muted);
     font-weight: 420;
   }
-  .footer-copy,
-  .footer-punze {
+  .footer-copy {
     color: var(--muted);
     text-transform: none;
     letter-spacing: 0.02em;
-  }
-  .footer-punze {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 var(--s2);
-  }
-  .footer-punze .i {
-    font-size: 1.25rem;
-    color: var(--accent);
-  }
-  .footer-punze a {
-    color: var(--ink);
   }
   .footer-top {
     display: inline-flex;
@@ -746,11 +754,11 @@
   }
   @media (min-width: 1024px) {
     .site-footer-inner {
-      grid-template-columns: auto auto 1fr auto;
+      grid-template-columns: auto 1fr auto;
       gap: var(--s6);
     }
-    .footer-punze {
-      justify-content: center;
+    .footer-copy {
+      justify-self: end;
     }
   }
 }

@@ -1,6 +1,6 @@
 # Inhaltsquellen
 
-Stand der Fakten: **28.09.2026**. Alle Texte, Zahlen und Bilder der Seite stammen aus den hier genannten Quellen. Die maschinenlesbaren Quellen pro Projekt stehen in `data/details/<id>.json → sources` (mit `checkedAt`) und werden auf der Seite als „Punze“ angezeigt. Rohmaterial: `docs/research/projects-deep.json`, `docs/research/film-network-persona.json`, `docs/research/new-work.json` (alle erstellt am 28.09.2026 aus READMEs, Repo-Metadaten per `gh api`, Live-Prüfungen mit Playwright und YouTube-Watch-Seiten).
+Stand der Fakten: **28.09.2026**. Alle Texte, Zahlen und Bilder der Seite stammen aus den hier genannten Quellen. Die maschinenlesbaren Quellen pro Projekt stehen in `data/details/<id>.json → sources` (mit `checkedAt`) und werden von `npm run check` geprüft; auf der Seite erscheinen sie nicht (Owner-Update „Portfolio statt Report“). Rohmaterial: `docs/research/projects-deep.json`, `docs/research/film-network-persona.json`, `docs/research/new-work.json` (alle erstellt am 28.09.2026 aus READMEs, Repo-Metadaten per `gh api`, Live-Prüfungen mit Playwright und YouTube-Watch-Seiten).
 
 Übernommen werden nur Angaben mit Quelle. **Nicht** übernommen: Ideen und Vorbehalte aus der Recherche (`interactionIdeas`, `caveats`), Fakten aus privaten READMEs, die als „nicht verwenden“ markiert sind, persönliche Marathon-Daten (Zielzeit, Bestzeit, Renntermin, Kalender), Spotify-Berichte anderer Personen, Ensemble-Namen und -Gesichter, Ortsnamen der Nachtfotos.
 

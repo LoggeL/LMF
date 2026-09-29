@@ -204,9 +204,8 @@ test("plates: link, h3, stamp row, glow, Rohling and the no-JS list is hidden", 
       await expect(card.locator(".plate-stamps")).toContainText("ausgemustert");
     }
   }
-  // Only fields that exist: a film without a repo shows no language and no stars.
-  const film = PROJECTS.find((p) => p.groups[0] === "film" && !p.repo);
-  if (film) await expect(page.locator(`[data-id="${film.id}"] .plate-star`)).toHaveCount(0);
+  // Only fields that exist, and no star counts on the shelf at all.
+  await expect(page.locator("#projects-container .plate-star, #projects-container .stamp--stars")).toHaveCount(0);
 });
 
 test("Noch warm: 8 plates by last push, rail buttons scroll, end tile links to the Lager", async ({ page }) => {
@@ -216,9 +215,9 @@ test("Noch warm: 8 plates by last push, rail buttons scroll, end tile links to t
   const expected = warmList(PROJECTS).map((p) => p.id);
   await expect(page.locator("#warm .plate")).toHaveCount(Math.min(8, expected.length));
   expect(await ids(page, "#warm .project-link")).toEqual(expected);
-  const first = PROJECTS.find((p) => p.id === expected[0]);
-  const [y, m, d] = first.repo.pushedAt.split("-");
-  await expect(page.locator("#warm .plate").first().locator(".plate-stamps")).toContainText(`zuletzt dran ${d}.${m}.${y}`);
+  // the section title says „Noch warm“; each plate only shows how hot it is (no date, no stars)
+  for (const stamps of await page.locator("#warm .plate .plate-stamps").allInnerTexts()) expect(stamps.trim()).toMatch(/^(glüht|warm|abgekühlt)$/i);
+  await expect(page.locator("#warm")).not.toContainText(/zuletzt dran/i);
   await expect(page.locator("#warm .warm-end")).toHaveAttribute("href", "#lager");
   await rail.scrollIntoViewIfNeeded();
   const before = await rail.evaluate((el) => el.scrollLeft);
@@ -260,12 +259,11 @@ test("short queries match word starts only („Öl“ does not hit Kolping or So
   expect(filterProjects(fixture, "all", "oleil").map((p) => p.id)).toEqual(["a"]);
 });
 
-test("Nº is explained next to the Stand; Film chip says what it counts; Liste shows one kind of fact", async ({ page }) => {
+test("no „Stand“ stamp over the plates; Film chip says what it counts; Liste shows one kind of fact", async ({ page }) => {
   await ready(page);
-  // „Nº“ is shown, „Nummer“ is read (U+00BA sounds like „N Ordinal“).
-  await expect(page.locator("#lager .lager-stand")).toContainText(/Nº.*= Reihenfolge nach Jahr/);
-  await expect(page.locator('#lager .lager-stand [aria-hidden="true"]')).toHaveText("Nº");
-  await expect(page.locator("#lager .lager-stand .vh")).toHaveText("Nummer");
+  // The Lager is a shelf, not a report: the as-of date lives once, in the Esse caption.
+  await expect(page.locator("#lager .lager-stand")).toHaveCount(0);
+  expect(await page.locator("#lager .lager-meta").innerText()).not.toMatch(/\bStand\b/);
   const filmIds = new Set(FILMS.keys());
   const extra = PROJECTS.filter((p) => p.groups.includes("film") && !filmIds.has(p.id));
   const chip = page.locator('#lager [data-filter="film"]');

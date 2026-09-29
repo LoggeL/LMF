@@ -164,7 +164,7 @@ export function renderUniverse(mountEl, nodes, { motion, byId } = {}) {
     <div class="uv">
       <header class="uv-head">
         <h4 class="uv-title"><span class="uv-count">${count}</span> Sachen für eine Theatergruppe</h4>
-        <p class="uv-legend meta" aria-hidden="true">Innen alt, außen neu · ${y0}–${y1}</p>
+        <p class="uv-legend meta" aria-hidden="true">${y0}–${y1}</p>
         ${hasMore ? html`<button class="uv-more" type="button" aria-expanded="false">Alle ${count} zeigen</button>` : ""}
       </header>
       <div class="uv-map" role="group" aria-label="Kolpingtheater-Universum: ${count} Sachen, nach Art sortiert, innen alt, außen neu">

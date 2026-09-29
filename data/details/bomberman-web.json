@@ -2,10 +2,10 @@
   "id": "bomberman-web",
   "story": [
     "Bomberman, aber so gebaut, dass lokal und online exakt dieselbe Spiel-Engine läuft: eine deterministische Simulation mit 60 Ticks pro Sekunde, die im Browser für den Couch-Modus und auf einem Node-Server für Online-Runden rechnet.",
-    "Kein Game-Framework, nur Vanilla JS und ein Canvas. Auf GitHub Pages läuft der lokale Modus; für Raumcode-Matches braucht es einen eigenen Node-Host."
+    "Kein Game-Framework, nur Vanilla JS und ein Canvas."
   ],
   "highlights": [
-    "Eine gemeinsame, deterministische Engine (shared/engine.js) für lokalen und Online-Modus, Map-Generierung per Seed",
+    "Eine gemeinsame, deterministische Engine für lokalen und Online-Modus, Map-Generierung per Seed",
     "Sechs 15×13-Arenen: Neon Reactor, Magma Foundry, Cryo Circuit, Switchyard Reactor, Astral Garden, Tidal Works",
     "Arena-Mechaniken: Portale, Lava-Vents, Eisbahnen, Bomben-Schienen, Orbit-Relais, Strömungen",
     "Neun Power-ups, u. a. Kick, Remote Detonator, Bomb Throw, Ghost und Shield",
@@ -29,7 +29,7 @@
   },
   "commits": 24,
   "funFact": {
-    "text": "Das Match-Ende ist spiralförmig: Im Sudden Death fällt die Arena in einer Spirale aus Wänden nach innen zusammen. Die Soundtracks der Arenen werden laut Commit-Historie prozedural erzeugt.",
+    "text": "Das Match-Ende ist spiralförmig: Im Sudden Death fällt die Arena in einer Spirale aus Wänden nach innen zusammen. Die Soundtracks der Arenen werden prozedural erzeugt.",
     "source": 0
   },
   "refs": {
@@ -51,6 +51,26 @@
       "label": "GitHub API · Repo-Metadaten, Commits, Sprachen",
       "url": "https://api.github.com/repos/LoggeL/bomberman-web",
       "checkedAt": "2026-09-28"
+    }
+  ],
+  "facts": [
+    {
+      "key": "arenas",
+      "label": "Arenen",
+      "value": "6",
+      "source": 0
+    },
+    {
+      "key": "powerups",
+      "label": "Power-ups",
+      "value": "9",
+      "source": 0
+    },
+    {
+      "key": "ticks",
+      "label": "Ticks/s",
+      "value": "60",
+      "source": 0
     }
   ]
 }

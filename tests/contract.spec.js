@@ -354,13 +354,21 @@ for (const theme of ["light", "dark"])
     await page.locator('#meisterstuecke [data-project-id="melodai"]').click();
     await expect(page.locator("#werkbank")).toBeVisible();
     expect(await axe(page)).toEqual([]);
-    const punze = page.locator("#werkbank [popovertarget], #werkbank .punze-button, #werkbank summary").filter({ hasText: /Gepunzt/ }).first();
-    if (await punze.count()) {
-      await punze.click();
-      expect(await axe(page)).toEqual([]);
-    }
     expect(errors).toEqual([]);
   });
+
+test("a portfolio, not a report: no hallmarks, citations or repeated „Stand“ dates", async ({ page }) => {
+  await ready(page);
+  await readThrough(page);
+  const text = await page.locator("body").innerText();
+  expect(text).not.toMatch(/Gepunzt|Punze|Quelle:|\bQuellen\b|Woher ich das weiß|sag Bescheid/);
+  // exactly one as-of mention: the Esse caption, because the ember brightness depends on it
+  expect(text.match(/\bStand\b/g) ?? []).toHaveLength(1);
+  await expect(page.locator(".esse-caption")).toContainText(/Stand (Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember) \d{4}/);
+  // the repo count is said where it matters (hero line, Schichtbuch counter), not five times over
+  expect(text.match(/\b\d+ öffentliche Repos\b/gi)?.length ?? 0).toBeLessThanOrEqual(2);
+  await expect(page.locator("main sup:not([data-ph]), .src-mark, .punze-slot, .punze-button, .specsheet, #i-punze")).toHaveCount(0);
+});
 
 test("404 page renders with a way home", async ({ page }) => {
   await page.goto("/404.html");

@@ -13,7 +13,7 @@
 import { announcer, calmSource, nextId } from "./index.js";
 
 export const KIND = "nachbau";
-export const CHIP = "Nachbau: ein vereinfachtes Feld für diese Seite. Die Regel stimmt: Trifft eine Explosion eine Bombe, geht die im selben Tick hoch.";
+export const CHIP = "Kleineres Feld, echte Regel: Kettenreaktionen im selben Tick.";
 
 /* ── Rules (pure) ──────────────────────────────────────────────────────────────────────────────── */
 
@@ -207,7 +207,7 @@ export function mount(root, ctx = {}) {
         <span>Bomben: <b data-pb="count">0</b>/${MAX_BOMBS}</span>
       </p>
     </div>
-    <p class="probe-howto" id="${howId}">Feld antippen oder mit Pfeiltasten wählen · Leertaste legt eine Bombe · Z zündet alles · R: neues Feld · Esc: raus</p>`;
+    <p class="probe-howto vh" id="${howId}">Feld antippen oder mit Pfeiltasten wählen. Leertaste legt eine Bombe, Z zündet alles, R baut ein neues Feld, Escape verlässt das Spielfeld.</p>`;
 
   const screen = root.querySelector(".pb-screen");
   const canvas = root.querySelector("canvas");

@@ -1,14 +1,12 @@
 {
   "id": "corona-board",
   "story": [
-    "Ende März 2020 entstanden: ein kleines COVID-19-Dashboard auf Basis der Johns-Hopkins-Daten, mit Weltkarte und Verläufen auf logarithmischer Skala, später mit eigener Deutschland-Kurve.",
-    "Heute ist es ein Archiv. Die Daten enden am 9. März 2023."
+    "Ende März 2020 entstanden: ein kleines COVID-19-Dashboard auf Basis der Johns-Hopkins-Daten, mit Weltkarte und Verläufen auf logarithmischer Skala, später mit eigener Deutschland-Kurve."
   ],
   "highlights": [
     "Weltkarte der aktiven Fälle (log10-Skala) mit Chart.js Geo",
     "Historische Verläufe weltweit und für Deutschland",
-    "Durchsuchbare Rohdatentabelle mit simple-datatables",
-    "Verweise auf WHO, RKI und JHU CSSE"
+    "Durchsuchbare Rohdatentabelle mit simple-datatables"
   ],
   "stack": [
     "JavaScript",
@@ -23,10 +21,6 @@
     "HTML": 0.3
   },
   "commits": 6,
-  "funFact": {
-    "text": "Das ganze Projekt besteht aus sechs Commits. Der letzte vom 15.08.2020 hat die Todesfälle zum Zähler hinzugefügt.",
-    "source": 0
-  },
   "refs": {
     "repo": 2,
     "live": 1

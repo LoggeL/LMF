@@ -1,6 +1,6 @@
 /*
  * css/werkbank.css  [WP2]  (lazy: injected on first idle by main.js, or on first intent by werkbank.js)
- * Werkbank (§2.5, §5.4): dialog, hero stage, spec sheet, language bar, Punze popover, film facade.
+ * Werkbank (§2.5, §5.4): dialog, hero stage, fact strip, story, tools and languages, film facade, next piece.
  */
 @layer sections {
   /* ═══════════════════════════════════════ DIALOG ═══════════════════════════════════════ */
@@ -138,12 +138,6 @@
   #werkbank .wb-nav button:disabled {
     opacity: 0.4;
     cursor: default;
-  }
-  #werkbank .wb-punze {
-    order: 3;
-  }
-  #werkbank .wb-punze:empty {
-    display: none;
   }
   #werkbank .wb-close {
     order: 4;
@@ -368,18 +362,6 @@
   .wb-film-frame {
     container-type: inline-size;
   }
-  /* narrow frames: „Film abspielen“ only; „(lädt YouTube)“ stays for screen readers and the note
-     under the frame says it too */
-  @container (max-width: 440px) {
-    .wb-film-label-note {
-      position: absolute;
-      inline-size: 1px;
-      block-size: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-      white-space: nowrap;
-    }
-  }
   /* tiny frames: disc + length only */
   @container (max-width: 220px) {
     .wb-film-label {
@@ -411,15 +393,14 @@
     block-size: 100%;
     border: 0;
   }
+  /* the consent line: needed, so it stays, but small and in sentence case */
   #werkbank .wb-hero .wb-film-note {
     max-inline-size: 70ch;
     margin: 0;
     color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
     text-align: center;
-  }
-  #werkbank .wb-hero .wb-film-note a {
-    color: var(--ink);
-    text-underline-offset: 0.25em;
   }
 
   /* ═══════════════════════════════════════ TITLE ═══════════════════════════════════════ */
@@ -460,28 +441,18 @@
     padding: 0 var(--wb-pad) var(--s8);
   }
   #werkbank .wb-note {
-    position: relative;
     display: grid;
     gap: var(--s2);
-    max-inline-size: 80ch;
+    max-inline-size: 72ch;
     margin-block-end: var(--s7);
-    padding: var(--s4) var(--s5) var(--s4) calc(var(--s5) + 4px);
-    border: 1px solid var(--control);
-    border-inline-start: 4px solid var(--heat-text);
-    background: var(--surface);
+    padding-inline-start: var(--s4);
+    border-inline-start: 3px solid var(--alloy);
+    color: var(--muted);
+    font-size: var(--t-small);
   }
   #werkbank .wb-note p {
     margin: 0;
-  }
-  #werkbank .wb-note-stamp {
-    justify-self: start;
-    padding: 2px 8px;
-    border: 1.5px solid var(--heat-text);
-    color: var(--heat-text);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    rotate: -2deg;
+    text-wrap: pretty;
   }
   #werkbank .wb-cols {
     display: grid;
@@ -550,33 +521,23 @@
     font: inherit;
     color: inherit;
   }
-  /* Short story, no media: story full width, then the sheet as a two-column definition grid. */
+  /* Short story, no media: story full width, the tools below it. */
   @media (min-width: 1024px) {
-    #werkbank .wb-cols--short {
+    #werkbank :is(.wb-cols--short, .wb-cols--solo) {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--s6);
     }
     #werkbank .wb-cols--short .wb-aside {
       position: static;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--s5) clamp(32px, 4vw, 72px);
+      max-inline-size: 72rem;
+    }
+    #werkbank .wb-cols--short .wb-aside > * {
+      margin-block-start: 0;
     }
     #werkbank .wb-cols--short .wb-story p {
-      max-inline-size: 60ch;
-    }
-    #werkbank .wb-cols--short .wb-spec {
-      grid-template-columns: repeat(2, fit-content(14ch) minmax(0, 1fr));
-      column-gap: var(--s4);
-    }
-    #werkbank .wb-cols--short .wb-spec > .spec-row {
-      grid-column: span 2;
-    }
-    #werkbank .wb-cols--short .wb-spec > .spec-row:nth-child(odd) {
-      grid-column: 1 / span 2;
-      margin-inline-end: var(--s4);
-    }
-    #werkbank .wb-cols--short .wb-spec > .spec-row:nth-child(even) {
-      grid-column: 3 / span 2;
-    }
-    #werkbank .wb-cols--short :is(.wb-langs, .wb-tools-wrap) {
       max-inline-size: 60ch;
     }
   }
@@ -612,6 +573,14 @@
      aspect ratio, widen the stage past 288 px on a 320 px phone. The live probe sizes itself. */
   #werkbank .wb-probe-stage.is-live {
     min-block-size: 200px;
+  }
+  /* The height reserved for the chapter probes (meister.css ::after) is sized for the chapter
+     layout; once the toy is live here it sizes itself, so the panel ends right under its chip line. */
+  :root[data-booted] #werkbank .wb-probe-stage.is-live::after {
+    content: none;
+  }
+  #werkbank .wb-probe-stage.is-live > .probe-live {
+    padding-block-end: var(--s4);
   }
   #werkbank .wb-probe-stage > img {
     inline-size: 100%;
@@ -713,220 +682,167 @@
     color: var(--alloy);
     translate: calc(var(--heat) * 4px) 0;
   }
-  #werkbank .wb-repos {
-    display: grid;
-    gap: 0;
-    padding: 0;
-    list-style: none;
+  /* ═══════════════════════════════════════ FACT STRIP ═══════════════════════════════════════ */
+  #werkbank .wb-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s5) clamp(28px, 4.5vw, 64px);
+    margin: 0 0 var(--s8);
+    padding-block-start: var(--s5);
     border-block-start: 1px solid var(--line);
   }
-  #werkbank .wb-repos > li {
+  #werkbank .wb-fact {
     display: grid;
-    grid-template-columns: minmax(0, 14ch) minmax(0, 1fr);
-    gap: 2px var(--s4);
-    padding-block: var(--s3);
-    border-block-end: 1px solid var(--line);
+    align-content: start;
+    gap: 6px;
+    min-inline-size: 0;
+    max-inline-size: 100%;
   }
-  #werkbank .wb-repo-role {
-    grid-row: span 2;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 1.125rem;
-    color: var(--muted);
-  }
-  #werkbank .wb-repo-name {
+  #werkbank .wb-fact dt {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: var(--t-meta);
     font-weight: 600;
-    color: var(--ink);
-    overflow-wrap: anywhere;
-  }
-  #werkbank .wb-repo-facts {
+    letter-spacing: var(--track-meta);
+    text-transform: uppercase;
     color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
   }
-
-  /* ═══════════════════════════════════════ ASIDE: Werkstattdaten ═══════════════════════════════════════ */
-  #werkbank .wb-specs {
-    --rivet: radial-gradient(circle at 38% 34%, color-mix(in oklch, var(--surface) 80%, var(--ink)) 0 0.8px, color-mix(in oklch, var(--ink) 40%, var(--surface)) 1.6px, color-mix(in oklch, var(--ink) 64%, var(--surface)) 2.7px, transparent 3.2px);
-    position: relative;
-    padding: var(--s5) var(--s5) var(--s5);
-    border: 1px solid var(--line);
-    border-block-start: 3px solid var(--alloy);
-    background: var(--surface);
-  }
-  #werkbank .wb-specs::before {
-    content: "";
-    position: absolute;
-    inset: 7px;
-    pointer-events: none;
-    background:
-      var(--rivet) left top / 7px 7px no-repeat,
-      var(--rivet) right top / 7px 7px no-repeat,
-      var(--rivet) left bottom / 7px 7px no-repeat,
-      var(--rivet) right bottom / 7px 7px no-repeat;
-  }
-  #werkbank .wb-specs > summary {
-    display: flex;
-    align-items: center;
-    min-block-size: 32px;
-    list-style: none;
-    cursor: default;
-  }
-  #werkbank .wb-specs > summary::-webkit-details-marker {
-    display: none;
-  }
-  #werkbank .wb-specs > summary .wb-h3 {
-    color: var(--ink);
-  }
-  #werkbank .wb-spec {
+  #werkbank .wb-fact dd {
     display: grid;
-    grid-template-columns: fit-content(14ch) minmax(0, 1fr);
-    column-gap: var(--s4);
-    margin: var(--s3) 0 0;
-  }
-  #werkbank .wb-spec > .spec-row {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
-    align-items: baseline;
-    padding-block: 9px;
-    border-block-end: 1px dotted var(--control);
-  }
-  #werkbank .wb-spec dt {
-    font-size: 0.75rem;
-    color: var(--muted);
-    overflow-wrap: normal;
-  }
-  #werkbank .wb-spec dd {
+    gap: 4px;
     margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.45;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.3rem + 1.8vw, 2.9rem);
+    line-height: 0.95;
+    font-variant-numeric: lining-nums tabular-nums;
     overflow-wrap: break-word;
-    hyphens: manual;
   }
-  #werkbank .wb-spec dd a {
-    padding-block: 0;
+  #werkbank .wb-fact--long dd {
+    max-inline-size: 22ch;
+    font-size: clamp(1.25rem, 1rem + 0.7vw, 1.6rem);
+    line-height: 1.1;
+    text-wrap: balance;
   }
-  #werkbank .wb-spec dd a {
+  #werkbank .wb-fact--long dd a {
     color: var(--ink);
     text-decoration-color: var(--alloy);
-    text-underline-offset: 0.25em;
+    text-underline-offset: 0.2em;
   }
-  #werkbank .wb-spec dd q {
+  #werkbank .wb-fact dd time {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+  #werkbank[data-glow="glueht"] .wb-fact--zuletzt dd {
+    color: var(--heat-text);
+  }
+  #werkbank .wb-fact-sub {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  @media (max-width: 599.98px) {
+    #werkbank .wb-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--s5) var(--s4);
+    }
+    #werkbank .wb-fact--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* One-line fact under the title (a nomination): a small ribbon, not a table row */
+  #werkbank .wb-ribbon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    max-inline-size: 100%;
+    margin: 0 0 var(--s5);
+    padding: var(--s2) var(--s4);
+    border: 1px solid color-mix(in srgb, var(--alloy) 55%, var(--line));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--alloy) 10%, transparent);
+    font-size: var(--t-small);
+    font-weight: 560;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+  #werkbank .wb-ribbon::before {
+    content: "" / "";
+    flex: none;
+    inline-size: 0.5em;
+    block-size: 0.5em;
+    border-radius: 50%;
+    background: var(--alloy);
+  }
+
+  /* ── film: the video's own words, and its parts ── */
+  #werkbank .wb-quote {
+    display: grid;
+    gap: var(--s3);
+    margin: 0;
+    padding-inline-start: var(--s5);
+    border-inline-start: 2px solid var(--alloy);
+  }
+  #werkbank .wb-quote blockquote {
+    margin: 0;
+  }
+  #werkbank .wb-quote p {
+    max-inline-size: 36ch;
+    margin: 0;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 1.05rem;
-  }
-  /* narrow phones: label above value, so „geprüft 28.09.2026¹“ never outgrows the column */
-  @media (max-width: 419.98px) {
-    #werkbank .wb-spec {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    #werkbank .wb-spec > .spec-row {
-      row-gap: 2px;
-    }
-  }
-  #werkbank .spec-row--zuletzt dd {
-    color: var(--ink);
-  }
-  #werkbank[data-glow="glueht"] .spec-row--zuletzt dd time {
-    color: var(--heat-text);
-    font-weight: 700;
-  }
-  #werkbank .spec-row--stand {
-    border-block-end: 0 !important;
+    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.2rem);
+    line-height: 1.15;
+    text-wrap: balance;
   }
   #werkbank .spec-parts {
     display: grid;
-    gap: 6px;
+    gap: 0;
     padding: 0;
     margin: 0;
     list-style: none;
+    border-block-start: 1px solid var(--line);
+  }
+  #werkbank .spec-parts > li {
+    display: grid;
+    grid-template-columns: 7ch minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--s3);
+    padding-block: var(--s3);
+    border-block-end: 1px solid var(--line);
+  }
+  #werkbank .spec-parts a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration-color: var(--alloy);
+    text-underline-offset: 0.25em;
+    overflow-wrap: anywhere;
   }
   #werkbank .spec-part-no,
   #werkbank .spec-part-len {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
     color: var(--muted);
   }
 
-  /* ── language bar ── */
-  #werkbank .wb-langs,
+  /* ── aside: the tools ── */
+  #werkbank .wb-aside {
+    display: grid;
+    gap: var(--s6);
+    align-content: start;
+  }
   #werkbank .wb-tools-wrap {
     display: grid;
     gap: var(--s3);
-    margin-block-start: var(--s5);
-  }
-  #werkbank .wb-langs-head {
-    display: flex;
-    align-items: baseline;
-    gap: 2px;
   }
   #werkbank .wb-aside-title {
     margin: 0;
+    font-size: var(--t-meta);
+    font-weight: 600;
     color: var(--muted);
   }
-  .wb-lang-bar {
-    display: flex;
-    block-size: 10px;
-    gap: 2px;
-  }
-  .wb-lang-seg {
-    flex: 0 0 var(--w);
-    min-inline-size: 3px;
-  }
-  .wb-lang-seg[data-step="0"],
-  .wb-lang-list [data-step="0"] .wb-lang-dot {
-    background: var(--alloy);
-  }
-  .wb-lang-seg[data-step="1"],
-  .wb-lang-list [data-step="1"] .wb-lang-dot {
-    background: color-mix(in oklch, var(--alloy) 62%, var(--ink));
-  }
-  .wb-lang-seg[data-step="2"],
-  .wb-lang-list [data-step="2"] .wb-lang-dot {
-    background: color-mix(in oklch, var(--alloy) 55%, var(--bg));
-  }
-  .wb-lang-seg[data-step="3"],
-  .wb-lang-list [data-step="3"] .wb-lang-dot {
-    background: color-mix(in oklch, var(--alloy) 35%, var(--ink));
-  }
-  .wb-lang-seg[data-step="4"],
-  .wb-lang-list [data-step="4"] .wb-lang-dot {
-    background: color-mix(in oklch, var(--alloy) 28%, var(--bg));
-  }
-  .wb-lang-seg[data-step="5"],
-  .wb-lang-list [data-step="5"] .wb-lang-dot {
-    background: var(--control);
-  }
-  .wb-lang-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px var(--s4);
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-variant-numeric: tabular-nums;
-  }
-  .wb-lang-list li {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .wb-lang-dot {
-    inline-size: 8px;
-    block-size: 8px;
-    flex: none;
-  }
-  .wb-lang-pct {
-    color: var(--muted);
-  }
-
   /* ── tool chips ── */
   .wb-tools {
     display: flex;
@@ -949,67 +865,92 @@
     opacity: calc(0.3 + var(--heat) * 0.7);
   }
 
-  /* ═══════════════════════════════════════ FOOTER: Gepunzt ═══════════════════════════════════════ */
+  /* ═══════════════════════════════════════ FOOT: the next piece ═══════════════════════════════════════ */
   #werkbank .wb-foot {
-    display: grid;
-    gap: var(--s6);
     margin-block-start: var(--s9);
-    padding-block-start: var(--s6);
-    border-block-start: 2px solid var(--ink);
-  }
-  @media (min-width: 1024px) {
-    #werkbank .wb-foot {
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
-      align-items: start;
-    }
-  }
-  #werkbank .wb-sources {
-    display: grid;
-    gap: var(--s4);
-  }
-  #werkbank .wb-sources-i {
-    inline-size: 1.6em;
-    block-size: 1.6em;
-    color: var(--accent);
   }
   #werkbank .wb-next-card {
     --heat: 0;
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: var(--s2) var(--s4);
-    min-block-size: 140px;
-    padding: var(--s5);
+    grid-template-columns: minmax(0, 1fr);
+    inline-size: 100%;
+    padding: 0;
     border: 1px solid var(--line);
+    border-block-start: 3px solid var(--alloy);
     background:
-      radial-gradient(90% 90% at 100% 100%, color-mix(in oklch, var(--alloy) calc(8% + var(--heat) * 20%), transparent), transparent 70%),
+      radial-gradient(80% 120% at 0% 100%, color-mix(in oklch, var(--alloy) calc(6% + var(--heat) * 14%), transparent), transparent 70%),
       var(--surface);
     color: var(--ink);
+    font: inherit;
     text-align: start;
     cursor: pointer;
+    overflow: hidden;
   }
   #werkbank .wb-next-card:is(:hover, :focus-visible) {
     --heat: 1;
     border-color: var(--alloy);
   }
-  #werkbank .wb-next-card .meta {
-    grid-column: 1 / -1;
-    align-self: start;
+  #werkbank .wb-next-text {
+    display: grid;
+    align-content: end;
+    gap: var(--s2);
+    padding: var(--s5);
+    min-inline-size: 0;
+  }
+  #werkbank .wb-next-kicker {
+    margin-block-end: var(--s2);
     color: var(--muted);
   }
   #werkbank .wb-next-title {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.6rem);
+    font-size: clamp(2rem, 1.2rem + 2.4vw, 3.4rem);
     line-height: 0.95;
-    overflow-wrap: anywhere;
+    letter-spacing: -0.01em;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    text-wrap: balance;
   }
-  #werkbank .wb-next-card .i {
+  #werkbank .wb-next-cat {
+    color: var(--muted);
+    font-size: var(--t-small);
+  }
+  #werkbank .wb-next-i {
     inline-size: 1.6em;
     block-size: 1.6em;
+    margin-block-start: var(--s3);
     color: var(--alloy);
     translate: calc(var(--heat) * 6px) 0;
   }
-
+  #werkbank .wb-next-media {
+    order: -1;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+  #werkbank .wb-next-media img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    scale: calc(1 + var(--heat) * 0.03);
+  }
+  @media (min-width: 720px) {
+    #werkbank .wb-next-card.has-media {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      min-block-size: 260px;
+    }
+    #werkbank .wb-next-card .wb-next-media {
+      order: 0;
+      aspect-ratio: auto;
+      min-block-size: 100%;
+      border-inline-start: 1px solid var(--line);
+    }
+    #werkbank .wb-next-text {
+      padding: var(--s6);
+    }
+  }
 
   /* ═══════════════════════════════════════ MOBILE: full-screen sheet ═══════════════════════════════════════ */
   @media (max-width: 1023.98px) {
@@ -1038,7 +979,7 @@
       border-block-start: 1px solid var(--line);
       box-shadow: 0 -1px 0 color-mix(in oklch, var(--alloy) 60%, transparent);
     }
-    #werkbank :is(.wb-back, .wb-meta, .wb-punze) {
+    #werkbank :is(.wb-back, .wb-meta) {
       display: none;
     }
     #werkbank .wb-nav {
@@ -1091,27 +1032,6 @@
     #werkbank .wb-film--portrait.is-playing .wb-film-frame {
       inline-size: min(100%, calc(64vh * 9 / 16));
     }
-    #werkbank .wb-specs > summary {
-      cursor: pointer;
-    }
-    #werkbank .wb-specs > summary::after {
-      content: "";
-      inline-size: 10px;
-      block-size: 10px;
-      margin-inline-start: auto;
-      border-inline-end: 2px solid var(--muted);
-      border-block-end: 2px solid var(--muted);
-      rotate: -45deg;
-    }
-    #werkbank .wb-specs[open] > summary::after {
-      rotate: 45deg;
-    }
-    #werkbank .wb-repos > li {
-      grid-template-columns: 1fr;
-    }
-    #werkbank .wb-repo-role {
-      grid-row: auto;
-    }
   }
   /* very narrow screens: prev/next become icon buttons (the label stays for screen readers) */
   @media (max-width: 359.98px) {
@@ -1130,20 +1050,15 @@
       white-space: nowrap;
     }
   }
-  @media (min-width: 1024px) {
-    /* the spec sheet is always open on desktop */
-    #werkbank .wb-specs > summary {
-      pointer-events: none;
-    }
-  }
 
   /* ═══════════════════════════════════════ CONTRAST / FORCED COLOURS ═══════════════════════════════════════ */
   @media (prefers-contrast: more) {
     #werkbank .wb-hero::after {
       display: none;
     }
-    #werkbank .wb-spec > .spec-row {
-      border-block-end-style: solid;
+    #werkbank .wb-fact dt,
+    #werkbank .wb-fact-sub {
+      color: var(--ink);
     }
   }
   @media (forced-colors: active) {
@@ -1161,21 +1076,9 @@
       outline: 2px solid Highlight;
       border-color: ButtonText;
     }
-    .wb-lang-bar {
-      display: none;
-    }
-    .wb-lang-dot {
-      forced-color-adjust: none;
-      border: 1px solid CanvasText;
-    }
-    .punze-button,
-    .punze-close,
     #werkbank .wb-next-card,
     #werkbank .wb-related-link {
       border: 1px solid ButtonText;
-    }
-    .punze-pop {
-      border: 2px solid CanvasText;
     }
   }
 }
@@ -1236,22 +1139,16 @@
       }
     }
     /* heat grammar on Werkbank controls */
-    :root:not([data-motion="paused"]) :is(.punze-button, .wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link) {
+    :root:not([data-motion="paused"]) :is(.wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link) {
       transition:
         --heat var(--d-cool) var(--ease-cool),
         border-color var(--d-cool) var(--ease-cool);
     }
-    :root:not([data-motion="paused"]) :is(.punze-button, .wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link):is(:hover, :focus-visible) {
+    :root:not([data-motion="paused"]) :is(.wb-film-play, #werkbank .wb-next-card, #werkbank .wb-related-link):is(:hover, :focus-visible) {
       transition-duration: var(--d-heat-in);
     }
-    :root:not([data-motion="paused"]) .punze-pop:popover-open {
-      animation: wb-stamp var(--d-stamp) var(--ease-rebound);
-    }
-    /* the hallmark is struck: scale only, so contrast is never mid-fade */
-    @keyframes wb-stamp {
-      from {
-        scale: 1.035;
-      }
+    :root:not([data-motion="paused"]) #werkbank .wb-next-media img {
+      transition: scale var(--d-cool) var(--ease-cool);
     }
     /* Morph: plate media → Werkbank hero */
     ::view-transition-group(werk-hero) {
@@ -1277,270 +1174,13 @@
   }
 }
 
-/* ═══════════════════ SHARED renderer output: Punze, source lists, ¹²³ marks, spec links ═══════════════════
- * js/werkbank/punze.js and js/render/specsheet.js are reused on the chapter spec sheets (WP4); main.js
- * lists this sheet for the Meisterstücke too, so a chapter mounts only once these styles are in. */
+/* ═══════════════════ SHARED renderer output (js/render/specsheet.js) ═══════════════════ */
 @layer sections {
-  .ref {
-    margin-inline-start: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.72em;
-    line-height: 0;
-    vertical-align: super;
-  }
-  .ref a {
-    display: inline-block;
-    min-inline-size: 1.6em;
-    padding: 1px 3px;
-    border-radius: 2px;
-    color: var(--accent);
-    text-align: center;
-    text-decoration: none;
-  }
-  .ref a:hover {
-    background: color-mix(in oklch, var(--accent) 14%, transparent);
-  }
-  .spec-list .nb,
-  .punze-nw {
+  /* the ↗ after a glued label stays with its last word; an inline-block, so the underline stops there */
+  .nw {
     white-space: nowrap;
   }
-  /* the ↗ after a glued label: an inline-block, so the link underline stops at the word */
   .ext-i {
-    display: inline-block;
-  }
-  /* repo slugs: owner on a muted line, the name never split (js/render/specsheet.js repoValue) */
-  .spec-repo-owner {
-    display: block;
-    color: var(--muted);
-    font-size: 0.92em;
-    overflow-wrap: anywhere;
-  }
-  /* 2.5.8: the ¹²³ marks and spec-sheet links get a 24 px target */
-  .ref a {
-    min-block-size: 24px;
-    min-inline-size: 24px;
-    line-height: 24px;
-    padding-block: 0;
-    vertical-align: middle;
-  }
-  .spec-list dd a {
-    padding-block: 5px;
-  }
-  .punze-list {
-    display: grid;
-    gap: 0;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    counter-reset: src;
-  }
-  .punze-list > li {
-    counter-increment: src;
-    display: grid;
-    grid-template-columns: 3ch minmax(0, 1fr);
-    gap: var(--s3);
-    padding-block: 8px;
-    border-block-end: 1px solid var(--line);
-    font-size: var(--t-small);
-    scroll-margin-block: var(--s7);
-  }
-  .punze-list > li::before {
-    content: counter(src);
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-  .punze-list > li:target {
-    background: color-mix(in oklch, var(--heat-4) 22%, transparent);
-  }
-  .punze-src {
-    color: var(--ink);
-    overflow-wrap: anywhere;
-  }
-  a.punze-src {
-    text-decoration-color: var(--control);
-    text-underline-offset: 0.25em;
-  }
-  a.punze-src:hover {
-    text-decoration-color: var(--accent);
-  }
-  .punze-src .i {
-    inline-size: 0.9em;
-    block-size: 0.9em;
-    vertical-align: -0.1em;
-  }
-  .punze-checked {
-    display: inline-block;
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .punze-line {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--t-small);
-  }
-  .punze-line a {
-    color: var(--ink);
-    font-weight: 650;
-  }
-  /* ═══════════════════════════════════════ PUNZE button + popover ═══════════════════════════════════════ */
-  .punze-button {
-    --heat: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-block-size: 44px;
-    padding: 0 12px 0 8px;
-    border: 1.5px solid var(--accent);
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 3px color-mix(in oklch, var(--accent) 55%, transparent);
-    background: color-mix(in oklch, var(--heat-4) calc(var(--heat) * 14%), transparent);
-    color: var(--ink);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    cursor: pointer;
-    list-style: none;
-  }
-  .punze-button::-webkit-details-marker {
-    display: none;
-  }
-  .punze-button:is(:hover, :focus-visible) {
-    --heat: 1;
-  }
-  .punze-i {
-    inline-size: 22px;
-    block-size: 22px;
-    color: var(--accent);
-    rotate: calc(-6deg + var(--heat) * 6deg);
-  }
-  .punze-pop {
-    --pop-pad: clamp(20px, 3vw, 32px);
-    inline-size: min(560px, 100vw - 32px);
-    max-block-size: min(80dvh, 720px);
-    margin: auto;
-    padding: var(--pop-pad);
-    border: 1px solid var(--control);
-    border-block-start: 4px solid var(--accent);
-    background: var(--surface);
-    color: var(--ink);
-    box-shadow: 0 30px 80px -24px rgb(var(--shadow-ink) / 0.55);
-    overflow: hidden;
-  }
-  .punze-pop::backdrop {
-    background: color-mix(in srgb, var(--heat-0) 50%, transparent);
-  }
-  /* head · scrolling list · pinned foot: the belegt line and „Schließen“ never fall below the fold */
-  .punze-pop:popover-open {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    gap: var(--s4);
-  }
-  .punze-pop-head {
-    display: grid;
-    gap: var(--s3);
-  }
-  .punze-when {
-    margin: 0;
-    color: var(--muted);
-  }
-  .punze-pop-scroll {
-    min-block-size: 0;
-    margin-inline: calc(var(--pop-pad) * -1);
-    padding-inline: var(--pop-pad);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: var(--control) transparent;
-    border-block-start: 1px solid var(--line);
-  }
-  .punze-pop-scroll:focus-visible {
-    outline: 3px solid var(--focus);
-    outline-offset: -3px;
-  }
-  /* bottom fade only while there is more below (scroll-driven where supported) */
-  @supports (animation-timeline: scroll()) {
-    .punze-pop-scroll {
-      animation: punze-fade linear both;
-      animation-timeline: scroll(self);
-    }
-    @keyframes punze-fade {
-      from {
-        mask-image: linear-gradient(#000 calc(100% - 88px), rgb(0 0 0 / 0.08));
-      }
-      96% {
-        mask-image: linear-gradient(#000 calc(100% - 88px), rgb(0 0 0 / 0.08));
-      }
-      to {
-        mask-image: none;
-      }
-    }
-  }
-  .punze-pop-foot {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s3) var(--s4);
-    padding-block-start: var(--s3);
-    border-block-start: 1px solid var(--line);
-  }
-  .punze-pop-foot .punze-line {
-    flex: 1 1 22ch;
-  }
-  .punze-pop--inline {
-    display: grid;
-    gap: var(--s4);
-    inline-size: auto;
-    margin-block-start: var(--s3);
-  }
-  .punze-pop--inline .punze-pop-scroll {
-    margin-inline: 0;
-    padding-inline: 0;
-    overflow: visible;
-    animation: none;
-  }
-  .punze-pop-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    color: var(--accent);
-  }
-  .punze-pop-i {
-    inline-size: 28px;
-    block-size: 28px;
-  }
-  .punze-pop-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
-    line-height: 1;
-  }
-  .punze-close {
-    flex: none;
-    margin-inline-start: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-block-size: 44px;
-    padding-inline: var(--s3);
-    border: 1px solid var(--control);
-    border-radius: var(--r-button);
-    color: var(--ink);
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .punze-details {
     display: inline-block;
   }
 }
@@ -1618,30 +1258,22 @@
 @layer sections {
   /* Probestück stages inside the Werkbank: the measured height incl. the chip row (was
      css/sections/meister.css, see the stage block there; work/wp4r2/fit.mjs). */
-  :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1529px + -159.40cqi); }
-  @container (min-width: 335px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1697px + -210.00cqi); } }
-  @container (min-width: 385px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(765px + 29.09cqi); } }
-  @container (min-width: 555px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(851px + 12.96cqi); } }
-  @container (min-width: 925px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(738px + 21.79cqi); } }
-  :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(908px + -53.00cqi); }
-  @container (min-width: 295px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(648px + 5.36cqi); } }
-  @container (min-width: 375px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(547px + 36.70cqi); } }
-  @container (min-width: 505px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(251px + 95.50cqi); } }
-  @container (min-width: 595px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(718px + 12.67cqi); } }
-  @container (min-width: 835px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(750px + 4.34cqi); } }
-  :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1673px + -232.00cqi); }
-  @container (min-width: 315px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1375px + -134.00cqi); } }
-  @container (min-width: 355px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1374px + -131.00cqi); } }
-  @container (min-width: 405px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(882px + -21.01cqi); } }
-  @container (min-width: 565px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(821px + -30.20cqi); } }
-  @container (min-width: 805px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(671px + -9.54cqi); } }
-  :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(3398px + -970.00cqi); }
-  @container (min-width: 275px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(968px + -63.00cqi); } }
-  @container (min-width: 315px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(727px + -11.73cqi); } }
-  @container (min-width: 425px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(2124px + -345.00cqi); } }
-  @container (min-width: 455px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(532px + 8.83cqi); } }
-  @container (min-width: 695px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(427px + 10.00cqi); } }
-  @container (min-width: 765px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(413px + 5.83cqi); } }
-  :root[data-booted] #werkbank .probe-stage[data-probe="beatguessr-years"]::after { block-size: calc(1298px + -311.00cqi); }
-  @container (min-width: 295px) { :root[data-booted] #werkbank .probe-stage[data-probe="beatguessr-years"]::after { block-size: calc(377px + -0.52cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1006px + -62.02cqi); }
+  @container (min-width: 335px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(1419px + -180.71cqi); } }
+  @container (min-width: 405px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(510px + 52.26cqi); } }
+  @container (min-width: 615px) { :root[data-booted] #werkbank .probe-stage[data-probe="theater-saalplan"]::after { block-size: calc(642px + 23.90cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(758px + -62.00cqi); }
+  @container (min-width: 295px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(262px + 78.13cqi); } }
+  @container (min-width: 595px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(639px + 12.80cqi); } }
+  @container (min-width: 835px) { :root[data-booted] #werkbank .probe-stage[data-probe="bomberman-chain"]::after { block-size: calc(692px + 4.51cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1102px + -107.33cqi); }
+  @container (min-width: 355px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(1033px + -83.00cqi); } }
+  @container (min-width: 405px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(658px + -0.90cqi); } }
+  @container (min-width: 565px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(738px + -33.18cqi); } }
+  @container (min-width: 745px) { :root[data-booted] #werkbank .probe-stage[data-probe="melodai-mixer"]::after { block-size: calc(443px + 7.51cqi); } }
+  :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(2726px + -730.00cqi); }
+  @container (min-width: 275px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(1217px + -159.00cqi); } }
+  @container (min-width: 315px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(639px + 5.03cqi); } }
+  @container (min-width: 435px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(593px + -4.44cqi); } }
+  @container (min-width: 695px) { :root[data-booted] #werkbank .probe-stage[data-probe="transcripator-pow"]::after { block-size: calc(510px + -3.38cqi); } }
 }

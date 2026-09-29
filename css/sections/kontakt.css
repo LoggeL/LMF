@@ -32,6 +32,30 @@
     box-shadow: 0 0 10px var(--heat-3);
   }
 
+  /* Desktop: one centred column over the coals, so the dark field around it reads as intended.
+     The last stop fills the screen under the header, so a „Kontakt“ jump lands flush under the
+     header like every other section. */
+  @media (min-width: 1024px) {
+    .section--kontakt {
+      display: grid;
+      align-content: center;
+      min-block-size: calc(100svh - var(--header-h) - 16px);
+    }
+    .kontakt-inner {
+      justify-items: center;
+      text-align: center;
+    }
+    .kontakt-inner .section-title {
+      max-inline-size: none;
+    }
+    .kontakt-inner .lead {
+      max-inline-size: 40ch;
+    }
+    .section--kontakt .contact-links {
+      justify-content: center;
+    }
+  }
+
   .kontakt-coals {
     --heat: 0;
     overflow: hidden;
@@ -46,59 +70,6 @@
   }
   .section--kontakt:has(.contact-mail:is(:hover, :focus-visible)) .kontakt-coals {
     --heat: 1;
-  }
-
-  .kontakt-warm {
-    display: none;
-  }
-  @media (min-width: 1200px) {
-    .kontakt-inner {
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
-      column-gap: var(--s8, 64px);
-    }
-    .kontakt-inner > * {
-      grid-column: 1;
-    }
-    .kontakt-inner > .kontakt-warm {
-      display: grid;
-      gap: var(--s3);
-      grid-column: 2;
-      grid-row: 3 / span 3;
-      align-self: center;
-      justify-self: stretch;
-      padding-inline-start: var(--s5);
-      border-inline-start: 1px solid var(--line);
-    }
-  }
-  .kontakt-warm-title {
-    margin: 0;
-    color: var(--heat-text);
-  }
-  .kontakt-warm-name {
-    font-weight: 650;
-  }
-  .kontakt-warm-line {
-    display: grid;
-    gap: 2px;
-    margin: 0;
-    padding-block: var(--s2);
-    border-block: 1px solid var(--line);
-    font-family: var(--font-mono);
-    overflow-wrap: anywhere;
-  }
-  .kontakt-warm-line a.kontakt-warm-name {
-    color: var(--ink);
-  }
-  .kontakt-warm-date,
-  .kontakt-warm-src {
-    color: var(--muted);
-    text-transform: none;
-  }
-  .kontakt-warm-src {
-    margin: 0;
-  }
-  a.kontakt-warm-name:is(:hover, :focus-visible) {
-    color: var(--heat-4);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -118,12 +89,6 @@
       to {
         opacity: 1;
       }
-    }
-    :root:not([data-motion="paused"]) .kontakt-warm-name {
-      transition: color var(--d-cool) var(--ease-cool);
-    }
-    :root:not([data-motion="paused"]) a.kontakt-warm-name:is(:hover, :focus-visible) {
-      transition-duration: var(--d-heat-in);
     }
   }
 

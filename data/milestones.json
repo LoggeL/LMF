@@ -26,23 +26,10 @@
     ]
   },
   {
-    "date": "2015-04-15",
-    "precision": "day",
-    "kind": "code",
-    "text": "GitHub-Account angelegt.",
-    "sources": [
-      {
-        "label": "GitHub API users/LoggeL",
-        "url": "https://api.github.com/users/LoggeL",
-        "checkedAt": "2026-09-28"
-      }
-    ]
-  },
-  {
     "date": "2017-03-29",
     "precision": "day",
     "kind": "film",
-    "text": "Selantis Teil 1 geht auf YouTube, Teil 2 am Tag danach.",
+    "text": "Selantis Teil 1 und 2 sind fertig.",
     "sources": [
       {
         "label": "YouTube-Playlist „Selantis“",
@@ -82,7 +69,7 @@
     "date": "2019-02-19",
     "precision": "day",
     "kind": "film",
-    "text": "Feldberg 2019, der erste Ski-Aftermovie in meiner LMF-Playlist.",
+    "text": "Feldberg 2019: mein erster Ski-Aftermovie.",
     "sources": [
       {
         "label": "YouTube",
@@ -120,7 +107,7 @@
     "date": "2020-08-27",
     "precision": "day",
     "kind": "film",
-    "text": "Der Kanaltrailer fürs Kolpingtheater, „Produziert von LMF“. Am selben Tag lege ich das Repo dieser Seite an.",
+    "text": "Der Kanaltrailer fürs Kolpingtheater, „Produziert von LMF“.",
     "sources": [
       {
         "label": "YouTube",
@@ -148,19 +135,6 @@
       {
         "label": "Erstes Galerie-Commit",
         "url": "https://github.com/LoggeL/LMF/commit/52c7a825bafb72e907aa208f7f4b54297e94434b",
-        "checkedAt": "2026-09-28"
-      }
-    ]
-  },
-  {
-    "date": "2020-09-27",
-    "precision": "day",
-    "kind": "galerie",
-    "text": "Commit in der Galerie: „im getting tired of this“.",
-    "sources": [
-      {
-        "label": "Commit 1f3440a",
-        "url": "https://github.com/LoggeL/LMF/commit/1f3440a3f44f81a58e0e9fd967f0bb447e9ed0df",
         "checkedAt": "2026-09-28"
       }
     ]
@@ -223,7 +197,7 @@
     "date": "2023-12-29",
     "precision": "day",
     "kind": "film",
-    "text": "Kurzfilm „Infected“, 12:22.",
+    "text": "Kurzfilm „Infected“.",
     "sources": [
       {
         "label": "YouTube",
@@ -251,7 +225,7 @@
     "date": "2025-12-25",
     "precision": "day",
     "kind": "code",
-    "text": "Weihnachtsnacht: Kurz nach Mitternacht (00:46 Uhr) lege ich BeatGuessr an, um 02:37 Uhr kommt das erste Commit von Coop Sudoku.",
+    "text": "BeatGuessr und Coop Sudoku: zwei Spiele in einer Weihnachtsnacht.",
     "sources": [
       {
         "label": "Repo LoggeL/BeatGuessr",
@@ -266,24 +240,10 @@
     ]
   },
   {
-    "date": "2026",
-    "precision": "year",
-    "kind": "life",
-    "text": "„Creepshow“: auf der Bühne als Bote / Diener, dahinter die Website.",
-    "sources": [
-      {
-        "label": "Teamseite kolpingtheater-ramsen.de",
-        "url": "https://kolpingtheater-ramsen.de/team",
-        "checkedAt": "2026-09-28"
-      }
-    ],
-    "projectId": "theater-website"
-  },
-  {
     "date": "2026-07-15",
     "precision": "day",
     "kind": "web",
-    "text": "Drei ShareX-Konzepte in {sharex.seconds} Sekunden angelegt.",
+    "text": "Drei ShareX-Konzepte, drei Welten.",
     "sources": [
       {
         "label": "Repo LoggeL/sharex-capture-engine",

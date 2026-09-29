@@ -31,7 +31,7 @@
   },
   "commits": 19,
   "funFact": {
-    "text": "Die Anti-Missbrauchs-Hürde ist ein kleines Rechenrätsel: Der Browser sucht eine Nonce, bis der SHA-256-Hash mit vier Nullen beginnt, laut README im Schnitt rund 65.000 Versuche. Der Server prüft das mit einem einzigen Hash.",
+    "text": "Die Anti-Missbrauchs-Hürde ist ein kleines Rechenrätsel: Der Browser sucht eine Nonce, bis der SHA-256-Hash mit vier Nullen beginnt, im Schnitt rund 65.000 Versuche. Der Server prüft das mit einem einzigen Hash.",
     "source": 0
   },
   "relatedRepos": [

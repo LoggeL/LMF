@@ -56,7 +56,7 @@ export const SEATS = LAYOUT.flatMap(({ row, seats }, ri) =>
   })),
 );
 export const SEAT_COUNT = SEATS.length; // 68
-export const CHIP = `Nachbau: der Saalplan von „${SHOW.title}“ mit denselben ${SEAT_COUNT} Plätzen wie in der echten Buchung. Gebucht wird hier nichts, und der QR-Code auf dem Ticket ist nur Deko.`;
+export const CHIP = `Dieselben ${SEAT_COUNT} Plätze wie im echten Saal. Gebucht wird hier nichts.`;
 const BY_ID = new Map(SEATS.map((s) => [s.id, s]));
 export const seatLabel = (id) => {
   const s = BY_ID.get(id);
@@ -250,7 +250,7 @@ export function mount(root, ctx = {}) {
         <li><i class="ps-dot ps-dot--pick" aria-hidden="true"></i>Deine Auswahl</li>
         <li><i class="ps-dot ps-dot--taken" aria-hidden="true"></i>Belegt</li>
       </ul>
-      <p class="ps-hint" id="${ids.hint}"><span class="ps-hint-q">„${SHOW.hint}“</span> <span class="ps-hint-src meta">Hinweis aus der echten Buchung</span></p>
+      <p class="ps-hint" id="${ids.hint}"><span class="ps-hint-q">„${SHOW.hint}“</span></p>
       <p class="ps-warn" data-ps="warn" hidden></p>
     </div>
     <div class="probe-toolbar">
@@ -260,7 +260,7 @@ export function mount(root, ctx = {}) {
       <p class="probe-readout meta" data-ps="readout"><span><b data-ps="count">0</b> von ${MAX_PICK} Plätzen</span><span><b data-ps="free">${SEAT_COUNT}</b> von ${SEAT_COUNT} frei</span></p>
     </div>
     <div class="ps-slot" data-ps="slot"><p class="ps-slot-empty meta" data-ps="slotnote">Hier kommt dein Ticket raus.</p></div>
-    <p class="probe-howto" id="${ids.how}">Platz antippen oder mit Pfeiltasten wählen · Enter oder Leertaste: auswählen · Pos1/Ende: Reihenanfang/-ende · Esc: raus</p>`;
+    <p class="probe-howto vh" id="${ids.how}">Platz antippen oder mit Pfeiltasten wählen. Enter oder Leertaste wählt aus, Pos1 und Ende springen an den Reihenanfang und das Reihenende, Escape verlässt den Saalplan.</p>`;
 
   const q = (sel) => root.querySelector(sel);
   const el = {

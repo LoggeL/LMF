@@ -597,8 +597,14 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  /* the same square as the section eyebrows */
   .section-readout-mark {
-    color: var(--accent);
+    display: inline-block;
+    inline-size: 7px;
+    block-size: 7px;
+    margin-inline-end: 0.9em;
+    vertical-align: 0.08em;
+    background: var(--accent);
   }
 
   .header-controls {
@@ -1426,8 +1432,6 @@
     :focus-visible {
       outline: 3px solid Highlight;
     }
-    .specsheet,
-    .buehne-card,
     .probe-stage,
     .project-dialog {
       border: 1px solid CanvasText;

@@ -6,8 +6,8 @@
  * Focus: #close-modal on open (contract), Tab wrap, Esc → router.close() → back to the trigger,
  * the matching plate, or the #lager heading after a direct load (scrolled into view once the
  * layout above it has settled). ←/→ = voriges/nächstes Werkstück in the order of the list it
- * was opened from. The page loads js/werkbank/werkbank.pack.js: this file, body.js, languages.js and
- * facade.js in one module (scripts/pack-werkbank.mjs, §8 „werkbank ≤ 9 KB gz“). Edit the sources, re-pack.
+ * was opened from. The page loads js/werkbank/werkbank.pack.js: this file, body.js and facade.js in
+ * one module (scripts/pack-werkbank.mjs, §8 „werkbank ≤ 9 KB gz“). Edit the sources, re-pack.
  */
 import { html, $, $$, icon, extLink, safeUrl, isTyping } from "../lib/dom.js";
 import { alloyOf, glowOf, glowLabel, stockNumbers, stockLabel, GROUP_LABEL, canonicalTool } from "../lib/derive.js";
@@ -88,7 +88,6 @@ export async function mount(dialog, ctx) {
 
   const el = {
     meta: $('[data-wb="meta"]', dialog),
-    punze: $('[data-wb="punze"]', dialog),
     hero: $('[data-wb="hero"]', dialog),
     kicker: $('[data-wb="kicker"]', dialog),
     title: $("#modal-title", dialog),
@@ -190,8 +189,13 @@ export async function mount(dialog, ctx) {
 
   function fill(p, film, d) {
     el.hero.innerHTML = String(B.renderHero(p, film, d, F));
-    el.punze.innerHTML = B.renderPunzeFor(p, d);
-    el.body.innerHTML = String(B.renderBody(p, film, d, { byId, stock, asOf, next: byId.get(neighbour(1)) }));
+    el.body.innerHTML = String(B.renderBody(p, film, d, { byId, stock, next: byId.get(neighbour(1)), asOf }));
+    // no fact strip → the year joins the kicker („Daten · 2020“), unless the title or dek says it
+    const year = String(p.yearLabel ?? p.year ?? "");
+    const said = !year || el.body.querySelector(".wb-facts") || `${p.title} ${el.dek.textContent}`.includes(year.slice(0, 4));
+    el.kicker.textContent = said ? p.category : `${p.category} · ${year}`;
+    // the inline player is the way to watch; a second „Film ansehen“ button would only repeat it
+    el.link.hidden = Boolean(el.hero.querySelector("[data-facade]"));
     capPoster();
     armProbe(p);
   }
@@ -381,7 +385,6 @@ export async function mount(dialog, ctx) {
     // Stop any playing film and free the iframes.
     el.hero.textContent = "";
     el.body.textContent = "";
-    el.punze.textContent = "";
     const job = afterClose;
     afterClose = null;
     requestAnimationFrame(() => {
@@ -397,7 +400,6 @@ export async function mount(dialog, ctx) {
   };
   const onCancel = (e) => {
     e.preventDefault();
-    // An open popover closes first (native light dismiss handles Esc for it).
     ctx.router.close();
   };
   const onKey = (e) => {
